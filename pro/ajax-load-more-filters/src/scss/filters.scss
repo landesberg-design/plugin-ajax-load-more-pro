@@ -1,0 +1,396 @@
+@import 'variables';
+// @import '../../vendor/flatpickr/flatpickr.css';
+
+// Selected filters
+#alm-selected-filters{
+	padding: 0 0 15px;
+	margin: 0;
+	li{
+		display: inline-block;
+		margin: 0 5px 5px 0;
+		padding: 0;
+		list-style: none;
+		background: none;
+		a{
+			display: block;
+			padding: 5px 10px;
+			border-radius: 2px;
+			background: #efefef;
+			border: 1px solid #e7e7e7;
+			color: $link;
+			font-size: 13px;
+			text-decoration: none;
+			line-height: 1.1;
+			transition: all $speed ease;
+			&:before{
+				content: '\00d7';
+				display: inline-block;
+				vertical-align: top;
+				margin: 0 4px 0 0;
+				opacity: 0.3;
+				color: $link_active;
+				position: relative; 
+				left: -2px;
+				transition: all $speed ease;
+				text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+			}
+			&:hover,
+			&:focus{				
+				background-color: #efefef;
+				border-color: #ccc;
+				color: $link_active;
+				&:before{
+					opacity: 1;
+				}
+			}
+		}
+	}
+} 
+
+
+// Blue 
+.alm-filters.filters-blue{
+	.alm-filter li a.active.field-checkbox:before, 
+	.alm-filter li a.active.field-radio:before{
+		background-color: $color_blue;
+		border-color: $color_blue;		
+	}
+	button[type=button]{
+		background-color: $color_blue;
+		&:hover, &:focus{
+			background-color: $color_blue_hover;
+		}
+	}
+}
+// Red 
+.alm-filters.filters-red{
+	.alm-filter li a.active.field-checkbox:before, 
+	.alm-filter li a.active.field-radio:before{
+		background-color: $color_red;	
+		border-color: $color_red;		
+	}
+	button[type=button]{
+		background-color: $color_red;
+		&:hover, &:focus{
+			background-color: $color_red_hover;
+		}
+	}
+}
+// Green 
+.alm-filters.filters-green{
+	.alm-filter li a.active.field-checkbox:before, 
+	.alm-filter li a.active.field-radio:before{
+		background-color: $color_green;	
+		border-color: $color_green;		
+	}
+	button[type=button]{
+		background-color: $color_green;
+		&:hover, &:focus{
+			background-color: $color_green_hover;
+		}
+	}
+}
+
+ 
+// Start filters
+.alm-reveal.alm-filters:after{
+   content: '';
+   display: table;
+   clear: both;
+}
+.alm-filters-container{
+	margin: 0;
+	padding: 0;
+	position: relative;
+	transition: opacity 0.25s ease;
+	*,
+	*:before,
+	*:after{
+		box-sizing: border-box;
+	}
+	
+	.alm-filter{
+		display: block; 
+		padding: 0 0 10px; 
+		margin: 0 0 20px 0;	
+		&--submit{
+			display: block;
+			padding: 0;
+			margin: 0 0 15px;
+		}
+		// Form Label
+		label{
+			font-weight: 600;
+			font-size: $font_size;
+			margin: 0 0 15px;  
+			padding: 0;	
+			cursor: pointer;
+		} 
+		&[data-fieldtype=text]{
+			label{
+				display: block; 
+			}
+		} 
+		ul{
+			padding: 0;
+			margin: 0;
+			ul{
+				padding-top: 4px;
+			}
+		} 
+		// Radio and Checkbox
+		li{ 
+			padding: 0;
+			margin: 0 0 6px;
+			list-style: none;
+			content: "";
+			line-height: 1;
+			display: block;
+			clear: both;
+			position: relative;	
+			&.has_parent{
+				padding-left: 9px;
+			}
+			&:last-of-type{
+				margin: 0;
+			}		
+			a{
+				display: block;
+				padding: 0 10px 0 26px;
+				min-height: 22px;
+				line-height: 1.4;
+				font-size: $font_size;
+				position: relative;
+				text-decoration: none;
+				color: $link;
+				&:before{
+					position: absolute;
+					left: 1px;
+					top: 1px;
+					width: 18px;
+					height: 18px;
+					background: $color_default_bkg;
+					border: 1px solid $color_default_border;
+					display: block;
+					content: '';
+					transition: all $speed ease;
+					box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+				}
+				&:after{
+					position: absolute;
+					display: block;
+					content: '';
+					z-index: 1;
+					opacity: 0;
+					visibility: hidden;
+				}
+				&:hover,
+				&:focus{
+					color: $link_active;
+					&:before{
+						border-color: $color_default_active;
+					}
+				}
+				&.field-checkbox{
+					&:before{
+						border-radius: 2px;
+					}
+					&:after{
+						left: 7px;
+						top: 3px;
+						width: 6px;
+						height: 11px;
+						border: solid white;
+						border-width: 0 3px 3px 0;
+						-ms-transform: rotate(45deg);
+						transform: rotate(45deg);
+					}
+				}
+				&.field-radio{
+					&:before,
+					&:after{
+						border-radius: 100%;
+					}
+					&:after{
+						width: 8px;
+						height: 8px;
+						left: 6px;
+						top: 6px;
+						background-color: #fff;
+					}
+				}
+				&.active{
+					color: $link_active;
+					&.field-checkbox,
+					&.field-radio{
+						&:before{
+							border-color: $color_default_active;
+							background-color: $color_default_active;
+							box-shadow: none;
+						}
+						&:after{						
+							visibility: visible;
+							opacity: 1;
+						}	
+					}
+				}
+			}		
+		}
+		
+		// Select
+		&--select{
+			select{
+				margin: 0;
+				max-width: 100%;
+				position: relative;
+				background-color: $color_default_bkg;
+   		   cursor: pointer;
+   		   font-size: $font_size;
+   		   color: #333;
+			}
+			select[multiple]{
+				padding: 5px;
+			}
+		}
+		
+		// Textfield
+		&--text{   		
+   		&-wrap{
+      		position: relative;
+      		input[type=text]{
+      		   background: $color_default_bkg;
+      		   border: 1px solid $color_default_border;
+      		   color: #666;
+      		   padding: 0 10px;
+      		   border-radius: 3px;
+      		   max-width: 100%;
+      		   width: 100%;
+      		   height: $height;
+      		   line-height: $height;
+      		   outline: none;
+      		   transition: border-color $speed ease;
+      		   font-size: $font_size;
+      		   color: #333;
+      		   min-width: 100px;
+      		   &:focus,
+      		   &:active{
+         		   border-color: $color_default_active;
+         		   background: #fff;
+      		   }
+      		}
+      		button[type=button]{
+      		   border-radius: 0 3px 3px 0;
+      		   width: auto;
+      		   height: auto;	
+      		   line-height: 1;   
+      		}
+      		&.has-button{
+         		display: flex;
+         		justify-content: center;
+         		input[type=text]{
+            		border-radius: 2px 0 0 2px;
+            		flex: 1;
+         		}
+         		button{
+	         		box-shadow: -3px 0 5px rgba(0, 0, 0, 0.1);
+         		}
+      		}
+   		}   		
+   		::-webkit-input-placeholder {
+				color: $color_default_border;
+				font-size: $font_size;
+			}
+			::-moz-placeholder {
+				color: $color_default_border;
+				font-size: $font_size;
+			}
+			:-ms-input-placeholder {
+				color: $color_default_border;
+				font-size: $font_size;
+			}
+			:-moz-placeholder {
+				color: $color_default_border;
+				font-size: $font_size;
+			}
+		}
+		
+		&--preselected{
+			li.alm-filter--radio a.active{
+				cursor: default;
+			}
+		}
+		
+		// Filter Title
+		&--title{
+			h3{
+				font-size: 18px;
+				font-weight: 600;
+				margin: 0;
+				padding: 0 0 20px;
+				line-height: 1.15;
+			}
+		}		
+	}
+	
+	// Button style
+	button[type=button]{
+		padding: 0 15px;
+	   border-radius: 3px;
+	   max-width: 100%;
+	   width: auto;
+	   height: $height;
+	   line-height: $height;
+	   font-size: $font_size;
+	   color: #fff;
+	   background-color: $color_default_active;
+	   border: none;
+	   text-transform: none;
+	   font-weight: 600;
+	   cursor: pointer; 
+	   &:hover,
+	   &:active,
+	   &:focus{
+   	   color: #fff;
+   	   background-color: $color_default_focus;
+	   }     		   
+	}
+	
+	// Filtering State
+	&.filtering{
+		opacity: 0.6;
+		.alm-filters--loading{
+			display: block;
+		}
+	}	
+	
+	// Loading
+	&--loading{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1000;
+		display: none;
+	}	
+	
+	// Edit button
+	.alm-filters-edit{
+		position: absolute;
+		right: 0;
+		top: 5px;
+		opacity: 0;
+		visibility: hidden;
+		font-size: 13px;
+		padding: 5px;
+		display: inline-block;
+		transition: all $speed ease;
+	}
+	&:hover{
+		.alm-filters-edit{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+
+}
