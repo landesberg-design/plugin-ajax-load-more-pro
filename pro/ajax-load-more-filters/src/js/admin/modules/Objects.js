@@ -56,7 +56,8 @@ let field_types = [
 	{ value: 'select_multiple', text: 'Select (Multiple)'},
 	{ value: 'text', text: 'Textfield'},
 	{ value: '#', text: alm_filters_localize.field_type_beta},
-	{ value: 'date_picker', text: 'Date Picker'}
+	{ value: 'date_picker', text: 'Date Picker'},
+	{ value: 'range_slider', text: 'Range Slider'}
 ];
 export {field_types as field_types};
 

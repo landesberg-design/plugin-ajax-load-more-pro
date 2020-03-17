@@ -47,12 +47,12 @@ var almNextpage = {};
          almNextpage.paging = false;
          almNextpage.active = true;
 
-         // Scroll
+         // Scroll & Offset
          almNextpage.scrollOptions = el.dataset.nextpageScroll;
          almNextpage.scrollOptions = almNextpage.scrollOptions.split(':');
-         almNextpage.scroll = (almNextpage.scrollOptions[0] === "0") ? false : true; // convert to boolean
-         almNextpage.offset = parseInt(almNextpage.scrollOptions[1]);
-
+         almNextpage.scroll = (almNextpage.scrollOptions[0] === 'false' || almNextpage.scrollOptions[0] === '0') ? false : true; // convert to boolean
+         almNextpage.offset = (almNextpage.scrollOptions[1]) ? parseInt(almNextpage.scrollOptions[1]) : almNextpage.offset;
+			
          // URLs
          almNextpage.urls = el.dataset.nextpageUrls;
          almNextpage.urls = (almNextpage.urls == "true"); // convert to boolean
@@ -214,11 +214,11 @@ var almNextpage = {};
          almNextpage.pageviews = alm.addons.nextpage_pageviews; // Send pageviews
          almNextpage.pageviews = (almNextpage.pageviews == 'true') ? true : false;
 
-         // Scroll      
+         // Scroll & Offset
          almNextpage.scrollOptions = alm.addons.nextpage_scroll;
          almNextpage.scrollOptions = almNextpage.scrollOptions.split(':');
          almNextpage.scroll = (almNextpage.scrollOptions[0] === 'false' || almNextpage.scrollOptions[0] === '0') ? false : true; // convert to boolean 
-         almNextpage.offset = parseInt(almNextpage.scrollOptions[1]);
+         almNextpage.offset = (almNextpage.scrollOptions[1]) ? parseInt(almNextpage.scrollOptions[1]) : almNextpage.offset;
 
          // Init
          almNextpage.init = false;
@@ -351,7 +351,6 @@ var almNextpage = {};
             
             if (typeof window.history.pushState === 'function' && !almNextpage.isIE) {	   
 	            
-	            //alert(pageID);
 	      		//almNextpage.setPageTitle(permalink, pageID);         
                
                history.pushState(state, window.location.title, permalink);
@@ -438,7 +437,7 @@ var almNextpage = {};
     * @param {Number} page
     */
    almNextpage.scrollToPage = function(page) {
-
+	   
       if (almNextpage.nested) return false; // Exit if nested
 
       // Get current page number

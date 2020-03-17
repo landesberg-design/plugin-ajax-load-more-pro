@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 Requires at least: 4.0
-Tested up to: 5.3.1
+Tested up to: 5.3.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.8.3
+Version: 1.9.0
 
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2020 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,6 +47,13 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 1.9.0 - March 2, 2020 =
+* NEW - Added Range Slider field type using [noUiSlider](https://refreshless.com/nouislider/). This field type is considered to be in beta but is fully functional for querying by custom field ranges using the `BETWEEN` compare operator.
+* NEW - Added new `alm_filters_{$id}_{key}_label` filter to allow for filtering of the default label in select and textfield field types.
+* UPDATE - Updated time of filter transitions. In some cases users were reporting issues of double clicks causing no results to be returned.
+* FIX - Fixed issue where browser URL update would happen while filtering causing issues in URL string.
+* FIX - Fixed issue where empty filter group could result in a JS error causing the add-on to stall.
 
 = 1.8.3 - December 17, 2019 =
 * FIX - Fixed issue in `almfilters.start()` function not initiating properly when loaded via Ajax.

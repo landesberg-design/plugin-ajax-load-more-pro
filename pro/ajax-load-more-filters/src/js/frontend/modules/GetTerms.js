@@ -54,7 +54,8 @@ let getTerms = (filter, data) => {
 			
 			break;
 		
-		case 'text' : 
+		case 'text' :
+		case 'range_slider' : 
 			
 			let text = filter.querySelector('input');
 			returnVal += (text.value === '') ? '' : text.value;

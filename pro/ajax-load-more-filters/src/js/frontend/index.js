@@ -9,7 +9,8 @@ import setCurrentFilters from './modules/CurrentFilters';
 import getKeyObject from './modules/currentFilters/getKeyObject';
 import getKeyElement from './modules/currentFilters/getKeyElement'; 
 import onScroll from './modules/Scroll';
-import { setDatePickers } from './modules/DatePicker';
+import { setDatePickers } from './types/DatePicker';
+import { setRangeSliders } from './types/RangeSliders';
 import {toggleAll, toggleSelect} from './helpers/toggle';
 
 require('./helpers/polyfills'); 
@@ -43,7 +44,7 @@ let almFiltersInit = (almFilters) => {
 	   
 	   event.preventDefault();
 	   
-	   let target = event.currentTarget;   
+	   let target = event.currentTarget;
 	   let fieldtype = target.dataset.type;	   
 		let current_id = target.id;
 		let parent = target.closest('.alm-filter'); // <div .alm-filter />// All items in filter
@@ -150,7 +151,6 @@ let almFiltersInit = (almFilters) => {
 				if (e.keyCode === 13) { // Enter/return click
 					almFiltersClick();
 				} 
-
 	      });
 	   });
    }  
@@ -160,6 +160,13 @@ let almFiltersInit = (almFilters) => {
 	let datePickers = document.querySelectorAll("input.alm-flatpickr");
    if(datePickers){
       setDatePickers(almFilters.dataset.id, datePickers);
+   }
+   
+     
+	// Init rangeSliders
+	let rangeSliders = document.querySelectorAll("div.alm-range-slider");
+   if(rangeSliders){
+      setRangeSliders(almFilters.dataset.id, rangeSliders, style);
    }
    
    
@@ -508,5 +515,5 @@ window.almFiltersAddonComplete = function(el = null){
 			ajaxloadmore.almScroll(top);
 		}
 		
-   }, 150);
+   }, 100);
 };

@@ -6,16 +6,15 @@ Description: Ajax Load More extension allowing repeater template selection from 
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: http://connekthq.com
-Version: 1.1.1
+Version: 1.1.2
 License: GPL
 Copyright: Darren Cooney & Connekt Media
-
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly		
 
-define('ALM_THEME_REPEATERS_VERSION', '1.1.1');
-define('ALM_THEME_REPEATERS_RELEASE', 'May 6, 2019');
+define('ALM_THEME_REPEATERS_VERSION', '1.1.2');
+define('ALM_THEME_REPEATERS_RELEASE', 'January 25, 2020');
 
 
 /*
@@ -46,7 +45,8 @@ if( !class_exists('ALMTHEMEREPEATERS') ):
    		add_action( 'alm_theme_repeaters_installed', array(&$this, 'alm_theme_repeaters_installed') );
    		add_action( 'alm_theme_repeaters_settings', array(&$this, 'alm_theme_repeaters_settings') );      	
    		add_filter( 'alm_get_theme_repeater', array(&$this, 'alm_get_theme_repeater' ), 10, 5);	      	
-   		add_filter( 'alm_get_acf_gallery_theme_repeater', array(&$this, 'alm_get_acf_gallery_theme_repeater' ), 10, 6);	
+   		add_filter( 'alm_get_acf_gallery_theme_repeater', array(&$this, 'alm_get_acf_gallery_theme_repeater' ), 10, 6);
+   		add_filter( 'alm_get_term_query_theme_repeater', array(&$this, 'alm_get_term_query_theme_repeater' ), 10, 6);	
    		add_filter( 'alm_get_users_theme_repeater', array(&$this, 'alm_get_users_theme_repeater' ), 10, 6);	     	
    		add_filter( 'alm_get_rest_theme_repeater', array(&$this, 'alm_get_rest_theme_repeater' ), 10, 1);	   		
    		add_action( 'alm_theme_repeaters_selection', array(&$this, 'alm_theme_repeaters_selection' ));	
@@ -227,6 +227,39 @@ if( !class_exists('ALMTHEMEREPEATERS') ):
    	
    	
    	/*
+		*  alm_get_term_query_theme_repeater
+		*  Get the theme repeater template for Term Query
+		*
+		*  @return $include (file path)
+		*  @since 1.2
+		*/		
+   		
+   	
+   	function alm_get_term_query_theme_repeater($theme_repeater, $alm_found_posts, $alm_page, $alm_item, $alm_current, $term){
+      	
+	   	if($theme_repeater != 'null'){
+		   	
+		   	// Get template directory
+		   	$dir = $this->alm_get_theme_repeaters_dir();
+		   	
+		   	// Security prevention
+		   	$theme_repeater = '/'. $dir . '/' .$this->alm_verfify_filepath($theme_repeater);
+		   			   			   	
+		   	// Get the complete file path
+		   	$file = $this->alm_get_theme_repeater_file($theme_repeater);
+				
+				include($file);
+				
+			}else{
+				
+				include( alm_get_default_repeater() ); //Include default repeater template
+				
+			}
+   	}
+   	 
+   	
+   	
+   	/*
 		*  alm_get_users_theme_repeater
 		*  Get the theme repeater template for Users add-on
 		*
@@ -308,46 +341,44 @@ if( !class_exists('ALMTHEMEREPEATERS') ):
    		   $options['_alm_theme_repeaters_dir'] = 'alm_templates';
    		   
    	?>
-			<div class="spacer"></div>
-   	   <div class="clear"></div>
    	   <div class="select-theme-repeater">
       	   <span class="or">or</span>
-      	   <hr/>
-				<div class="spacer"></div>
-      	   <div class="section-title">	      	   
-					<h4><?php _e('Theme Repeater', ALM_NAME); ?></h4>
-         	   <p><?php _e('Select a repeater template from the <span>'.$options['_alm_theme_repeaters_dir'].'</span> (<a href="admin.php?page=ajax-load-more" target="_parent">update</a>) directory within your current theme folder', ALM_NAME); ?>.</p>
-      	   </div>
-      	   <div class="wrap">    
-         	   <div class="inner">  	            
-      	         <?php	      	         
-	      	         // Get template location
-	      	         if(is_child_theme()){
-                     	$dir = get_stylesheet_directory() . '/' . $options['_alm_theme_repeaters_dir']; 		      	         
-	      	         }else{		      	         
-                     	$dir = get_template_directory() . '/' . $options['_alm_theme_repeaters_dir']; 
-	      	         } 
-                         
-                     $count = 0;
-                     
-                     echo '<select name="theme-repeater-select" class="alm_element"><option value="" selected="selected">-- '.__('Select Theme Repeater', ALM_NAME).' --</option>';
-                     foreach (glob($dir.'/*') as $file) {   
-	                     $count++;                     
-                        $file = realpath($file);
-                        $link = substr($file, strlen($dir) + 1);
+      	   <section>
+         	   <div class="shortcode-builder--label">	      	   
+   					<h4><?php _e('Theme Repeater', ALM_NAME); ?></h4>
+            	   <p><?php _e('Select a repeater template from the <span>'.$options['_alm_theme_repeaters_dir'].'</span> (<a href="admin.php?page=ajax-load-more" target="_parent">update</a>) directory within your current theme folder', ALM_NAME); ?>.</p>
+         	   </div>
+         	   <div class="shortcode-builder--fields">    
+            	   <div class="inner">  	            
+         	         <?php	      	         
+   	      	         // Get template location
+   	      	         if(is_child_theme()){
+                        	$dir = get_stylesheet_directory() . '/' . $options['_alm_theme_repeaters_dir']; 		      	         
+   	      	         }else{		      	         
+                        	$dir = get_template_directory() . '/' . $options['_alm_theme_repeaters_dir']; 
+   	      	         } 
+                            
+                        $count = 0;
                         
-                        // Only display .php, .html files files
-                        $file_extension = strtolower(substr(basename($file), strrpos(basename($file), '.') + 1));
-                        if($file_extension == 'php'){
-                        	echo '<option value="'.basename($file).'">'.basename($file).'</option>';
+                        echo '<select name="theme-repeater-select" class="alm_element"><option value="" selected="selected">-- '.__('Select Theme Repeater', ALM_NAME).' --</option>';
+                        foreach (glob($dir.'/*') as $file) {   
+   	                     $count++;                     
+                           $file = realpath($file);
+                           $link = substr($file, strlen($dir) + 1);
+                           
+                           // Only display .php, .html files files
+                           $file_extension = strtolower(substr(basename($file), strrpos(basename($file), '.') + 1));
+                           if($file_extension == 'php'){
+                           	echo '<option value="'.basename($file).'">'.basename($file).'</option>';
+                           }
+                           
                         }
-                        
-                     }
-                     if($count==0) echo '<option value="null">'.__('No Templates Found', ALM_NAME).'</option>';
-                     echo '</select>';
-                  ?>                     
-               </div>
-      	   </div>
+                        if($count==0) echo '<option value="null">'.__('No Templates Found', ALM_NAME).'</option>';
+                        echo '</select>';
+                     ?>                     
+                  </div>
+         	   </div>
+      	   </section>
    	   </div>
       <?php
       	

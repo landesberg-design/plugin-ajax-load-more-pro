@@ -1,5 +1,4 @@
 @import 'variables';
-// @import '../../vendor/flatpickr/flatpickr.css';
 
 // Selected filters
 #alm-selected-filters{
@@ -61,6 +60,9 @@
 			background-color: $color_blue_hover;
 		}
 	}
+	.noUi-connect{
+		background-color: $color_blue;
+	}
 }
 // Red 
 .alm-filters.filters-red{
@@ -75,6 +77,9 @@
 			background-color: $color_red_hover;
 		}
 	}
+	.noUi-connect{
+		background-color: $color_red;
+	}
 }
 // Green 
 .alm-filters.filters-green{
@@ -88,6 +93,38 @@
 		&:hover, &:focus{
 			background-color: $color_green_hover;
 		}
+	}
+	.noUi-connect{
+		background-color: $color_green;
+	}
+}
+
+
+// Range Slider 
+.alm-range-slider{
+	&--label{
+		font-size: 15px;
+		padding: 10px 0 0;
+	}
+	.noUi-connect{
+		background-color: $color_default_active;
+	}
+	.noUi-handle{
+		cursor: pointer;
+	}
+	.noUi-vertical{
+		height: 200px;
+	}
+	.noUi-marker-horizontal.noUi-marker{
+		height: 2px;
+		width: 1px;
+	}
+	.noUi-marker-horizontal.noUi-marker-large{
+		height: 5px;
+	}
+	.noUi-pips{
+		color: $link;
+		font-size: 13px;
 	}
 }
 
@@ -126,7 +163,8 @@
 			padding: 0;	
 			cursor: pointer;
 		} 
-		&[data-fieldtype=text]{
+		&[data-fieldtype=text],
+		&[data-fieldtype=range_slider]{
 			label{
 				display: block; 
 			}

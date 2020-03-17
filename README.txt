@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 3.6.1
-Tested up to: 5.3.1
+Tested up to: 5.3.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.0.23
+Version: 1.0.25
 
 == Copyright ==
-Copyright 2019 Darren Cooney, Connekt Media
+Copyright 2020 Darren Cooney, Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,6 +47,26 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 
 == Changelog ==
+
+= 1.0.25 - March 2, 2020 =
+**Add-on Updates**
+
+Filters
+* NEW - Added Range Slider field type using [noUiSlider](https://refreshless.com/nouislider/). This field type is considered to be in beta but is fully functional for querying by custom field ranges using the `BETWEEN` compare operator.
+* NEW - Added new `alm_filters_{$id}_{key}_label` filter to allow for filtering of the default label in select and textfield field types.
+* UPDATE - Updated time of filter transitions. In some cases users were reporting issues of double clicks causing no results to be returned.
+
+Next Page
+* NEW - Added `alm_nextpage_paged` filter hook that allows users to stop the loading of previous pages when hitting a paged URL.
+* FIX - Fixed issue with paged URLs if an incorrect value was entered in `nextpage-scroll` shortcode parameter.
+
+
+= 1.0.24 - January 25, 2020 =
+**Add-on Updates**
+
+Theme Repeaters
+* UPDATE - Updated HTML layout of Theme Repeater selection in shortcode builder.
+
 
 = 1.0.23 - December 17, 2019 =
 **Add-on Updates**

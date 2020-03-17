@@ -18,12 +18,11 @@ let buildDataObj = (filter, data) => {
 	
 	let key = filter.dataset.key;
 	let isArchive = filter.dataset.isArchive;
-	let fieldtype = filter.dataset.fieldtype;
 	let taxonomy = filter.dataset.taxonomy;
 	let taxonomyOperator = filter.dataset.taxonomyOperator; 
 	let metaKey = filter.dataset.metaKey;
 	let metaCompare = filter.dataset.metaCompare; 
-	let metaType = filter.dataset.metaType; 	
+	let metaType = filter.dataset.metaType; 
 	
 	// Convert date and author queries to abbv because 404 occurs otherwise
 	if(key === '_year'){
@@ -92,7 +91,7 @@ let buildDataObj = (filter, data) => {
 	}
 	
 	// Meta_Query(Custom fields)
-	else if(metaKey){    	
+	else if(metaKey){  	
 		
 		// If data obj already has a meta value.
 		// Need to prepend : to add multiple values

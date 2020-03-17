@@ -8,10 +8,10 @@ Requires at least: 4.0
 Tested up to: 5.1.1
 Stable tag: trunk
 Homepage: http://connekthq.com/ajax-load-more/
-Version: 1.1.1
+Version: 1.1.2
 
 == Copyright ==
-Copyright 2019 Darren Cooney, Connekt Media
+Copyright 2020 Darren Cooney, Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -45,8 +45,11 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/theme-repeaters/
 5. Activate the plugin in the Plugin dashboard
 
 
-
 == Changelog ==
+
+= 1.1.2 - January 25, 2020 =
+* UPDATE - Updated HTML layout of Theme Repeater selection in shortcode builder.
+
 
 = 1.1.1 - May 6, 2019 =
 * FIX - Fixed issue if core Ajax Load More is deactivated the add-on will throw a fatal error becasue of undefined methods.

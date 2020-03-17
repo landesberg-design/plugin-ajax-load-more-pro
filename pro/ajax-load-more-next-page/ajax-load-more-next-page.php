@@ -6,18 +6,17 @@ Description: Ajax Load More add-on for displaying multipage WordPress content
 Author: Darren Cooney
 Twitter: @KaptonKaos 
 Author URI: https://connekthq.com
-Version: 1.4.2
+Version: 1.4.3
 License: GPL
 Copyright: Darren Cooney & Connekt Media
-
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_NEXTPAGE_PATH', plugin_dir_path(__FILE__));
 define('ALM_NEXTPAGE_URL', plugins_url('', __FILE__));
-define('ALM_NEXTPAGE_VERSION', '1.4.2');
-define('ALM_NEXTPAGE_RELEASE', 'December 17, 2019');
+define('ALM_NEXTPAGE_VERSION', '1.4.3');
+define('ALM_NEXTPAGE_RELEASE', 'March 2, 2020');
 
 
 
@@ -319,24 +318,36 @@ if( !class_exists('ALMNEXTPAGE') ):
    	 * @since 1.0
    	 */
    	public static function alm_init_nextpage($post_id = null, $page, $is_paged, $paging, $div_id, $id){
+      	$the_content = '';
       	
-      	if($post_id){         	
-            $post_content = get_post($post_id);
-            $content = $post_content->post_content;		
-            		
-				// Get the content
-				$content = self::alm_nextpage_content($content, $id); 
-            
-            // Get total page count
-            $length = count($content);
-            
+      	if($post_id){
+	      	
+            $the_post = get_post($post_id);
+            $content = $the_post->post_content;				
+				$content = self::alm_nextpage_content($content, $id); // Get the content           
+            $length = count($content); // Get total page count            
             $page = $page - 1;
-            $the_content = '';		
+            $current = $page;
             
-            if(!$is_paged){ // Not paged, only return first page    
-	                                   
-               $current = 1;
-	            $permalink = get_permalink($post_id);
+            
+            // Has user disabled loading previous pages
+            if(has_filter('alm_nextpage_paged')){
+	            $nextpage_is_paged = apply_filters('alm_nextpage_paged', false);
+	            if(!$nextpage_is_paged){
+		            $current = $current + 1;
+	            }
+            }           
+            		
+            
+            if(!$is_paged){ 
+	            
+	            // Not paged, return only a single page 	                               
+	            $base_url = get_permalink($post_id);
+	            if($current > 1){
+	           		$permalink = $base_url . ALMNEXTPAGE::get_leading_slash() . ($current) . ALMNEXTPAGE::get_trailing_slash();
+		         } else {
+		            $permalink = $base_url;
+	           	}
 	            
                $the_content .= apply_filters('alm_nextpage_wrap_start', $post_id, $permalink, $current, $length, true);
                
@@ -366,9 +377,13 @@ if( !class_exists('ALMNEXTPAGE') ):
 					
                $the_content .= apply_filters('alm_nextpage_wrap_end', '</div>');
                
-            } else { // Split pages up into individual content blocks              
+            } else { 
+	            
+	            // Split pages up into individual content blocks              
                
-               if($paging === 'true'){ // Paging Add-on
+               if($paging === 'true'){ 
+	               
+	               // Paging Add-on
                   
 	               $permalink = get_permalink($post_id);
 	               $the_content .= apply_filters('alm_nextpage_wrap_start', $post_id, $permalink, $page, $length, true);
@@ -401,7 +416,9 @@ if( !class_exists('ALMNEXTPAGE') ):
 						
                   $the_content .= apply_filters('alm_nextpage_wrap_end', '');
 	               
-               } else { // Standard
+               } else { 
+	               
+	               // Standard
                
 	               for($i = 0; $i <= $page; $i++){ // Loop pages and build return
 	                  
@@ -493,7 +510,7 @@ if( !class_exists('ALMNEXTPAGE') ):
    	 */   	
    	
    	public function alm_nextpage_wrap_start($post_id, $url, $page, $total, $init = false){ 
-
+	   	
       	$totalpages = ($page == 1) ? ' data-total-posts="'. $total .'"' : '';       	
       	
       	if($init){ 
@@ -502,11 +519,10 @@ if( !class_exists('ALMNEXTPAGE') ):
 			} else {
    			$querysrting = ALMNEXTPAGE::alm_nextpage_get_querystring();      		
             $url =  ($querysrting) ? $url .'?'. $querysrting : $url;
-			}
+			}			
 			
-			
-      	return '<div class="alm-nextpage post-'. $post_id .'" data-url="'. $url .'" data-id="'. $page .'"'. $totalpages .'>';;
-   	
+      	return '<div class="alm-nextpage post-'. $post_id .'" data-url="'. $url .'" data-id="'. $page .'"'. $totalpages .'>';
+      	
    	}
    	
       

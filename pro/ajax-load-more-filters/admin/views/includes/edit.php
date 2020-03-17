@@ -570,9 +570,180 @@
 			</div>
 			<!-- End Datepicker -->	
 			
+			<!-- Range Slider -->
+			<div class="related-filters--wrap" v-show="filter.field_type === 'range_slider'" id="rangeslider">
+				<div class="alm-filter--row_instructions">
+   				<div class="alm-instructions alm-instructions--intro">
+   				   <p><?php _e('The <strong>Range Slider</strong> field type uses the <a href="https://refreshless.com/nouislider/" target="_blank">noUiSlider</a> library to display a draggable range selector.', 'ajax-load-more-filters'); ?></p>
+   				   <p><?php _e('Range Sliders are most commonly used when querying for custom field values such as product price (WooCommerce) or width/height measurements.', 'ajax-load-more-filters'); ?></p>
+   				</div>
+				</div>
+				
+				<div class="alm-filters-inline-desc">
+				   <h3><?php _e('Range Slider Config', 'ajax-load-more-filters'); ?></h3>				   
+				   <p><?php _e('Set the min/max value and other noUiSlider configuration options.', 'ajax-load-more-filters'); ?></p>
+				</div>
+				
+				<!-- Range Min -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-start">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Min Value', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('Set the minimum value of the slider.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="number" placeholder="0" id="filter-rangeslider-min" data-id="rangeslider_min" :data-index="index" :value="filter.rangeslider_min" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+   			<!-- Range Max -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-end">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Max Value', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('Set the maximum value of the slider.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="number" placeholder="100" id="filter-rangeslider-max" data-id="rangeslider_max" :data-index="index" :value="filter.rangeslider_max" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+   			<!-- Range Steps -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-end">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Steps', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('Make the slide handles jump between intervals on drag - default is 1.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="number" placeholder="1" id="filter-rangeslider-steps" data-id="rangeslider_steps" :data-index="index" :value="filter.rangeslider_steps" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+   			<hr/>
+   			<!-- Range Label -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-label">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Display Label', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('The label renders the current start & end values of the slider to the user. The {start} template parameter displays the low value, and {end} displays the high value.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="text" placeholder="${start} - ${end}" id="filter-rangeslider-label" data-id="rangeslider_label" :data-index="index" :value="filter.rangeslider_label" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+   			<!-- Range Orientation -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-orientation">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Orientation', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('Vertical sliders default to 200px in height. You can adjust this using custom CSS.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<div class="select-wrapper">
+	   	      			<select 
+		   	      			id="filter-rangeslider-orientation" 
+			   	      		class="alm-filter-select" 
+					   	      data-id="rangeslider_orientation" 
+				   	      	:data-index="index" 
+						   	   v-on:change="filterChange($event)"
+									>						 	   
+	   		      			<option value="horizontal" :selected="isActive('horizontal', filter.rangeslider_orientation, 'horizontal')"><?php _e('Horizontal', 'ajax-load-more-filters'); ?> &nbsp; ↔</option>
+	   		      			<option value="vertical" :selected="isActive('vertical', filter.rangeslider_orientation, 'horizontal')"><?php _e('Vertical', 'ajax-load-more-filters'); ?> &nbsp; ↕</option>	
+	   	      			</select>
+   	      			</div>
+	      			</div>
+	      		</label>
+   			</div>
+   			<!-- Range Decimal -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-orientation">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Show Decimals', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('Render decimals in the range slider display.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<div class="select-wrapper">
+	   	      			<select 
+		   	      			id="filter-rangeslider-decimals" 
+			   	      		class="alm-filter-select" 
+					   	      data-id="rangeslider_decimals" 
+				   	      	:data-index="index" 
+						   	   v-on:change="filterChange($event)"
+									>						 	   
+	   		      			<option value="true" :selected="isActive('true', filter.rangeslider_decimals, 'true')"><?php _e('True', 'ajax-load-more-filters'); ?></option>
+	   		      			<option value="false" :selected="isActive('false', filter.rangeslider_decimals, 'false')"><?php _e('False', 'ajax-load-more-filters'); ?></option>	
+	   	      			</select>
+   	      			</div>
+	      			</div>
+	      		</label>
+   			</div>
+   			<div class="alm-filters-inline-desc">
+				   <h3><?php _e('Range Slider Defaults', 'ajax-load-more-filters'); ?></h3>				   
+				   <p><?php _e('Set the default start and end position of the drag handles.', 'ajax-load-more-filters'); ?></p>
+				</div>
+   			<!-- Range Start -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-start">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('Start Value', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('If no value is set, handle will start at the Min value.', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="number" placeholder="10" id="filter-rangeslider-start" data-id="rangeslider_start" :data-index="index" :value="filter.rangeslider_start" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+   			<!-- Range End -->
+				<div class="alm-filter--row not-required" id="row-rangeslider-end">
+      			<label>
+	      			<div class="label">
+   	      			<?php _e('End Value', 'ajax-load-more-filters'); ?>
+   	      			<a 
+         	      		title="<?php _e('If no value is set, handle will start at the Max value', 'ajax-load-more-filters'); ?>"
+         	      		href="javascript:void(0)" 
+      	   	      	class="fa fa-question-circle tooltip" tabindex="-1" 
+      		   	   ></a>
+   	      		</div>
+	      			<div class="item">
+   	      			<input type="number" placeholder="175" id="filter-rangeslider-end" data-id="rangeslider_end" :data-index="index" :value="filter.rangeslider_end" v-on:keyup="filterChange($event)">
+	      			</div>
+	      		</label>
+   			</div>
+			</div>
+			<!-- End Range Slider -->			
 			
 			<!-- Custom Values -->
-			<div class="alm-filter--row not-required" id="row-values" v-show="filter.key !== 'search' && filter.field_type !== 'text' && filter.field_type !== 'date_picker'">
+			<div class="alm-filter--row not-required" id="row-values" v-show="filter.key !== 'search' && filter.field_type !== 'text' && filter.field_type !== 'range_slider' && filter.field_type !== 'date_picker'">
 				<div class="fake-label">
 	   			<div class="label">
 		   			<?php _e('Custom Values', 'ajax-load-more-filters'); ?>
@@ -675,7 +846,7 @@
 			
 			
 			<!-- Default Value --> 
-			<div class="alm-filter--row not-required" id="row-default-value">
+			<div class="alm-filter--row not-required" id="row-default-value" v-show="filter.field_type !== 'range_slider'">
 				<label>
 					<div class="label">
 		   			<?php _e('Default Value', 'ajax-load-more-filters'); ?>

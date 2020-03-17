@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 5.3.1
+Tested up to: 5.3.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.2
+Version: 1.4.3
 
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2020 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -48,6 +48,17 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 
 
 == Changelog ==
+
+= 1.4.3 - March 2, 2020 =
+* NEW - Added `alm_nextpage_paged` filter hook that allows users to stop the loading of previous pages when hitting a paged URL.
+```
+// website.com/about/4/
+add_filter('alm_nextpage_paged', function(){
+	return false;
+});
+```
+* FIX - Fixed issue with paged URLs if an incorrect value was entered in `nextpage-scroll` shortcode parameter.
+
 
 = 1.4.2 - December 17, 2019 =
 FIX - Fixed issue with custom ACF Blocks for Gutenberg not displaying in Ajax requests.

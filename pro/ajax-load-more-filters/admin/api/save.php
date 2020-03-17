@@ -200,6 +200,51 @@ function save_filter( WP_REST_Request $request ) {
 	   			unset($array['datepicker_locale']);
 	   		}
 	   		
+	   		
+	   		// Range Slider	
+	   		
+	   			   		     
+	   		// Min
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_min']) && $array['rangeslider_min'] === ''){
+	   			unset($array['rangeslider_min']);
+	   		}	   		
+	   		
+	   		// Max
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_max']) && $array['rangeslider_max'] === ''){
+	   			unset($array['rangeslider_max']);
+	   		}	   		
+	   		
+	   		// Start
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_start']) && $array['rangeslider_start'] === ''){
+	   			unset($array['rangeslider_start']);
+	   		}	   		
+	   		
+	   		// End
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_end']) && $array['rangeslider_end'] === ''){
+	   			unset($array['rangeslider_end']);
+	   		}	   		
+	   		
+	   		// Steps
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_steps']) && $array['rangeslider_steps'] === ''){
+	   			unset($array['rangeslider_steps']);
+	   		}	   		
+	   		
+	   		// Steps
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_label']) && $array['rangeslider_label'] === ''){
+	   			unset($array['rangeslider_label']);
+	   		}	   		
+	   		
+	   		// Orientation
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_orientation']) && $array['rangeslider_orientation'] === ''){
+	   			unset($array['rangeslider_orientation']);
+	   		}	   		
+	   		
+	   		// Decimals
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_decimals']) && $array['rangeslider_decimals'] === ''){
+	   			unset($array['rangeslider_decimals']);
+	   		}
+	   		
+	   		
 
 	   		unset($array['order']);
 	   		unset($array['uniqueid']);

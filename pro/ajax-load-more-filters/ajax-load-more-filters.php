@@ -6,17 +6,16 @@ Description: Ajax Load More add-on to build and manage Ajax filters.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.8.3
+Version: 1.9.0
 License: GPL
 Copyright: Darren Cooney & Connekt Media
-
 */
 
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_FILTERS_VERSION', '1.8.3');
-define('ALM_FILTERS_RELEASE', 'December 17, 2019');
+define('ALM_FILTERS_VERSION', '1.9.0');
+define('ALM_FILTERS_RELEASE', 'March 2, 2020');
 define('ALM_FILTERS_PATH', plugin_dir_path(__FILE__));
 define('ALM_FILTERS_URL', plugins_url('', __FILE__));
 define('ALM_FILTERS_ADMIN_URL', plugins_url('admin/', __FILE__));
@@ -485,7 +484,7 @@ if( !class_exists('ALMFilters') ):
 			// Set up variables
 			$output = '';
 			$filterCount = 0;
-			$has_datepicker = false;
+			$has_datepicker = $has_rangeslider = false;
 			$container_element = 'div';
 
 			if($filters['filters']){
@@ -503,8 +502,8 @@ if( !class_exists('ALMFilters') ):
 					$filters_color = ' filters-'.$options['_alm_filters_color'];
 				}
 
-				$output .= '<'.$container_element.' class="alm-filters alm-filters-container'. $filters_color .'" id="alm-filters-'. $options_obj['id'] .'" data-target="'. $options_obj['target'] .'" data-style="'. $options_obj['style'] .'" data-id="'. $options_obj['id'] .'">';
-
+				$output .= '<'.$container_element.' class="alm-filters alm-filters-container'. $filters_color .'" id="alm-filters-'. $options_obj['id'] .'" data-target="'. $options_obj['target'] .'" data-style="'. $options_obj['style'] .'" data-id="'. $options_obj['id'] .'">';                    
+            
 					foreach($filters['filters'] as $f){
 
 						$filterCount++;
@@ -529,6 +528,14 @@ if( !class_exists('ALMFilters') ):
 			            'datepicker_mode' => (isset($f['datepicker_mode'])) ? esc_attr($f['datepicker_mode']) : '',
 			            'datepicker_format' => (isset($f['datepicker_format'])) ? esc_attr($f['datepicker_format']) : '',
 			            'datepicker_locale' => (isset($f['datepicker_locale'])) ? esc_attr($f['datepicker_locale']) : '',
+			            'rangeslider_min' => (isset($f['rangeslider_min'])) ? esc_attr($f['rangeslider_min']) : '',
+			            'rangeslider_max' => (isset($f['rangeslider_max'])) ? esc_attr($f['rangeslider_max']) : '',
+			            'rangeslider_start' => (isset($f['rangeslider_start'])) ? esc_attr($f['rangeslider_start']) : '',
+			            'rangeslider_end' => (isset($f['rangeslider_end'])) ? esc_attr($f['rangeslider_end']) : '',
+			            'rangeslider_steps' => (isset($f['rangeslider_steps'])) ? esc_attr($f['rangeslider_steps']) : '',
+			            'rangeslider_label' => (isset($f['rangeslider_label'])) ? esc_attr($f['rangeslider_label']) : '',
+			            'rangeslider_orientation' => (isset($f['rangeslider_orientation'])) ? esc_attr($f['rangeslider_orientation']) : '',
+			            'rangeslider_decimals' => (isset($f['rangeslider_decimals'])) ? esc_attr($f['rangeslider_decimals']) : '',
 			            'checkbox_toggle' => (isset($f['checkbox_toggle'])) ? esc_attr($f['checkbox_toggle']) : '',
 			            'checkbox_toggle_label' => (isset($f['checkbox_toggle_label'])) ? esc_attr($f['checkbox_toggle_label']) : apply_filters('alm_filters_toggle_label', __('Select All', 'ajax-load-more-filters')),
 				         'count' => $filterCount,
@@ -646,19 +653,25 @@ if( !class_exists('ALMFilters') ):
 			         	$values = apply_filters('alm_filters_'. $options_obj['id'] .'_'. self::alm_filters_revert_underscore($key), $obj['values']);
 
 			         	// Pass Custom Values to function
-			         	$output .= self::alm_filters_list_custom_values($values, $obj, $queryString);
+			         	$output .= self::alm_filters_list_custom_values($options_obj['id'], $values, $obj, $queryString);
 
 		         	} else {
 
-			         	if($obj['field_type'] === 'text' || $obj['field_type'] === 'date_picker'){
+			         	if($obj['field_type'] === 'text' || $obj['field_type'] === 'date_picker' || $obj['field_type'] === 'range_slider'){
 
-								$output .= self::alm_filters_display_textfield($obj, $queryString);
+								$output .= self::alm_filters_display_textfield($options_obj['id'], $obj, $queryString);
 								
 								if($obj['field_type'] === 'date_picker'){
 									$has_datepicker = true;
 								}
+								
+								if($obj['field_type'] === 'range_slider'){
+									$has_rangeslider = true;
+								}
 
-							} else {
+							} 
+													
+							else {
 
                         /*
                          * Value filter hook
@@ -666,7 +679,7 @@ if( !class_exists('ALMFilters') ):
                         if(has_filter('alm_filters_'. $options_obj['id'] .'_'. $key)){
 
                            $values = apply_filters('alm_filters_'. $options_obj['id'] .'_'. self::alm_filters_revert_underscore($key), '');
-                           $output .= self::alm_filters_list_custom_values($values, $obj, $queryString);
+                           $output .= self::alm_filters_list_custom_values($options_obj['id'], $values, $obj, $queryString);
 
                         } else {
 
@@ -712,6 +725,12 @@ if( !class_exists('ALMFilters') ):
 	         if($has_datepicker){
 		         $datepicker_style = (isset($options['_alm_filters_flatpickr_theme'])) ? $options['_alm_filters_flatpickr_theme'] : 'default';
 		         wp_enqueue_style( 'alm-flatpickr-'. $datepicker_style);
+	         }
+	         
+	         // Enqueue Range Slider CSS
+	         if($has_rangeslider){
+		         $rangeslider_style = (isset($options['_alm_filters_flatpickr_theme'])) ? $options['_alm_filters_flatpickr_theme'] : 'default';
+		         wp_enqueue_style( 'alm-nouislider', ALM_FILTERS_URL. '/vendor/nouislider/nouislider.min.css', '', ALM_FILTERS_VERSION);
 	         }
 
 
@@ -806,8 +825,17 @@ if( !class_exists('ALMFilters') ):
 
 
 
-   	// Render custom values
-   	public static function alm_filters_list_custom_values($custom_values, $obj, $queryString){
+   	/**
+		 * alm_filters_list_custom_values
+		 * Render custom values (cat, tag, custom tax)
+		 *
+		 * @param {*} $id
+		 * @param {*} $obj
+		 * @param {*} $queryString
+		 * @param {*} $id
+		 * @since 1.0
+		 */
+   	public static function alm_filters_list_custom_values($id, $custom_values, $obj, $queryString){
 
 	   	if($obj['field_type'] === 'text') return false; // Exit if is textfield field_type
 
@@ -870,7 +898,7 @@ if( !class_exists('ALMFilters') ):
 						}
                   $parent = ($nested) ? ' - ' : '';
 						if($items_count === 1 && $obj['label']){
-							$return .= '<option value="#"'. $selected .'>'. $obj['label'] .'</option>';
+							$return .= '<option value="#"'. $selected .'>'. alm_filters_display_label($id, $obj) .'</option>';
 						}
 						$return .= '<option id="'. $obj['field_type'] .'-'. $slug .'"'. $fieldname .' value="'. $slug .'"'. $selected .'>';
 							$return .= $parent . $name;
@@ -911,6 +939,7 @@ if( !class_exists('ALMFilters') ):
 		 * alm_filters_list_terms
 		 * Render taxonomy terms (cat, tag, custom tax)
 		 *
+		 * @param {*} $id
 		 * @param {*} $obj
 		 * @param {*} $queryString
 		 * @param {*} $id
@@ -1148,7 +1177,7 @@ if( !class_exists('ALMFilters') ):
 
 
    	// Render textfield
-   	public static function alm_filters_display_textfield($obj, $queryString){
+   	public static function alm_filters_display_textfield($id, $obj, $queryString){
 	   	
 	   	$text_id = $obj['key'] .'-'. $obj['field_type'];
 	   	$output = '';
@@ -1164,17 +1193,60 @@ if( !class_exists('ALMFilters') ):
 			}			
 			
 			$placeholder = (isset($obj['placeholder'])) ? 'placeholder="'. $obj['placeholder'] .'"' : '';
-			$has_button = (!empty($obj['button_label'])) ? true : false;
-			$field_class = ($has_button) ? ' has-button' : '';			
 			$datepicker = ($obj['field_type'] === 'date_picker') ? true : false;
+			$rangeslider = ($obj['field_type'] === 'range_slider') ? true : false;
+			$has_button = (!empty($obj['button_label'])) ? true : false;
+			$has_button = ($rangeslider) ? false : $has_button; // set false if range slider
+			$field_class = ($has_button) ? ' has-button' : '';	
+			$display_style = "";
 
 	   	$output .= '<div class="alm-filter--'. $obj['field_type'] .'">';
+				
 				if($obj['label']){
-					$output .= '<label for="'. $text_id .'">'. $obj['label'] .'</label>';
+					$output .= '<label for="'. $text_id .'">'. alm_filters_display_label($id, $obj) .'</label>';
 				}
-				$output .= '<div class="alm-filter--text-wrap'. $field_class .'">';
+				
+				if($rangeslider){ // Range Slider		
+   				
+   				$range_min = (isset($obj['rangeslider_min'])) ? $obj['rangeslider_min'] : 0;
+   				$range_max = (isset($obj['rangeslider_max'])) ? $obj['rangeslider_max'] : 100;
+   				
+   				$range_start = (isset($obj['rangeslider_start'])) ? $obj['rangeslider_start'] : $range_min;
+   				$range_end = (isset($obj['rangeslider_end'])) ? $obj['rangeslider_end'] : $range_max;   				
+   				
+   				$rangeslider_label = (isset($obj['rangeslider_label'])) ? $obj['rangeslider_label'] : '{start} - {end}';
+   				$rangeslider_steps = (isset($obj['rangeslider_steps'])) ? $obj['rangeslider_steps'] : 1;
+   				$rangeslider_orientation = (isset($obj['rangeslider_orientation'])) ? $obj['rangeslider_orientation'] : 'horizontal';
+   				$rangeslider_decimals = (isset($obj['rangeslider_decimals'])) ? $obj['rangeslider_decimals'] : 'true';
+   				
+   				//$selected_value = explode(',', $obj['selected_value']); // parse selected_value into array
+   				
+   				// Parse selected value
+         		$values = (!empty($selected)) ? explode(',', $selected) : '';
+					if(!empty($values)){
+						$range_start = $values[0];
+						$range_end = isset($values[1]) ? $values[1] : $range_max;
+					}
+					
+					$output .= '<div class="alm-range-slider" 
+						data-min="'. $range_min .'" 
+						data-max="'. $range_max .'" 
+						data-start="'. $range_start .'" 
+						data-end="'. $range_end .'"
+						data-label="'. $rangeslider_label .'"
+						data-steps="'. $rangeslider_steps .'"
+						data-orientation="'. $rangeslider_orientation .'"
+						data-decimals="'. $rangeslider_decimals .'"
+						>'; 
+						$output .= '<div class="alm-range-slider--target"></div>';
+						$output .= '<div class="alm-range-slider--label"></div>';
+					$output .= '</div>';
+					$display_style = ' style="display: none;"';
+				}
+				
+				$output .= '<div class="alm-filter--text-wrap'. $field_class .'"'.$display_style.'>';
 				   
-				   if($datepicker){// Datepicker   	
+				   if($datepicker){ // Date Picker   	
 					   			   
    				   $datepicker_mode = (isset($obj['datepicker_mode'])) ? $obj['datepicker_mode'] : 'single';
          			$datepicker_mode_return = (isset($obj['datepicker_mode'])) ? ' data-display-mode="'. $datepicker_mode .'"' : ' data-display-mode="single"';
@@ -1186,7 +1258,9 @@ if( !class_exists('ALMFilters') ):
          			
 					   $output .= '<input class="alm-filter--textfield textfield alm-flatpickr" id="'. $text_id .'" name="'. $text_id .'" type="text" value="'. urldecode($selected) .'" '. $placeholder .''. $datepicker_format .''. $datepicker_mode_return .''. $datepicker_locale .' />';
 					   
-				   } else { // Standard
+				   }
+				   
+				   else { // Standard
 				   	$output .= '<input class="alm-filter--textfield textfield" id="'. $text_id .'" name="'. $text_id .'" type="text" value="'. urldecode($selected) .'" '. $placeholder .' />';
 				   	
 				   }
@@ -1194,6 +1268,7 @@ if( !class_exists('ALMFilters') ):
 				   $output .= ($has_button) ? '<button type="button">'. $obj['button_label'] .'</button>' : '';
 
 				$output .= '</div>';
+				
 			$output .= '</div>';
 
 			return $output;

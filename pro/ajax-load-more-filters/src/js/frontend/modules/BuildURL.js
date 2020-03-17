@@ -28,7 +28,7 @@ let buildURL = (filter, currentURL) => {
 	title = (currentURL === '') ? `?${title}` : `&${title}`;	
 	
 	// Get preselected value
-	let preselected = filter.dataset.selectedValue;
+	let preselected = filter.dataset.selectedValue;	
 	
 	switch (fieldtype){  	
 		
@@ -61,6 +61,7 @@ let buildURL = (filter, currentURL) => {
 			break;
 		
 		case 'text' : 
+		case 'range_slider' : 
 			let textfield = filter.querySelector('input[type=text]');
 			url += (textfield.value === '') ? '' : `${title}=${textfield.value}`;
 			

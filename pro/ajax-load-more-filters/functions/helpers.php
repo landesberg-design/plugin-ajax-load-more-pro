@@ -1,6 +1,33 @@
 <?php
    
 /**
+ * alm_filters_display_label
+ * Render filter label.
+ *
+ * @param $id string
+ * @param $obj array
+ * @since 1.8.4
+ */
+function alm_filters_display_label($id = '', $obj = ''){
+   
+   if( empty($id) || empty($obj) || !isset($obj['label']) ){
+      return false; // Exit if empty   
+   }
+      
+   $filter_key = alm_filters_get_filter_key($obj);
+   $value = $obj['label']; 
+   
+   if( empty($value) && !has_filter('alm_filters_'. $id . '_' . $filter_key .'_label') ){
+      return false; // Exit if title is empty && filter doesn't exist
+   }
+   
+   $output = apply_filters('alm_filters_'. $id . '_' . $filter_key .'_label', $value);   
+      
+   return $output;
+
+}
+   
+/**
  * alm_filters_display_title
  * Render filter title.
  *
