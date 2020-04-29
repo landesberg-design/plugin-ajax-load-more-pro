@@ -6,9 +6,8 @@ Description: Ajax Load More extension that adds predefined layouts for your repe
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: http://connekthq.com
-Version: 1.2.2
+Version: 1.3.1
 Copyright: Darren Cooney & Connekt Media
-
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-define('ALM_LAYOUTS_VERSION', '1.2.2');
-define('ALM_LAYOUTS_RELEASE', 'May 6, 2019');
+define('ALM_LAYOUTS_VERSION', '1.3.1');
+define('ALM_LAYOUTS_RELEASE', 'April 22, 2020');
+define('ALM_LAYOUTS_PATH', plugin_dir_path(__FILE__)); 
+define('ALM_LAYOUTS_URL', plugins_url('', __FILE__));	 
 
 
 /*
@@ -41,9 +42,7 @@ register_activation_hook( __FILE__, 'alm_layouts_install' );
 
 if( !class_exists('alm_layouts') ):
    class alm_layouts{	      
-   	function __construct(){		   	
-   		define('ALM_LAYOUTS_PATH', plugin_dir_path(__FILE__)); 
-			define('ALM_LAYOUTS_URL', plugins_url('', __FILE__));	   	
+   	function __construct(){		   	  	
    		add_action( 'after_setup_theme', array(&$this, 'alm_layouts_image_sizes' ));
    		add_action( 'alm_layouts_installed', array(&$this, 'alm_layouts_installed') );
    		add_action( 'alm_layouts_settings', array(&$this, 'alm_layouts_settings' ));	
@@ -125,16 +124,12 @@ if( !class_exists('alm_layouts') ):
 	   	 		  	
    		// Enqueue CSS
    		if(!alm_do_inline_css('_alm_inline_css')){ // Not inline
-      		
-      		//$file = ALM_LAYOUTS_URL.'/core/css/ajax-load-more-layouts.css';
-         	$file = ALM_LAYOUTS_URL.'/core/css/ajax-load-more-layouts.min.css'; 
-         	
+	   		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
+         	$file = ALM_LAYOUTS_URL.'/core/css/ajax-load-more-layouts'. $suffix .'.css';          	
          	if(class_exists('ALM_ENQUEUE')){
             	ALM_ENQUEUE::alm_enqueue_css('ajax-load-more-layouts', $file);
          	}
-         	
    		}	
-          
    	}  
    	
    	
@@ -261,6 +256,13 @@ if( !class_exists('alm_layouts') ):
 	// Is last item in 3 column layout
 	function alm_is_last($number){
 		if ($number % 3 == 0) {
+		  echo "last";
+		}
+	}  
+	
+	// Is last item in 4 column layout
+	function alm_is_4col_last($number){
+		if ($number % 4 == 0) {
 		  echo "last";
 		}
 	} 

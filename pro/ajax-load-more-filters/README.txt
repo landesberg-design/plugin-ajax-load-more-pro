@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 5.3.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.9.0
+Version: 1.9.1
 
 
 == Copyright ==
@@ -47,6 +47,18 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 1.9.1 - March 18, 2020 =
+
+## UPGRADE NOTICE
+This version of Filters updates the markup of Radio and Checkbox filed types. 
+For accessibility purposes, the `<a href="#"/>` has been replaced with clickable `<div/>` elements. 
+
+Users who are using custom CSS to style these elements may need to update their markup for these elements.
+
+* UPDATE - Improved Radio and Checkbox accessibility by adding aria role, checked and labelledby attributes.
+* FIX - Fixed issue with filter loading animation not working as intended.
+
 
 = 1.9.0 - March 2, 2020 =
 * NEW - Added Range Slider field type using [noUiSlider](https://refreshless.com/nouislider/). This field type is considered to be in beta but is fully functional for querying by custom field ranges using the `BETWEEN` compare operator.

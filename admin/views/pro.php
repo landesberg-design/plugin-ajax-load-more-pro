@@ -28,6 +28,15 @@
                <?php echo $total; ?> <?php _e('Add-ons Available', 'ajax-load-more-pro'); ?>
                <div><span class="num"></span> <?php _e('of', 'ajax-load-more-pro'); ?> <?php echo $total; ?> <?php _e('activated', 'ajax-load-more-pro'); ?></div>
             </section>
+            
+            <style>
+	            a.not-installed{
+		            
+	            }
+	            .alm-pro-listing .item--detail p:before{
+		            display: none;
+	            }
+	         </style>
 	           
 	   		<div class="alm-pro-listing">  
    	   		<div class="loader"></div>  
@@ -47,19 +56,35 @@
    	         		$img = $addon['img'];
    	         		$slug = $addon['slug'];	
    	         		$option_name = ALM_PRO_OPTION_PREFIX . $slug;
-   	         		$option_value = (get_option($option_name)) ? get_option($option_name) : update_option($option_name, 'inactive');   	         		
+   	         		$option_value = (get_option($option_name)) ? get_option($option_name) : update_option($option_name, 'inactive');   	
+   	         		$plugin_path = ALM_PRO_ADMIN_PATH . 'pro/ajax-load-more-'. $slug .'/ajax-load-more-'. $slug . '.php';          		
    	         		$i++;
+   	         		
+   	         		$installed = true;
+   	         		$installed_class = 'installed';
+   	         		if(!file_exists($plugin_path)){
+	   	         		$installed = false;
+	   	         		$installed_class = 'not-installed';
+	   	         	}
+
    	      		?>   	      		
    	      		<section class="item <?php echo get_option($option_name); if($is_odd && $i == $total) echo ' last';  if(!$is_odd && $i >= ($total - 1)) echo ' last-row';?>" data-status="<?php echo $option_value; ?>" data-slug="<?php echo $slug; ?>">
-   		      		<a href="#">     
+   		      		<a href="<?php echo $url; ?>" class="<?php echo $installed_class; ?>" title="<?php if(!$installed) { _e( 'Add-on not installed', 'ajax-load-more-pro');} ?>"> 
+	   		      		<?php if($installed) { ?>	    
    			      		<div class="state"><span class="offscreen"><?php _e('Toggle activation', 'ajax-load-more-pro'); ?></span></div>
+   			      		<?php } ?>
    		               <div class="item--detail">
    		                  <img src="<?php echo ALM_ADMIN_URL; ?><?php echo $img; ?>" alt="">   		                  
    		                  <div>
-   		                     <h2><?php echo $name; ?> <span><?php if(defined($version)) {echo constant($version);} ?></span></h2>
+   		                     <h2>
+	   		                     <?php echo $name; ?>
+	   		                     <span><?php if(defined($version)) {echo constant($version);} ?></span>
+	   		                  </h2>
                               <p><?php echo $desc; ?></p>
+                              <?php if(!$installed) { echo '<p style="padding-top: 15px; font-size: 12px;">'. __( 'Add-on not installed!', 'ajax-load-more-pro') .'</p>'; } ?>
    		                  </div>
-   		               </div>		
+   		               </div>	
+   		               <?php if($installed) { ?>	
    		               <div class="result">
       		               <span class="type active">
       		                  <?php _e('Activated', 'ajax-load-more-pro'); ?>
@@ -67,14 +92,15 @@
       		               <span class="type inactive">
       		                  <?php _e('Deactivated', 'ajax-load-more-pro'); ?>
       		               </span>
-   		               </div>            
+   		               </div>    
+   		               <?php } ?>        
    		   		   </a>    
    	      		</section>		   		
    	      		<?php } unset($addons); ?>		
    	   		</div>			
 				</div>	
 				
-				<div class="call-out light no-shadow" style="width: 100%;">
+				<div class="call-out light no-shadow" style="width: 100%; margin-bottom: 20px;">
       		   <p><?php _e('New <a href="https://connekthq.com/plugins/ajax-load-more/add-ons/" target="_blank"><strong>add-ons</strong></a> will be deactivated by default and must be activated before being used', 'ajax-load-more'); ?>.</p>
          	</div>      		
    

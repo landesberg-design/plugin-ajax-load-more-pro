@@ -20,6 +20,7 @@ export function setDefaults(container){
    let default_item = container.querySelector('.alm-filter--link[data-selected="true"]');
    if(default_item){
 	   default_item.classList.add('active');
+	   default_item.setAttribute('aria-checked', true);
    }
 	
 }
@@ -46,20 +47,34 @@ export function restoreDefault(filter){
          [...radios].forEach((radio) => {
       		if(radio.dataset.value === selected_value){
                radio.classList.add('active');
+               radio.setAttribute('aria-checked', true);
       		} else {
          		radio.classList.remove('active');
+         		radio.setAttribute('aria-checked', false);
       		}
          });
          
       break;
+      
+      case 'checkbox':
+      
+      	let checkboxes = filter.querySelectorAll('.alm-filter--link');
+         [...checkboxes].forEach((checkbox) => {
+         	checkbox.classList.remove('active');
+         	checkbox.setAttribute('aria-checked', false);
+         });
+      
+      break;
          	
    	case 'select':
+	   		   	   
+   	   let select = filter.querySelector('select');   	   
+   	   if(!select){
+				break; // exit if empty
+			}
    	
    		// If (pre)selected value is null, set value to #
 	   	selected_value = (selected_value == null || selected_value === '') ? '#' : selected_value;
-	   		   	   
-   	   let select = filter.querySelector('select');
-   	   let value = '';
    	   
    	   [...select.options].forEach((item, index) => {
       	   if(item.value === selected_value){
@@ -70,12 +85,14 @@ export function restoreDefault(filter){
       break;
          	
    	case 'select_multiple':
+	   		   	   
+   	   let select_multiple = filter.querySelector('select');   	   
+   	   if(!select_multiple){
+				break; // exit if empty
+			}			
    	
    		// If (pre)selected value is null, set value to #
 	   	selected_value = (selected_value == null || selected_value === '') ? '#' : selected_value;
-	   		   	   
-   	   let select_multiple = filter.querySelector('select');
-   	   let value_multiple = '';
    	   
    	   [...select_multiple.options].forEach((item, index) => {
       	   if(item.value === selected_value){
@@ -87,18 +104,13 @@ export function restoreDefault(filter){
       
       break;
       
-      case 'checkbox':
-      
-      	let checkboxes = filter.querySelectorAll('.alm-filter--link');
-         [...checkboxes].forEach((checkbox) => {
-         	checkbox.classList.remove('active');
-         });
-      
-      break;
-      
       default: // textfield
       	
       	let input = filter.querySelector('input');
+      	if(!input){
+				break; // exit if empty
+			}
+			
       	input.value = '';
       
       break;
@@ -127,5 +139,3 @@ export function getDefault(filter){
 	
 	return returnVal;	
 }
-
-

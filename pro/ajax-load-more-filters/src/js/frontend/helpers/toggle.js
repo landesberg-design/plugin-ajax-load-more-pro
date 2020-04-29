@@ -26,8 +26,10 @@ export function toggleAll(fieldtype, items = '', parent){
          } 
          if(allChecked){
             allElement.classList.add('active');
+            allElement.setAttribute('aria-checked', true);
          } else {
-            allElement.classList.remove('active');                  
+            allElement.classList.remove('active');
+            allElement.setAttribute('aria-checked', false);              
          }
       }
    }

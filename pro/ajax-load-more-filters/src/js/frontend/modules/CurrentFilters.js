@@ -89,7 +89,7 @@ function buildSelections(obj) {
 				let value = getKeyValue(key , values[n]); // Get text of the filter, not the slug
 				if(value){ // Confirm value exits
 					items += '<li>';
-						items += '<a href="javascript:void(0);" onClick="window.removeSelectedFilter(this);" data-key="' + key + '" data-value="' +  values[n] + '">';
+						items += '<div onclick="window.removeSelectedFilter(this);" onkeyup="window.removeSelectedFilterEnter(event);" data-key="' + key + '" data-value="' +  values[n] + '" tabindex="0">';
 							items += value;
 						items += '</a>';
 					items += '</li>';

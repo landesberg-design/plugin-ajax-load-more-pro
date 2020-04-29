@@ -49,7 +49,7 @@ function alm_filters_display_title($id = '', $obj = ''){
       return false; // Exit if title is empty && filter doesn't exist
    }
    
-   $output = '<div class="alm-filter--title"><'. apply_filters('alm_filters_title_element', 'h3') .'>';
+   $output = '<div class="alm-filter--title"><'. apply_filters('alm_filters_title_element', 'h3') .' id="alm-filter-'. $filter_key .'-title' .'">';
       
       // WPML      
       //if(function_exists('icl_register_string')){

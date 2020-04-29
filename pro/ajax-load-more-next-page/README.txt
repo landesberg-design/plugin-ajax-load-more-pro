@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.3
+Version: 1.4.4
 
 
 == Copyright ==
@@ -48,6 +48,9 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 
 
 == Changelog ==
+
+= 1.4.4 - April 22, 2020 =
+* FIX - Fixed issue with [Results Text](https://connekthq.com/plugins/ajax-load-more/docs/results-text/) not working when using ALM `id` parameter.
 
 = 1.4.3 - March 2, 2020 =
 * NEW - Added `alm_nextpage_paged` filter hook that allows users to stop the loading of previous pages when hitting a paged URL.

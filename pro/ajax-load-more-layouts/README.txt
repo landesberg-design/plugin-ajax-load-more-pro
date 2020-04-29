@@ -5,15 +5,15 @@ Author: Darren Cooney
 Author URI: https://connekthq.com
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/layouts/
 Requires at least: 4.0
-Tested up to: 5.1.1
+Tested up to: 5.4
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 1.2.2
+Version: 1.3.0
 == Copyright ==
-Copyright 2019 Darren Cooney, Connekt Media
+Copyright 2020 Darren Cooney, Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
-This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
@@ -47,8 +47,19 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/
 
 == Changelog ==
 
-= 1.2.2 - February 8, 2018 =
-* FIX - Fixed issue if core Ajax Load More is deactivated the add-on will throw a fatal error becasue of undefined methods.
+= 1.3.1 - April 22, 2020 =
+* NEW - Added new 4 column grid for each layout.
+
+
+= 1.3.0 - March 18, 2020 =
+* NEW - Added new Blog Card #3 layout.
+* UPDATE - Updated various template styles.
+* UPDATE - Only load .min CSS file when `WP_DEBUG` is `true`.
+* UPDATE - Convert to webpack for quicker build iterations.
+
+
+= 1.2.2 - May 6, 2019 =
+* FIX - Fixed issue if core Ajax Load More is deactivated the add-on will throw a fatal error because of undefined methods.
 
 
 = 1.2.1 - February 8, 2018 =

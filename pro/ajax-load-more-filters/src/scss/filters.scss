@@ -10,7 +10,7 @@
 		padding: 0;
 		list-style: none;
 		background: none;
-		a{
+		div{
 			display: block;
 			padding: 5px 10px;
 			border-radius: 2px;
@@ -21,6 +21,8 @@
 			text-decoration: none;
 			line-height: 1.1;
 			transition: all $speed ease;
+			cursor: pointer;
+			outline: none;
 			&:before{
 				content: '\00d7';
 				display: inline-block;
@@ -38,6 +40,7 @@
 				background-color: #efefef;
 				border-color: #ccc;
 				color: $link_active;
+				box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.075);
 				&:before{
 					opacity: 1;
 				}
@@ -49,8 +52,8 @@
 
 // Blue 
 .alm-filters.filters-blue{
-	.alm-filter li a.active.field-checkbox:before, 
-	.alm-filter li a.active.field-radio:before{
+	.alm-filter li div.alm-filter--link.active.field-checkbox:before, 
+	.alm-filter li div.alm-filter--link.active.field-radio:before{
 		background-color: $color_blue;
 		border-color: $color_blue;		
 	}
@@ -66,8 +69,8 @@
 }
 // Red 
 .alm-filters.filters-red{
-	.alm-filter li a.active.field-checkbox:before, 
-	.alm-filter li a.active.field-radio:before{
+	.alm-filter li div.alm-filter--link.active.field-checkbox:before, 
+	.alm-filter li div.alm-filter--link.active.field-radio:before{
 		background-color: $color_red;	
 		border-color: $color_red;		
 	}
@@ -83,8 +86,8 @@
 }
 // Green 
 .alm-filters.filters-green{
-	.alm-filter li a.active.field-checkbox:before, 
-	.alm-filter li a.active.field-radio:before{
+	.alm-filter li div.alm-filter--link.active.field-checkbox:before, 
+	.alm-filter li div.alm-filter--link.active.field-radio:before{
 		background-color: $color_green;	
 		border-color: $color_green;		
 	}
@@ -192,7 +195,7 @@
 			&:last-of-type{
 				margin: 0;
 			}		
-			a{
+			div.alm-filter--link{
 				display: block;
 				padding: 0 10px 0 26px;
 				min-height: 22px;
@@ -201,6 +204,7 @@
 				position: relative;
 				text-decoration: none;
 				color: $link;
+				cursor: pointer;
 				&:before{
 					position: absolute;
 					left: 1px;
@@ -212,7 +216,7 @@
 					display: block;
 					content: '';
 					transition: all $speed ease;
-					box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+					box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
 				}
 				&:after{
 					position: absolute;
@@ -225,8 +229,10 @@
 				&:hover,
 				&:focus{
 					color: $link_active;
+					outline: none;
 					&:before{
 						border-color: $color_default_active;
+						box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.075);
 					}
 				}
 				&.field-checkbox{
@@ -264,7 +270,6 @@
 						&:before{
 							border-color: $color_default_active;
 							background-color: $color_default_active;
-							box-shadow: none;
 						}
 						&:after{						
 							visibility: visible;
@@ -398,11 +403,12 @@
 		opacity: 0.6;
 		.alm-filters--loading{
 			display: block;
+			cursor: default !important;
 		}
 	}	
 	
 	// Loading
-	&--loading{
+	.alm-filters--loading{
 		position: absolute;
 		left: 0;
 		top: 0;

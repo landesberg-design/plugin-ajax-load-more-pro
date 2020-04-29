@@ -9,6 +9,7 @@
 let clearInputs = (inputs) => {
    [...inputs].forEach((input) => {
       input.classList.remove('active');
+      input.setAttribute('aria-checked', false);
    });
 };
 

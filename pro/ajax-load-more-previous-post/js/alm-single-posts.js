@@ -27,7 +27,9 @@ var almSinglePosts = {};
       almSinglePosts.offset = 30;
       almSinglePosts.popstate = false;
       almSinglePosts.is_disqus = false;
+      almSinglePosts.disableOnScroll = false;
       almSinglePosts.active = true;
+      almSinglePosts.target = '';
       almSinglePosts.first = document.querySelector('.alm-single-post');
       almSinglePosts.isIE = (navigator.appVersion.indexOf("MSIE 10") !== -1) ? true : false;     
       almSinglePosts.showProgressBar = false;
@@ -48,50 +50,46 @@ var almSinglePosts = {};
 
       var scrollTop = window.pageYOffset;
 
-      if (almSinglePosts.active && !almSinglePosts.popstate && scrollTop > 1) {
+      if (almSinglePosts.active && !almSinglePosts.popstate && scrollTop > 1 && !almSinglePosts.disableOnScroll) {
 
-         //almSinglePosts.timer = window.setTimeout(function() {
+         // Get container scroll position
+         var fromTop = scrollTop + almSinglePosts.offset;
+         var posts = document.querySelectorAll('.alm-single-post');
+         var url = window.location.href;
 
-            // Get container scroll position
-            var fromTop = scrollTop + almSinglePosts.offset;
-            var posts = document.querySelectorAll('.alm-single-post');
-            var url = window.location.href;
-
-            // Loop all posts
-            var current = Array.prototype.filter.call(posts, function(n, i) {
-	            if (typeof ajaxloadmore.getOffset === 'function') {
-	               var divOffset = ajaxloadmore.getOffset(n);
-						if (divOffset.top < fromTop){
-							return n;
-						}
+         // Loop all posts
+         var current = Array.prototype.filter.call(posts, function(n, i) {
+            if (typeof ajaxloadmore.getOffset === 'function') {
+               var divOffset = ajaxloadmore.getOffset(n);
+					if (divOffset.top < fromTop){
+						return n;
 					}
-            });
+				}
+         });
 
-            // Get the data attributes of the current element
-            var currentPost = current[current.length - 1];
-            var id = (currentPost) ? currentPost.dataset.id : undefined;
-            var permalink = (currentPost) ? currentPost.dataset.url : '';
-            var title = (currentPost) ? currentPost.dataset.title : '';
-            var page = (currentPost) ? currentPost.dataset.page : '';
+         // Get the data attributes of the current element
+         var currentPost = current[current.length - 1];
+         var id = (currentPost) ? currentPost.dataset.id : undefined;
+         var permalink = (currentPost) ? currentPost.dataset.url : '';
+         var title = (currentPost) ? currentPost.dataset.title : '';
+         var page = (currentPost) ? currentPost.dataset.page : '';
 
-            // If undefined, use the first post data
-            if (id === undefined) {
-               id = almSinglePosts.first.dataset.id;
-               permalink = almSinglePosts.first.dataset.url;
-               title = almSinglePosts.first.dataset.title;
-            }
-            
-            // Set the reading progress bar
-            if(almSinglePosts.showProgressBar){
-               almSinglePosts.almSetProgressBar(id);
-            }
+         // If undefined, use the first post data
+         if (id === undefined) {
+            id = almSinglePosts.first.dataset.id;
+            permalink = almSinglePosts.first.dataset.url;
+            title = almSinglePosts.first.dataset.title;
+         }
+         
+         // Set the reading progress bar
+         if(almSinglePosts.showProgressBar){
+            almSinglePosts.almSetProgressBar(id);
+         }
 
-            // Set URL, if applicible.               
-            if (url !== permalink) {
-               almSinglePosts.setURL(id, permalink, title, page);
-            }
-            
-         //}, 10);
+         // Set URL, if applicible.               
+         if (url !== permalink) {
+            almSinglePosts.setURL(id, permalink, title, page);
+         }
 
       }
    };
@@ -118,7 +116,28 @@ var almSinglePosts = {};
          almSinglePosts.controls = alm.addons.single_post_controls; // Enable back/fwd button controls
          almSinglePosts.controls = (almSinglePosts.controls === '1') ? true : false;
          almSinglePosts.scroll = (almSinglePosts.scroll === 'true') ? true : false;
+         almSinglePosts.target = (alm.addons.single_post_target !== '') ? alm.addons.single_post_target : false;
          almSinglePosts.progress_bar = alm.addons.single_post_progress_bar; // Progress Bar
+         
+         
+         // Set up target
+         if(almSinglePosts.target){	        
+	         // Get wrapper
+	         var singlePostTarget = document.querySelector(almSinglePosts.target);
+	         if(singlePostTarget){
+		         
+		         // Get .alm-single div      
+		         var singlePostWrap = document.querySelector('.alm-reveal.alm-single-post');
+		         
+		         // InsertBefore
+		         singlePostTarget.parentNode.insertBefore(singlePostWrap, singlePostTarget);
+					
+					// Append wrapper to .alm-single
+					singlePostWrap.appendChild(singlePostTarget);		         
+
+	         }
+         }
+         
          
          // Initiate Progress Bar         
          if(almSinglePosts.progress_bar !== ''){
@@ -165,7 +184,6 @@ var almSinglePosts = {};
 				var percentage = (parseInt(scrollT - pTop + almSinglePosts.offset) / parseInt(elHeight - pageEnd - almSinglePosts.offset)) * 100;
 				
 				// Set Width
-				// console.log(Math.floor(percentage));
 				almSinglePosts.progress.style.width = Math.floor(percentage) + '%';
 			} 
 			else { 
@@ -267,22 +285,38 @@ var almSinglePosts = {};
     *
     * @since 1.0
     */
-   almSinglePosts.onpopstate = function(event) {
-      if (!almSinglePosts.init && almSinglePosts.active) {
+   almSinglePosts.onpopstate = function(ev) {
+	   
+	   almSinglePosts.disableOnScroll = true;
+	   
+	   // Exit potstate functions if window has hash - this would likely mean an achor link was clicked.
+	   if(window.location.hash){
+		   almSinglePosts.disableOnScroll = false;
+		   return false;
+	   }
+		
+		if (!almSinglePosts.init && almSinglePosts.active) {
          almSinglePosts.popstate = true;
          var id;
-         if (event.state) {
-            id = event.state.postID;
-            almSinglePosts.setPageTitle(event.state.title);
+         if (ev.state) {
+	         // State 
+            id = ev.state.postID;
+            almSinglePosts.setPageTitle(ev.state.title);
+				
          } else {
+	         // Null State
             id = almSinglePosts.first.dataset.id;
             document.title = almSinglePosts.initPageTitle;
          }
-			
-         // Move to post
-         almSinglePosts.popstate = true;
-         almSinglePosts.scrollToPost(id);
+				
+			// Move to post
+			almSinglePosts.popstate = true;
+			almSinglePosts.scrollToPost(id);
+         
       }
+      
+      almSinglePosts.disableOnScroll = false;
+      
    };
 
 
@@ -295,8 +329,6 @@ var almSinglePosts = {};
     */
    window.addEventListener('popstate', function(event) {
       if (typeof window.history.pushState == 'function') {
-         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-	      document.body.scrollTop = scrollTop;
          almSinglePosts.onpopstate(event);
       }
    });
@@ -472,8 +504,8 @@ var almSinglePosts = {};
       }
    };
 
-   if (document.querySelector('.alm-single-post .alm-disqus')) {
-      almSinglePosts.disqusInit(document.querySelector('.alm-single-post .alm-disqus')); // Init Disqus 
+   if (document.querySelector('.alm-disqus')) {
+      almSinglePosts.disqusInit(document.querySelector('.alm-disqus')); // Init Disqus 
    }
 
 
@@ -499,11 +531,11 @@ var almSinglePosts = {};
 
          // Hide #disqus_thread
          disqus_thread.style.display = 'none';
-
-         // New target div
-         var target = document.querySelectorAll('.alm-single-post .alm-disqus').item(parseInt(page));
+			
+         // Get Target Div
+         var target = document.querySelector('.alm-single-post[data-id="'+ id +'"] .alm-disqus');
          if (target) {
-            // Append #disqus_thread to new container
+            // Append #disqus_thread to new target
             target.appendChild(disqus_thread).style.display = 'block';
          }
 

@@ -6,7 +6,7 @@ Description: Ajax Load More add-on to build and manage Ajax filters.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.9.0
+Version: 1.9.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -14,8 +14,8 @@ Copyright: Darren Cooney & Connekt Media
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_FILTERS_VERSION', '1.9.0');
-define('ALM_FILTERS_RELEASE', 'March 2, 2020');
+define('ALM_FILTERS_VERSION', '1.9.1');
+define('ALM_FILTERS_RELEASE', 'March 18, 2020');
 define('ALM_FILTERS_PATH', plugin_dir_path(__FILE__));
 define('ALM_FILTERS_URL', plugins_url('', __FILE__));
 define('ALM_FILTERS_ADMIN_URL', plugins_url('admin/', __FILE__));
@@ -627,11 +627,25 @@ if( !class_exists('ALMFilters') ):
 			         $has_selected_value = (!empty($default_selected_value)) ? ' alm-filter--preselected' : '';
 						$has_selected_value = ($default_selected_value === 'data-selected-value=""') ? '' : $has_selected_value; // Empty
 						
+						
 						// Archive/Front page
 						$is_archive = (alm_filters_is_archive()) ? ' data-is-archive="true"' : ''; 
-
+						
+						
+						// Checkbox/Radio Role. and Aria Labelledby
+						$role = $labelledby = '';
+						if($obj['field_type'] === 'radio' || $obj['field_type'] === 'checkbox'){
+							$labelledby = (isset($obj) && isset($obj['title'])) ? ' aria-labelledby="alm-filter-'. $filter_key .'-title"' : '';
+							if($obj['field_type'] === 'radio'){
+								$role = ' role="radiogroup"';
+							} else {
+								$role = ' role="group"';
+							}
+						}
+						
+						
 						// Build output
-			         $output .= '<div class="alm-filter alm-filter--'. str_replace('_', '', $obj['key']) . $has_selected_value .''. $obj['classes'] .'" id="alm-filter-'. $filterCount .'" data-key="'. $obj['key'] .'" data-fieldtype="'. $obj['field_type'] .'"'. $taxonomy_value . $taxonomy_operator .''. $meta_value . $meta_operator . $meta_type . $author_role .  $default_selected_value .''. $default_value .''. $is_archive .'>';
+			         $output .= '<div class="alm-filter alm-filter--'. str_replace('_', '', $obj['key']) . $has_selected_value .''. $obj['classes'] .'" id="alm-filter-'. $filterCount .'" data-key="'. $obj['key'] .'" data-fieldtype="'. $obj['field_type'] .'"'. $taxonomy_value . $taxonomy_operator .''. $meta_value . $meta_operator . $meta_type . $author_role .  $default_selected_value .''. $default_value .''. $is_archive .''. $role . $labelledby .'>';
 
 		         	$output .= alm_filters_display_title($options_obj['id'], $obj);
 
@@ -907,18 +921,27 @@ if( !class_exists('ALMFilters') ):
 						break;
 
 					default :
-
+						
+						$ariaChecked = 'aria-checked="false"';
+						
 						// Get active list item
 						if(!empty($matchArray)){
 							$active = (in_array($slug, $matchArray)) ? ' active' : '';
+							$ariaChecked = (in_array($slug, $matchArray)) ? 'aria-checked="true"' : $ariaChecked;
 						}
 
 						$parent = ($nested) ? ' has_parent' : '';
 
 						$return .= '<li class="alm-filter--'. $obj['field_type'] . $parent .'">';
-							$return .= '<a href="javascript:void(0);" class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug . $active .'" id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"'. ' data-type="'. $obj['field_type'] .'" data-value="'. $slug .'"'. $selected .'>';
+							$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug . $active .'" 
+							id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"'. ' 
+							data-type="'. $obj['field_type'] .'" 
+							data-value="'. $slug .'"
+							role="'. $obj['field_type'] .'" 
+							tabindex="0"
+							 '. $ariaChecked .'>';
 								$return .= $name;
-							$return .= '</a>';
+							$return .= '</div>';
 
 						$return .= '</li>';
 
@@ -1111,10 +1134,12 @@ if( !class_exists('ALMFilters') ):
 
 							default :
 								
-								// Radio/Checkbox								
-								
+								// Radio/Checkbox				
+
+								$ariaChecked = 'aria-checked="false"';
 								if(!empty($matchArray)){ // Get active list item
 									$active = (in_array($slug, $matchArray)) ? ' active' : '';
+									$ariaChecked = (in_array($slug, $matchArray)) ? 'aria-checked="true"' : $ariaChecked;
 								}
 								
 								if(!$has_parent && $was_parent){
@@ -1131,9 +1156,15 @@ if( !class_exists('ALMFilters') ):
 
 								$return .= '<li class="alm-filter--'. $obj['field_type'] . $parent .'">';
 
-									$return .= '<a href="javascript:void(0)" class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug . $active .'" id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"'. ' data-type="'. $obj['field_type'] .'" data-value="'. $slug .'"'. $selected .'>';
+									$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug .' '. $active .'" 
+									id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'" 
+									data-type="'. $obj['field_type'] .'" 
+									data-value="'. $slug .'"
+									role="'. $obj['field_type'] .'" 
+									tabindex="0"
+									 '. $ariaChecked .'>';
 										$return .= $name;
-									$return .= '</a>';
+									$return .= '</div>';
 
 								$return .= (!$has_children) ? '</li>' : ''; // Close only if no children element exists
 
@@ -1165,9 +1196,16 @@ if( !class_exists('ALMFilters') ):
 			if(isset($obj['field_type']) && $obj['field_type'] === 'checkbox' && isset($obj['checkbox_toggle']) && isset($obj['checkbox_toggle_label'])){				
 				if( ($obj['checkbox_toggle'] === 'before' && $position === 'before') || ($obj['checkbox_toggle'] === 'after' && $position === 'after')){			
 					$return .= '<li class="alm-filter--checkbox">';
-						$return .= '<a href="javascript:void(0);" class="alm-filter--link field-checkbox field-toggle" data-all="true" data-value="" data-type="all">';
+						$return .= '<div class="alm-filter--link field-checkbox field-toggle" 
+						data-all="true" 
+						data-value="" 
+						data-type="all"
+						role="checkbox" 
+						tabindex="0"
+						aria-checked="false"
+						>';
 							$return .= $obj['checkbox_toggle_label'];
-						$return .= '</a>';
+						$return .= '</div>';
 					$return .= '</li>';
 				}
 			}			
@@ -1277,7 +1315,13 @@ if( !class_exists('ALMFilters') ):
 
 
 
-   	// Set the container element
+   	/**
+	    * alm_filters_get_container
+	    *	Set the container element
+	    *
+	    * @param {String} $field_type
+	    * @param {String} $location
+	    */
    	public static function alm_filters_get_container($field_type, $location){
 
 			if($field_type === 'checkbox' || $field_type === 'radio'){

@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/single-post/
 Requires at least: 4.0
-Tested up to: 5.2.3
+Tested up to: 5.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.2
+Version: 1.4.4
 
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2020 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -48,6 +48,15 @@ http://connekthq.com/plugins/ajax-load-more/single-post/
 
 
 == Changelog ==
+
+= 1.4.4 - April 22, 2020 =
+* FIX - Fixed issue with anchor links taking user to the top of the page.
+* FIX - Fixed issue with encoded characters in post titles.
+* UPDATE - Added support for Yoast page titles.
+
+= 1.4.3 - March 18, 2020 =
+* NEW - Added new Single Post [implementation](https://connekthq.com/plugins/ajax-load-more/add-ons/single-posts/#implementation) technique. Users are no longer required to use a Repeater Template when using this add-on.
+
 
 = 1.4.2 - October 1, 2019 =
 * NEW - Added option to display a reading progress bar. `single_post_progress_bar` is the shortcode parameter - please view the Shortcode Builder for implementation help.

@@ -57,11 +57,13 @@ let almFiltersInit = (almFilters) => {
    		   // Uncheck All
 			   [...items].forEach((item, e) => {
 				   item.classList.remove('active');
+				   item.setAttribute('aria-checked', false);
 			   });			   
 		   } else {
    		   // Check All 
 			   [...items].forEach((item, e) => {
 				   item.classList.add('active');
+					item.setAttribute('aria-checked', true);
 			   });			   
 		   }
 		   
@@ -79,6 +81,7 @@ let almFiltersInit = (almFilters) => {
 			   [...items].forEach((item, e) => {
 				   if(item.id !== current_id){
 					   item.classList.remove('active');
+					   item.setAttribute('aria-checked', false);
 				   } 
 			   });
 			}
@@ -86,8 +89,10 @@ let almFiltersInit = (almFilters) => {
 			// Set active state
 		   if(target.classList.contains('active')){
 			   target.classList.remove('active');
+			   target.setAttribute('aria-checked', false);
 		   } else {
 			   target.classList.add('active');
+			   target.setAttribute('aria-checked', true);
 		   }
 			
 			// Check for `toggle All` button
@@ -109,6 +114,11 @@ let almFiltersInit = (almFilters) => {
    if(almFilterLinks){
 	   [...almFilterLinks].forEach((item, e) => {
 	      item.addEventListener('click', almFilterChange);
+	      item.addEventListener('keyup', function(event){
+				if (event.keyCode === 13) { // Enter/return click
+					almFilterChange(event);
+				} 
+	      });
 	   });
    }  
    
@@ -212,6 +222,54 @@ window.removeSelectedFilter = (element) =>{
 			}
 			break;
 	}	
+}
+
+
+
+/**
+ * removeSelectedFilterEnter
+ * Trigger click event on selected filter when enter clicked
+ *
+ * @param element   The clicked element
+ * @since 1.0
+ */ 
+window.removeSelectedFilterEnter = (event) => {
+	
+	if(!event){
+		return false;
+	}
+	
+	if (event.keyCode === 13) { // Enter/return click
+		
+		let element = event.target;
+		
+		let almFilters = vars.almFilters;
+		let key = element.dataset.key;
+		let value = element.dataset.value;	
+		let obj = getKeyObject(key, value); // Return the el container (.alm-filter)
+		let el = getKeyElement(obj.target, value, obj.fieldType);
+		
+		switch (obj.fieldType){
+			
+			case 'select' :
+				// if has a selected value
+				el.value = (obj.target.dataset.selectedValue) ? obj.target.dataset.selectedValue : '#';
+				triggerChange(almFilters);
+				break;
+			
+			case 'text' : 
+				el.value = '';
+				triggerChange(almFilters);
+				break;
+			
+			default : 
+				el.click();
+				if(almFilters.dataset.style === 'button'){
+					triggerChange(almFilters)
+				}
+				break;
+		}	
+	}
 }
 
 

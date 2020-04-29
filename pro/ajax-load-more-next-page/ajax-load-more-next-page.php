@@ -6,7 +6,7 @@ Description: Ajax Load More add-on for displaying multipage WordPress content
 Author: Darren Cooney
 Twitter: @KaptonKaos 
 Author URI: https://connekthq.com
-Version: 1.4.3
+Version: 1.4.4
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_NEXTPAGE_PATH', plugin_dir_path(__FILE__));
 define('ALM_NEXTPAGE_URL', plugins_url('', __FILE__));
-define('ALM_NEXTPAGE_VERSION', '1.4.3');
-define('ALM_NEXTPAGE_RELEASE', 'March 2, 2020');
+define('ALM_NEXTPAGE_VERSION', '1.4.4');
+define('ALM_NEXTPAGE_RELEASE', 'April 22, 2020');
 
 
 
@@ -467,12 +467,13 @@ if( !class_exists('ALMNEXTPAGE') ):
                                              
             } 
             
+            $localized_id = (!empty($id)) ? 'ajax-load-more-'. $id : $div_id;
             
             // Add Localized `page` variable
-            ALM_LOCALIZE::add_localized_var('page', $page || $current, $div_id);
+            ALM_LOCALIZE::add_localized_var('page', $page || $current, $localized_id);
             
             // Add Localized `total_posts` variable
-            ALM_LOCALIZE::add_localized_var('total_posts', $length, $div_id);
+            ALM_LOCALIZE::add_localized_var('total_posts', $length, $localized_id);
             
             return $the_content;
       	}      	

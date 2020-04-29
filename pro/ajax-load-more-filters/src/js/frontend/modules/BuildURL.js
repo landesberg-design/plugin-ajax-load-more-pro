@@ -39,6 +39,10 @@ let buildURL = (filter, currentURL) => {
 		   let mSelectVal = '';	
 			let mSelectCount = 0;	 
 			
+			if(!mSelect){
+				break; // exit if empty
+			}
+			
 			// Loop all <option/> elements to build URL
          [...options].forEach((option, e) => {
             if (option.selected) {			
@@ -56,6 +60,10 @@ let buildURL = (filter, currentURL) => {
 		case 'select' : 
 			
 			let select = filter.querySelector('select');
+			if(!select){
+				break; // exit if empty	
+			}
+			
 			url += (select.value === '#') ? '' : `${title}=${select.value}`;
 			
 			break;
@@ -63,13 +71,21 @@ let buildURL = (filter, currentURL) => {
 		case 'text' : 
 		case 'range_slider' : 
 			let textfield = filter.querySelector('input[type=text]');
+			if(!textfield){
+				break; // exit if empty	
+			}
+			
 			url += (textfield.value === '') ? '' : `${title}=${textfield.value}`;
 			
 			break;
 			
 		case 'date_picker' :  
 			let datepicker = filter.querySelector('input.flatpickr-input');
-			if(datepicker && datepicker.value){
+			if(!datepicker){
+				break; // exit if empty
+			}
+			
+			if(datepicker.value){
    			// Replace ` | ` with `+` for range mode
 				let value = datepicker.value.replace(' | ', '+');
 				url += (datepicker.value === '') ? '' : `${title}=${value}`;
@@ -82,6 +98,10 @@ let buildURL = (filter, currentURL) => {
 			let items = filter.querySelectorAll('.alm-filter--link'); // Get all inputs
 			let checkedVal = '';	
 			let count = 0;
+			
+			if(!items.length){
+				break; // exit if empty
+			}
 			
 			[...items].forEach((item, e) => {
    			

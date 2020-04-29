@@ -7,7 +7,6 @@
 	<div class="alm-card-details">
    	<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>  	
    	<?php alm_get_excerpt(20); ?> 	
-   	<p class="alm-more-link"><a href="<?php the_permalink(); ?>"><?php _e('Continue Reading'); ?></a></p>
    	<?php echo get_avatar( get_the_author_meta('user_email')); ?>   	
 	</div>
 	<div class="alm-post-author">		

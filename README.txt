@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 3.6.1
-Tested up to: 5.3.2
+Tested up to: 5.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.0.25
+Version: 1.1
 
 == Copyright ==
 Copyright 2020 Darren Cooney, Connekt Media
@@ -48,7 +48,53 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 == Changelog ==
 
-= 1.0.25 - March 2, 2020 =
+= 1.1 - April 22, 2020 =
+
+* NEW - Added new [WooCommerce Add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/). This add-on will need to be enabled in Ajax Load More > Pro in your WordPress admin.
+
+**Add-on Updates**
+
+Layouts
+* NEW - Added new 4 column grid for each layout.
+
+Next Page
+* FIX - Fixed issue with [Results Text](https://connekthq.com/plugins/ajax-load-more/docs/results-text/) not working when using ALM `id` parameter.
+
+Single Posts
+* FIX - Fixed issue with anchor links taking user to the top of the page.
+* FIX - Fixed issue with encoded characters in post titles.
+* UPDATE - Added support for Yoast page titles.
+
+
+= 1.0.26 - March 18, 2020 =
+
+**Add-on Updates**
+
+FILTERS
+## UPGRADE NOTICE
+This version of Filters updates the markup of Radio and Checkbox filed types.
+For accessibility purposes, the `<a href="#"/>` has been replaced with clickable `<div/>` elements.
+
+Users who are using custom CSS to style these elements may need to update their markup for these elements.
+
+* UPDATE - Improved Radio and Checkbox accessibility by adding aria role, checked and labelledby attributes.
+* FIX - Fixed issue with filter loading animation not working as intended.
+
+
+Layouts
+* NEW - Added new Blog Card #3 layout.
+* UPDATE - Updated various template styles.
+* UPDATE - Only load .min CSS file when `WP_DEBUG` is `true`.
+* UPDATE - Convert to webpack for quicker build iterations.
+
+
+Single Posts
+* NEW - Updated implementation method.
+* NEW - Single Posts now longer requires Repeater Template when using the new [implementation method](https://connekthq.com/plugins/ajax-load-more/add-ons/single-posts/#implementation).
+* NEW - Added new `single_post_target` shortcode parameters as part of the implementation update.
+
+
+= 1.0.25 - February 24, 2020 =
 **Add-on Updates**
 
 Filters

@@ -36,7 +36,7 @@ let setElementStates = (urlArray) => {
          
          case 'checkbox' :  // Checkbox
          
-            let checkboxes = filter.querySelectorAll('a.field-checkbox'); // All checkboxes     
+            let checkboxes = filter.querySelectorAll('div.field-checkbox'); // All checkboxes     
                    
             // If key matches URL key
             if (urlArray.hasOwnProperty(key)){
@@ -54,10 +54,10 @@ let setElementStates = (urlArray) => {
          
          case 'radio' : // Radios
                       
-            let radios = filter.querySelectorAll('a.field-radio'); // All radios
+            let radios = filter.querySelectorAll('div.field-radio'); // All radios
                   
             if (urlArray.hasOwnProperty(key)){
-               let radio = filter.querySelector('a[data-value="'+ urlArray[key] +'"]');
+               let radio = filter.querySelector('div[data-value="'+ urlArray[key] +'"]');
                let valueArray = urlArray[key].split('+');
                [...radios].forEach((radio) => {
                   setCheckboxState(valueArray, radio);

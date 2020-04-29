@@ -9162,8 +9162,10 @@ function toggleAll(fieldtype) {
 
 			if (allChecked) {
 				allElement.classList.add('active');
+				allElement.setAttribute('aria-checked', true);
 			} else {
 				allElement.classList.remove('active');
+				allElement.setAttribute('aria-checked', false);
 			}
 		}
 	}
@@ -9323,11 +9325,13 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 				// Uncheck All
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
 					item.classList.remove('active');
+					item.setAttribute('aria-checked', false);
 				});
 			} else {
 				// Check All 
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
 					item.classList.add('active');
+					item.setAttribute('aria-checked', true);
 				});
 			}
 		} else {
@@ -9344,6 +9348,7 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
 					if (item.id !== current_id) {
 						item.classList.remove('active');
+						item.setAttribute('aria-checked', false);
 					}
 				});
 			}
@@ -9351,8 +9356,10 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 			// Set active state
 			if (target.classList.contains('active')) {
 				target.classList.remove('active');
+				target.setAttribute('aria-checked', false);
 			} else {
 				target.classList.add('active');
+				target.setAttribute('aria-checked', true);
 			}
 
 			// Check for `toggle All` button
@@ -9370,6 +9377,12 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 	if (almFilterLinks) {
 		[].concat(_toConsumableArray(almFilterLinks)).forEach(function (item, e) {
 			item.addEventListener('click', almFilterChange);
+			item.addEventListener('keyup', function (event) {
+				if (event.keyCode === 13) {
+					// Enter/return click
+					almFilterChange(event);
+				}
+			});
 		});
 	}
 
@@ -9463,6 +9476,53 @@ window.removeSelectedFilter = function (element) {
 				(0, _TriggerChange2.default)(almFilters);
 			}
 			break;
+	}
+};
+
+/**
+ * removeSelectedFilterEnter
+ * Trigger click event on selected filter when enter clicked
+ *
+ * @param element   The clicked element
+ * @since 1.0
+ */
+window.removeSelectedFilterEnter = function (event) {
+
+	if (!event) {
+		return false;
+	}
+
+	if (event.keyCode === 13) {
+		// Enter/return click
+
+		var element = event.target;
+
+		var almFilters = _Variables2.default.almFilters;
+		var key = element.dataset.key;
+		var value = element.dataset.value;
+		var obj = (0, _getKeyObject2.default)(key, value); // Return the el container (.alm-filter)
+		var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
+
+		switch (obj.fieldType) {
+
+			case 'select':
+				// if has a selected value
+				el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : '#';
+				(0, _TriggerChange2.default)(almFilters);
+				break;
+
+			case 'text':
+				el.value = '';
+				(0, _TriggerChange2.default)(almFilters);
+				break;
+
+			default:
+				el.click();
+				if (almFilters.dataset.style === 'button') {
+					(0, _TriggerChange2.default)(almFilters);
+				}
+				break;
+		}
 	}
 };
 
@@ -10151,6 +10211,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var clearInputs = function clearInputs(inputs) {
    [].concat(_toConsumableArray(inputs)).forEach(function (input) {
       input.classList.remove('active');
+      input.setAttribute('aria-checked', false);
    });
 };
 
@@ -10268,7 +10329,7 @@ function buildSelections(obj) {
 				if (value) {
 					// Confirm value exits
 					items += '<li>';
-					items += '<a href="javascript:void(0);" onClick="window.removeSelectedFilter(this);" data-key="' + key + '" data-value="' + values[n] + '">';
+					items += '<div onclick="window.removeSelectedFilter(this);" onkeyup="window.removeSelectedFilterEnter(event);" data-key="' + key + '" data-value="' + values[n] + '" tabindex="0">';
 					items += value;
 					items += '</a>';
 					items += '</li>';
@@ -10323,6 +10384,7 @@ function setDefaults(container) {
    var default_item = container.querySelector('.alm-filter--link[data-selected="true"]');
    if (default_item) {
       default_item.classList.add('active');
+      default_item.setAttribute('aria-checked', true);
    }
 }
 
@@ -10347,9 +10409,21 @@ function restoreDefault(filter) {
          [].concat(_toConsumableArray(radios)).forEach(function (radio) {
             if (radio.dataset.value === selected_value) {
                radio.classList.add('active');
+               radio.setAttribute('aria-checked', true);
             } else {
                radio.classList.remove('active');
+               radio.setAttribute('aria-checked', false);
             }
+         });
+
+         break;
+
+      case 'checkbox':
+
+         var checkboxes = filter.querySelectorAll('.alm-filter--link');
+         [].concat(_toConsumableArray(checkboxes)).forEach(function (checkbox) {
+            checkbox.classList.remove('active');
+            checkbox.setAttribute('aria-checked', false);
          });
 
          break;
@@ -10388,15 +10462,6 @@ function restoreDefault(filter) {
             } else {
                item.selected = false;
             }
-         });
-
-         break;
-
-      case 'checkbox':
-
-         var checkboxes = filter.querySelectorAll('.alm-filter--link');
-         [].concat(_toConsumableArray(checkboxes)).forEach(function (checkbox) {
-            checkbox.classList.remove('active');
          });
 
          break;
@@ -10902,16 +10967,16 @@ Object.defineProperty(exports, "__esModule", {
 // 
 var setCheckboxState = function setCheckboxState(array, checkbox) {
 
-   console.log(checkbox);
-
    var chkVal = checkbox.dataset.value;
 
    // If checkbox value is found in array set as .active
    if (array.indexOf(chkVal) > -1) {
       checkbox.classList.add('active');
+      checkbox.setAttribute("aria-checked", true);
    } else {
       // Not found (uncheck)
       checkbox.classList.remove('active');
+      checkbox.setAttribute("aria-checked", false);
    }
 };
 
@@ -10986,7 +11051,7 @@ var setElementStates = function setElementStates(urlArray) {
          case 'checkbox':
             // Checkbox
 
-            var checkboxes = filter.querySelectorAll('a.field-checkbox'); // All checkboxes     
+            var checkboxes = filter.querySelectorAll('div.field-checkbox'); // All checkboxes     
 
             // If key matches URL key
             if (urlArray.hasOwnProperty(key)) {
@@ -11004,10 +11069,10 @@ var setElementStates = function setElementStates(urlArray) {
          case 'radio':
             // Radios
 
-            var radios = filter.querySelectorAll('a.field-radio'); // All radios
+            var radios = filter.querySelectorAll('div.field-radio'); // All radios
 
             if (urlArray.hasOwnProperty(key)) {
-               var radio = filter.querySelector('a[data-value="' + urlArray[key] + '"]');
+               var radio = filter.querySelector('div[data-value="' + urlArray[key] + '"]');
                var _valueArray = urlArray[key].split('+');
                [].concat(_toConsumableArray(radios)).forEach(function (radio) {
                   (0, _SetCheckboxState2.default)(_valueArray, radio);
@@ -11257,7 +11322,7 @@ var getKeyElement = function getKeyElement(target, value, fieldType) {
       break;
 
     default:
-      el = target.querySelector('a.alm-filter--link[data-value="' + value + '"]');
+      el = target.querySelector('div.alm-filter--link[data-value="' + value + '"]');
 
   }
 

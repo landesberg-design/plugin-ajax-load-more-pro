@@ -22,7 +22,7 @@ let getKeyElement = function( target, value, fieldType ) {
 			break;
 		
 		default : 
-			el = target.querySelector('a.alm-filter--link[data-value="'+ value +'"]');
+			el = target.querySelector('div.alm-filter--link[data-value="'+ value +'"]');
 		
 	}
     

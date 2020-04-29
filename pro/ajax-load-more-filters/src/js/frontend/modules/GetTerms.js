@@ -28,6 +28,10 @@ let getTerms = (filter, data) => {
 		   let mSelectVal = '';	
 			let mSelectCount = 0;	 
 			
+			if(!mSelect){
+				break; // exit if empty
+			}
+			
 			// Loop all <option/> elements to build URL
          [...options].forEach((option, e) => {
             if (option.selected) {			
@@ -47,9 +51,12 @@ let getTerms = (filter, data) => {
 		   
 		case 'select' : 
 					
-			let select = filter.querySelector('select');
-			// Replace + with comma
-			value = select.value.replace('+', ',');
+			let select = filter.querySelector('select');		
+			if(!select){
+				break; // exit if empty
+			}
+			
+			value = select.value.replace('+', ','); // Replace + with comma
 			returnVal += (value === '#') ? '' : value;
 			
 			break;
@@ -58,6 +65,10 @@ let getTerms = (filter, data) => {
 		case 'range_slider' : 
 			
 			let text = filter.querySelector('input');
+			if(!text){
+				break; // exit if empty
+			}
+			
 			returnVal += (text.value === '') ? '' : text.value;
 			
 			break;
@@ -65,6 +76,10 @@ let getTerms = (filter, data) => {
 		case 'date_picker' : 
 		
 			let datepicker = filter.querySelector('.flatpickr-input');
+			if(!datepicker){
+				break; // exit if empty
+			}
+			
 			returnVal += (datepicker.value === '') ? '' : datepicker.value.split(" | ");
 			
 			break;
@@ -72,6 +87,10 @@ let getTerms = (filter, data) => {
 		default : 
 			
 			let items = filter.querySelectorAll('.alm-filter--link'); // Get all link fields	
+			if(!items.length){
+				break; // exit if empty
+			}
+			
 			[...items].forEach((item, e) => {
    			
 				if(item.classList.contains('active') && item.dataset.value !== ''){

@@ -6,17 +6,18 @@ Description: Ajax Load More add-on for infinite scrolling single posts
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.4.2
+Version: 1.4.4
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
+
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_PREV_POST_PATH', plugin_dir_path(__FILE__));
 define('ALM_PREV_POST_URL', plugins_url('', __FILE__));
-define('ALM_PREV_POST_VERSION', '1.4.2');
-define('ALM_PREV_POST_RELEASE', 'October 1, 2019');
+define('ALM_PREV_POST_VERSION', '1.4.4');
+define('ALM_PREV_POST_RELEASE', 'April 22, 2020');
 
 
 /*
@@ -46,7 +47,7 @@ if( !class_exists('ALM_SINGLEPOST') ):
    		add_action( 'wp_ajax_nopriv_alm_get_single', array(&$this, 'alm_query_single_post') );
    	   add_filter( 'alm_single_post_inc', array( &$this, 'alm_single_post_inc' ), 10, 5 );
    	   add_filter( 'alm_single_post_args', array( &$this, 'alm_single_post_args' ), 10, 2 );
-   		add_filter( 'alm_single_post_shortcode', array( &$this, 'alm_single_post_shortcode'), 10, 6 );
+   		add_filter( 'alm_single_post_shortcode', array( &$this, 'alm_single_post_shortcode'), 10, 7 );
    		add_action( 'alm_prev_post_settings', array( &$this, 'alm_prev_post_settings') );
    		add_action( 'wp_enqueue_scripts', array( &$this, 'alm_single_post_enqueue_scripts' ));
    		add_action( 'posts_where', array( &$this, 'alm_single_query_where' ), 10, 2);  
@@ -378,9 +379,22 @@ if( !class_exists('ALM_SINGLEPOST') ):
 				$data['prev_id'] = $previous_post->ID;
 				$data['prev_slug'] = $previous_post->post_name;
 				$data['prev_permalink'] = get_permalink($previous_post->ID);
-				$data['prev_title'] = strip_tags(get_the_title($previous_post->ID));
+				
+				$title = '';
+				
+				// Yoast SEO Title
+				if(function_exists('wpseo_replace_vars')){
+					$title = self::alm_convert_yoast_title($previous_post);
+				}
+				if(empty($title)){
+					$title = strip_tags(html_entity_decode(get_the_title($previous_post->ID)));
+				}
+				
+				$data['prev_title'] = $title;
+				
 	      } else {
 		      $data['has_previous_post'] = false;
+		      
 	      }
 	      
 			$data['current_id'] = $id;
@@ -394,6 +408,24 @@ if( !class_exists('ALM_SINGLEPOST') ):
       
       
       /**
+	    *  alm_convert_yoast_title
+   	 *  Get the Yoast pahge title
+   	 *
+   	 *  @param $post  Object
+   	 *  @since 1.4.4
+   	 */
+		public static function alm_convert_yoast_title($post) {
+			$yoast_title = get_post_meta( $post->ID, '_yoast_wpseo_title', true );
+			if(empty($yoast_title)) {
+				$wpseo_titles = get_option( 'wpseo_titles', [] );
+				$yoast_title  = isset( $wpseo_titles[ 'title-' . $post->post_type ] ) ? $wpseo_titles[ 'title-' . $post->post_type ] : get_the_title($post->ID);
+			}
+			return wpseo_replace_vars( $yoast_title, $post );
+		}
+		
+		
+		
+		/**
 	    *  alm_single_post_args
    	 *  Set the `single_post` query args
    	 *
@@ -447,7 +479,7 @@ if( !class_exists('ALM_SINGLEPOST') ):
    	 *  @since 1.0
    	 */
 
-   	function alm_single_post_shortcode($id, $order, $tax, $excluded, $progress_bar, $options){
+   	function alm_single_post_shortcode($id, $order, $tax, $excluded, $progress_bar, $options, $target){
 	   	
    		$return = ' data-single-post="true"';
 		   $return .= ' data-single-post-id="'.$id.'"';
@@ -457,6 +489,8 @@ if( !class_exists('ALM_SINGLEPOST') ):
 		   	$return .= ' data-single-post-taxonomy="'.$tax.'"';
 		   if(!empty($excluded))
 		   	$return .= ' data-single-post-excluded-terms="'.$excluded.'"';
+		   if(!empty($target))
+		   	$return .= ' data-single-post-target="'.$target.'"';
 
 		   // Set scrolltop
 		   $single_post_scrolltop = '30';
@@ -465,7 +499,7 @@ if( !class_exists('ALM_SINGLEPOST') ):
    		$single_post_scrolltop = (isset($options['_alm_prev_post_scrolltop'])) ? $options['_alm_prev_post_scrolltop'] : $single_post_scrolltop;
 
 		   // Enabled Scrolling
-			$single_post_enable_scroll = $options['_alm_prev_post_scroll'];
+			$single_post_enable_scroll = (isset($options['_alm_prev_post_scroll'])) ? $options['_alm_prev_post_scroll'] : 'false';
    		if(!isset($single_post_enable_scroll)){
    			$single_post_enable_scroll = 'false';
          }else{

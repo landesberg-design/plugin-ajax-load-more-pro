@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
     *  @since 1.0
     */
    let is_working = false;
-   $(document).on('click', '.alm-pro-listing .item a', function(e){
+   $(document).on('click', '.alm-pro-listing .item a.installed', function(e){
       e.preventDefault();
       
       if(is_working) return false;

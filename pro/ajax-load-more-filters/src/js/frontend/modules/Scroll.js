@@ -14,6 +14,10 @@ let almFiltersTimer = '';
 
 let onScroll = function(almFilters, almListing){
 	
+	if(vars.alm_filtering){
+		return false;
+	}
+	
 	let almFiltersFirst = document.querySelector('.alm-listing[data-filters="true"] .alm-filters:first-child');	
 	if(!almFiltersFirst){
 		return false; // Exit if not found

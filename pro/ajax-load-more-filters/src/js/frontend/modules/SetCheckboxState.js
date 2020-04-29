@@ -9,16 +9,16 @@
  // 
 let setCheckboxState = (array, checkbox) => {
 	
-	console.log(checkbox);
-	
    let chkVal = checkbox.dataset.value;
    
    // If checkbox value is found in array set as .active
    if(array.indexOf(chkVal) > -1){ 
       checkbox.classList.add('active'); 
+      checkbox.setAttribute("aria-checked", true);
    } else { 
 	   // Not found (uncheck)
       checkbox.classList.remove('active'); 
+      checkbox.setAttribute("aria-checked", false);
    }
    
 };
