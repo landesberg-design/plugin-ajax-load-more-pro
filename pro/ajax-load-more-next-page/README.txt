@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.4
+Version: 1.4.5
 
 
 == Copyright ==
@@ -48,6 +48,13 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 
 
 == Changelog ==
+
+= 1.4.5 - May 1, 2020 =
+* FIX - Fixed issue with push/popstate when using Nextpage and Paging add-ons.
+* FIX - Fixed issue with Google Analytics integration sending a second pageview on page load.
+* UPDATE - Set default `nextpage_scroll` shortcode parameter to false for better UX and accessibility.
+* UPDATE - Disabled `Scroll to Page` functionality if Paging add-on is active. Use Paging add-on to scroll user to the top of the page.
+
 
 = 1.4.4 - April 22, 2020 =
 * FIX - Fixed issue with [Results Text](https://connekthq.com/plugins/ajax-load-more/docs/results-text/) not working when using ALM `id` parameter.

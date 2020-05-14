@@ -41,7 +41,7 @@ var alm_seo = {};
 
       alm_seo.nested = (alm.main.dataset.nested === 'true') ? true : false; // Nested ALM instance
 
-      alm_seo.seo_scroll = (alm.addons.seo_scroll === undefined) ? 'true' : alm.addons.seo_scroll;
+      alm_seo.seo_scroll = (alm.addons.seo_scroll === undefined) ? 'false' : alm.addons.seo_scroll;
       alm_seo.scroll = (alm.addons.seo_scroll === 'true') ? true : false; // Scrolling enabled
 
       alm_seo.canonical_url = alm.canonical_url;

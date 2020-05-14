@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/search-engine-optimization/
 Requires at least: 4.0
-Tested up to: 5.2.2
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 1.9.2
+Version: 1.9.3
 
 
 == Copyright ==
@@ -47,6 +47,10 @@ http://connekthq.com/plugins/ajax-load-more/seo/
 
 
 == Changelog ==
+
+= 1.9.3 - May 1, 2020 =
+* UPDATE - Updated default setting for `Scroll to Page` to false for better UX and accessibility. 
+
 
 = 1.9.2 - August 6, 2019 =
 * FIX - Fixed issue with `alm_seo_leading_slash` filter not working in some situations. [Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/search-engine-optimization/#alm_seo_leading_slash)

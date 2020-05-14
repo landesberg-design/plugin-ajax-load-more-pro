@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 5.0.1
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.6
+Version: 1.6.1
 
 
 == Copyright ==
-Copyright 2018 Darren Cooney
+Copyright 2020 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -49,7 +49,11 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 
 == Changelog ==
 
-= 1.6.0 - December 21, 2018 =
+= 1.6.0 - May 1, 2020 =
+* NEW - Added new cache API for caching Single Posts using the new implementation method. This new API will allow for more robust caching options in the future.
+
+
+= 1.6.0 - December 28, 2018 =
 * NEW - Added functionality to auto-generate ALM Cache - [view docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/cache/#auto-generate).
 * NEW - Added new `do_action('alm_clear_cache')` function to clear the entire cache. This allows developers to run custom cache clear scripts.
 * NEW - Added uninstaller script to remove `alm-cache` directory on plugin deletion.

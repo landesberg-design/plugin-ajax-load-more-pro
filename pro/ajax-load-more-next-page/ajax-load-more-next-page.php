@@ -6,7 +6,7 @@ Description: Ajax Load More add-on for displaying multipage WordPress content
 Author: Darren Cooney
 Twitter: @KaptonKaos 
 Author URI: https://connekthq.com
-Version: 1.4.4
+Version: 1.4.5
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_NEXTPAGE_PATH', plugin_dir_path(__FILE__));
 define('ALM_NEXTPAGE_URL', plugins_url('', __FILE__));
-define('ALM_NEXTPAGE_VERSION', '1.4.4');
-define('ALM_NEXTPAGE_RELEASE', 'April 22, 2020');
+define('ALM_NEXTPAGE_VERSION', '1.4.5');
+define('ALM_NEXTPAGE_RELEASE', 'May 1, 2020');
 
 
 

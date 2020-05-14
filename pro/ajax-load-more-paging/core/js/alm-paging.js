@@ -550,17 +550,14 @@ var almPaging = {};
       
       almPaging.setHeight(alm);	  
 
-      var almDoScroll = false,
-         almScrollTop = 30; // set default
-
-      // Get SEO scroll values
-      if (alm.addons.seo_scroll === undefined || alm.addons.seo_scroll === null || alm.addons.seo_scroll === 'false') { // SEO - scroll user to top of paging
-         almDoScroll = false;
-      } else {
-         almDoScroll = alm.addons.seo_scroll;
-         almScrollTop = alm.addons.seo_scrolltop;
+      var almDoScroll = false;
+      var almScrollTop = 100;
+      
+      if(alm.addons.paging_scroll === 'true'){
+	     almDoScroll = true;
+	     almScrollTop = (alm.addons.paging_scrolltop) ? alm.addons.paging_scrolltop : almScrollTop;
       }
-
+		
       setTimeout(function() {
 
          container.classList.remove('loading'); // remove 'loading' class from .alm-reveal
@@ -584,7 +581,6 @@ var almPaging = {};
             setTimeout(function() {
 	            var event = document.createEvent("Event");
 					event.initEvent("resize", false, true); 
-					// args: string type, boolean bubbles, boolean cancelable
 					window.dispatchEvent(event);
 
             }, alm.speed);

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More Cache\n"
-"POT-Creation-Date: 2018-12-20 14:58-0500\n"
+"POT-Creation-Date: 2020-05-01 12:21-0400\n"
 "PO-Revision-Date: 2018-04-16 12:58-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -102,7 +102,7 @@ msgid ""
 "page, the cache build process will stop."
 msgstr ""
 
-#: ../admin/views/cache.php:18 ../ajax-load-more-cache.php:562
+#: ../admin/views/cache.php:18 ../ajax-load-more-cache.php:599
 msgid "Cache deleted successfully"
 msgstr ""
 
@@ -138,12 +138,12 @@ msgstr ""
 msgid "Are you sure you want to delete the entire Ajax Load More cache?"
 msgstr ""
 
-#: ../admin/views/cache.php:88 ../ajax-load-more-cache.php:637
-#: ../ajax-load-more-cache.php:640
+#: ../admin/views/cache.php:88 ../ajax-load-more-cache.php:674
+#: ../ajax-load-more-cache.php:677
 msgid "Delete Cache"
 msgstr ""
 
-#: ../admin/views/cache.php:95 ../ajax-load-more-cache.php:649
+#: ../admin/views/cache.php:95 ../ajax-load-more-cache.php:686
 msgid "Auto-Generate Cache"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid ""
 "<strong>Generate Cache</strong> below to start the process."
 msgstr ""
 
-#: ../admin/views/cache.php:103 ../ajax-load-more-cache.php:652
+#: ../admin/views/cache.php:103 ../ajax-load-more-cache.php:689
 msgid "Generate Cache"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgid ""
 "created."
 msgstr ""
 
-#: ../admin/views/file-listing.php:13 ../ajax-load-more-cache.php:187
+#: ../admin/views/file-listing.php:13 ../ajax-load-more-cache.php:192
 msgid "Cache Settings"
 msgstr ""
 
@@ -242,62 +242,63 @@ msgid ""
 "write to your server. Please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:193
+#: ../ajax-load-more-cache.php:198
 msgid "Published Posts"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:200
+#: ../ajax-load-more-cache.php:205
 msgid "Known Users"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:259
+#: ../ajax-load-more-cache.php:264
 msgid "Unable to create text file!"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:267
+#: ../ajax-load-more-cache.php:272
 msgid ""
 "Unable to write to text file. Please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:318 ../ajax-load-more-cache.php:320
-#: ../ajax-load-more-cache.php:355 ../ajax-load-more-cache.php:389
+#: ../ajax-load-more-cache.php:322 ../ajax-load-more-cache.php:324
+#: ../ajax-load-more-cache.php:359 ../ajax-load-more-cache.php:393
+#: ../ajax-load-more-cache.php:427
 msgid "Error opening file - please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:323 ../ajax-load-more-cache.php:357
-#: ../ajax-load-more-cache.php:391
+#: ../ajax-load-more-cache.php:327 ../ajax-load-more-cache.php:361
+#: ../ajax-load-more-cache.php:395 ../ajax-load-more-cache.php:429
 msgid "Error writing to cache file. Please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:507
+#: ../ajax-load-more-cache.php:544
 msgid "Error - Unable to verify nonce."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:631
+#: ../ajax-load-more-cache.php:668
 msgid "Ajax Load More Cache"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:669
+#: ../ajax-load-more-cache.php:706
 msgid ""
 "Customize your installation of the <a href=\"http://connekthq.com/plugins/"
 "ajax-load-more/cache/\">Cache</a> add-on."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:691
+#: ../ajax-load-more-cache.php:728
 msgid "Delete cache when new posts are published."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:692
+#: ../ajax-load-more-cache.php:729
 msgid ""
 "Cache will be fully cleared whenever a post, page or Custom Post Type is "
 "published or updated."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:717
+#: ../ajax-load-more-cache.php:754
 msgid "Don't cache files for logged in users."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:718
+#: ../ajax-load-more-cache.php:755
 msgid ""
 "Logged in users will retrieve content directly from the database and will "
 "not view any cached content."

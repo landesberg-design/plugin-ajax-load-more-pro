@@ -127,11 +127,11 @@ ul.alm-paging li.active a {
    transition: all 0.25s ease;   
 }
    .ajax-load-more-wrap.alm-loading .alm-paging-content{
-      opacity: 0.5;
+      opacity: 0.5 !important;
    }
 
 .alm-paging-wrap .alm-paging-loading,
-.ajax-load-more-wrap.alm-is-filtering {
+.ajax-load-more-wrap.alm-paging.alm-is-filtering {
    background-color: rgba(255, 255, 255, 0.1);
    background-image: url('../../img/ajax-loader.gif');
    background-repeat: no-repeat;

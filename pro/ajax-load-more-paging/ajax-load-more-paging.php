@@ -6,7 +6,7 @@ Description: Ajax Load More extension to replace infinite scroll with paging nav
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.5.2
+Version: 1.5.3
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_PAGING_PATH', plugin_dir_path(__FILE__));
 define('ALM_PAGING_URL', plugins_url('', __FILE__));
-define('ALM_PAGING_VERSION', '1.5.2');
-define('ALM_PAGING_RELEASE', 'October 1, 2019');
+define('ALM_PAGING_VERSION', '1.5.3');
+define('ALM_PAGING_RELEASE', 'May 1, 2020');
 
 
 /*
@@ -57,18 +57,30 @@ if( !class_exists('ALMPAGING') ):
    	*
    	*  @since 1.2
    	*/
-   	
-
-   	function alm_paging_shortcode($paging, $paging_controls, $paging_show_at_most, $paging_classes, $paging_first_label, $paging_last_label, $paging_previous_label, $paging_next_label, $options){
+   	function alm_paging_shortcode($paging, $controls, $show_at_most, $classes, $first_label, $last_label, $previous_label, $next_label, $scroll){
          $return = ' data-paging="'.$paging.'"';
-         $return .= ' data-paging-controls="'.$paging_controls.'"';
-         $return .= ' data-paging-show-at-most="'.$paging_show_at_most.'"';
-         $return .= ' data-paging-classes="'.$paging_classes.'"';
-         $return .= ' data-paging-first-label="'.$paging_first_label.'"';
-         $return .= ' data-paging-last-label="'.$paging_last_label.'"';
-         $return .= ' data-paging-previous-label="'.$paging_previous_label.'"';
-         $return .= ' data-paging-next-label="'.$paging_next_label.'"';
+         $return .= ' data-paging-controls="'.$controls.'"';
+         $return .= ' data-paging-show-at-most="'.$show_at_most.'"';
+         $return .= ' data-paging-classes="'.$classes.'"';
+         $return .= ' data-paging-first-label="'.$first_label.'"';
+         $return .= ' data-paging-last-label="'.$last_label.'"';
+         $return .= ' data-paging-previous-label="'.$previous_label.'"';
+         $return .= ' data-paging-next-label="'.$next_label.'"';
+			
+			if($scroll){
+				$scroll_values = explode(':', $scroll);
+				if($scroll_values[0] === 'true'){
+					$return .= ' data-paging-scroll="true"';
+					if(isset($scroll_values[1])){
+						$return .= ' data-paging-scrolltop="'. $scroll_values[1] .'"';
+					} else {
+						$return .= ' data-paging-scrolltop="100"';
+					}
+				}
+			}
+			
          return $return;
+         
    	}
 
 

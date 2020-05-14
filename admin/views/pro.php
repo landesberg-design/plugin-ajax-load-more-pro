@@ -81,7 +81,13 @@
 	   		                     <span><?php if(defined($version)) {echo constant($version);} ?></span>
 	   		                  </h2>
                               <p><?php echo $desc; ?></p>
-                              <?php if(!$installed) { echo '<p style="padding-top: 15px; font-size: 12px;">'. __( 'Add-on not installed!', 'ajax-load-more-pro') .'</p>'; } ?>
+                              
+                              <?php if(!$installed) { 
+	                              echo '<p class="highlight-addon"><span>'. __( 'Add-on Not Installed', 'ajax-load-more-pro') .'</span><br/>'; 
+	                              echo __( 'You need to update ALM Pro or renew your subscription to access this add-on.', 'ajax-load-more-pro'); 
+	                              echo '</p>';
+	                           } ?>
+                              
    		                  </div>
    		               </div>	
    		               <?php if($installed) { ?>	

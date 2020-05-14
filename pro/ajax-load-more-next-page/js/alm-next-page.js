@@ -67,8 +67,7 @@ var almNextpage = {};
          // If paged, move to current page on page load.
          if (startPage > 1) {
 
-            almNextpage.popstate = true;
-            almNextpage.fromPopstate = true;
+            almNextpage.popstate = almNextpage.fromPopstate = true;
 
             // Get scroll target 
             var target = document.querySelector('.alm-nextpage[data-id="' + parseInt(startPage) + '"]');
@@ -165,7 +164,7 @@ var almNextpage = {};
             var permalink = (currentPost) ? currentPost.dataset.url : '';
             var id = (currentPost) ? currentPost.dataset.id : '';
 
-            if (id === undefined) {
+            if (id === undefined || id === '') {
                id = almNextpage.first.dataset.id;
                permalink = almNextpage.first.dataset.url;
             }
@@ -189,8 +188,7 @@ var almNextpage = {};
     *
     * @since 1.0         
     */
-
-   window.almSetNextPage = function(alm) {
+	 window.almSetNextPage = function(alm) {
 
       almNextpage.active = true;
       almNextpage.paging = alm.addons.paging; // paging
@@ -225,11 +223,9 @@ var almNextpage = {};
       }
 
       // Scroll to post
-      if (almNextpage.scroll) {
-	      if(!almNextpage.paging){
-		      almNextpage.fromPopstate = almNextpage.popstate = false;
-	      }
-         almNextpage.scrollToPage(alm.page);
+      if (almNextpage.scroll && !almNextpage.paging) {
+	      almNextpage.fromPopstate = almNextpage.popstate = false;
+	      almNextpage.scrollToPage(alm.page);
       }
 
       // Paging - Set URL
@@ -251,7 +247,10 @@ var almNextpage = {};
       var page;
       
       // Exit if nested OR not active
-      if (almNextpage.nested || !almNextpage.active) { return false; } // Safari fix - only fire when active
+      if (almNextpage.nested || !almNextpage.active) {
+	      // Safari fix - only fire when active
+	      return false;
+	   } 
 
       almNextpage.popstate = almNextpage.fromPopstate = true;         
             
@@ -292,10 +291,6 @@ var almNextpage = {};
          }
       }
       
-      setTimeout(function(){
-         almNextpage.popstate = almNextpage.fromPopstate = false;
-      }, 250);
-      
    };
 
 
@@ -308,8 +303,6 @@ var almNextpage = {};
     */
    window.addEventListener('popstate', function(event) {
       if (typeof window.history.pushState == 'function') {
-         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-	      document.body.scrollTop = scrollTop;
          almNextpage.onpopstate(event);
       }
    });
@@ -326,7 +319,7 @@ var almNextpage = {};
     * @return null
     */
    almNextpage.setURL = function(pageID, permalink, is_paging) {
-
+	   
       if (almNextpage.nested) return false; // Exit if nested
 
       if (almNextpage.urls) { // Confirm URLs are to be updated
@@ -367,6 +360,7 @@ var almNextpage = {};
          }
 
          almNextpage.fromPopstate = almNextpage.popstate = false;
+         
       }
    };
    

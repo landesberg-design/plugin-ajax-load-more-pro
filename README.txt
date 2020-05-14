@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 3.6.1
-Tested up to: 5.4
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.1
+Version: 1.1.1
 
 == Copyright ==
 Copyright 2020 Darren Cooney, Connekt Media
@@ -48,7 +48,29 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 == Changelog ==
 
-= 1.1 - April 22, 2020 =
+= 1.1.1 - May 1, 2020 =
+
+**Add-on Updates**
+
+Cache
+* NEW - Added new cache API for caching Single Posts using the new implementation method. This new API will allow for more robust caching options in the future.
+
+Next Page
+* FIX - Fixed issue with push/popstate when using Nextpage and Paging add-ons.
+* FIX - Fixed issue with Google Analytics integration sending a second pageview on page load.
+* UPDATE - Set default `nextpage_scroll` shortcode parameter to false for better UX and accessibility.
+* UPDATE - Disabled `Scroll to Page` functionality if Paging add-on is active. Use Paging add-on to scroll user to the top of the page.
+
+Paging
+* NEW - Added new Scroll to Top functionality for after a paging click event.
+* FIX - Resolved issue with loading transition not displaying properly in some instances.
+* FIX - Added CSS fix for loading issue when Paging CSS is not loaded inline.
+
+Search Engine Optimization
+* UPDATE - Updated default setting for `Scroll to Page` to false for better UX and accessibility.
+
+
+= 1.1.0 - April 22, 2020 =
 
 * NEW - Added new [WooCommerce Add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/). This add-on will need to be enabled in Ajax Load More > Pro in your WordPress admin.
 

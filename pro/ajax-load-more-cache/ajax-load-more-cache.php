@@ -6,15 +6,15 @@ Description: Ajax Load More extension that creates static HTML files from ajax r
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: http://connekthq.com
-Version: 1.6.0
+Version: 1.6.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_CACHE_VERSION', '1.6.0');
-define('ALM_CACHE_RELEASE', 'December 28, 2018');
+define('ALM_CACHE_VERSION', '1.6.1');
+define('ALM_CACHE_RELEASE', 'May 1, 2020');
 
 
 /*
@@ -54,7 +54,7 @@ function alm_cache_install() {
 if( !class_exists('ALMCache') ):
    class ALMCache{
    	function __construct(){
-         $this->constants();
+         $this->init();
 
    		add_action( 'alm_cache_installed', array(&$this, 'alm_cache_installed') );
    		add_action( 'alm_clear_cache', array(&$this, 'alm_clear_cache') );
@@ -62,6 +62,7 @@ if( !class_exists('ALMCache') ):
    	   add_filter( 'alm_cache_file', array(&$this, 'alm_cache_file' ), 10, 5 );
    	   add_filter( 'alm_get_cache_array', array(&$this, 'alm_get_cache_array' ), 10, 2 );
    	   add_filter( 'alm_previous_post_cache_file', array(&$this, 'alm_previous_post_cache_file' ), 10, 3 );
+   	   add_filter( 'alm_html_cache_file', array(&$this, 'alm_html_cache_file' ), 10, 3 );
    	   add_filter( 'alm_nextpage_cache_file', array(&$this, 'alm_nextpage_cache_file' ), 10, 3 );
    	   add_filter( 'alm_cache_create_dir', array(&$this, 'alm_cache_create_dir' ), 10, 3 );
          add_action( 'wp_ajax_alm_delete_cache', array(&$this, 'alm_delete_cache') ); // Delete Cache
@@ -71,20 +72,21 @@ if( !class_exists('ALMCache') ):
    		add_filter( 'alm_cache_shortcode', array(&$this, 'alm_cache_shortcode'), 10, 3 );
          add_action( 'admin_head', array(&$this, 'alm_cache_vars') ); // Localized Cache Variables
    		load_plugin_textdomain( 'ajax-load-more-cache', false, dirname(plugin_basename( __FILE__ )).'/lang/'); //load text domain
-
+			
    	}
 
 
       /*
-      *  constants
+      *  init
       *  Include these files in the admin
       *
       *  @since 1.4
       */
 
-      private function constants(){
+      private function init(){
       	define('ALM_CACHE_ADMIN_PATH', plugin_dir_path(__FILE__)); // Plugin Dir Path
       	define('ALM_CACHE_ADMIN_URL', plugins_url('', __FILE__)); // Plugin URL
+      	require_once('api/create.php');
       }
 
 
@@ -246,17 +248,17 @@ if( !class_exists('ALMCache') ):
       	// Test upload directory before creating files
       	$path = ALMCache::alm_get_cache_path();
 
-         // Create alm-cache directory if does not exist
+         // Create alm-cache directory if not exists
          if(!is_dir($path)){             
             wp_mkdir_p($path);
-            //mkdir($path) or die(__('Error creating cache directory. Please contact your hosting administrator.', 'ajax-load-more-cache'));
       	}
 
          $cdir = $path . $cache_id;
+         
          // make the directory and text file to store data
-         if(!is_dir($cdir)){             
+         if(!is_dir($cdir)){   
+	                   
             wp_mkdir_p($cdir);
-            //mkdir($cdir) or die(__('Error creating cache directory. Please contact your hosting administrator.', 'ajax-load-more-cache'));
 
             // Create text file
             $txtfile = fopen($cdir . '/_info.txt', 'w') or die(__('Unable to create text file!', 'ajax-load-more-cache'));
@@ -269,6 +271,7 @@ if( !class_exists('ALMCache') ):
 
             fwrite($txtfile, serialize($data)) or die(__('Unable to write to text file. Please contact your hosting administrator.', 'ajax-load-more-cache'));
             fclose($txtfile);
+            
          }
 
 	   }
@@ -348,6 +351,40 @@ if( !class_exists('ALMCache') ):
    	*/
 
    	function alm_previous_post_cache_file($cache_id, $slug, $data){
+
+         $path = ALMCache::alm_get_cache_path();
+
+         $dir = $path . $cache_id;
+
+         $cached_file = fopen($dir . '/'. $slug .'.html', 'w') or die(__('Error opening file - please contact your hosting administrator.', 'ajax-load-more-cache'));
+
+         fwrite($cached_file, $data) or die(__('Error writing to cache file. Please contact your hosting administrator.', 'ajax-load-more-cache'));
+
+         /*
+          *	alm_cache_created
+          *
+          * ALM Cache Hook
+          * Dispatched after cache has been created
+          *
+          * Since 1.6
+          */
+         do_action('alm_cache_created');
+	   }
+
+
+
+   	/*
+   	*  alm_html_cache_file
+   	*  Create cache file from HTML
+   	*
+   	*
+   	*  @param $cache_id   string
+   	*  @param $slug   string
+   	*  @param $data   string
+   	*  @since 1.6.1
+   	*/
+
+   	function alm_html_cache_file($cache_id, $slug, $data){
 
          $path = ALMCache::alm_get_cache_path();
 
@@ -454,7 +491,6 @@ if( !class_exists('ALMCache') ):
                 */
                do_action('alm_cache_deleted');
          	}
-
          }
    	}
 

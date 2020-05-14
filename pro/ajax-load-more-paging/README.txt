@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/paging/
 Requires at least: 4.0
-Tested up to: 5.2.3
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.2
+Version: 1.5.3
 
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2020 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,9 +47,14 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 == Upgrade Notice ==
-meowowaj swsw
 
 == Changelog ==
+
+= 1.5.3 - May 1, 2020 = 
+* NEW - Added new Scroll to Top functionality for after a paging click event.
+* FIX - Resolved issue with loading transition not displaying properly in some instances.
+* FIX - Added CSS fix for loading issue when Paging CSS is not loaded inline.
+
 
 = 1.5.2 - October 1, 2019 =
 * FIX - Fixed issue with pagination not showing in some instances when used with Filters Addon.

@@ -6,7 +6,7 @@ Description: Ajax Load More extension to generate unique paging URLs with each q
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.9.2
+Version: 1.9.3
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('ALM_SEO_PATH', plugin_dir_path(__FILE__));
 define('ALM_SEO_URL', plugins_url('', __FILE__));
-define('ALM_SEO_VERSION', '1.9.2');
-define('ALM_SEO_RELEASE', 'August 6, 2019');
+define('ALM_SEO_VERSION', '1.9.3');
+define('ALM_SEO_RELEASE', 'May 1, 2020');
 
 
 /*
@@ -39,7 +39,7 @@ function alm_seo_install() {
 if( !class_exists('ALMSEO') ):
 
    class ALMSEO{
-      
+
    	function __construct(){
    		add_action('alm_seo_installed', array(&$this, 'alm_is_seo_installed'));
    		add_action('wp_enqueue_scripts', array(&$this, 'alm_seo_enqueue_scripts'));
@@ -61,15 +61,16 @@ if( !class_exists('ALMSEO') ):
    	function alm_seo_shortcode($seo, $preloaded, $options){
 
 		   $seo_scrolltop = '30';
-   		if(isset($options['_alm_seo_scrolltop']))
+   		if(isset($options['_alm_seo_scrolltop'])){
    			$seo_scrolltop = $options['_alm_seo_scrolltop'];
+   		}
 
 		   $seo_controls = '1';
    		if(isset($options['_alm_seo_browser_controls'])){
    			$seo_controls = $options['_alm_seo_browser_controls'];
    		}
 
-			$seo_enable_scroll = 'true';
+			$seo_enable_scroll = 'false';
    		if(isset($options['_alm_seo_scroll'])){
    			$seo_enable_scroll = $options['_alm_seo_scroll'];
    			if($seo_enable_scroll == '1'){
@@ -286,8 +287,9 @@ if( !class_exists('ALMSEO') ):
 
 	   $options = get_option( 'alm_settings' );
 
-	   if(!isset($options['_alm_seo_scroll']))
-		   $options['_alm_seo_scroll'] = '1';
+	   if(!isset($options['_alm_seo_scroll'])){
+			$options['_alm_seo_scroll'] = '0';
+		}
 
 		$html = '<input type="hidden" name="alm_settings[_alm_seo_scroll]" value="0" />';
 		$html .= '<input type="checkbox" name="alm_settings[_alm_seo_scroll]" id="alm_scroll_page" value="1"'. (($options['_alm_seo_scroll']) ? ' checked="checked"' : '') .' />';
@@ -314,7 +316,7 @@ if( !class_exists('ALMSEO') ):
 
 
 		echo '<label for="alm_settings[_alm_seo_scrolltop]">'.__('Set the scrolltop position of the window when scrolling to post.', 'ajax-load-more-seo').'</label><br/><input type="number" class="sm" id="alm_settings[_alm_seo_scrolltop]" name="alm_settings[_alm_seo_scrolltop]" step="1" min="0" value="'.$options['_alm_seo_scrolltop'].'" placeholder="30" /> ';
-		
+
 	}
 
 
@@ -340,7 +342,7 @@ if( !class_exists('ALMSEO') ):
 		$html .='<input type="checkbox" id="_alm_seo_browser_controls" name="alm_settings[_alm_seo_browser_controls]" value="1"'. (($options['_alm_seo_browser_controls']) ? ' checked="checked"' : '') .' />';
 		$html .= '<label for="_alm_seo_browser_controls">'.__('Enable Back/Fwd Browser Buttons.', 'ajax-load-more-seo').'<br/><span>'.__('Allow users to navigate Ajax generated content using the back and forward browser buttons.', 'ajax-load-more-seo').'</span></label>';
 
-		echo $html;		
+		echo $html;
 	}
 
 
