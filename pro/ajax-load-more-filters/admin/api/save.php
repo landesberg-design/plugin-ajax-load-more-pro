@@ -29,11 +29,11 @@ function save_filter( WP_REST_Request $request ) {
 	error_reporting(E_ALL|E_STRICT);
 
 	// Get contents of request and convert to array
-	$data = json_decode($request->get_body(), true);	
+	$data = json_decode($request->get_body(), true);
 
 	$options = json_decode($data['options']);
 	$filters = json_decode($data['filters']);
-	
+
 	$filter_array = [];
 	$filter_array['id'] = '';
 
@@ -84,6 +84,8 @@ function save_filter( WP_REST_Request $request ) {
 
 		// convert $filters to array from stdClass Object
 		$filters = json_decode(json_encode($filters), true);
+		// alm_pretty_print($filters);
+
 
 		// Loop each as a $filter
 		foreach($filters as $filter){
@@ -112,7 +114,8 @@ function save_filter( WP_REST_Request $request ) {
 	   			unset($array['meta_key']);
 	   			unset($array['meta_operator']);
 	   			unset($array['meta_type']);
-   			}
+				}
+
    			// Clear Custom Field value if $filter['key'] !== 'meta'
    			if($filter['key'] !== 'meta'){
 	   			unset($array['meta_key']);
@@ -138,10 +141,10 @@ function save_filter( WP_REST_Request $request ) {
    			// default value
    			if((isset($array['default_value']) && $array['default_value'] === '')){
 	   			unset($array['default_value']);
-	   		}
+				}
 
 	   		// Custom Values
-   			if((isset($array['values']) && $array['values'] === '') || empty($array['values']) || $filter['field_type'] === 'text'){
+   			if((isset($array['values']) && $array['values'] === '') || empty($array['values']) || $filter['field_type'] === 'text' || $filter['field_type'] === 'star_rating'){
 	   			unset($array['values']);
    			}
 
@@ -153,6 +156,11 @@ function save_filter( WP_REST_Request $request ) {
    			// Title
    			if(isset($array['title']) && $array['title'] === ''){
 	   			unset($array['title']);
+	   		}
+
+   			// Description
+   			if(isset($array['description']) && empty($array['description'])){
+	   			unset($array['description']);
 	   		}
 
    			// Button Label
@@ -168,11 +176,15 @@ function save_filter( WP_REST_Request $request ) {
    			// Classes
    			if(isset($array['classes']) && $array['classes'] === ''){
 	   			unset($array['classes']);
+				}
+
+				// Star Rating
+				if($filter['field_type'] !== 'star_rating'){
+	   			unset($array['star_rating_min'], $array['star_rating_max']);
 	   		}
-	   		
-	   		
-	   		// Checkbox Toggle	   		
-	   		
+
+	   		// Checkbox Toggle
+
 	   		// Toggle Option
    			if($filter['field_type'] !== 'checkbox' || isset($array['checkbox_toggle']) && $array['checkbox_toggle'] === ''){
 	   			unset($array['checkbox_toggle']);
@@ -181,78 +193,82 @@ function save_filter( WP_REST_Request $request ) {
    			if($filter['field_type'] !== 'checkbox' || isset($array['checkbox_toggle']) && $array['checkbox_toggle'] === '' || isset($array['checkbox_toggle_label']) && $array['checkbox_toggle_label'] === ''){
 	   			unset($array['checkbox_toggle_label']);
 	   		}
-	   		
-	   		
-	   		// Datepicker		   		         		
-	   		
+
+
+	   		// Datepicker
+
 	   		// Mode
    			if($filter['field_type'] !== 'date_picker' || isset($array['datepicker_mode']) && $array['datepicker_mode'] === ''){
 	   			unset($array['datepicker_mode']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Display Format
    			if($filter['field_type'] !== 'date_picker' || isset($array['datepicker_format']) && $array['datepicker_format'] === ''){
 	   			unset($array['datepicker_format']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Locale
    			if($filter['field_type'] !== 'date_picker' || isset($array['datepicker_locale']) && $array['datepicker_locale'] === ''){
 	   			unset($array['datepicker_locale']);
 	   		}
-	   		
-	   		
-	   		// Range Slider	
-	   		
-	   			   		     
+
+
+	   		// Range Slider
+
+
 	   		// Min
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_min']) && $array['rangeslider_min'] === ''){
 	   			unset($array['rangeslider_min']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Max
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_max']) && $array['rangeslider_max'] === ''){
 	   			unset($array['rangeslider_max']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Start
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_start']) && $array['rangeslider_start'] === ''){
 	   			unset($array['rangeslider_start']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// End
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_end']) && $array['rangeslider_end'] === ''){
 	   			unset($array['rangeslider_end']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Steps
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_steps']) && $array['rangeslider_steps'] === ''){
 	   			unset($array['rangeslider_steps']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Steps
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_label']) && $array['rangeslider_label'] === ''){
 	   			unset($array['rangeslider_label']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Orientation
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_orientation']) && $array['rangeslider_orientation'] === ''){
 	   			unset($array['rangeslider_orientation']);
-	   		}	   		
-	   		
+	   		}
+
 	   		// Decimals
    			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_decimals']) && $array['rangeslider_decimals'] === ''){
 	   			unset($array['rangeslider_decimals']);
 	   		}
-	   		
-	   		
+
+	   		// Reset Button
+   			if($filter['field_type'] !== 'range_slider' || isset($array['rangeslider_reset']) && $array['rangeslider_reset'] === ''){
+	   			unset($array['rangeslider_reset']);
+	   		}
+
 
 	   		unset($array['order']);
 	   		unset($array['uniqueid']);
 
    			array_push($filter_array['filters'], $array);
-   			
+
 			}
-			
+
 		}
 
 	}

@@ -41,6 +41,28 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 			'type'    => 'checkbox'
 		)
 	);
+	
+	if(has_action('alm_cache_installed')){
+		// Shop Cache
+		$wp_customize->add_setting(
+			ALM_WOO_PREFIX.'shop_cache',
+			array(
+				'default' 				=> false,
+				'capability' 			=> 'edit_theme_options',
+				'type' 					=> 'option'
+			)
+		);
+		$wp_customize->add_control(
+			ALM_WOO_PREFIX. 'shop_cache',
+			array(
+				'section' 		=> 'woocommerce_alm',
+				'priority' 		=> 2,
+				'label'			=> __( 'Shop Cache', 'alm-woocommerce' ),
+				'description' 	=> __( sprintf('Enable <a href="%s">Cache</a> on main Shop</a>.', 'admin.php?page=ajax-load-more-cache'), 'alm-woocommerce' ),
+				'type'    => 'checkbox'
+			)
+		);
+	}
 
 	// Shop Archive Pages
 	$wp_customize->add_setting(
@@ -57,10 +79,32 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 			'section' 		=> 'woocommerce_alm',
 			'priority' 		=> 2,
 			'label'			=> __( 'Shop Archives', 'alm-woocommerce' ),
-			'description' 	=> __( sprintf('Enable Ajax Load More on shop <a href="%s">archive</a> pages. <br/><span style="opacity: 0.7;">e.g. Product category and tags</span>', alm_woo_get_random_product_cat()), 'alm-woocommerce' ),
+			'description' 	=> __( sprintf('Enable Ajax Load More on shop <a href="%s">archives</a>. <br/><span style="opacity: 0.7;">e.g. Product category and tags</span>', alm_woo_get_random_product_cat()), 'alm-woocommerce' ),
 			'type'    => 'checkbox'
 		)
 	);
+	
+	if(has_action('alm_cache_installed')){
+		// Shop Archive Cache
+		$wp_customize->add_setting(
+			ALM_WOO_PREFIX.'shop_archives_cache',
+			array(
+				'default' 				=> false,
+				'capability' 			=> 'edit_theme_options',
+				'type' 					=> 'option'
+			)
+		);
+		$wp_customize->add_control(
+			ALM_WOO_PREFIX. 'shop_archives_cache',
+			array(
+				'section' 		=> 'woocommerce_alm',
+				'priority' 		=> 2,
+				'label'			=> __( 'Shop Archive Cache', 'alm-woocommerce' ),
+				'description' 	=> __( sprintf('Enable <a href="%s">Cache</a> on shop archives.', 'admin.php?page=ajax-load-more-cache'), 'alm-woocommerce' ),
+				'type'    => 'checkbox'
+			)
+		);
+	}
 
 	// Shop Search
 	$wp_customize->add_setting(
@@ -369,6 +413,46 @@ function alm_woocommerce_customizer_add_scripts() {
 					}
 				});
 			});
+			
+			<?php if(has_action('alm_cache_installed')){ ?> 
+			// Cache
+			// Hide Cache if Shop Page false
+			wp.customize('alm_woo_shop_main', function (value) {
+				var shop_main = wp.customize.instance('alm_woo_shop_main').get();
+				if(shop_main !== '1'){
+					setTimeout(function(){
+						wp.customize.control('alm_woo_shop_cache').toggle(false);
+					}, 1000);
+				}
+				value.bind(function (state) {
+					console.log(state);
+					if(!state){
+						wp.customize.control('alm_woo_shop_cache').toggle(false);
+					} else {
+						wp.customize.control('alm_woo_shop_cache').toggle(true);
+					}
+				});
+			});
+			
+			
+			// Hide Cache if Shop Archive false
+			wp.customize('alm_woo_shop_archives', function (value) {
+				var shop_main = wp.customize.instance('alm_woo_shop_archives').get();
+				if(shop_main !== '1'){
+					setTimeout(function(){
+						wp.customize.control('alm_woo_shop_archives_cache').toggle(false);
+					}, 1000);
+				}
+				value.bind(function (state) {
+					console.log(state);
+					if(!state){
+						wp.customize.control('alm_woo_shop_archives_cache').toggle(false);
+					} else {
+						wp.customize.control('alm_woo_shop_archives_cache').toggle(true);
+					}
+				});
+			});
+			<?php } ?>
 				
 		});
 	</script>

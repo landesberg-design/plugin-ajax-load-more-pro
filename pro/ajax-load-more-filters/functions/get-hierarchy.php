@@ -7,20 +7,20 @@
  * @return array
  */
 function alm_get_taxonomy_hierarchy( $args = array(), $parent = 0 ) {
-	
+
 	if(!$args) return false;
-	
+
 	// Add parent relationship
 	$args['parent'] = $parent;
-	
+
 	//alm_pretty_print($args);
-	
+
 	// Get the terms
 	$terms = get_terms( $args );
-	
+
 	// Prepare new array
 	$children = array();
-	
+
 	// Loop direct decendants of $parent, and get children
 	foreach ( $terms as $term ){
 		// Get direct decendants of "this" term
@@ -28,7 +28,7 @@ function alm_get_taxonomy_hierarchy( $args = array(), $parent = 0 ) {
 		// Add term to new array
 		$children[] = $term;
 	}
-	
+
 	return $children; // Return $children
 }
 
@@ -43,9 +43,9 @@ function alm_get_taxonomy_hierarchy( $args = array(), $parent = 0 ) {
  * @return array
  */
 function alm_loop_term_children($items, $term, $exclude){
-	
+
 	if(!$items || !$term) return false;
-	
+
 	// Confirm child term exists
 	if(isset($term->children)){
 		// Loop child terms
@@ -56,5 +56,5 @@ function alm_loop_term_children($items, $term, $exclude){
 			}
 		}
 	}
-	return $items;	
+	return $items;
 }

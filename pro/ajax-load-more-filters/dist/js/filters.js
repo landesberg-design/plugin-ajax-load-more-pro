@@ -87,6 +87,17 @@ var almfilters =
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/a11yarrows/dist/a11yarrows.min.js":
+/*!********************************************************!*\
+  !*** ./node_modules/a11yarrows/dist/a11yarrows.min.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,function(){return function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=0)}([function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.init=function(e,t){if((t=Object.assign({},n,t)).target=e,t.next=t.next?t.next:"down",t.prev=t.prev?t.prev:"up",!t.target||!t.selector)return;i(t),window.addEventListener(t.event,function(e){o(e,t)})};var n=r(1),o=r(2),i=r(7);r(8)},function(e,t,r){"use strict";e.exports={selector:"a",loop:!0,event:"keydown",next:"down right",prev:"up left"}},function(e,t,r){"use strict";var n=r(3),o=r(4),i=r(5),u=r(6);e.exports=function(e,t){var r=e.target,f=e.which||e.keycode,c=t.target.querySelectorAll(t.selector);c=c?Array.prototype.slice.call(c):c;var a=i(r,c);if(!c||!a)return!1;if(-1!==u(t.next,n).indexOf(f)){var l=o(r,c,"next");if(l<c.length)return c[l].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[0].focus(),e.preventDefault(),e.stopPropagation(),!1}if(-1!==u(t.prev,n).indexOf(f)){var p=o(r,c,"previous");if(p<c.length&&-1!==p)return c[p].focus(),e.preventDefault(),e.stopPropagation(),!1;if(t.loop)return c[c.length-1].focus(),e.preventDefault(),e.stopPropagation(),!1}return!0}},function(e,t,r){"use strict";e.exports={up:38,right:39,down:40,left:37,escape:27,enter:13,spacebar:32,tab:9}},function(e,t,r){"use strict";e.exports=function(e,t){var r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"next",n=Array.prototype.slice.call(t).indexOf(e);if(-1!==n)return"previous"===r?n-1:n+1}},function(e,t,r){"use strict";e.exports=function(e,t){return-1!==Array.prototype.slice.call(t).indexOf(e)}},function(e,t,r){"use strict";e.exports=function(e,t){for(var r=e.split(" "),n=[],o=0;o<r.length;o++)n.push(t[r[o]]);return n}},function(e,t,r){"use strict";e.exports=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";if(!e.target||!e.selector)return!1;var t=e.target.querySelectorAll(e.selector);(t=t?Array.prototype.slice.call(t):t).forEach(function(e){e.tabIndex=0})}},function(e,t,r){"use strict";"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,t){if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var r=Object(e),n=1;n<arguments.length;n++){var o=arguments[n];if(null!=o)for(var i in o)Object.prototype.hasOwnProperty.call(o,i)&&(r[i]=o[i])}return r},writable:!0,configurable:!0}),Array.prototype.forEach||(Array.prototype.forEach=function(e){var t,r;if(null==this)throw new TypeError("this is null or not defined");var n=Object(this),o=n.length>>>0;if("function"!=typeof e)throw new TypeError(e+" is not a function");for(arguments.length>1&&(t=arguments[1]),r=0;r<o;){var i;r in n&&(i=n[r],e.call(t,i,r,n)),r++}})}])});
+
+/***/ }),
+
 /***/ "./node_modules/flatpickr/dist/flatpickr.js":
 /*!**************************************************!*\
   !*** ./node_modules/flatpickr/dist/flatpickr.js ***!
@@ -94,7 +105,7 @@ var almfilters =
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* flatpickr v4.6.1, @license MIT */
+/* flatpickr v4.6.3, @license MIT */
 (function (global, factory) {
      true ? module.exports = factory() :
     undefined;
@@ -185,6 +196,7 @@ var almfilters =
         locale: "default",
         minuteIncrement: 5,
         mode: "single",
+        monthSelectorType: "dropdown",
         nextArrow: "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 17 17'><g></g><path d='M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z' /></svg>",
         noCalendar: false,
         now: new Date(),
@@ -278,6 +290,8 @@ var almfilters =
         toggleTitle: "Click to toggle",
         amPM: ["AM", "PM"],
         yearAriaLabel: "Year",
+        hourAriaLabel: "Hour",
+        minuteAriaLabel: "Minute",
         time_24hr: false
     };
 
@@ -1240,7 +1254,8 @@ var almfilters =
             }
         }
         function buildMonthSwitch() {
-            if (self.config.showMonths > 1)
+            if (self.config.showMonths > 1 ||
+                self.config.monthSelectorType !== "dropdown")
                 return;
             var shouldBuildMonth = function (month) {
                 if (self.config.minDate !== undefined &&
@@ -1259,7 +1274,7 @@ var almfilters =
                     continue;
                 var month = createElement("option", "flatpickr-monthDropdown-month");
                 month.value = new Date(self.currentYear, i).getMonth().toString();
-                month.textContent = monthToStr(i, false, self.l10n);
+                month.textContent = monthToStr(i, self.config.shorthandCurrentMonth, self.l10n);
                 month.tabIndex = -1;
                 if (self.currentMonth === i) {
                     month.selected = true;
@@ -1271,7 +1286,8 @@ var almfilters =
             var container = createElement("div", "flatpickr-month");
             var monthNavFragment = window.document.createDocumentFragment();
             var monthElement;
-            if (self.config.showMonths > 1) {
+            if (self.config.showMonths > 1 ||
+                self.config.monthSelectorType === "static") {
                 monthElement = createElement("span", "cur-month");
             }
             else {
@@ -1361,9 +1377,13 @@ var almfilters =
             self.timeContainer = createElement("div", "flatpickr-time");
             self.timeContainer.tabIndex = -1;
             var separator = createElement("span", "flatpickr-time-separator", ":");
-            var hourInput = createNumberInput("flatpickr-hour");
+            var hourInput = createNumberInput("flatpickr-hour", {
+                "aria-label": self.l10n.hourAriaLabel
+            });
             self.hourElement = hourInput.getElementsByTagName("input")[0];
-            var minuteInput = createNumberInput("flatpickr-minute");
+            var minuteInput = createNumberInput("flatpickr-minute", {
+                "aria-label": self.l10n.minuteAriaLabel
+            });
             self.minuteElement = minuteInput.getElementsByTagName("input")[0];
             self.hourElement.tabIndex = self.minuteElement.tabIndex = -1;
             self.hourElement.value = pad(self.latestSelectedDateObj
@@ -1422,6 +1442,9 @@ var almfilters =
             return self.weekdayContainer;
         }
         function updateWeekdays() {
+            if (!self.weekdayContainer) {
+                return;
+            }
             var firstDayOfWeek = self.l10n.firstDayOfWeek;
             var weekdays = self.l10n.weekdays.shorthand.slice();
             if (firstDayOfWeek > 0 && firstDayOfWeek < weekdays.length) {
@@ -1599,6 +1622,11 @@ var almfilters =
                     return elem.contains(eventTarget_1);
                 });
                 if (lostFocus && isIgnored) {
+                    if (self.timeContainer !== undefined &&
+                        self.minuteElement !== undefined &&
+                        self.hourElement !== undefined) {
+                        updateTime();
+                    }
                     self.close();
                     if (self.config.mode === "range" && self.selectedDates.length === 1) {
                         self.clear(false);
@@ -1756,7 +1784,8 @@ var almfilters =
                         e.preventDefault();
                         var delta = e.keyCode === 40 ? 1 : -1;
                         if ((self.daysContainer && e.target.$i !== undefined) ||
-                            e.target === self.input) {
+                            e.target === self.input ||
+                            e.target === self.altInput) {
                             if (e.ctrlKey) {
                                 e.stopPropagation();
                                 changeYear(self.currentYear - delta);
@@ -2020,7 +2049,7 @@ var almfilters =
                 set: minMaxDateSetter("max")
             });
             var minMaxTimeSetter = function (type) { return function (val) {
-                self.config[type === "min" ? "_minTime" : "_maxTime"] = self.parseDate(val, "H:i");
+                self.config[type === "min" ? "_minTime" : "_maxTime"] = self.parseDate(val, "H:i:S");
             }; };
             Object.defineProperty(self.config, "minTime", {
                 get: function () { return self.config._minTime; },
@@ -2103,7 +2132,7 @@ var almfilters =
                 (configPosHorizontal != null && configPosHorizontal === "center"
                     ? (calendarWidth - inputBounds.width) / 2
                     : 0);
-            var right = window.document.body.offsetWidth - inputBounds.right;
+            var right = window.document.body.offsetWidth - (window.pageXOffset + inputBounds.right);
             var rightMost = left + calendarWidth > window.document.body.offsetWidth;
             var centerMost = right + calendarWidth > window.document.body.offsetWidth;
             toggleClass(self.calendarContainer, "rightMost", rightMost);
@@ -2292,7 +2321,8 @@ var almfilters =
                 return self.clear(triggerChange);
             setSelectedDate(date, format);
             self.showTimeInput = self.selectedDates.length > 0;
-            self.latestSelectedDateObj = self.selectedDates[self.selectedDates.length - 1];
+            self.latestSelectedDateObj =
+                self.selectedDates[self.selectedDates.length - 1];
             self.redraw();
             jumpToDate();
             setHoursFromDate();
@@ -2490,7 +2520,8 @@ var almfilters =
             self.yearElements.forEach(function (yearElement, i) {
                 var d = new Date(self.currentYear, self.currentMonth, 1);
                 d.setMonth(self.currentMonth + i);
-                if (self.config.showMonths > 1) {
+                if (self.config.showMonths > 1 ||
+                    self.config.monthSelectorType === "static") {
                     self.monthElements[i].textContent =
                         monthToStr(d.getMonth(), self.config.shorthandCurrentMonth, self.l10n) + " ";
                 }
@@ -2755,7 +2786,7 @@ var almfilters =
                 "ديسمبر",
             ]
         },
-        rangeSeparator: ' - '
+        rangeSeparator: " - "
     };
     fp.l10ns.ar = Arabic;
     fp.l10ns;
@@ -2984,7 +3015,7 @@ var almfilters =
                 "Maj",
                 "Juni",
                 "Juli",
-                "August",
+                "Avgust",
                 "Septembar",
                 "Oktobar",
                 "Novembar",
@@ -3500,6 +3531,8 @@ var almfilters =
         toggleTitle: "Click to toggle",
         amPM: ["AM", "PM"],
         yearAriaLabel: "Year",
+        hourAriaLabel: "Hour",
+        minuteAriaLabel: "Minute",
         time_24hr: false
     };
 
@@ -4240,7 +4273,7 @@ var almfilters =
             return "";
         },
         time_24hr: true,
-        rangeSeparator: ' - '
+        rangeSeparator: " - "
     };
     fp$o.l10ns.id = Indonesian;
     fp$o.l10ns;
@@ -4413,12 +4446,76 @@ var almfilters =
             ]
         },
         time_24hr: true,
-        rangeSeparator: ' から '
+        rangeSeparator: " から ",
+        firstDayOfWeek: 1
     };
     fp$r.l10ns.ja = Japanese;
     fp$r.l10ns;
 
     var fp$s = typeof window !== "undefined" && window.flatpickr !== undefined
+        ? window.flatpickr
+        : {
+            l10ns: {}
+        };
+    var Georgian = {
+        weekdays: {
+            shorthand: ["კვ", "ორ", "სა", "ოთ", "ხუ", "პა", "შა"],
+            longhand: [
+                "კვირა",
+                "ორშაბათი",
+                "სამშაბათი",
+                "ოთხშაბათი",
+                "ხუთშაბათი",
+                "პარასკევი",
+                "შაბათი",
+            ]
+        },
+        months: {
+            shorthand: [
+                "იან",
+                "თებ",
+                "მარ",
+                "აპრ",
+                "მაი",
+                "ივნ",
+                "ივლ",
+                "აგვ",
+                "სექ",
+                "ოქტ",
+                "ნოე",
+                "დეკ",
+            ],
+            longhand: [
+                "იანვარი",
+                "თებერვალი",
+                "მარტი",
+                "აპრილი",
+                "მაისი",
+                "ივნისი",
+                "ივლისი",
+                "აგვისტო",
+                "სექტემბერი",
+                "ოქტომბერი",
+                "ნოემბერი",
+                "დეკემბერი",
+            ]
+        },
+        firstDayOfWeek: 1,
+        ordinal: function () {
+            return "";
+        },
+        rangeSeparator: " — ",
+        weekAbbreviation: "კვ.",
+        scrollTitle: "დასქროლეთ გასადიდებლად",
+        toggleTitle: "დააკლიკეთ გადართვისთვის",
+        amPM: ["AM", "PM"],
+        yearAriaLabel: "წელი",
+        time_24hr: true
+    };
+    fp$s.l10ns.ka = Georgian;
+    fp$s.l10ns;
+
+    var fp$t = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4469,12 +4566,12 @@ var almfilters =
         ordinal: function () {
             return "일";
         },
-        rangeSeparator: ' ~ '
+        rangeSeparator: " ~ "
     };
-    fp$s.l10ns.ko = Korean;
-    fp$s.l10ns;
+    fp$t.l10ns.ko = Korean;
+    fp$t.l10ns;
 
-    var fp$t = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$u = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4533,10 +4630,10 @@ var almfilters =
         yearAriaLabel: "ឆ្នាំ",
         time_24hr: true
     };
-    fp$t.l10ns.km = Khmer;
-    fp$t.l10ns;
+    fp$u.l10ns.km = Khmer;
+    fp$u.l10ns;
 
-    var fp$u = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$v = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4595,10 +4692,10 @@ var almfilters =
         amPM: ["ТД", "ТК"],
         yearAriaLabel: "Жыл"
     };
-    fp$u.l10ns.kz = Kazakh;
-    fp$u.l10ns;
+    fp$v.l10ns.kz = Kazakh;
+    fp$v.l10ns;
 
-    var fp$v = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$w = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4655,10 +4752,10 @@ var almfilters =
         toggleTitle: "Perjungti laiko formatą",
         time_24hr: true
     };
-    fp$v.l10ns.lt = Lithuanian;
-    fp$v.l10ns;
+    fp$w.l10ns.lt = Lithuanian;
+    fp$w.l10ns;
 
-    var fp$w = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$x = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4710,10 +4807,10 @@ var almfilters =
         rangeSeparator: " līdz ",
         time_24hr: true
     };
-    fp$w.l10ns.lv = Latvian;
-    fp$w.l10ns;
+    fp$x.l10ns.lv = Latvian;
+    fp$x.l10ns;
 
-    var fp$x = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$y = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4766,10 +4863,10 @@ var almfilters =
         rangeSeparator: " до ",
         time_24hr: true
     };
-    fp$x.l10ns.mk = Macedonian;
-    fp$x.l10ns;
+    fp$y.l10ns.mk = Macedonian;
+    fp$y.l10ns;
 
-    var fp$y = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$z = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4813,10 +4910,10 @@ var almfilters =
         rangeSeparator: "-с ",
         time_24hr: true
     };
-    fp$y.l10ns.mn = Mongolian;
-    fp$y.l10ns;
+    fp$z.l10ns.mn = Mongolian;
+    fp$z.l10ns;
 
-    var fp$z = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$A = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4869,9 +4966,9 @@ var almfilters =
             return "";
         }
     };
-    fp$z.l10ns;
+    fp$A.l10ns;
 
-    var fp$A = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$B = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4925,10 +5022,10 @@ var almfilters =
         },
         time_24hr: true
     };
-    fp$A.l10ns.my = Burmese;
-    fp$A.l10ns;
+    fp$B.l10ns.my = Burmese;
+    fp$B.l10ns;
 
-    var fp$B = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$C = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -4988,10 +5085,10 @@ var almfilters =
             return "de";
         }
     };
-    fp$B.l10ns.nl = Dutch;
-    fp$B.l10ns;
+    fp$C.l10ns.nl = Dutch;
+    fp$C.l10ns;
 
-    var fp$C = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$D = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5049,10 +5146,10 @@ var almfilters =
             return ".";
         }
     };
-    fp$C.l10ns.no = Norwegian;
-    fp$C.l10ns;
+    fp$D.l10ns.no = Norwegian;
+    fp$D.l10ns;
 
-    var fp$D = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$E = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5102,10 +5199,10 @@ var almfilters =
         },
         time_24hr: true
     };
-    fp$D.l10ns.pa = Punjabi;
-    fp$D.l10ns;
+    fp$E.l10ns.pa = Punjabi;
+    fp$E.l10ns;
 
-    var fp$E = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$F = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5163,10 +5260,10 @@ var almfilters =
             return ".";
         }
     };
-    fp$E.l10ns.pl = Polish;
-    fp$E.l10ns;
+    fp$F.l10ns.pl = Polish;
+    fp$F.l10ns;
 
-    var fp$F = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$G = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5217,10 +5314,10 @@ var almfilters =
         rangeSeparator: " até ",
         time_24hr: true
     };
-    fp$F.l10ns.pt = Portuguese;
-    fp$F.l10ns;
+    fp$G.l10ns.pt = Portuguese;
+    fp$G.l10ns;
 
-    var fp$G = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$H = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5274,10 +5371,10 @@ var almfilters =
             return "";
         }
     };
-    fp$G.l10ns.ro = Romanian;
-    fp$G.l10ns;
+    fp$H.l10ns.ro = Romanian;
+    fp$H.l10ns;
 
-    var fp$H = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$I = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5337,10 +5434,10 @@ var almfilters =
         yearAriaLabel: "Год",
         time_24hr: true
     };
-    fp$H.l10ns.ru = Russian;
-    fp$H.l10ns;
+    fp$I.l10ns.ru = Russian;
+    fp$I.l10ns;
 
-    var fp$I = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$J = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5390,10 +5487,10 @@ var almfilters =
         },
         time_24hr: true
     };
-    fp$I.l10ns.si = Sinhala;
-    fp$I.l10ns;
+    fp$J.l10ns.si = Sinhala;
+    fp$J.l10ns;
 
-    var fp$J = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$K = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5448,10 +5545,10 @@ var almfilters =
             return ".";
         }
     };
-    fp$J.l10ns.sk = Slovak;
-    fp$J.l10ns;
+    fp$K.l10ns.sk = Slovak;
+    fp$K.l10ns;
 
-    var fp$K = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$L = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5506,10 +5603,10 @@ var almfilters =
             return ".";
         }
     };
-    fp$K.l10ns.sl = Slovenian;
-    fp$K.l10ns;
+    fp$L.l10ns.sl = Slovenian;
+    fp$L.l10ns;
 
-    var fp$L = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$M = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5559,10 +5656,10 @@ var almfilters =
         },
         time_24hr: true
     };
-    fp$L.l10ns.sq = Albanian;
-    fp$L.l10ns;
+    fp$M.l10ns.sq = Albanian;
+    fp$M.l10ns;
 
-    var fp$M = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$N = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5615,10 +5712,10 @@ var almfilters =
         rangeSeparator: " do ",
         time_24hr: true
     };
-    fp$M.l10ns.sr = Serbian;
-    fp$M.l10ns;
+    fp$N.l10ns.sr = Serbian;
+    fp$N.l10ns;
 
-    var fp$N = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$O = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5673,10 +5770,10 @@ var almfilters =
             return ".";
         }
     };
-    fp$N.l10ns.sv = Swedish;
-    fp$N.l10ns;
+    fp$O.l10ns.sv = Swedish;
+    fp$O.l10ns;
 
-    var fp$O = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$P = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5733,10 +5830,10 @@ var almfilters =
             return "";
         }
     };
-    fp$O.l10ns.th = Thai;
-    fp$O.l10ns;
+    fp$P.l10ns.th = Thai;
+    fp$P.l10ns;
 
-    var fp$P = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$Q = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5795,10 +5892,10 @@ var almfilters =
         amPM: ["ÖÖ", "ÖS"],
         time_24hr: true
     };
-    fp$P.l10ns.tr = Turkish;
-    fp$P.l10ns;
+    fp$Q.l10ns.tr = Turkish;
+    fp$Q.l10ns;
 
-    var fp$Q = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$R = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5849,10 +5946,10 @@ var almfilters =
         },
         time_24hr: true
     };
-    fp$Q.l10ns.uk = Ukrainian;
-    fp$Q.l10ns;
+    fp$R.l10ns.uk = Ukrainian;
+    fp$R.l10ns;
 
-    var fp$R = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$S = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5901,12 +5998,12 @@ var almfilters =
             ]
         },
         firstDayOfWeek: 1,
-        rangeSeparator: ' đến '
+        rangeSeparator: " đến "
     };
-    fp$R.l10ns.vn = Vietnamese;
-    fp$R.l10ns;
+    fp$S.l10ns.vn = Vietnamese;
+    fp$S.l10ns;
 
-    var fp$S = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$T = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -5959,10 +6056,10 @@ var almfilters =
         scrollTitle: "滚动切换",
         toggleTitle: "点击切换 12/24 小时时制"
     };
-    fp$S.l10ns.zh = Mandarin;
-    fp$S.l10ns;
+    fp$T.l10ns.zh = Mandarin;
+    fp$T.l10ns;
 
-    var fp$T = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp$U = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {}
@@ -6015,8 +6112,8 @@ var almfilters =
         scrollTitle: "滾動切換",
         toggleTitle: "點擊切換 12/24 小時時制"
     };
-    fp$T.l10ns.zh_tw = MandarinTraditional;
-    fp$T.l10ns;
+    fp$U.l10ns.zh_tw = MandarinTraditional;
+    fp$U.l10ns;
 
     var l10n = {
         ar: Arabic,
@@ -6049,6 +6146,7 @@ var almfilters =
         is: Icelandic,
         it: Italian,
         ja: Japanese,
+        ka: Georgian,
         ko: Korean,
         km: Khmer,
         kz: Kazakh,
@@ -6095,7 +6193,7 @@ var almfilters =
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! nouislider - 14.1.1 - 12/15/2019 */
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! nouislider - 14.5.0 - 5/11/2020 */
 (function(factory) {
     if (true) {
         // AMD. Register as an anonymous module.
@@ -6107,7 +6205,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 })(function() {
     "use strict";
 
-    var VERSION = "14.1.1";
+    var VERSION = "14.5.0";
 
     //region Helper Methods
 
@@ -6194,7 +6292,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     // http://youmightnotneedjquery.com/#add_class
     function addClass(el, className) {
-        if (el.classList) {
+        if (el.classList && !/\s/.test(className)) {
             el.classList.add(className);
         } else {
             el.className += " " + className;
@@ -6203,7 +6301,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     // http://youmightnotneedjquery.com/#remove_class
     function removeClass(el, className) {
-        if (el.classList) {
+        if (el.classList && !/\s/.test(className)) {
             el.classList.remove(className);
         } else {
             el.className = el.className.replace(
@@ -6300,13 +6398,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     }
 
     // (percentage) How many percent is this value of this range?
-    function fromPercentage(range, value) {
-        return (value * 100) / (range[1] - range[0]);
+    function fromPercentage(range, value, startRange) {
+        return (value * 100) / (range[startRange + 1] - range[startRange]);
     }
 
     // (percentage) Where is this value on this range?
     function toPercentage(range, value) {
-        return fromPercentage(range, range[0] < 0 ? value + Math.abs(range[0]) : value - range[0]);
+        return fromPercentage(range, range[0] < 0 ? value + Math.abs(range[0]) : value - range[0], 0);
     }
 
     // (value) How much is this percentage on this range?
@@ -6442,7 +6540,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
         // Factor to range ratio
         that.xSteps[i] =
-            fromPercentage([that.xVal[i], that.xVal[i + 1]], n) / subRangeRatio(that.xPct[i], that.xPct[i + 1]);
+            fromPercentage([that.xVal[i], that.xVal[i + 1]], n, 0) / subRangeRatio(that.xPct[i], that.xPct[i + 1]);
 
         var totalSteps = (that.xVal[i + 1] - that.xVal[i]) / that.xNumSteps[i];
         var highestStep = Math.ceil(Number(totalSteps.toFixed(3)) - 1);
@@ -6500,14 +6598,107 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         }
     }
 
-    Spectrum.prototype.getMargin = function(value) {
-        var step = this.xNumSteps[0];
+    Spectrum.prototype.getDistance = function(value) {
+        var index;
+        var distances = [];
 
-        if (step && (value / step) % 1 !== 0) {
-            throw new Error("noUiSlider (" + VERSION + "): 'limit', 'margin' and 'padding' must be divisible by step.");
+        for (index = 0; index < this.xNumSteps.length - 1; index++) {
+            // last "range" can't contain step size as it is purely an endpoint.
+            var step = this.xNumSteps[index];
+
+            if (step && (value / step) % 1 !== 0) {
+                throw new Error(
+                    "noUiSlider (" +
+                        VERSION +
+                        "): 'limit', 'margin' and 'padding' of " +
+                        this.xPct[index] +
+                        "% range must be divisible by step."
+                );
+            }
+
+            // Calculate percentual distance in current range of limit, margin or padding
+            distances[index] = fromPercentage(this.xVal, value, index);
         }
 
-        return this.xPct.length === 2 ? fromPercentage(this.xVal, value) : false;
+        return distances;
+    };
+
+    // Calculate the percentual distance over the whole scale of ranges.
+    // direction: 0 = backwards / 1 = forwards
+    Spectrum.prototype.getAbsoluteDistance = function(value, distances, direction) {
+        var xPct_index = 0;
+
+        // Calculate range where to start calculation
+        if (value < this.xPct[this.xPct.length - 1]) {
+            while (value > this.xPct[xPct_index + 1]) {
+                xPct_index++;
+            }
+        } else if (value === this.xPct[this.xPct.length - 1]) {
+            xPct_index = this.xPct.length - 2;
+        }
+
+        // If looking backwards and the value is exactly at a range separator then look one range further
+        if (!direction && value === this.xPct[xPct_index + 1]) {
+            xPct_index++;
+        }
+
+        var start_factor;
+        var rest_factor = 1;
+
+        var rest_rel_distance = distances[xPct_index];
+
+        var range_pct = 0;
+
+        var rel_range_distance = 0;
+        var abs_distance_counter = 0;
+        var range_counter = 0;
+
+        // Calculate what part of the start range the value is
+        if (direction) {
+            start_factor = (value - this.xPct[xPct_index]) / (this.xPct[xPct_index + 1] - this.xPct[xPct_index]);
+        } else {
+            start_factor = (this.xPct[xPct_index + 1] - value) / (this.xPct[xPct_index + 1] - this.xPct[xPct_index]);
+        }
+
+        // Do until the complete distance across ranges is calculated
+        while (rest_rel_distance > 0) {
+            // Calculate the percentage of total range
+            range_pct = this.xPct[xPct_index + 1 + range_counter] - this.xPct[xPct_index + range_counter];
+
+            // Detect if the margin, padding or limit is larger then the current range and calculate
+            if (distances[xPct_index + range_counter] * rest_factor + 100 - start_factor * 100 > 100) {
+                // If larger then take the percentual distance of the whole range
+                rel_range_distance = range_pct * start_factor;
+                // Rest factor of relative percentual distance still to be calculated
+                rest_factor = (rest_rel_distance - 100 * start_factor) / distances[xPct_index + range_counter];
+                // Set start factor to 1 as for next range it does not apply.
+                start_factor = 1;
+            } else {
+                // If smaller or equal then take the percentual distance of the calculate percentual part of that range
+                rel_range_distance = ((distances[xPct_index + range_counter] * range_pct) / 100) * rest_factor;
+                // No rest left as the rest fits in current range
+                rest_factor = 0;
+            }
+
+            if (direction) {
+                abs_distance_counter = abs_distance_counter - rel_range_distance;
+                // Limit range to first range when distance becomes outside of minimum range
+                if (this.xPct.length + range_counter >= 1) {
+                    range_counter--;
+                }
+            } else {
+                abs_distance_counter = abs_distance_counter + rel_range_distance;
+                // Limit range to last range when distance becomes outside of maximum range
+                if (this.xPct.length - range_counter >= 1) {
+                    range_counter++;
+                }
+            }
+
+            // Rest of relative percentual distance still to be calculated
+            rest_rel_distance = distances[xPct_index + range_counter] * rest_factor;
+        }
+
+        return value + abs_distance_counter;
     };
 
     Spectrum.prototype.toStepping = function(value) {
@@ -6586,12 +6777,55 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         or true when everything is OK. It can also modify the option
         object, to make sure all values can be correctly looped elsewhere. */
 
+    //region Defaults
+
     var defaultFormatter = {
         to: function(value) {
             return value !== undefined && value.toFixed(2);
         },
         from: Number
     };
+
+    var cssClasses = {
+        target: "target",
+        base: "base",
+        origin: "origin",
+        handle: "handle",
+        handleLower: "handle-lower",
+        handleUpper: "handle-upper",
+        touchArea: "touch-area",
+        horizontal: "horizontal",
+        vertical: "vertical",
+        background: "background",
+        connect: "connect",
+        connects: "connects",
+        ltr: "ltr",
+        rtl: "rtl",
+        textDirectionLtr: "txt-dir-ltr",
+        textDirectionRtl: "txt-dir-rtl",
+        draggable: "draggable",
+        drag: "state-drag",
+        tap: "state-tap",
+        active: "active",
+        tooltip: "tooltip",
+        pips: "pips",
+        pipsHorizontal: "pips-horizontal",
+        pipsVertical: "pips-vertical",
+        marker: "marker",
+        markerHorizontal: "marker-horizontal",
+        markerVertical: "marker-vertical",
+        markerNormal: "marker-normal",
+        markerLarge: "marker-large",
+        markerSub: "marker-sub",
+        value: "value",
+        valueHorizontal: "value-horizontal",
+        valueVertical: "value-vertical",
+        valueNormal: "value-normal",
+        valueLarge: "value-large",
+        valueSub: "value-sub"
+    };
+
+    //endregion
 
     function validateFormat(entry) {
         // Any object with a to and from method is supported.
@@ -6729,11 +6963,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             return;
         }
 
-        parsed.margin = parsed.spectrum.getMargin(entry);
-
-        if (!parsed.margin) {
-            throw new Error("noUiSlider (" + VERSION + "): 'margin' option is only supported on linear sliders.");
-        }
+        parsed.margin = parsed.spectrum.getDistance(entry);
     }
 
     function testLimit(parsed, entry) {
@@ -6741,7 +6971,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             throw new Error("noUiSlider (" + VERSION + "): 'limit' option must be numeric.");
         }
 
-        parsed.limit = parsed.spectrum.getMargin(entry);
+        parsed.limit = parsed.spectrum.getDistance(entry);
 
         if (!parsed.limit || parsed.handles < 2) {
             throw new Error(
@@ -6753,6 +6983,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     }
 
     function testPadding(parsed, entry) {
+        var index;
+
         if (!isNumeric(entry) && !Array.isArray(entry)) {
             throw new Error(
                 "noUiSlider (" + VERSION + "): 'padding' option must be numeric or array of exactly 2 numbers."
@@ -6773,18 +7005,21 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             entry = [entry, entry];
         }
 
-        // 'getMargin' returns false for invalid values.
-        parsed.padding = [parsed.spectrum.getMargin(entry[0]), parsed.spectrum.getMargin(entry[1])];
+        // 'getDistance' returns false for invalid values.
+        parsed.padding = [parsed.spectrum.getDistance(entry[0]), parsed.spectrum.getDistance(entry[1])];
 
-        if (parsed.padding[0] === false || parsed.padding[1] === false) {
-            throw new Error("noUiSlider (" + VERSION + "): 'padding' option is only supported on linear sliders.");
+        for (index = 0; index < parsed.spectrum.xNumSteps.length - 1; index++) {
+            // last "range" can't contain step size as it is purely an endpoint.
+            if (parsed.padding[0][index] < 0 || parsed.padding[1][index] < 0) {
+                throw new Error("noUiSlider (" + VERSION + "): 'padding' option must be a positive number(s).");
+            }
         }
 
-        if (parsed.padding[0] < 0 || parsed.padding[1] < 0) {
-            throw new Error("noUiSlider (" + VERSION + "): 'padding' option must be a positive number(s).");
-        }
+        var totalPadding = entry[0] + entry[1];
+        var firstValue = parsed.spectrum.xVal[0];
+        var lastValue = parsed.spectrum.xVal[parsed.spectrum.xVal.length - 1];
 
-        if (parsed.padding[0] + parsed.padding[1] > 100) {
+        if (totalPadding / (lastValue - firstValue) > 1) {
             throw new Error("noUiSlider (" + VERSION + "): 'padding' option must not exceed 100% of the range.");
         }
     }
@@ -6972,44 +7207,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             orientation: "horizontal",
             keyboardSupport: true,
             cssPrefix: "noUi-",
-            cssClasses: {
-                target: "target",
-                base: "base",
-                origin: "origin",
-                handle: "handle",
-                handleLower: "handle-lower",
-                handleUpper: "handle-upper",
-                touchArea: "touch-area",
-                horizontal: "horizontal",
-                vertical: "vertical",
-                background: "background",
-                connect: "connect",
-                connects: "connects",
-                ltr: "ltr",
-                rtl: "rtl",
-                textDirectionLtr: "txt-dir-ltr",
-                textDirectionRtl: "txt-dir-rtl",
-                draggable: "draggable",
-                drag: "state-drag",
-                tap: "state-tap",
-                active: "active",
-                tooltip: "tooltip",
-                pips: "pips",
-                pipsHorizontal: "pips-horizontal",
-                pipsVertical: "pips-vertical",
-                marker: "marker",
-                markerHorizontal: "marker-horizontal",
-                markerVertical: "marker-vertical",
-                markerNormal: "marker-normal",
-                markerLarge: "marker-large",
-                markerSub: "marker-sub",
-                value: "value",
-                valueHorizontal: "value-horizontal",
-                valueVertical: "value-vertical",
-                valueNormal: "value-normal",
-                valueLarge: "value-large",
-                valueSub: "value-sub"
-            }
+            cssClasses: cssClasses
         };
 
         // AriaFormat defaults to regular format, if any.
@@ -7423,7 +7621,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                     type = group.indexOf(i) > -1 ? PIPS_LARGE_VALUE : isSteps ? PIPS_SMALL_VALUE : PIPS_NO_VALUE;
 
                     // Enforce the 'ignoreFirst' option by overwriting the type for 0.
-                    if (!index && ignoreFirst) {
+                    if (!index && ignoreFirst && i !== high) {
                         type = 0;
                     }
 
@@ -7614,7 +7812,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             if (touch) {
                 // Returns true if a touch originated on the target.
                 var isTouchOnTarget = function(checkTouch) {
-                    return checkTouch.target === eventTarget || eventTarget.contains(checkTouch.target);
+                    return (
+                        checkTouch.target === eventTarget ||
+                        eventTarget.contains(checkTouch.target) ||
+                        (checkTouch.target.shadowRoot && checkTouch.target.shadowRoot.contains(eventTarget))
+                    );
                 };
 
                 // In the case of touchstart events, we need to make sure there is still no more than one
@@ -8081,7 +8283,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                             // Event is fired by tap, true or false
                             tap || false,
                             // Left offset of the handle, in relation to the slider
-                            scope_Locations.slice()
+                            scope_Locations.slice(),
+                            // add the slider public API to an accessible parameter when this is unavailable
+                            scope_Self
                         );
                     });
                 }
@@ -8090,15 +8294,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
         // Split out the handle positioning logic so the Move event can use it, too
         function checkHandlePosition(reference, handleNumber, to, lookBackward, lookForward, getValue) {
+            var distance;
+
             // For sliders with multiple handles, limit movement to the other handle.
             // Apply the margin option by adding it to the handle positions.
             if (scope_Handles.length > 1 && !options.events.unconstrained) {
                 if (lookBackward && handleNumber > 0) {
-                    to = Math.max(to, reference[handleNumber - 1] + options.margin);
+                    distance = scope_Spectrum.getAbsoluteDistance(reference[handleNumber - 1], options.margin, 0);
+                    to = Math.max(to, distance);
                 }
 
                 if (lookForward && handleNumber < scope_Handles.length - 1) {
-                    to = Math.min(to, reference[handleNumber + 1] - options.margin);
+                    distance = scope_Spectrum.getAbsoluteDistance(reference[handleNumber + 1], options.margin, 1);
+                    to = Math.min(to, distance);
                 }
             }
 
@@ -8107,11 +8315,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             // handles would be unmovable.
             if (scope_Handles.length > 1 && options.limit) {
                 if (lookBackward && handleNumber > 0) {
-                    to = Math.min(to, reference[handleNumber - 1] + options.limit);
+                    distance = scope_Spectrum.getAbsoluteDistance(reference[handleNumber - 1], options.limit, 0);
+                    to = Math.min(to, distance);
                 }
 
                 if (lookForward && handleNumber < scope_Handles.length - 1) {
-                    to = Math.max(to, reference[handleNumber + 1] - options.limit);
+                    distance = scope_Spectrum.getAbsoluteDistance(reference[handleNumber + 1], options.limit, 1);
+                    to = Math.max(to, distance);
                 }
             }
 
@@ -8119,11 +8329,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             // edges of the slider. Padding must be > 0.
             if (options.padding) {
                 if (handleNumber === 0) {
-                    to = Math.max(to, options.padding[0]);
+                    distance = scope_Spectrum.getAbsoluteDistance(0, options.padding[0], 0);
+                    to = Math.max(to, distance);
                 }
 
                 if (handleNumber === scope_Handles.length - 1) {
-                    to = Math.min(to, 100 - options.padding[1]);
+                    distance = scope_Spectrum.getAbsoluteDistance(100, options.padding[1], 1);
+                    to = Math.min(to, distance);
                 }
             }
 
@@ -8572,6 +8784,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             target: scope_Target, // Issue #597
             removePips: removePips,
             removeTooltips: removeTooltips,
+            getTooltips: function() {
+                return scope_Tooltips;
+            },
+            getOrigins: function() {
+                return scope_Handles;
+            },
             pips: pips // Issue #594
         };
 
@@ -8603,6 +8821,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         // Exposed for unit testing, don't use this in your application.
         __spectrum: Spectrum,
         version: VERSION,
+        // A reference to the default classes, allows global changes.
+        // Use the cssClasses option for changes to one slider.
+        cssClasses: cssClasses,
         create: initialize
     };
 });
@@ -9232,6 +9453,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.resetFilter = exports.reset = exports.start = undefined;
 
+var _a11yarrows = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
+
+var a11yarrows = _interopRequireWildcard(_a11yarrows);
+
 var _Variables = __webpack_require__(/*! ./global/Variables */ "./src/js/frontend/global/Variables.js");
 
 var _Variables2 = _interopRequireDefault(_Variables);
@@ -9278,36 +9503,40 @@ var _DatePicker = __webpack_require__(/*! ./types/DatePicker */ "./src/js/fronte
 
 var _RangeSliders = __webpack_require__(/*! ./types/RangeSliders */ "./src/js/frontend/types/RangeSliders.js");
 
+var _StarRating = __webpack_require__(/*! ./types/StarRating */ "./src/js/frontend/types/StarRating.js");
+
+var _StarRating2 = _interopRequireDefault(_StarRating);
+
 var _toggle = __webpack_require__(/*! ./helpers/toggle */ "./src/js/frontend/helpers/toggle.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 __webpack_require__(/*! ./helpers/polyfills */ "./src/js/frontend/helpers/polyfills.js");
 
-/* 
+/*
  * almFiltersInit
  * Initiate the filter object
  *
  * @param almFilters element   The container element for the almFilters
  * @since 1.0
  */
-var almFiltersInit = function almFiltersInit(almFilters) {
 
-	var style = almFilters.dataset.style; // change, button 
+var almFiltersInit = function almFiltersInit(almFilters) {
+	var style = almFilters.dataset.style; // change, button
 
 	// Click/Change Event
 	var almFiltersClick = function almFiltersClick(event) {
-
-		if (_Variables2.default.alm_filtering) return false; // exit if animating/loading            
+		if (_Variables2.default.alm_filtering) return false; // exit if animating/loading
 
 		(0, _TriggerChange2.default)(almFilters);
 	};
 
 	// Radio + Checkbox Click Event
 	var almFilterChange = function almFilterChange(event) {
-
 		if (_Variables2.default.alm_filtering) return false; // exit if animating/loading
 
 		event.preventDefault();
@@ -9315,31 +9544,27 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 		var target = event.currentTarget;
 		var fieldtype = target.dataset.type;
 		var current_id = target.id;
-		var parent = target.closest('.alm-filter'); // <div .alm-filter />// All items in filter
-		var items = parent.querySelectorAll('.alm-filter--link'); // All items in filter
+		var parent = target.closest(".alm-filter"); // <div .alm-filter />// All items in filter
+		var items = parent.querySelectorAll(".alm-filter--link"); // All items in filter
 
-
-		if (fieldtype === 'all') {
-
-			if (target.classList.contains('active')) {
+		if (fieldtype === "all") {
+			if (target.classList.contains("active")) {
 				// Uncheck All
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
-					item.classList.remove('active');
-					item.setAttribute('aria-checked', false);
+					item.classList.remove("active");
+					item.setAttribute("aria-checked", false);
 				});
 			} else {
-				// Check All 
+				// Check All
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
-					item.classList.add('active');
-					item.setAttribute('aria-checked', true);
+					item.classList.add("active");
+					item.setAttribute("aria-checked", true);
 				});
 			}
 		} else {
-
-			if (fieldtype === 'radio') {
-
+			if (fieldtype === "radio" || fieldtype === "star_rating") {
 				// Exit if active and preselected value set
-				if (parent.classList.contains('alm-filter--preselected') && target.classList.contains('active')) {
+				if (parent.classList.contains("alm-filter--preselected") && target.classList.contains("active")) {
 					event.preventDefault();
 					return false;
 				}
@@ -9347,19 +9572,19 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 				// Loop all radios
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
 					if (item.id !== current_id) {
-						item.classList.remove('active');
-						item.setAttribute('aria-checked', false);
+						item.classList.remove("active");
+						item.setAttribute("aria-checked", false);
 					}
 				});
 			}
 
 			// Set active state
-			if (target.classList.contains('active')) {
-				target.classList.remove('active');
-				target.setAttribute('aria-checked', false);
+			if (target.classList.contains("active")) {
+				target.classList.remove("active");
+				target.setAttribute("aria-checked", false);
 			} else {
-				target.classList.add('active');
-				target.setAttribute('aria-checked', true);
+				target.classList.add("active");
+				target.setAttribute("aria-checked", true);
 			}
 
 			// Check for `toggle All` button
@@ -9367,57 +9592,88 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 		}
 
 		// Trigger Change Event
-		if (style === 'change') {
+		if (style === "change") {
 			(0, _TriggerChange2.default)(almFilters);
 		}
 	};
 
 	// Radio + Checkbox Event listeners
-	var almFilterLinks = document.querySelectorAll('.alm-filter--link');
+	var almFilterLinks = document.querySelectorAll(".alm-filter--link");
 	if (almFilterLinks) {
 		[].concat(_toConsumableArray(almFilterLinks)).forEach(function (item, e) {
-			item.addEventListener('click', almFilterChange);
-			item.addEventListener('keyup', function (event) {
-				if (event.keyCode === 13) {
-					// Enter/return click
+			item.addEventListener("click", almFilterChange);
+			item.addEventListener("keyup", function (event) {
+				if (event.keyCode === 13 || event.keyCode === 32) {
+					// Enter/return click || spacebar
 					almFilterChange(event);
+				}
+			});
+			item.addEventListener("keydown", function (event) {
+				if (event.keyCode === 32) {
+					//  Prevent the default scrollbar action of scrolling the page
+					event.preventDefault();
+					event.stopPropagation();
+					return false;
 				}
 			});
 		});
 	}
 
+	// Radio + Checkbox - a11yarrows controls
+	var radioInputs = document.querySelectorAll("div.alm-filter[data-fieldtype=radio]");
+	if (radioInputs) {
+		[].concat(_toConsumableArray(radioInputs)).forEach(function (item, e) {
+			var target = item.querySelector("ul");
+			a11yarrows.init(target, {
+				// options
+				selector: ".alm-filter--link"
+			});
+		});
+	}
+
+	// Star Rating
+	var starRatings = document.querySelectorAll("div.alm-filter[data-fieldtype=star_rating]");
+	if (starRatings) {
+		[].concat(_toConsumableArray(starRatings)).forEach(function (rating, e) {
+			var stars = rating.querySelectorAll("li div.field-starrating");
+			if (stars) {
+				(0, _StarRating2.default)(stars);
+			}
+		});
+	}
+
 	// Textfield Button Event listeners
-	var almFiltertextButtons = document.querySelectorAll('.alm-filter--text-wrap.has-button button');
+	var almFiltertextButtons = document.querySelectorAll(".alm-filter--text-wrap.has-button button");
 	if (almFiltertextButtons) {
 		[].concat(_toConsumableArray(almFiltertextButtons)).forEach(function (button, e) {
-			button.addEventListener('click', almFiltersClick);
+			button.addEventListener("click", almFiltersClick);
 		});
 	}
 
 	// Change Event (Select)
-	if (style === 'change') {
+	if (style === "change") {
 		// Loop all items and add the event listener
-		var almFilterItems = document.querySelectorAll('.alm-filter--item');
+		var almFilterItems = document.querySelectorAll(".alm-filter--item");
 		if (almFilterItems) {
 			[].concat(_toConsumableArray(almFilterItems)).forEach(function (item, e) {
-				item.addEventListener('change', almFiltersClick);
+				item.addEventListener("change", almFiltersClick);
 			});
 		}
 	}
 
 	// Button
-	if (style === 'button') {
-		var almFilterButton = almFilters.querySelector('.alm-filters--button');
+	if (style === "button") {
+		var almFilterButton = almFilters.querySelector(".alm-filters--button");
 		if (almFilterButton) {
-			almFilterButton.addEventListener('click', almFiltersClick);
+			almFilterButton.addEventListener("click", almFiltersClick);
 		}
 	}
 
 	// Attach enter click listener for textfields
-	var almFilterTextfields = document.querySelectorAll('.alm-filter--textfield');
+	var almFilterTextfields = document.querySelectorAll(".alm-filter--textfield");
 	if (almFilterTextfields) {
 		[].concat(_toConsumableArray(almFilterTextfields)).forEach(function (item, e) {
-			item.addEventListener('keyup', function (e) {
+			item.addEventListener("keyup", function (e) {
 				if (e.keyCode === 13) {
 					// Enter/return click
 					almFiltersClick();
@@ -9449,8 +9705,8 @@ var almFiltersInit = function almFiltersInit(almFilters) {
  * @param element   The clicked element
  * @since 1.0
  */
-window.removeSelectedFilter = function (element) {
 
+window.removeSelectedFilter = function (element) {
 	var almFilters = _Variables2.default.almFilters;
 	var key = element.dataset.key;
 	var value = element.dataset.value;
@@ -9458,21 +9714,20 @@ window.removeSelectedFilter = function (element) {
 	var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
 
 	switch (obj.fieldType) {
-
-		case 'select':
+		case "select":
 			// if has a selected value
-			el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : '#';
+			el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : "#";
 			(0, _TriggerChange2.default)(almFilters);
 			break;
 
-		case 'text':
-			el.value = '';
+		case "text":
+			el.value = "";
 			(0, _TriggerChange2.default)(almFilters);
 			break;
 
 		default:
 			el.click();
-			if (almFilters.dataset.style === 'button') {
+			if (almFilters.dataset.style === "button") {
 				(0, _TriggerChange2.default)(almFilters);
 			}
 			break;
@@ -9486,8 +9741,8 @@ window.removeSelectedFilter = function (element) {
  * @param element   The clicked element
  * @since 1.0
  */
-window.removeSelectedFilterEnter = function (event) {
 
+window.removeSelectedFilterEnter = function (event) {
 	if (!event) {
 		return false;
 	}
@@ -9504,21 +9759,20 @@ window.removeSelectedFilterEnter = function (event) {
 		var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
 
 		switch (obj.fieldType) {
-
-			case 'select':
+			case "select":
 				// if has a selected value
-				el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : '#';
+				el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : "#";
 				(0, _TriggerChange2.default)(almFilters);
 				break;
 
-			case 'text':
-				el.value = '';
+			case "text":
+				el.value = "";
 				(0, _TriggerChange2.default)(almFilters);
 				break;
 
 			default:
 				el.click();
-				if (almFilters.dataset.style === 'button') {
+				if (almFilters.dataset.style === "button") {
 					(0, _TriggerChange2.default)(almFilters);
 				}
 				break;
@@ -9533,9 +9787,9 @@ window.removeSelectedFilterEnter = function (event) {
  *
  * @since 1.7.5
  */
-var start = function start() {
 
-	var almFilters = document.querySelector('.alm-filters-container');
+var start = function start() {
+	var almFilters = document.querySelector(".alm-filters-container");
 
 	if (!almFilters) {
 		return false;
@@ -9543,19 +9797,19 @@ var start = function start() {
 
 	almFiltersInit(almFilters);
 
-	var almListing = document.querySelector('.alm-listing');
+	var almListing = document.querySelector(".alm-listing");
 
 	// Set scroll & touch listeners if required
 	// Exit if paging addon active.
-	// Do not want scrolling to update the URL  
+	// Do not want scrolling to update the URL
 
-	if (almListing && almListing.dataset.paging !== 'true') {
+	if (almListing && almListing.dataset.paging !== "true") {
 		var doScroll = almListing.dataset.filtersScroll;
 		if (doScroll) {
-			window.addEventListener('touchstart', function () {
+			window.addEventListener("touchstart", function () {
 				(0, _Scroll2.default)(almFilters, almListing);
 			});
-			window.addEventListener('scroll', function () {
+			window.addEventListener("scroll", function () {
 				(0, _Scroll2.default)(almFilters, almListing);
 			});
 		}
@@ -9567,19 +9821,18 @@ exports.start = start;
 
 // Init Filters on page load
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
 	if (_Variables2.default.almFilters) {
 		start(_Variables2.default.almFilters);
 	}
 });
 
 /*
- * popstate 
+ * popstate
  * Fires when users click back or forward browser buttons
  */
-window.addEventListener('popstate', function (event) {
-
-	var almFilters = _Variables2.default.almFilters || document.querySelector('.alm-filters-container');
+window.addEventListener("popstate", function (event) {
+	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
 
 	if (!almFilters) {
 		// If element exists
@@ -9587,15 +9840,15 @@ window.addEventListener('popstate', function (event) {
 	}
 
 	var querystring = window.location.search; // get Querystring
-	var url = event.state ? event.state.permalink : querystring; // Get state or querystring      
-	url = url.replace('?', ''); // remove `?` param 
+	var url = event.state ? event.state.permalink : querystring; // Get state or querystring
+	url = url.replace("?", ""); // remove `?` param
 
-	// Empty URL or empty querystring      
-	if (url === '' || url === null || querystring === '') {
+	// Empty URL or empty querystring
+	if (url === "" || url === null || querystring === "") {
 		almFiltersClear(false);
 	} else {
-		var urlArray = (0, _ParseQuerystring2.default)(url); // [helpers/helpers.js]   
-		(0, _SetSelectedElements2.default)(urlArray); // [modules/setSelectedElements.js]   
+		var urlArray = (0, _ParseQuerystring2.default)(url); // [helpers/helpers.js]
+		(0, _SetSelectedElements2.default)(urlArray); // [modules/setSelectedElements.js]
 	}
 });
 
@@ -9608,11 +9861,11 @@ window.addEventListener('popstate', function (event) {
  * @param init boolen
  * @since 1.0
  */
+
 window.almFiltersPaged = function (alm) {
 	var init = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-
-	var nested = alm.main.dataset.nested === 'true' ? true : false; // Nested ALM instance
+	var nested = alm.main.dataset.nested === "true" ? true : false; // Nested ALM instance
 
 	// Exit if finished
 	if (alm.finished || nested) {
@@ -9620,7 +9873,7 @@ window.almFiltersPaged = function (alm) {
 	}
 
 	var page = alm.page + 1;
-	page = alm.preloaded === 'true' ? page + 1 : page; // Add 1 for preloaded
+	page = alm.preloaded === "true" ? page + 1 : page; // Add 1 for preloaded
 
 	var querystring = window.location.search.substring(1);
 	var obj = {};
@@ -9631,27 +9884,26 @@ window.almFiltersPaged = function (alm) {
 			obj.pg = page;
 		}
 	} else {
-		// Empty querystring   
+		// Empty querystring
 		obj.pg = page;
 	}
 
-	var url = '?';
+	var url = "?";
 	var count = 0;
 
 	// Loop the object and build the querystring
 	Object.keys(obj).forEach(function (key) {
 		count++;
 		if (count > 1) {
-			url += '&';
+			url += "&";
 		}
-		url += key + '=' + obj[key];
+		url += key + "=" + obj[key];
 	});
 
 	// Confirm URL
-	url = page == 1 ? url.replace(/\A?pg=[^&]+&*/g, '') : url; // Regex to check for ?pg=1 parmaeters   
-	url = url[url.length - 1] === '?' || url[url.length - 1] === '&' ? url.substring(0, url.length - 1) : url; // Remove orphan ? || & querystring params   
-	url = url === '' ? alm.canonical_url : url; // If empty, set to alm.canonical_url
-
+	url = page == 1 ? url.replace(/\A?pg=[^&]+&*/g, "") : url; // Regex to check for ?pg=1 parmaeters
+	url = url[url.length - 1] === "?" || url[url.length - 1] === "&" ? url.substring(0, url.length - 1) : url; // Remove orphan ? || & querystring params
+	url = url === "" ? alm.canonical_url : url; // If empty, set to alm.canonical_url
 
 	// Set the URL - use replaceState to prevent bck/fwd interactions
 	if (alm.addons.filters_paging) {
@@ -9666,7 +9918,7 @@ window.almFiltersPaged = function (alm) {
 		if (!target) {
 			return false;
 		}
-		var offset = typeof ajaxloadmore.getOffset === 'function' ? ajaxloadmore.getOffset(target).top : target.offsetTop;
+		var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
 		var scrolltop = alm.addons.filters_scrolltop ? parseInt(alm.addons.filters_scrolltop) : 30;
 		var top = offset - scrolltop + 1;
 		ajaxloadmore.almScroll(top);
@@ -9681,17 +9933,17 @@ window.almFiltersPaged = function (alm) {
  * @param reset boolean
  * @since 1.7.5
  */
+
 var reset = function reset() {
 	var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
-
-	var almFilters = _Variables2.default.almFilters || document.querySelector('.alm-filters-container');
+	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
 	if (!almFilters) {
 		return false;
 	}
 
 	var target = almFilters.dataset.target; // Get target
-	var filters = almFilters.querySelectorAll('.alm-filter'); // Get all filters
+	var filters = almFilters.querySelectorAll(".alm-filter"); // Get all filters
 	var data = {}; // Define data object
 
 	// Loop all filters
@@ -9722,16 +9974,18 @@ window.almFiltersClear = function () {
 	var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
 	almfilters.reset(reset);
+	(0, _StarRating.clearHighlightedStars)();
 };
 
-/** 
- * resetFilter 
+/**
+ * resetFilter
  * Reset an individual filter group `almfilters.restoreDefault()`
  * Public JS function
  *
  * @param filter HTML element
  * @since 1.7.5
  */
+
 var resetFilter = function resetFilter(filter) {
 	if (filter) {
 		(0, _Defaults.restoreDefault)(filter);
@@ -9754,19 +10008,22 @@ window.almFiltersOnload = function () {
 	if (!alm) {
 		return false;
 	}
-	var page = parseInt(alm.page) + 1;
-	if (page > 1) {
-		var target = alm.listing.querySelector('.alm-filters[data-page="' + page + '"]');
-		if (target) {
-			var offset = typeof ajaxloadmore.getOffset === 'function' ? ajaxloadmore.getOffset(target).top : target.offsetTop;
-			var scrolltop = alm.addons.filters_scrolltop ? parseInt(alm.addons.filters_scrolltop) : 30;
-			var top = offset - scrolltop + 1;
-			window.scrollTo(0, top);
+	// Delay to give posts time to load
+	setTimeout(function () {
+		var page = parseInt(alm.page) + 1;
+		if (page > 1) {
+			var target = alm.listing.querySelector('.alm-filters[data-page="' + page + '"]');
+			if (target) {
+				var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
+				var scrolltop = alm.addons.filters_scrolltop ? parseInt(alm.addons.filters_scrolltop) : 30;
+				var top = offset - scrolltop + 1;
+				window.scrollTo(0, top);
+			}
 		}
-	}
+	}, 150);
 };
 
-/** 
+/**
  * almFiltersAddonComplete
  * Filters Complete function
  * Fires from core Ajax Load More [core/src/js/modules/filtering.js]
@@ -9774,36 +10031,36 @@ window.almFiltersOnload = function () {
  * @param el element   The alm element
  * @since 1.0
  */
+
 window.almFiltersAddonComplete = function () {
 	var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-
-	var target = el.querySelector('.alm-listing');
+	var target = el.querySelector(".alm-listing");
 	var scroll = false;
 	var scrolltop = 30;
 
 	if (target) {
-		scroll = target.dataset.filtersScroll === 'true' ? true : false;
+		scroll = target.dataset.filtersScroll === "true" ? true : false;
 		scrolltop = target.dataset.filtersScrolltop ? parseInt(target.dataset.filtersScrolltop) : 30;
 	}
 
 	setTimeout(function () {
 		// Delay re-initialization
 
-		var almFilters = _Variables2.default.almFilters || document.querySelector('.alm-filters-container');
+		var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
 
 		if (!almFilters) {
 			return false;
 		}
 
 		_Variables2.default.alm_filtering = false;
-		almFilters.classList.remove('filtering');
+		almFilters.classList.remove("filtering");
 
 		/*
-     * almFiltersComplete
-     * Callback function dispatched after the filters have completed their magic
-     *
-     */
+   * almFiltersComplete
+   * Callback function dispatched after the filters have completed their magic
+   *
+   */
 		if (typeof window.almFiltersComplete === "function") {
 			window.almFiltersComplete();
 		}
@@ -9814,7 +10071,7 @@ window.almFiltersAddonComplete = function () {
 				return false;
 			}
 
-			var offset = typeof ajaxloadmore.getOffset === 'function' ? ajaxloadmore.getOffset(el).top : el.offsetTop;
+			var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(el).top : el.offsetTop;
 			var top = offset - scrolltop + 1;
 			ajaxloadmore.almScroll(top);
 		}
@@ -10195,7 +10452,7 @@ exports.default = buildURL;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+  value: true
 });
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -10209,10 +10466,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  */
 
 var clearInputs = function clearInputs(inputs) {
-   [].concat(_toConsumableArray(inputs)).forEach(function (input) {
-      input.classList.remove('active');
-      input.setAttribute('aria-checked', false);
-   });
+  [].concat(_toConsumableArray(inputs)).forEach(function (input) {
+    input.classList.remove("active");
+    input.classList.remove("highlight");
+    input.setAttribute("aria-checked", false);
+  });
 };
 
 exports.default = clearInputs;
@@ -10837,7 +11095,7 @@ exports.default = parseQuerystring;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
@@ -10850,7 +11108,7 @@ var _Analytics2 = _interopRequireDefault(_Analytics);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var almFiltersTimer = '';
+var almFiltersTimer = "";
 
 /**
  * almFiltersScroll
@@ -10862,81 +11120,80 @@ var almFiltersTimer = '';
  */
 
 var onScroll = function onScroll(almFilters, almListing) {
+	if (_Variables2.default.alm_filtering) {
+		return false;
+	}
 
-  if (_Variables2.default.alm_filtering) {
-    return false;
-  }
+	var almFiltersFirst = document.querySelector('.alm-listing[data-filters="true"] .alm-filters:first-child');
 
-  var almFiltersFirst = document.querySelector('.alm-listing[data-filters="true"] .alm-filters:first-child');
-  if (!almFiltersFirst) {
-    return false; // Exit if not found
-  }
+	if (!almFiltersFirst) {
+		return false; // Exit if not found
+	}
 
-  // Window offset
-  var scrollTop = window.pageYOffset;
+	// Window offset
+	var scrollTop = window.pageYOffset;
 
-  // Get ALM target
-  var target = almFilters.dataset.target ? almFilters.dataset.target : '';
+	// Get ALM target
+	var target = almFilters.dataset.target ? almFilters.dataset.target : "";
 
-  // Get ALM instance
-  var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
+	// Get ALM instance
+	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
 
-  // Get the Scroll Top
-  var filters_scrolltop = almListing.dataset.filtersScrolltop;
-  filters_scrolltop = filters_scrolltop ? parseInt(filters_scrolltop) : 30;
+	// Get the Scroll Top
+	var filters_scrolltop = almListing.dataset.filtersScrolltop;
+	filters_scrolltop = filters_scrolltop ? parseInt(filters_scrolltop) : 30;
 
-  // Nested 
-  var nested = alm[0].parentNode.dataset.nested === 'true' ? true : false; // Nested ALM instance
+	// Nested
+	var nested = alm[0].parentNode.dataset.nested === "true" ? true : false; // Nested ALM instance
 
-  if (nested) {
-    return false; // exit if nested
-  }
+	if (nested) {
+		return false; // exit if nested
+	}
 
-  // Scroll Delay
-  almFiltersTimer = window.setTimeout(function () {
+	// Scroll Delay
+	almFiltersTimer = window.setTimeout(function () {
+		// Get container scroll position
+		var fromTop = scrollTop + filters_scrolltop;
+		var posts = document.querySelectorAll(".alm-filters");
+		var url = window.location.href;
 
-    // Get container scroll position
-    var fromTop = scrollTop + filters_scrolltop;
-    var posts = document.querySelectorAll('.alm-reveal.alm-filters');
-    var url = window.location.href;
+		// Loop all posts
+		var current = Array.prototype.filter.call(posts, function (n, i) {
+			if (typeof ajaxloadmore.getOffset === "function") {
+				var divOffset = ajaxloadmore.getOffset(n);
+				if (divOffset.top < fromTop) {
+					return n;
+				}
+			}
+		});
 
-    // Loop all posts
-    var current = Array.prototype.filter.call(posts, function (n, i) {
-      if (typeof ajaxloadmore.getOffset === 'function') {
-        var divOffset = ajaxloadmore.getOffset(n);
-        if (divOffset.top < fromTop) {
-          return n;
-        }
-      }
-    });
+		// Get the data attributes of the current element
+		var currentPost = current[current.length - 1];
+		var permalink = currentPost ? currentPost.dataset.url : "";
+		var page = currentPost ? currentPost.dataset.page : "";
 
-    // Get the data attributes of the current element
-    var currentPost = current[current.length - 1];
-    var permalink = currentPost ? currentPost.dataset.url : '';
-    var page = currentPost ? currentPost.dataset.page : '';
+		if (page === undefined || page === "") {
+			page = almFiltersFirst.dataset.page;
+			permalink = almFiltersFirst.dataset.url;
+		}
 
-    if (page === undefined || page === '') {
-      page = almFiltersFirst.dataset.page;
-      permalink = almFiltersFirst.dataset.url;
-    }
+		if (url !== permalink) {
+			var state = {
+				page: page,
+				permalink: permalink
+			};
 
-    if (url !== permalink) {
-      var state = {
-        page: page,
-        permalink: permalink
-      };
+			// Update URL
+			if (typeof window.history.pushState === "function" && !_Variables2.default.isIE) {
+				history.replaceState(state, window.location.title, permalink);
+			}
 
-      // Update URL
-      if (typeof window.history.pushState === 'function' && !_Variables2.default.isIE) {
-        history.replaceState(state, window.location.title, permalink);
-      }
-
-      // Analytics
-      if (alm[0].dataset.filtersAnalytics === 'true') {
-        (0, _Analytics2.default)();
-      }
-    }
-  }, 15);
+			// Analytics
+			if (alm[0].dataset.filtersAnalytics === "true") {
+				(0, _Analytics2.default)();
+			}
+		}
+	}, 15);
 };
 
 exports.default = onScroll;
@@ -10954,32 +11211,30 @@ exports.default = onScroll;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+	value: true
 });
 /*
  * setCheckboxState
  * Set checked state of checkbox
  *
- * @param array array   Array of selected filter values
- * @param setCheckboxState element   The current checkbox in the loop
+ * @param {Array} array Array of selected filter values
+ * @param {HTMLElement} setCheckboxState The current checkbox in the loop
  * @since 1.0
  */
-// 
 var setCheckboxState = function setCheckboxState(array, checkbox) {
+	var chkVal = checkbox.dataset.value;
+	var isStarRating = checkbox.classList.contains("field-starrating");
 
-   var chkVal = checkbox.dataset.value;
-
-   // If checkbox value is found in array set as .active
-   if (array.indexOf(chkVal) > -1) {
-      checkbox.classList.add('active');
-      checkbox.setAttribute("aria-checked", true);
-   } else {
-      // Not found (uncheck)
-      checkbox.classList.remove('active');
-      checkbox.setAttribute("aria-checked", false);
-   }
+	// If checkbox value is found in array set as .active
+	if (array.indexOf(chkVal) > -1) {
+		checkbox.classList.add("active");
+		checkbox.setAttribute("aria-checked", true);
+	} else {
+		// Not found (uncheck)
+		checkbox.classList.remove("active");
+		checkbox.setAttribute("aria-checked", false);
+	}
 };
-
 exports.default = setCheckboxState;
 
 /***/ }),
@@ -10995,7 +11250,7 @@ exports.default = setCheckboxState;
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+	value: true
 });
 
 var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
@@ -11014,6 +11269,8 @@ var _ClearInputs = __webpack_require__(/*! ./ClearInputs */ "./src/js/frontend/m
 
 var _ClearInputs2 = _interopRequireDefault(_ClearInputs);
 
+var _StarRating = __webpack_require__(/*! ../types/StarRating */ "./src/js/frontend/types/StarRating.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -11030,114 +11287,123 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  */
 
 var setElementStates = function setElementStates(urlArray) {
+	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
+	if (!almFilters) {
+		return false;
+	}
 
-   var almFilters = _Variables2.default.almFilters || document.querySelector('.alm-filters-container');
-   if (!almFilters) {
-      return false;
-   }
+	_Variables2.default.alm_filtering_popstate = true;
+	var filters = almFilters.querySelectorAll(".alm-filter");
 
-   _Variables2.default.alm_filtering_popstate = true;
-   var filters = almFilters.querySelectorAll('.alm-filter');
+	// Loop all filters
+	[].concat(_toConsumableArray(filters)).forEach(function (filter, e) {
+		var fieldtype = filter.dataset.fieldtype;
+		var key = filter.dataset.key;
+		key = key === "taxonomy" ? filter.dataset.taxonomy : key; // If key is taxonomy, convert key to taxonomy slug
+		key = key === "meta" ? filter.dataset.metaKey : key; // If key is meta, convert key to meta key
 
-   // Loop all filters
-   [].concat(_toConsumableArray(filters)).forEach(function (filter, e) {
-      var fieldtype = filter.dataset.fieldtype;
-      var key = filter.dataset.key;
-      key = key === 'taxonomy' ? filter.dataset.taxonomy : key; // If key is taxonomy, convert key to taxonomy slug 
-      key = key === 'meta' ? filter.dataset.metaKey : key; // If key is meta, convert key to meta key           
+		switch (fieldtype) {
+			case "checkbox":
+				// Checkbox
+				var checkboxes = filter.querySelectorAll("div.field-checkbox"); // All checkboxes
 
-      switch (fieldtype) {
+				// If key matches URL key
+				if (urlArray.hasOwnProperty(key)) {
+					var valueArray = urlArray[key].split("+");
+					[].concat(_toConsumableArray(checkboxes)).forEach(function (checkbox) {
+						(0, _SetCheckboxState2.default)(valueArray, checkbox);
+					});
+				} else {
+					(0, _ClearInputs2.default)(checkboxes); // Clear all
+				}
 
-         case 'checkbox':
-            // Checkbox
+				break;
 
-            var checkboxes = filter.querySelectorAll('div.field-checkbox'); // All checkboxes     
+			case "radio":
+				// Radios
+				var radios = filter.querySelectorAll("div.field-radio"); // All radios
 
-            // If key matches URL key
-            if (urlArray.hasOwnProperty(key)) {
-               var valueArray = urlArray[key].split('+');
-               [].concat(_toConsumableArray(checkboxes)).forEach(function (checkbox) {
-                  (0, _SetCheckboxState2.default)(valueArray, checkbox);
-               });
-            } else {
-               // Clear all checkboxes
-               (0, _ClearInputs2.default)(checkboxes);
-            }
+				if (urlArray.hasOwnProperty(key)) {
+					var _valueArray = urlArray[key].split("+");
+					[].concat(_toConsumableArray(radios)).forEach(function (radio) {
+						(0, _SetCheckboxState2.default)(_valueArray, radio);
+					});
+					if (isStarRating) {
+						clearRatingClass(radios);
+					}
+				} else {
+					(0, _ClearInputs2.default)(radios); // Clear all
+				}
 
-            break;
+				break;
 
-         case 'radio':
-            // Radios
+			case "star_rating":
+				// Star Rating... Duplicate of Radio func
+				var stars = filter.querySelectorAll("div.field-starrating"); // All radios
+				var feedback = filter.querySelector(".alm-star--feedback");
 
-            var radios = filter.querySelectorAll('div.field-radio'); // All radios
+				if (urlArray.hasOwnProperty(key)) {
+					var _valueArray2 = urlArray[key].split("+");
+					[].concat(_toConsumableArray(stars)).forEach(function (star) {
+						(0, _SetCheckboxState2.default)(_valueArray2, star);
+					});
+					(0, _StarRating.setHighlightedStars)(filter, stars);
+				} else {
+					(0, _ClearInputs2.default)(stars); // Clear all
+				}
 
-            if (urlArray.hasOwnProperty(key)) {
-               var radio = filter.querySelector('div[data-value="' + urlArray[key] + '"]');
-               var _valueArray = urlArray[key].split('+');
-               [].concat(_toConsumableArray(radios)).forEach(function (radio) {
-                  (0, _SetCheckboxState2.default)(_valueArray, radio);
-               });
-            } else {
-               // Clear all radios
-               (0, _ClearInputs2.default)(radios);
-            }
+				break;
 
-            break;
+			case "select":
+				// Select
+				var select = filter.querySelector("select");
+				if (urlArray.hasOwnProperty(key)) {
+					select.value = urlArray[key];
+				} else {
+					select.value = "#";
+				}
 
-         case 'select':
-            // Select 
+				break;
 
-            var select = filter.querySelector('select');
-            if (urlArray.hasOwnProperty(key)) {
-               select.value = urlArray[key];
-            } else {
-               select.value = '#';
-            }
+			case "select_multiple":
+				// Select
+				var select_multiple = filter.querySelector("select");
+				if (urlArray.hasOwnProperty(key)) {
+					select_multiple.value = urlArray[key];
+				} else {
+					select_multiple.value = "#";
+				}
 
-            break;
+				break;
 
-         case 'select_multiple':
-            // Select 
+			case "date_picker":
+				// Select
+				var datepicker = filter.querySelector(".flatpickr-input");
+				if (urlArray.hasOwnProperty(key)) {
+					// Replace `+` with ` | ` for range mode
+					var value = urlArray[key].replace("+", " | ");
+					datepicker.value = value;
+				} else {
+					datepicker.value = "";
+				}
 
-            var select_multiple = filter.querySelector('select');
-            if (urlArray.hasOwnProperty(key)) {
-               select_multiple.value = urlArray[key];
-            } else {
-               select_multiple.value = '#';
-            }
+				break;
 
-            break;
+			default:
+				// Textfield
 
-         case 'date_picker':
-            // Select 
+				var textfield = filter.querySelector("input[type=text]");
+				if (urlArray.hasOwnProperty(key)) {
+					textfield.value = urlArray[key];
+				} else {
+					textfield.value = "";
+				}
 
-            var datepicker = filter.querySelector('.flatpickr-input');
-            if (urlArray.hasOwnProperty(key)) {
-               // Replace `+` with ` | ` for range mode
-               var value = urlArray[key].replace('+', ' | ');
-               datepicker.value = value;
-            } else {
-               datepicker.value = '';
-            }
+				break;
+		}
+	});
 
-            break;
-
-         default:
-            // Textfield
-
-            var textfield = filter.querySelector('input[type=text]');
-            if (urlArray.hasOwnProperty(key)) {
-               textfield.value = urlArray[key];
-            } else {
-               textfield.value = '';
-            }
-
-            break;
-
-      }
-   });
-
-   (0, _TriggerChange2.default)(almFilters);
+	(0, _TriggerChange2.default)(almFilters);
 };
 exports.default = setElementStates;
 
@@ -11558,14 +11824,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /*
  * rangeSliders
  * Initiate the Flatpickr date pickers.
- 
+
  * @param filter_id  ID of the filter instance
  * @param randeSliders  the items to convert to a range
  * @since 1.8
  */
-function setRangeSliders(filter_id, rangeSliders) {
-	var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'button';
 
+function setRangeSliders(filter_id, rangeSliders) {
+	var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "button";
 
 	if (!rangeSliders) {
 		return false;
@@ -11573,39 +11839,42 @@ function setRangeSliders(filter_id, rangeSliders) {
 
 	// Loop all range sliders
 	[].concat(_toConsumableArray(rangeSliders)).forEach(function (slider, e) {
-
-		var target = slider.querySelector('.alm-range-slider--target');
-		var label = slider.querySelector('.alm-range-slider--label');
-		var input = slider.parentNode.querySelector('input');
+		var target = slider.querySelector(".alm-range-slider--target");
+		var label = slider.querySelector(".alm-range-slider--label");
+		var resetBtn = slider.querySelector(".alm-range-slider--reset");
+		var input = slider.parentNode.querySelector("input");
 
 		var min = slider.dataset.min ? parseInt(slider.dataset.min) : 0;
 		var max = slider.dataset.max ? parseInt(slider.dataset.max) : 100;
 		var start = slider.dataset.start ? parseInt(slider.dataset.start) : min;
+		var start_reset = slider.dataset.startReset ? parseInt(slider.dataset.startReset) : start;
 		var end = slider.dataset.end ? parseInt(slider.dataset.end) : max;
+		var end_reset = slider.dataset.endReset ? parseInt(slider.dataset.endReset) : end;
 		var steps = slider.dataset.steps ? parseInt(slider.dataset.steps) : 1;
-		var display_label = slider.dataset.label ? slider.dataset.label : '{start} - {end}';
-		var orientation = slider.dataset.orientation ? slider.dataset.orientation : 'horizontal';
-		var decimals = slider.dataset.decimals ? slider.dataset.decimals : 'true';
-		decimals = decimals === 'true' ? true : false;
+		var display_label = slider.dataset.label ? slider.dataset.label : "{start} - {end}";
+		var orientation = slider.dataset.orientation ? slider.dataset.orientation : "horizontal";
+		var decimals = slider.dataset.decimals ? slider.dataset.decimals : "true";
+		decimals = decimals === "true" ? true : false;
 
 		// Range Slider Options
 		var options = {
 			start: [start, end],
 			step: steps,
 			connect: true,
-			behaviour: 'tap',
+			behaviour: "tap",
 			orientation: orientation,
 			range: {
-				'min': min,
-				'max': max
+				min: min,
+				max: max
 			}
+		};
 
-			// Custom config options		
-		};var opt_var = filter_id !== '' ? 'alm_nouislider_opts_' + filter_id : 'alm_nouislider_opts'; // Dynamic Variable Name		
+		// Custom config options
+		var opt_var = filter_id !== "" ? "alm_nouislider_opts_" + filter_id : "alm_nouislider_opts"; // Dynamic Variable Name
 		var alm_nouislider_opts = window[opt_var]; // Get window variable
 		if (alm_nouislider_opts) {
 			Object.keys(alm_nouislider_opts).forEach(function (key) {
-				// Loop object	to create key:prop			
+				// Loop object	to create key:prop
 				options[key] = alm_nouislider_opts[key];
 			});
 		}
@@ -11614,30 +11883,75 @@ function setRangeSliders(filter_id, rangeSliders) {
 		_nouislider2.default.create(target, options);
 
 		// Update
-		target.noUiSlider.on('update', function () {
+		target.noUiSlider.on("update", function () {
 			var value = this.get();
 			label.innerHTML = parseRangeValue(value, min, max, display_label, decimals);
 		});
 
-		// Change
-		target.noUiSlider.on('change', function () {
-
+		// End
+		target.noUiSlider.on("end", function () {
 			var value = this.get();
-			label.innerHTML = parseRangeValue(value, min, max, display_label, decimals);
-			input.value = value;
 
 			// If style is change, submit the form on change
-			if (style === 'change') {
-				var ev = document.createEvent('Event');
-				ev.initEvent('keyup');
+			if (style === "change") {
+				var ev = document.createEvent("Event");
+				ev.initEvent("keyup", true, false);
 				ev.which = ev.keyCode = 13;
 				input.dispatchEvent(ev);
 			}
+
+			if (resetBtn) {
+				toggleResetBtn(resetBtn, value, start_reset, end_reset);
+			}
 		});
+
+		// Change
+		target.noUiSlider.on("change", function () {
+			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style);
+		});
+
+		// Set
+		target.noUiSlider.on("set", function () {
+			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style);
+		});
+
+		// Reset Range Slider
+		if (resetBtn) {
+			resetBtn.addEventListener("click", function () {
+				target.noUiSlider.set([start_reset, end_reset]);
+			});
+			// Run on init
+			toggleResetBtn(resetBtn, target.noUiSlider.get(), start_reset, end_reset);
+		}
 	});
 }
 
-// Parse the display label
+/**
+ * Function dispatched after `change` or `set`
+ *
+ */
+function onChange(el, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style) {
+	var value = el.get();
+	label.innerHTML = parseRangeValue(value, min, max, display_label, decimals);
+	input.value = value;
+
+	// If style is change, submit the form on change
+	if (style === "change") {
+		var ev = document.createEvent("Event");
+		ev.initEvent("keyup", true, false);
+		ev.which = ev.keyCode = 13;
+		input.dispatchEvent(ev);
+	}
+
+	if (resetBtn) {
+		toggleResetBtn(resetBtn, value, start_reset, end_reset);
+	}
+}
+
+/**
+ * Parse the display label
+ *
+ */
 function parseRangeValue(value, min, max, display_label, decimals) {
 	if (!value && value.length !== 2) {
 		return false;
@@ -11650,10 +11964,197 @@ function parseRangeValue(value, min, max, display_label, decimals) {
 	start_val = !decimals ? Math.round(start_val) : start_val;
 	end_val = !decimals ? Math.round(end_val) : end_val;
 
-	returnVal = returnVal.replace('{start}', '<span class="alm-range-start">' + start_val + '</span>');
-	returnVal = returnVal.replace('{end}', '<span class="alm-range-end">' + end_val + '</span>');
+	returnVal = returnVal.replace("{start}", "<span class=\"alm-range-start\">" + start_val + "</span>");
+	returnVal = returnVal.replace("{end}", "<span class=\"alm-range-end\">" + end_val + "</span>");
 
 	return returnVal;
+}
+
+/**
+ * Show/Hide Reset Button
+ *
+ */
+function toggleResetBtn(button, value, start_reset, end_reset) {
+	if (parseInt(value[0]) !== parseInt(start_reset) || parseInt(value[1]) !== parseInt(end_reset)) {
+		button.style.display = "block";
+	} else {
+		button.style.display = "none";
+	}
+}
+
+/***/ }),
+
+/***/ "./src/js/frontend/types/StarRating.js":
+/*!*********************************************!*\
+  !*** ./src/js/frontend/types/StarRating.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.setHighlightedStars = setHighlightedStars;
+exports.clearHighlightedStars = clearHighlightedStars;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/*
+ * StarRating
+ * Initiate the StarRating field type.
+ *
+ * @param {*} stars
+ * @since 1.10.0
+ */
+var starRating = function starRating() {
+	var stars = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+	if (!stars) {
+		return false;
+	}
+
+	// Loop Stars, Add Click, Keyup event Event
+
+	var _loop = function _loop(i) {
+		stars[i].addEventListener("mouseover", function () {
+			starHover(i, stars);
+		});
+		stars[i].addEventListener("mouseout", function () {
+			starOut(stars);
+		});
+		stars[i].addEventListener("click", function () {
+			starClick(this, stars);
+		});
+		stars[i].addEventListener("keyup", function (event) {
+			if (event.keyCode === 13 || event.keyCode === 32) {
+				// Enter/return click || spacebar
+				starClick(this, stars);
+			}
+		});
+	};
+
+	for (var i = 0; i < stars.length; i++) {
+		_loop(i);
+	}
+};
+exports.default = starRating;
+
+/**
+ * Star click/Keyup event handler
+ * @param {*} el
+ * @param {*} stars
+ */
+
+function starClick(el, stars) {
+	var value = el.dataset.value;
+	var feedback = el.parentNode.parentNode.querySelector(".alm-star--feedback");
+
+	clearRatingClass(stars);
+
+	if (el.classList.contains("active")) {
+		for (var j = value - 1; j >= 0; j--) {
+			stars[j].classList.toggle("highlight");
+		}
+		if (feedback) {
+			setFeedback(feedback, el.dataset.text);
+		}
+	} else {
+		if (feedback) {
+			setFeedback(feedback, "");
+		}
+	}
+}
+
+function setFeedback(el, value) {
+	el.innerHTML = value;
+}
+
+/**
+ * Star mouseover event handler
+ * @param {*} index
+ * @param {*} stars
+ */
+function starHover(index, stars) {
+	for (var i = 0; i < stars.length; i++) {
+		if (i <= index) {
+			stars[i].classList.add("hover");
+		} else {
+			stars[i].classList.remove("hover");
+			stars[i].classList.add("none");
+		}
+	}
+}
+
+/**
+ * Star mouseout event handler
+ * @param {*} stars
+ */
+function starOut(stars) {
+	for (var i = 0; i < stars.length; i++) {
+		stars[i].classList.remove("hover");
+		stars[i].classList.remove("none");
+	}
+}
+
+/**
+ * Clear the stars `highlight` class
+ * @param {*} stars
+ */
+function clearRatingClass(stars) {
+	if (!stars) {
+		return false;
+	}
+
+	for (var i = 0; i < stars.length; i++) {
+		stars[i].classList.remove("highlight");
+	}
+}
+
+/**
+ * Set the highlighed stars when user initiates a popstate
+ * @param {*} filter
+ * @param {*} stars
+ */
+function setHighlightedStars(filter, stars) {
+	// Get active star
+	var active = filter.querySelector("div.active");
+	if (!active) {
+		return false;
+	}
+
+	var value = active.dataset.value;
+	clearRatingClass(stars);
+	setFeedback(filter.querySelector(".alm-star--feedback"), active.dataset.text);
+
+	/// Add highlight class
+	for (var j = value - 1; j >= 0; j--) {
+		stars[j].classList.toggle("highlight");
+	}
+}
+
+/**
+ * Clear all highlighted star filters
+ */
+function clearHighlightedStars() {
+	// Get all links
+	var stars = document.querySelectorAll(".alm-filter--link.field-starrating");
+	if (stars) {
+		[].concat(_toConsumableArray(stars)).forEach(function (star) {
+			star.classList.remove("active");
+			star.classList.remove("highlight");
+			star.classList.remove("hover");
+		});
+	}
+	/// Get all feedback
+	var feedback = document.querySelectorAll(".alm-star--feedback");
+	if (stars) {
+		[].concat(_toConsumableArray(feedback)).forEach(function (el) {
+			el.innerHTML = "";
+		});
+	}
 }
 
 /***/ })

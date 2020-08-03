@@ -5,10 +5,10 @@ Author: Connekt Media
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.0
+Version: 1.0.1
 
 
 == Copyright ==
@@ -45,6 +45,9 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.0.1 - May 29, 2020 =
+* NEW - Added support for Ajax Load More [Cache add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/cache/). When cache is enabled, a new customizer settings will be created for both the main Shop page and Shop archives allowing.
 
 
 = 1.0 - April 22, 2020 =

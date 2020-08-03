@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.6.1
+Version: 1.7.1
 
 
 == Copyright ==
@@ -49,7 +49,18 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 
 == Changelog ==
 
-= 1.6.0 - May 1, 2020 =
+= 1.7.1 - June 29, 2020 =
+* FIX - Fixed issue with 'Delete cache when new posts are published.` setting causing issues for Editor, Author roles saving and creating posts.
+
+
+= 1.7.0 - June 12, 2020 =
+* NEW - Added support for caching results with the [Filters add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/)
+* NEW - Added support for nested cache directories for when caching [Filters](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/) or [WooCommerce](https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/) add-on results.
+* UPDATE - Updated warning before deleting a cache directory. Users are now instructed as to which specific directory is up for deletion.
+* FIX - Fixed PHP warning message about undefined index 0 on ALM Cache admin page.
+
+
+= 1.6.1 - May 1, 2020 =
 * NEW - Added new cache API for caching Single Posts using the new implementation method. This new API will allow for more robust caching options in the future.
 
 

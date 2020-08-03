@@ -11,7 +11,7 @@
 			<i class="fa fa-pause" aria-hidden="true"></i> <?php _e('Cache Paused', 'ajax-load-more-cache'); ?>
 		</span>
 		<span id="alm-cache-complete-txt">
-			<i class="fa fa-check" aria-hidden="true"></i> <?php _e('Cache created successfully!', 'ajax-load-more-cache'); ?> &nbsp;&nbsp; <a style="float: right;" href="admin.php?page=ajax-load-more-cache"><?php _e('View cache', 'ajax-load-more-cache'); ?></a>
+			<i class="fa fa-check" aria-hidden="true"></i> <?php _e('Cache created successfully!', 'ajax-load-more-cache'); ?> &nbsp;&nbsp; <a style="float: right;" href="admin.php?page=ajax-load-more-cache"><?php _e('View Cache', 'ajax-load-more-cache'); ?></a>
 		</span>
 	</p>
 	<?php if($alm_cache_array){ ?>	

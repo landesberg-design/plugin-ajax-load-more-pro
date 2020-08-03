@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 3.6.1
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.1.1
+Version: 1.1.5
 
 == Copyright ==
 Copyright 2020 Darren Cooney, Connekt Media
@@ -47,6 +47,62 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 
 == Changelog ==
+
+
+= 1.1.5 - July 13, 2020 =
+
+**Add-on Updates**
+
+Filters
+* NEW - Added new Star Rating field for allowing users to query by start rating custom fields.
+* NEW - Added new optional description field for filter block.
+* UPDATE - Added new PHP Output option. Filters can now can be added via PHP Array and not a shortcode. Click the `Generate PHP` button in the Shortcode Output sidebar.
+* UPDATE - Admin UI/UX updates for a better experince building filters.
+
+
+
+= 1.1.4 - June 29, 2020 =
+
+**Add-on Updates**
+
+Cache
+* FIX - Fixed issue with 'Delete cache when new posts are published.` setting causing issues for Editor, Author roles saving and creating posts.
+
+Filters
+* NEW - Added `Reset` button to Range Slider field type. Users can now reset the Range Slider to the default values after filtering.
+* UPDATE - Added support for Masonry `transition` and updating the paging URLs when using Filters add-on.
+* UPDATE - Improved the stability of the scroll to post functionality when loading a paged URL.
+* FIX - Fixed IE11 issue with keyboard navigation of radio buttons.
+* FIX - Fixed IE11 issue where Range Slider was not triggering a change event.
+
+Next Page
+* FIX - Fixed issue with querystrings in paging URLs when using Next Page + Cache add-ons.
+
+
+= 1.1.3 - June 12, 2020 =
+
+**Add-on Updates**
+
+Cache
+* NEW - Added support for caching results with the [Filters add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/)
+* NEW - Added support for nested cache directories for when caching [Filters](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/) or [WooCommerce](https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/) add-on results.
+* UPDATE - Updated warning before deleting a cache directory. Users are now instructed as to which specific directory is up for deletion.
+* FIX - Fixed PHP warning message about undefined index 0 on ALM Cache admin page.
+
+Filters
+* UPDATE - Added support for spacerbar keydown event to trigger events when using radio or checkbox field types.
+* UPDATE - Added support for arrow keys to traverse the radio groups and act more like native radio buttons.
+* FIX - Fixed issue on setting page not displaying filter preview
+* FIX - Pushed fix for issue where hitting a paged URL would not send the user to the top of the current page.
+
+
+= 1.1.2 - May 29, 2020 =
+
+**Add-on Updates**
+
+WooCommerce
+* NEW - Added new cache API for caching Single Posts using the new implementation method. This new API will allow for more robust caching options in the future.
+
 
 = 1.1.1 - May 1, 2020 =
 

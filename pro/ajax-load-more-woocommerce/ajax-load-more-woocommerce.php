@@ -6,7 +6,7 @@ Description: Ajax Load More addons for integrating WooCommerce.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: http://connekthq.com
-Version: 1.0.0
+Version: 1.0.1
 Copyright: Darren Cooney & Connekt Media
 */
 
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-define('ALM_WOO_VERSION', '1.0.0');
-define('ALM_WOO_RELEASE', 'April 22, 2020');
+define('ALM_WOO_VERSION', '1.0.1');
+define('ALM_WOO_RELEASE', 'May 29, 2020');
 
 
 /**
@@ -138,13 +138,11 @@ if( !class_exists('ALMWooCommerce') ):
 			
 			$orderby = apply_filters('alm_woocommerce_orderby', 'menu_order title');
 			
-			
 			// Default $args
 			$args = array(
 				'id' => 'alm_woocommerce',
 				'woo' => 'true',
 				'post_type' => $woo_config['post_type'],
-				//'offset' => $woo_config['per_page'],
 				'posts_per_page' => $woo_config['per_page'],
 				'pause' => 'true',
 				'order' => 'ASC',
@@ -152,6 +150,26 @@ if( !class_exists('ALMWooCommerce') ):
 				'container_type' => $woo_config['container_element'],
 				'css_classes' => $woo_config['classes']
 			);
+			
+			
+			// ALM Cache
+			if( has_action('alm_cache_installed') && !is_customize_preview() ){
+				// Main Shop
+				if ( is_shop() && !is_product_category() && !is_product_tag() ){
+					if(alm_woo_is_shop_cache()){ 
+						$args['cache'] = 'true';
+						$args['cache_id'] = $this::alm_woocommerce_get_cache_id();
+					}
+				}
+				// Archives
+				if ( is_product_category() || is_product_tag() ){
+					if(alm_woo_is_shop_archive_cache()){ 
+						$args['cache'] = 'true';
+						$args['cache_id'] = $this::alm_woocommerce_get_cache_id();
+					}
+				
+				}
+			}
 			
 			
 			// Loading Style
@@ -207,6 +225,39 @@ if( !class_exists('ALMWooCommerce') ):
 			alm_render($args);
 			
    	}
+   	
+   	
+   	
+   	/**
+   	 * alm_woocommerce_get_cache_id
+   	 * Create a cache ID based on current page and querystrings
+   	 *
+   	 * @since 1.1
+   	 */
+   	public static function alm_woocommerce_get_cache_id(){
+	   	
+	   	$cache_id = 'woo-shop'; // Default ID
+	   	
+	   	if(is_product_category()|| is_product_tag()){ // Shop Archives
+		   	$obj = get_queried_object();
+				if(isset($obj->taxonomy) && isset($obj->slug)){
+				   $taxonomy = $obj->taxonomy;
+				   $cache_id = 'woo-'. $obj->taxonomy .'-'.$obj->slug;
+				}
+	   	}
+		   
+		   // Get Querystring and parse into string
+		   // `woo-shop--param-value-param-value`
+	   	$qs = $_SERVER['QUERY_STRING']; 
+	   	if($qs){
+		   	$qs = str_replace('=', '-', $qs);
+		   	$qs = str_replace('&', '-', $qs);
+		   	$cache_id = $cache_id . '--' . $qs;
+	   	}
+	   	
+	   	return $cache_id;
+   	}
+   	
    	
    	
    	
@@ -283,7 +334,7 @@ if( !class_exists('ALMWooCommerce') ):
    		if(wc_get_loop_prop('current_page') > 1){
 	   		$page_link = apply_filters('alm_woocommerce_previous_link_sep', ' - ');
 	   		$page_link .= '<a href="'. get_pagenum_link() .'" class="alm-woo-prev">';
-	   			$page_link .= apply_filters('alm_woocommerce_previous_link', 'Previous Products');
+	   			$page_link .= apply_filters('alm_woocommerce_previous_link', __('Previous Products', 'alm-woocommerce'));
 	   		$page_link .= '</a>';
 	   		
 	   		$params['settings']['previous_page_link'] = $page_link;
@@ -377,6 +428,22 @@ if( !class_exists('ALMWooCommerce') ):
    	}
    	
    }
+   
+   /*
+   *  alm_woocommerce_sanitize_license
+   *  Sanitize the license activation
+   *
+   *  @since 1.0.1
+   */
+
+   function alm_woocommerce_sanitize_license( $new ) {
+   	$old = get_option( 'alm_woocommerce_license_key' );
+   	if( $old && $old != $new ) {
+   		delete_option( 'alm_woocommerce_license_status' );
+   	}
+   	return $new;
+   }
+   
    	
    	
    /**

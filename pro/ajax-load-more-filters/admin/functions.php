@@ -1,5 +1,5 @@
 <?php
-   
+
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
@@ -13,12 +13,12 @@ if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *  @return	n/a
  */
 function alm_list_all_filters($filter_id, $pos = 'sidebar'){
-   
+
 	$filters = ALMFilters::alm_get_all_filters();
-   
+
 	if($filters) : ?>
 		<div class="filter-listing--wrap">
-			
+
 			<?php if($pos !== 'sidebar'){ ?>
 			<div class="filter-listing--row header">
 				<div class="left">
@@ -29,60 +29,61 @@ function alm_list_all_filters($filter_id, $pos = 'sidebar'){
 				</div>
 			</div>
 			<?php } ?>
-			
-			<ul class="filter-listing--ul">			
-				<?php	   				
-				foreach( $filters as $filter ) :	// Loop the filters	  	
-					
-				   $filter = str_replace(esc_sql( ALM_FILTERS_PREFIX ), '', $filter);		
-				   $filter_data = unserialize(get_option(ALM_FILTERS_PREFIX.$filter));			
-	            $current = ($filter === $filter_id) ? ' class="current"' : ''; 
-					
+
+			<ul class="filter-listing--ul">
+				<?php
+				foreach( $filters as $filter ) :	// Loop the filters
+
+					//$filter = str_replace(esc_sql( ALM_FILTERS_PREFIX ), '', $filter);
+				   $filter = preg_replace( '/' .esc_sql( ALM_FILTERS_PREFIX ). '/', '', $filter, 1);
+				   $filter_data = unserialize(get_option(ALM_FILTERS_PREFIX.$filter));
+	            $current = ($filter === $filter_id) ? ' class="current"' : '';
+
 					if($filter_data){ ?>
-	   				<li> 
+	   				<li>
 	   					<div class="filter-listing--row">
-		   					
+
 		   					<?php if($pos !== 'sidebar'){ ?>
 		   					<div class="left">
-			   				<?php } ?>	
-			   				
+			   				<?php } ?>
+
 			   					<div class="title-row">
 				   					<strong>
-				   					<?php 
+				   					<?php
 											echo '<a href="'. ALM_FILTERS_BASE_URL .'&filter='. $filter .'"'. $current .'>'. str_replace(ALM_FILTERS_PREFIX, '', $filter) .'</a>'; ?>
 				   					</strong>
-										<span class="counter" title="<?php echo count($filter_data['filters']); ?> <?php _e('filter block(s) in this filter', 'ajax-load-more-filters'); ?>"><?php echo count($filter_data['filters']); ?></span>	
-			   					</div>   			
-			   						   
-			   					<div class="edit-row">				   						
+										<span class="counter" title="<?php echo count($filter_data['filters']); ?> <?php _e('filter block(s) in this filter', 'ajax-load-more-filters'); ?>"><?php echo count($filter_data['filters']); ?></span>
+			   					</div>
+
+			   					<div class="edit-row">
 				   					<a href="<?php echo ALM_FILTERS_BASE_URL; ?>&filter=<?php echo $filter_data['id']; ?>">
 						   				<?php _e('Edit', 'ajax-load-more-filters'); ?>
 						   			</a>
-				   					<span class="sep">|</span>			   					
+				   					<span class="sep">|</span>
 				   					<?php if($pos === 'sidebar'){ ?>
 				   					<a v-on:click="deleteFilter($event)" data-id="<?php echo str_replace(ALM_FILTERS_PREFIX, '', $filter); ?>" href="javascript:void(0);" title="<?php _e('Delete Filter', 'ajax-load-more-filters'); ?>">
 					   					<span><?php _e('Delete', 'ajax-load-more-filters'); ?></span>
 					   				</a>
 					   				<?php } else { ?>
 					   				<a href="<?php echo ALM_FILTERS_BASE_URL; ?>&delete_filter=<?php echo $filter_data['id']; ?>" class="delete-filter" data-name="<?php echo $filter_data['id']; ?>"><?php _e('Delete', 'ajax-load-more-filters'); ?></a>
-					   				<?php } ?>					   				
-			   					</div>		   					
-		   					
+					   				<?php } ?>
+			   					</div>
+
 		   					<?php if($pos !== 'sidebar'){ ?>
 		   					</div>
 			   				<div class="right">
 				   				<p class="date">
 					   				<?php _e('Published', 'ajax-load-more-filters'); ?>:<br/>
 					   				<?php if(isset($filter_data['date_created'])){
-						   				echo '<abbr title="'. date('Y/m/d h:i:s a', $filter_data['date_created']) .'">'. date('Y/m/d',$filter_data['date_created']) .'</abbr>';						   				
-					   				} else { 
+						   				echo '<abbr title="'. date('Y/m/d h:i:s a', $filter_data['date_created']) .'">'. date('Y/m/d',$filter_data['date_created']) .'</abbr>';
+					   				} else {
 						   				echo '--';
 					   				}
 					   				?>
 				   				</p>
 			   				</div>
 			   				<?php } ?>
-			   					
+
 	   					</div>
 	   				</li>
 	   			<?php } endforeach; ?>
@@ -90,8 +91,8 @@ function alm_list_all_filters($filter_id, $pos = 'sidebar'){
 			</div>
 		<?php else : ?>
 			<?php echo alm_empty_filters($pos); ?>
-   <?php endif; ?>		
-<?php		
+   <?php endif; ?>
+<?php
 }
 
 
@@ -106,7 +107,7 @@ function alm_list_all_filters($filter_id, $pos = 'sidebar'){
  *  @return	n/a
  */
 function alm_empty_filters($pos){
-	
+
 	$response = '<div class="alm-no-filters '. $pos .'">';
 		$response .= '<div class="alm-no-filters--inner">';
 			$response .= '<p class="first-intro">';
@@ -115,13 +116,13 @@ function alm_empty_filters($pos){
 			$response .= '<p>';
 				$response .= __('The first step in filtering with Ajax Load More is to create one!', 'ajax-load-more-filters');
 			$response .= '</p>';
-			
+
 			if($pos !== 'sidebar'){
 			   $response .= '<p class="create-btn"><a href="'. ALM_FILTERS_BASE_URL .'&action=new" class="button button-primary button-large"> '. __('Create Filter','ajax-load-more-filters') .'</a></p>';
 			}
-			
+
 		$response .= '</div>';
 	$response .= '</div>';
-	
+
 	return $response;
 }

@@ -5,17 +5,17 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.5
+Version: 1.4.6
 
 
 == Copyright ==
 Copyright 2020 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
-This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
@@ -48,6 +48,10 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 
 
 == Changelog ==
+
+= 1.4.6 - June 29, 2020 =
+* FIX - Fixed issue with querystrings in paging URLs when using Next Page + Cache add-ons.
+
 
 = 1.4.5 - May 1, 2020 =
 * FIX - Fixed issue with push/popstate when using Nextpage and Paging add-ons.
@@ -95,8 +99,8 @@ When updating to Next Page 1.3.0 you must also update core (Ajax Load More)[http
 * NEW - Added new `alm_nextpage_split_{id}` filter hook that provides the ability to generate dynamic content breaks. This will allow users to automatically split content into pages at specific HTML tags and not rely on `<!--nextpage--> short tags. See (Next Page docs)[https://connekthq.com/plugins/ajax-load-more/docs/add-ons/next-page/#filter-hooks] for more info.
 * NEW - Plugin re-written in vanilla JS without jQuery dependency.
 * NEW - Querystring values are now maintained through all page loads.
-* UPDATE - Improved scroll to element functionality and URL updates. 
-* UPDATE - Removed Scroll Speed shortcode parameter. Scroll speed is now a global ALM variable. 
+* UPDATE - Improved scroll to element functionality and URL updates.
+* UPDATE - Removed Scroll Speed shortcode parameter. Scroll speed is now a global ALM variable.
 
 
 = 1.2.0 - December 6, 2018 =
@@ -106,12 +110,12 @@ When updating to Next Page 1.3.0 you must also update core (Ajax Load More)[http
 = 1.1.1 - May 30, 2018 =
 * NEW - Added new filters for injecting custom HTML/JS into each page. Please refer to our [docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/next-page/) for implementation support.
  - `alm_nextpage_before` adds content before the page.
- - `alm_nextpage_after` adds content after the page. 
+ - `alm_nextpage_after` adds content after the page.
 
 = 1.1 - March 8, 2018 =
 * NEW - Added new filters for customizing URLS. Please refer to our [docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/next-page/) for implementation support.
  - `alm_nextpage_leading_slash` adds a leading slash (/) before the page number.
- - `alm_nextpage_remove_trailing_slash` removes the trailing slash (/) at the end of the URL. 
+ - `alm_nextpage_remove_trailing_slash` removes the trailing slash (/) at the end of the URL.
 
 = 1.0.3 - January 22, 2018 =
 * NEW - Added support for the new gtag Analytics script.

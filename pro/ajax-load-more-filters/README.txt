@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.4.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.9.1
+Version: 1.10.0
 
 
 == Copyright ==
@@ -48,11 +48,33 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 == Changelog ==
 
+= 1.10.0 - July 13, 2020 =
+* NEW - Added new Star Rating field for allowing users to query by start rating custom fields.
+* NEW - Added new optional description field for filter block.
+* UPDATE - Added new PHP Output option. Filters can now can be added via PHP Array and not a shortcode. Click the `Generate PHP` button in the Shortcode Output sidebar.
+* UPDATE - Admin UI/UX updates for a better experince building filters.
+
+= 1.9.3 - June 29, 2020 =
+
+* NEW - Added `Reset` button to Range Slider field type. Users can now reset the Range Slider to the default values after filtering.
+* UPDATE - Added support for Masonry `transition` and updating the paging URLs when using Filters add-on.
+* UPDATE - Improved the stability of the scroll to post functionality when loading a paged URL.
+* FIX - Fixed IE11 issue with keyboard navigation of radio buttons.
+* FIX - Fixed IE11 issue where Range Slider was not triggering a change event.
+
+
+= 1.9.2 - June 12, 2020 =
+* UPDATE - Added support for spacerbar keydown event to trigger events when using radio or checkbox field types.
+* UPDATE - Added support for arrow keys to traverse the radio groups and act more like native radio buttons.
+* FIX - Fixed issue on setting page not displaying filter preview
+* FIX - Pushed fix for issue where hitting a paged URL would not send the user to the top of the current page.
+
+
 = 1.9.1 - March 18, 2020 =
 
 ## UPGRADE NOTICE
-This version of Filters updates the markup of Radio and Checkbox filed types. 
-For accessibility purposes, the `<a href="#"/>` has been replaced with clickable `<div/>` elements. 
+This version of Filters updates the markup of Radio and Checkbox filed types.
+For accessibility purposes, the `<a href="#"/>` has been replaced with clickable `<div/>` elements.
 
 Users who are using custom CSS to style these elements may need to update their markup for these elements.
 
@@ -74,7 +96,7 @@ Users who are using custom CSS to style these elements may need to update their 
 
 = 1.8.2 - December 6, 2019 =
 * FIX - Fixed issue with `filters_scrolltop` parameter not being maintained on scroll.
-* UPDATE - Filters admin UI updates and tweaks. 
+* UPDATE - Filters admin UI updates and tweaks.
 
 
 = 1.8.1 - November 18, 2019 =
@@ -109,7 +131,7 @@ Users who are using custom CSS to style these elements may need to update their 
 
 = 1.7.3 - June 26, 2019 =
 * FIX - Fixed issue where `title` HTML markup was being rendered even if empty.
-* FIX - Fixed an issue with UTM (querystring) parameters being treated as meta query parameters. 
+* FIX - Fixed an issue with UTM (querystring) parameters being treated as meta query parameters.
 * FIX - Fixed issue with fatal error after filter deletion.
 * UPDATE - Improved debug information.
 
@@ -143,7 +165,7 @@ When updating to Filters 1.7.0 you must also update core [Ajax Load More](https:
 * FIX - Added polyfills for supporting IE10 and 11.
 * FIX - Added fix for popstate error of `Cannot read property 'indexOf' of undefined` function when setting current filters.
 * FIX - Added fix for nested filter elements.
-* UPDATE - Improved scroll to element functionality and URL updates. 
+* UPDATE - Improved scroll to element functionality and URL updates.
 * UPDATE - Update `almFilter` function in favour of new `ajaxloadmore.filter` function.
 * UPDATE - Removed shorthand array `[]` sysntax for users on PHP version < 5.4.
 
@@ -205,8 +227,8 @@ When updating to Filters 1.7.0 you must also update core [Ajax Load More](https:
 * NEW - Adding callback functions dispatched at various intervals throughout the filter process. See the [docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#callback-functions).
 
 = 1.2 - March 20, 2018 =
-* NEW - Added `Selected Value` parameter that allows for setting a default, pre-selected value of a filter. 
-* NEW - Added public JS function (`almFiltersClear`) that allows for the complete resetting/clearing of a filter group. 
+* NEW - Added `Selected Value` parameter that allows for setting a default, pre-selected value of a filter.
+* NEW - Added public JS function (`almFiltersClear`) that allows for the complete resetting/clearing of a filter group.
 * FIX - Fixed issue with missing quotes causing issues with filter submit in some browsers.
 * FIX - Removed `ALM_FILTERS_EXCLUDE_ARRAY` variable as it was causing issues in PHP version < 7.
 * FIX - Fixed issue with filters clearing after popstate event when sharing a filtered URL.

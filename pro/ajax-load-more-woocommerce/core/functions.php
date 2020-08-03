@@ -2,6 +2,49 @@
 	
 
 /**
+ * alm_woo_is_shop_cache_enabled
+ * Is cache ALM enabled on shop main page
+ *
+ * @since 1.1
+ */ 
+function alm_woo_is_shop_cache(){
+	if(!alm_woo_is_shop_enabled()){
+		return false;	
+	}
+	
+	$active = ( null === get_option(ALM_WOO_PREFIX. 'shop_cache') || empty(get_option(ALM_WOO_PREFIX. 'shop_cache')) ) ? false : true;
+	if( !$active ){
+   	return false;
+	} else {
+		return true;
+	}
+	
+}
+	
+
+/**
+ * alm_woo_is_shop_cache_enabled
+ * Is cache ALM enabled on shop main page
+ *
+ * @since 1.1
+ */ 
+function alm_woo_is_shop_archive_cache(){
+	if(!alm_woo_is_shop_archive_enabled()){
+		return false;	
+	}
+	
+	$active = ( null === get_option(ALM_WOO_PREFIX. 'shop_archives_cache') || empty(get_option(ALM_WOO_PREFIX. 'shop_archives_cache')) ) ? false : true;
+	if( !$active ){
+   	return false;
+	} else {
+		return true;
+	}
+	
+}
+	
+	
+
+/**
  * alm_woo_is_shop_enabled
  * Is ALM enabled on shop main page
  *
@@ -67,7 +110,6 @@ function alm_is_woo_archive(){
 	} else {
 		return false;
 	}
-	
 }
 
 

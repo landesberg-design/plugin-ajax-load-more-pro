@@ -29,7 +29,7 @@ if(isset($_GET['action'])) {
 }
 ?>
    
-<div class="admin ajax-load-more alm-cache" id="alm-cache" data-msg="<?php _e('Are you sure you want to delete this cache?', 'ajax-load-more-cache'); ?>">
+<div class="admin ajax-load-more alm-cache" id="alm-cache">
 	<div class="wrap main-cnkt-wrap">
       <header class="header-wrap">
          <h1>
@@ -59,20 +59,44 @@ if(isset($_GET['action'])) {
    
    	   <aside class="cnkt-sidebar">	 	   	     
    	      <div class="cta">
-   	         <h3><?php _e('Statistics', 'ajax-load-more-cache'); ?></h3>
+   	         <h3><?php _e('Cache Statistics', 'ajax-load-more-cache'); ?></h3>
 	   	      <div class="cta-inner">
 	   	         <?php
-	                  $dircount = 0;
+		   	         // Count cache files and directories
+		   	         $dircount = 0;
 	                  $filecount = 0;
-	                  $directories = glob($path . "*");
-	                  foreach($directories as $directory){
-	                     $dir = glob($directory . "*");
-	                     $val = count(glob($dir[0] .'/*.html'));
-	                     if($val > 0){
-	                        $dircount++;
-	                        $filecount = $filecount + $val;
-	                     }
-	                  }
+	                  $directories = array();
+		   	         foreach (new DirectoryIterator($path) as $file) {
+				            if ($file->isDot()) continue;
+				
+				            if ($file->isDir()){
+				            	$directories[] = $file->getFilename();
+				            }
+				         }
+			            
+			            foreach($directories as $directory){
+				            $val = count(glob($path.$directory .'/*.html'));
+				            $dircount++;
+				            $filecount = $filecount + $val;
+					         
+					         // Sub Directories
+				            $subDirectories = array();
+				            $sub_path = $path . $directory;
+				            foreach (new DirectoryIterator($sub_path) as $file) {
+					            if ($file->isDot()) continue;
+				
+					            if ($file->isDir()){
+					            	$subDirectories[] = $file->getFilename();
+					            }
+					         }
+					         if($subDirectories){
+						         foreach($subDirectories as $subdirectory){
+										$val = count(glob($path . $directory .'/'. $subdirectory .'/*.html'));
+										$dircount++;
+										$filecount = $filecount + $val;
+						         }
+					         }
+				         }
 	               ?>
 	   	         <p class="cache-stats">
 		   	         <span class="stat" id="dircount"><?php echo $dircount; ?></span><?php _e('Page', 'ajax-load-more-cache'); ?><?php echo ($dircount > 1 || $dircount == 0) ? 's' : ''; ?> <?php _e('cached', 'ajax-load-more-cache'); ?>
@@ -83,7 +107,7 @@ if(isset($_GET['action'])) {
 		   	      </p> 	         
    	         </div>
    	         <div class="major-publishing-actions">
-	   	         <form id="delete-all-cache" name="delete-all-cache" action="admin.php" method="GET" data-msg="<?php _e('Are you sure you want to delete the entire Ajax Load More cache?', 'ajax-load-more-cache'); ?>">
+	   	         <form id="delete-all-cache" name="delete-all-cache" action="admin.php" method="GET" data-path="<?php echo ALMCache::alm_get_cache_path(); ?>">
 	   		         <input type="hidden" value="ajax-load-more-cache" name="page">
 	   		         <button type="submit" class="button-primary" name="action" value="delete"><?php _e('Delete Cache', 'ajax-load-more-cache'); ?></button>
 	   		      </form>

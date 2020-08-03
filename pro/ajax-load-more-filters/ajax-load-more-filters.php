@@ -2,11 +2,11 @@
 /*
 Plugin Name: Ajax Load More: Filters
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/filters/
-Description: Ajax Load More add-on to build and manage Ajax filters.
+Description: Ajax Load More add-on to build and manage Ajaxed filters.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.9.1
+Version: 1.10.0
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -14,8 +14,8 @@ Copyright: Darren Cooney & Connekt Media
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_FILTERS_VERSION', '1.9.1');
-define('ALM_FILTERS_RELEASE', 'March 18, 2020');
+define('ALM_FILTERS_VERSION', '1.10.0');
+define('ALM_FILTERS_RELEASE', 'July 13, 2020');
 define('ALM_FILTERS_PATH', plugin_dir_path(__FILE__));
 define('ALM_FILTERS_URL', plugins_url('', __FILE__));
 define('ALM_FILTERS_ADMIN_URL', plugins_url('admin/', __FILE__));
@@ -376,7 +376,7 @@ if( !class_exists('ALMFilters') ):
 
       	// Get ALM Options
    		$options = get_option( 'alm_settings' );
-   		
+
    		// JS and Localization
    		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
    		wp_register_script( 'ajax-load-more-filters', plugins_url( '/dist/js/filters'. $suffix .'.js', __FILE__ ), 'ajax-load-more',  ALM_FILTERS_VERSION, true );
@@ -390,7 +390,7 @@ if( !class_exists('ALMFilters') ):
          	}
 
    		}
-   		
+
    		// Datepickr Themes
    		wp_register_style( 'alm-flatpickr-default', ALM_FILTERS_URL . '/vendor/flatpickr/flatpickr.css' );
    		wp_register_style( 'alm-flatpickr-airbnb', ALM_FILTERS_URL . '/vendor/flatpickr/themes/airbnb.css' );
@@ -401,7 +401,7 @@ if( !class_exists('ALMFilters') ):
    		wp_register_style( 'alm-flatpickr-material_green', ALM_FILTERS_URL . '/vendor/flatpickr/themes/material_green.css' );
    		wp_register_style( 'alm-flatpickr-material_orange', ALM_FILTERS_URL . '/vendor/flatpickr/themes/material_orange.css' );
    		wp_register_style( 'alm-flatpickr-material_red', ALM_FILTERS_URL . '/vendor/flatpickr/themes/material_red.css' );
-   		
+
    	}
 
 
@@ -502,8 +502,8 @@ if( !class_exists('ALMFilters') ):
 					$filters_color = ' filters-'.$options['_alm_filters_color'];
 				}
 
-				$output .= '<'.$container_element.' class="alm-filters alm-filters-container'. $filters_color .'" id="alm-filters-'. $options_obj['id'] .'" data-target="'. $options_obj['target'] .'" data-style="'. $options_obj['style'] .'" data-id="'. $options_obj['id'] .'">';                    
-            
+				$output .= '<'.$container_element.' class="alm-filters alm-filters-container'. $filters_color .'" id="alm-filters-'. $options_obj['id'] .'" data-target="'. $options_obj['target'] .'" data-style="'. $options_obj['style'] .'" data-id="'. $options_obj['id'] .'">';
+
 					foreach($filters['filters'] as $f){
 
 						$filterCount++;
@@ -511,7 +511,7 @@ if( !class_exists('ALMFilters') ):
 						$obj = array(
 							'base_url' => (function_exists('alm_get_canonical_url')) ? alm_get_canonical_url() : '',
 				         'key' => (isset($f['key'])) ? self::alm_filters_replace_underscore(esc_attr($f['key'])) : '',
-				         'field_type' => (isset($f['field_type'])) ? esc_attr($f['field_type']) : '',
+							'field_type' => (isset($f['field_type'])) ? esc_attr($f['field_type']) : '',
 				         'taxonomy' => (isset($f['taxonomy'])) ? esc_attr($f['taxonomy']) : '',
 				         'taxonomy_operator' => (isset($f['taxonomy_operator'])) ? self::alm_filters_replace_underscore(esc_attr($f['taxonomy_operator'])) : 'IN',
 				         'meta_key' => (isset($f['meta_key'])) ? esc_attr($f['meta_key']) : '',
@@ -521,10 +521,13 @@ if( !class_exists('ALMFilters') ):
 				         'author_role' => (isset($f['author_role'])) ? esc_attr($f['author_role']) : '',
 				         'values' => (isset($f['values'])) ? $f['values'] : '',
 				         'title' => (isset($f['title'])) ? esc_attr($f['title']) : '',
+				         'description' => (isset($f['description'])) ? esc_attr($f['description']) : '',
 			            'label' => (isset($f['label'])) ? esc_attr($f['label']) : '',
 			            'button_label' => (isset($f['button_label'])) ? $f['button_label'] : '',
 			            'placeholder' => (isset($f['placeholder'])) ? esc_attr($f['placeholder']) : '',
-			            'classes' => (isset($f['classes'])) ? ' '. esc_attr($f['classes']) : '',
+							'classes' => (isset($f['classes'])) ? ' '. esc_attr($f['classes']) : '',
+			            'star_rating_min' => (isset($f['star_rating_min'])) ? esc_attr($f['star_rating_min']) : '',
+			            'star_rating_max' => (isset($f['star_rating_max'])) ? esc_attr($f['star_rating_max']) : '',
 			            'datepicker_mode' => (isset($f['datepicker_mode'])) ? esc_attr($f['datepicker_mode']) : '',
 			            'datepicker_format' => (isset($f['datepicker_format'])) ? esc_attr($f['datepicker_format']) : '',
 			            'datepicker_locale' => (isset($f['datepicker_locale'])) ? esc_attr($f['datepicker_locale']) : '',
@@ -536,11 +539,11 @@ if( !class_exists('ALMFilters') ):
 			            'rangeslider_label' => (isset($f['rangeslider_label'])) ? esc_attr($f['rangeslider_label']) : '',
 			            'rangeslider_orientation' => (isset($f['rangeslider_orientation'])) ? esc_attr($f['rangeslider_orientation']) : '',
 			            'rangeslider_decimals' => (isset($f['rangeslider_decimals'])) ? esc_attr($f['rangeslider_decimals']) : '',
+			            'rangeslider_reset' => (isset($f['rangeslider_reset'])) ? esc_attr($f['rangeslider_reset']) : '',
 			            'checkbox_toggle' => (isset($f['checkbox_toggle'])) ? esc_attr($f['checkbox_toggle']) : '',
 			            'checkbox_toggle_label' => (isset($f['checkbox_toggle_label'])) ? esc_attr($f['checkbox_toggle_label']) : apply_filters('alm_filters_toggle_label', __('Select All', 'ajax-load-more-filters')),
 				         'count' => $filterCount,
 				      );
-
 
 				      // Get filter key value
 				      $filter_key = alm_filters_get_filter_key($obj);
@@ -612,7 +615,7 @@ if( !class_exists('ALMFilters') ):
 			         if($obj['key'] === 'search' && is_search()){
 							$obj['key'] = 's';
 						}
-						
+
 						// Convert tag to _tag for front and archive pages
 						if($obj['key'] === 'tag' && alm_filters_is_archive()){
 							$obj['key'] =  alm_filters_add_underscore() .'tag';
@@ -626,34 +629,35 @@ if( !class_exists('ALMFilters') ):
 			         // Selected Value
 			         $has_selected_value = (!empty($default_selected_value)) ? ' alm-filter--preselected' : '';
 						$has_selected_value = ($default_selected_value === 'data-selected-value=""') ? '' : $has_selected_value; // Empty
-						
-						
+
+
 						// Archive/Front page
-						$is_archive = (alm_filters_is_archive()) ? ' data-is-archive="true"' : ''; 
-						
-						
-						// Checkbox/Radio Role. and Aria Labelledby
+						$is_archive = (alm_filters_is_archive()) ? ' data-is-archive="true"' : '';
+
+
+						// Checkbox/Radio/Star Rating Role. and Aria Labelledby
 						$role = $labelledby = '';
-						if($obj['field_type'] === 'radio' || $obj['field_type'] === 'checkbox'){
+						if($obj['field_type'] === 'radio' || $obj['field_type'] === 'checkbox' || $obj['field_type'] === 'star_rating'){
 							$labelledby = (isset($obj) && isset($obj['title'])) ? ' aria-labelledby="alm-filter-'. $filter_key .'-title"' : '';
-							if($obj['field_type'] === 'radio'){
+							if($obj['field_type'] === 'radio' || $obj['field_type'] === 'star_rating'){
 								$role = ' role="radiogroup"';
 							} else {
 								$role = ' role="group"';
 							}
 						}
-						
-						
+
+
 						// Build output
 			         $output .= '<div class="alm-filter alm-filter--'. str_replace('_', '', $obj['key']) . $has_selected_value .''. $obj['classes'] .'" id="alm-filter-'. $filterCount .'" data-key="'. $obj['key'] .'" data-fieldtype="'. $obj['field_type'] .'"'. $taxonomy_value . $taxonomy_operator .''. $meta_value . $meta_operator . $meta_type . $author_role .  $default_selected_value .''. $default_value .''. $is_archive .''. $role . $labelledby .'>';
 
 		         	$output .= alm_filters_display_title($options_obj['id'], $obj);
+		         	$output .= alm_filters_display_description($options_obj['id'], $obj);
 
 		         	// Determine which $key to implement
 		         	$key = $obj['key'];
                   $key = ($key === 'taxonomy') ? $obj['taxonomy'] : $key; // Convert $key to $taxonomy value
                   $key = ($key === 'meta') ? $obj['meta_key'] : $key; // Convert $key to $meta_key value
-		         	
+
 
 		         	// Check to see if custom filter exists
 		         	$has_custom_values_filter = has_filter('alm_filters_'. $options_obj['id'] .'_'. self::alm_filters_revert_underscore($key));
@@ -669,22 +673,26 @@ if( !class_exists('ALMFilters') ):
 			         	// Pass Custom Values to function
 			         	$output .= self::alm_filters_list_custom_values($options_obj['id'], $values, $obj, $queryString);
 
-		         	} else {
 
+						} else {
 			         	if($obj['field_type'] === 'text' || $obj['field_type'] === 'date_picker' || $obj['field_type'] === 'range_slider'){
 
 								$output .= self::alm_filters_display_textfield($options_obj['id'], $obj, $queryString);
-								
+
 								if($obj['field_type'] === 'date_picker'){
 									$has_datepicker = true;
 								}
-								
+
 								if($obj['field_type'] === 'range_slider'){
 									$has_rangeslider = true;
 								}
 
-							} 
-													
+							}
+
+							else if($obj['field_type'] === 'star_rating'){
+								$output .= self::alm_filters_display_star_rating($options_obj['id'], $obj, $queryString);
+
+							}
 							else {
 
                         /*
@@ -730,17 +738,17 @@ if( !class_exists('ALMFilters') ):
 	         		$output .= '<a href="'. get_admin_url() .'admin.php?page=ajax-load-more-filters&filter='. $filters['id'] .'" class="alm-filters-edit">'. __('Edit Filter', 'ajax-load-more-filters') .'</a>';
 	         	}
 
-		      	$output .= '<div class="alm-filters--loading"></div>';		      	
+		      	$output .= '<div class="alm-filters--loading"></div>';
 
 	         $output .= '</'.$container_element.'>';
-	         
-	         
+
+
 	         // Enqueue Datepicker CSS
 	         if($has_datepicker){
 		         $datepicker_style = (isset($options['_alm_filters_flatpickr_theme'])) ? $options['_alm_filters_flatpickr_theme'] : 'default';
 		         wp_enqueue_style( 'alm-flatpickr-'. $datepicker_style);
 	         }
-	         
+
 	         // Enqueue Range Slider CSS
 	         if($has_rangeslider){
 		         $rangeslider_style = (isset($options['_alm_filters_flatpickr_theme'])) ? $options['_alm_filters_flatpickr_theme'] : 'default';
@@ -858,7 +866,7 @@ if( !class_exists('ALMFilters') ):
 	   	$selected_value = explode('+', $obj['selected_value']); // parse selected_value into array
 
 	   	$return .= apply_filters('alm_filters_container_open', self::alm_filters_get_container($obj['field_type'], 'open'));
-	   	
+
 	   	$return .= self::alm_filters_display_toggle($obj, 'before');
 
 	   	foreach($custom_values as $v){
@@ -921,9 +929,9 @@ if( !class_exists('ALMFilters') ):
 						break;
 
 					default :
-						
+
 						$ariaChecked = 'aria-checked="false"';
-						
+
 						// Get active list item
 						if(!empty($matchArray)){
 							$active = (in_array($slug, $matchArray)) ? ' active' : '';
@@ -933,11 +941,11 @@ if( !class_exists('ALMFilters') ):
 						$parent = ($nested) ? ' has_parent' : '';
 
 						$return .= '<li class="alm-filter--'. $obj['field_type'] . $parent .'">';
-							$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug . $active .'" 
-							id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"'. ' 
-							data-type="'. $obj['field_type'] .'" 
+							$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug . $active .'"
+							id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"'. '
+							data-type="'. $obj['field_type'] .'"
 							data-value="'. $slug .'"
-							role="'. $obj['field_type'] .'" 
+							role="'. $obj['field_type'] .'"
 							tabindex="0"
 							 '. $ariaChecked .'>';
 								$return .= $name;
@@ -947,7 +955,7 @@ if( !class_exists('ALMFilters') ):
 
 				}
 	   	}
-	   	
+
 	   	$return .= self::alm_filters_display_toggle($obj, 'after');
 
 	   	$return .= apply_filters('alm_filters_container_close', self::alm_filters_get_container($obj['field_type'], 'close'));
@@ -979,16 +987,16 @@ if( !class_exists('ALMFilters') ):
 
 	   	// Author
 	   	if($obj['key'] === '_author' && isset($obj['author_role'])){
-		   	
+
 		   	$author_args = array(
 			   	'role' => $obj['author_role'],
 			   	'order' => 'DESC',
 			   	'orderby' => 'login'
 		   	);
-		   	
+
 		   	// Author $args core filter
 		   	$author_args = apply_filters('alm_filters_'. $id .'_author_args', $author_args);
-		   	
+
 				$authors = get_users( $author_args );
 				$terms = array();
 				if($authors){
@@ -1002,19 +1010,19 @@ if( !class_exists('ALMFilters') ):
 					}
 				}
 			}
-			
+
 	   	// Category
 	   	if($obj['key'] === 'category' || $obj['key'] === 'category_and'){
-		   	
+
 		   	$cat_args = array(
 			   	'order' => 'ASC',
 			   	'orderby' => 'name',
 			   	'hide_empty' =>true
 		   	);
-		   	
+
 		   	// Category $args core filter
-		   	$cat_args = apply_filters('alm_filters_'. $id .'_category_args', $cat_args);		   	
-		   	
+		   	$cat_args = apply_filters('alm_filters_'. $id .'_category_args', $cat_args);
+
 		   	// Set taxonomy
 		   	$cat_args['taxonomy'] = 'category';
 				$terms = alm_get_taxonomy_hierarchy( $cat_args );
@@ -1022,16 +1030,16 @@ if( !class_exists('ALMFilters') ):
 
 			// Tag
 	   	if($obj['key'] === '_tag' || $obj['key'] === 'tag' || $obj['key'] === 'tag_and'){
-		   	
+
 		   	$tag_args = array(
 			   	'order' => 'ASC',
 			   	'orderby' => 'name',
 			   	'hide_empty' => true
 		   	);
-		   	
+
 		   	// Tag $args core filter
 		   	$tag_args = apply_filters('alm_filters_'. $id .'_post_tag_args', $tag_args);
-		   	
+
 		   	// Set taxonomy
 		   	$tag_args['taxonomy'] = 'post_tag';
 				$terms = alm_get_taxonomy_hierarchy( $tag_args );
@@ -1039,19 +1047,19 @@ if( !class_exists('ALMFilters') ):
 
 			// Taxonomy
 	   	if($obj['key'] === 'taxonomy'){
-		   	
+
 		   	$matchKey = alm_filters_add_underscore() .''. $obj['taxonomy']; // set $matchKey to taxonomy slug
 		   	$tax_args = array(
 			   	'order' => 'ASC',
 			   	'orderby' => 'name',
 			   	'hide_empty' => true
 		   	);
-		   	
+
 		   	// Taxonomy $args core filter
 		   	$tax_args = apply_filters('alm_filters_'. $id .'_'. $obj['taxonomy'] .'_args', $tax_args);
-		   	
+
 		   	// Set taxonomy
-		   	$tax_args['taxonomy'] = $obj['taxonomy'];		   	
+		   	$tax_args['taxonomy'] = $obj['taxonomy'];
 				$terms = alm_get_taxonomy_hierarchy( $tax_args );
 			}
 
@@ -1077,30 +1085,30 @@ if( !class_exists('ALMFilters') ):
 					// Build terms array, exclude where needed
 	   			if(!in_array($term->term_id, $exclude)){
 	   				$items[] = $term;
-						$items = alm_loop_term_children($items, $term, $exclude);	   				
+						$items = alm_loop_term_children($items, $term, $exclude);
 	   			}
 	         }
 
-				//alm_pretty_print($items);	
-				
+				//alm_pretty_print($items);
+
 				if($items){
 
-					$return .= apply_filters('alm_filters_container_open', self::alm_filters_get_container($obj['field_type'], 'open'));					
-					
-					$return .= self::alm_filters_display_toggle($obj, 'before');					
-					
+					$return .= apply_filters('alm_filters_container_open', self::alm_filters_get_container($obj['field_type'], 'open'));
+
+					$return .= self::alm_filters_display_toggle($obj, 'before');
+
 					$was_parent = false;
-					
-					foreach( $items as $item ) {																	
+
+					foreach( $items as $item ) {
 
 						$items_count++;
 						$name = $item->name;
 						$slug = $item->slug;
 						$has_children = (isset($item->children) && $item->children) ? true : false;
 						$has_parent = ( isset($item->parent) && $item->parent > 0 ) ? true : false;
-						$parent = ($has_parent) ? ' has_parent' : '';	
-						
-						
+						$parent = ($has_parent) ? ' has_parent' : '';
+
+
 						// If category_and use ID
 						$slug = ($obj['key'] === 'category_and') ? $slug = $item->term_id : $slug;
 
@@ -1113,11 +1121,11 @@ if( !class_exists('ALMFilters') ):
 
 
 						switch ($obj['field_type']) {
-							
+
 							// Select
 							case 'select' :
 							case 'select_multiple' :
-								
+
 								if(!empty($matchArray)){
 									$selected = (in_array($slug, $matchArray)) ? ' selected="selected"' : '';
 								}
@@ -1133,21 +1141,21 @@ if( !class_exists('ALMFilters') ):
 								break;
 
 							default :
-								
-								// Radio/Checkbox				
+
+								// Radio/Checkbox
 
 								$ariaChecked = 'aria-checked="false"';
 								if(!empty($matchArray)){ // Get active list item
 									$active = (in_array($slug, $matchArray)) ? ' active' : '';
 									$ariaChecked = (in_array($slug, $matchArray)) ? 'aria-checked="true"' : $ariaChecked;
 								}
-								
+
 								if(!$has_parent && $was_parent){
 									// Close UL if previous was a child
 									$return .= '</ul>';
 									$was_parent = false;
 								}
-								
+
 								if($has_parent && !$was_parent){
 									// Open UL if first child item
 									$return .= '<ul>';
@@ -1156,11 +1164,11 @@ if( !class_exists('ALMFilters') ):
 
 								$return .= '<li class="alm-filter--'. $obj['field_type'] . $parent .'">';
 
-									$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug .' '. $active .'" 
-									id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'" 
-									data-type="'. $obj['field_type'] .'" 
+									$return .= '<div class="alm-filter--link field-'. $obj['field_type'] .' field-'. $slug .' '. $active .'"
+									id="'. $obj['field_type'] .'-'. $slug .'-'. $obj['count'] .'"
+									data-type="'. $obj['field_type'] .'"
 									data-value="'. $slug .'"
-									role="'. $obj['field_type'] .'" 
+									role="'. $obj['field_type'] .'"
 									tabindex="0"
 									 '. $ariaChecked .'>';
 										$return .= $name;
@@ -1170,16 +1178,16 @@ if( !class_exists('ALMFilters') ):
 
 						}
 
-					}					
-					
+					}
+
 					if($was_parent){
-						// Close last <li/> & <ul/> elements 
+						// Close last <li/> & <ul/> elements
 						$return .= '</li></ul>';
 						$was_parent = false;
 					}
-					
-					$return .= self::alm_filters_display_toggle($obj, 'after');					
-					
+
+					$return .= self::alm_filters_display_toggle($obj, 'after');
+
 					$return .= apply_filters('alm_filters_container_close', self::alm_filters_get_container($obj['field_type'], 'close'));
 
 				}
@@ -1187,20 +1195,20 @@ if( !class_exists('ALMFilters') ):
 
 			return $return;
 	   }
-	   
-	   
-	   
+
+
+
 	   // Render toggle checkbox
-   	public static function alm_filters_display_toggle($obj, $position = 'before'){				
-			$return = '';			
-			if(isset($obj['field_type']) && $obj['field_type'] === 'checkbox' && isset($obj['checkbox_toggle']) && isset($obj['checkbox_toggle_label'])){				
-				if( ($obj['checkbox_toggle'] === 'before' && $position === 'before') || ($obj['checkbox_toggle'] === 'after' && $position === 'after')){			
+   	public static function alm_filters_display_toggle($obj, $position = 'before'){
+			$return = '';
+			if(isset($obj['field_type']) && $obj['field_type'] === 'checkbox' && isset($obj['checkbox_toggle']) && isset($obj['checkbox_toggle_label'])){
+				if( ($obj['checkbox_toggle'] === 'before' && $position === 'before') || ($obj['checkbox_toggle'] === 'after' && $position === 'after')){
 					$return .= '<li class="alm-filter--checkbox">';
-						$return .= '<div class="alm-filter--link field-checkbox field-toggle" 
-						data-all="true" 
-						data-value="" 
+						$return .= '<div class="alm-filter--link field-checkbox field-toggle"
+						data-all="true"
+						data-value=""
 						data-type="all"
-						role="checkbox" 
+						role="checkbox"
 						tabindex="0"
 						aria-checked="false"
 						>';
@@ -1208,105 +1216,176 @@ if( !class_exists('ALMFilters') ):
 						$return .= '</div>';
 					$return .= '</li>';
 				}
-			}			
-			return $return;			
-	   }
+			}
+			return $return;
+		}
+
+
+		// Render Star Rating
+   	public static function alm_filters_display_star_rating($id, $obj, $queryString){
+
+			$current = '';
+			if(isset($queryString) && isset($obj['meta_key']) && isset($queryString[$obj['meta_key']])){
+				$current = $queryString[$obj['meta_key']];
+			}
+
+			$start = ( isset($obj['star_rating_min']) && is_numeric($obj['star_rating_min']) ) ? (int)$obj['star_rating_min'] : 1;
+			$end = ( isset($obj['star_rating_max']) && is_numeric($obj['star_rating_max']) ) ? (int)$obj['star_rating_max'] : 5;
+			$end = ($end <= $start) ? $start + 1 : $end;
+
+			$output = $init_feedback = '';
+			$output .= '<ul class="alm-filter--align-items">';
+
+				for($i = $start; $i <= $end; $i++){
+
+					$active = $current == $i ? ' active' : '';
+					$highlight = $i <= $current ? ' highlight' : '';
+					$ariaChecked = $current == $i ? 'aria-checked="true"' : 'aria-checked="false"';
+					$label = ($i > 1) ? apply_filters('alm_filters_stars_label', __('stars and up', 'ajax-load-more-filters')) : apply_filters('alm_filters_stars_label_singular', __('star and up', 'ajax-load-more-filters'));
+					$label = ($i === $end) ? apply_filters('alm_filters_stars_label_last', __('stars', 'ajax-load-more-filters')) : $label;
+
+
+					$init_feedback =  ($current == $i) ? $current .' '. $label : $init_feedback;
+
+					$output .= '<li class="alm-filter--radio">';
+						$output .= '<div
+							class="alm-filter--link field-radio field-starrating'. $active . $highlight .'"
+							role="radio"
+							data-type="radio"
+							data-value="'. $i .'"
+							data-text="'. $i .' '.$label.'"
+							id="star-'. $i .'"
+							'. $ariaChecked .'
+							title="'. $i .' '.$label.'"
+							tabindex="0"
+							>';
+							$output .= '<div><i class="alm-star" aria-hidden="true"></i></div>';
+						$output .= '<span class="offscreen">'. $i .' ' . $label .'</span>';
+						$output .= '</div>';
+					$output .= '</li>';
+				}
+
+				$output .= '<span class="alm-star--feedback" aria-live="polite" aria-atomic="true">';
+					$output .= !empty($init_feedback) ? $init_feedback : '';
+				$output .= '</span>';
+
+			$output .= '</ul>';
+
+			return $output;
+		}
 
 
 
    	// Render textfield
    	public static function alm_filters_display_textfield($id, $obj, $queryString){
-	   	
+
 	   	$text_id = $obj['key'] .'-'. $obj['field_type'];
 	   	$output = '';
 
-	   	// Parse Querystring params		
+	   	// Parse Querystring params
 			if($obj['key'] === 'meta'){
 				$selected = (isset($queryString[$obj['meta_key']])) ? $queryString[$obj['meta_key']] : '';
 			}
 			elseif($obj['key'] === 'taxonomy'){
-				$selected = (isset($queryString[$obj['taxonomy']])) ? $queryString[$obj['taxonomy']] : ''; 
+				$selected = (isset($queryString[$obj['taxonomy']])) ? $queryString[$obj['taxonomy']] : '';
 			} else {
 				$selected = (isset($queryString[$obj['key']])) ? $queryString[$obj['key']] : '';
-			}			
-			
+			}
+
+			$textfield_type = 'text';
 			$placeholder = (isset($obj['placeholder'])) ? 'placeholder="'. $obj['placeholder'] .'"' : '';
 			$datepicker = ($obj['field_type'] === 'date_picker') ? true : false;
 			$rangeslider = ($obj['field_type'] === 'range_slider') ? true : false;
 			$has_button = (!empty($obj['button_label'])) ? true : false;
 			$has_button = ($rangeslider) ? false : $has_button; // set false if range slider
-			$field_class = ($has_button) ? ' has-button' : '';	
+			$field_class = ($has_button) ? ' has-button' : '';
 			$display_style = "";
 
 	   	$output .= '<div class="alm-filter--'. $obj['field_type'] .'">';
-				
+
 				if($obj['label']){
 					$output .= '<label for="'. $text_id .'">'. alm_filters_display_label($id, $obj) .'</label>';
 				}
-				
-				if($rangeslider){ // Range Slider		
-   				
+
+				if($rangeslider){
+					// Range Slider opts
+
    				$range_min = (isset($obj['rangeslider_min'])) ? $obj['rangeslider_min'] : 0;
    				$range_max = (isset($obj['rangeslider_max'])) ? $obj['rangeslider_max'] : 100;
-   				
-   				$range_start = (isset($obj['rangeslider_start'])) ? $obj['rangeslider_start'] : $range_min;
-   				$range_end = (isset($obj['rangeslider_end'])) ? $obj['rangeslider_end'] : $range_max;   				
-   				
+
+					$range_start = (isset($obj['rangeslider_start'])) ? $obj['rangeslider_start'] : $range_min;
+					$range_start_orig = $range_start === '' ? $range_min : $range_start;
+   				$range_end = (isset($obj['rangeslider_end'])) ? $obj['rangeslider_end'] : $range_max;
+					$range_end_orig = $range_end === '' ? $range_max : $range_end;
+
    				$rangeslider_label = (isset($obj['rangeslider_label'])) ? $obj['rangeslider_label'] : '{start} - {end}';
    				$rangeslider_steps = (isset($obj['rangeslider_steps'])) ? $obj['rangeslider_steps'] : 1;
    				$rangeslider_orientation = (isset($obj['rangeslider_orientation'])) ? $obj['rangeslider_orientation'] : 'horizontal';
    				$rangeslider_decimals = (isset($obj['rangeslider_decimals'])) ? $obj['rangeslider_decimals'] : 'true';
-   				
-   				//$selected_value = explode(',', $obj['selected_value']); // parse selected_value into array
-   				
+					$rangeslider_reset = (isset($obj['rangeslider_reset'])) ? $obj['rangeslider_reset'] : 'true';
+
    				// Parse selected value
          		$values = (!empty($selected)) ? explode(',', $selected) : '';
 					if(!empty($values)){
 						$range_start = $values[0];
 						$range_end = isset($values[1]) ? $values[1] : $range_max;
 					}
-					
-					$output .= '<div class="alm-range-slider" 
-						data-min="'. $range_min .'" 
-						data-max="'. $range_max .'" 
-						data-start="'. $range_start .'" 
+
+					$output .= '<div class="alm-range-slider"
+						data-min="'. $range_min .'"
+						data-max="'. $range_max .'"
+						data-start-reset="'. $range_start_orig .'"
+						data-start="'. $range_start .'"
+						data-end-reset="'. $range_end_orig .'"
 						data-end="'. $range_end .'"
 						data-label="'. $rangeslider_label .'"
 						data-steps="'. $rangeslider_steps .'"
 						data-orientation="'. $rangeslider_orientation .'"
 						data-decimals="'. $rangeslider_decimals .'"
-						>'; 
+						>';
 						$output .= '<div class="alm-range-slider--target"></div>';
-						$output .= '<div class="alm-range-slider--label"></div>';
+						$output .= '<div class="alm-range-slider--wrap">';
+							$output .= '<div class="alm-range-slider--label"></div>';
+							if($rangeslider_reset !== 'false'){
+								// Reset Button
+								$output .= '<button class="alm-range-slider--reset alm-range-reset" type="button" style="display: none;">';
+									$output .=  apply_filters('alm_filters_range_slider_reset_label', __('Reset', 'ajax-load-more-filters'));
+								$output .= '</button>';
+							}
+						$output .= '</div>';
 					$output .= '</div>';
 					$display_style = ' style="display: none;"';
 				}
-				
+
 				$output .= '<div class="alm-filter--text-wrap'. $field_class .'"'.$display_style.'>';
-				   
-				   if($datepicker){ // Date Picker   	
-					   			   
+
+				   if($datepicker){ // Date Picker
+
    				   $datepicker_mode = (isset($obj['datepicker_mode'])) ? $obj['datepicker_mode'] : 'single';
          			$datepicker_mode_return = (isset($obj['datepicker_mode'])) ? ' data-display-mode="'. $datepicker_mode .'"' : ' data-display-mode="single"';
          			$datepicker_format = (isset($obj['datepicker_format'])) ? ' data-display-format="'. $obj['datepicker_format'] .'"' : ' data-display-format="Y-m-d"';
          			$datepicker_locale = (isset($obj['datepicker_locale'])) ? ' data-date-locale="'. $obj['datepicker_locale'] .'"' : ' data-date-locale="en"';
-         			         			
+
                   // Replace `+` with ` | ` for range mode
          			$selected = ($datepicker_mode === 'range') ? str_replace('+', ' | ', $selected) : $selected;
-         			
+
 					   $output .= '<input class="alm-filter--textfield textfield alm-flatpickr" id="'. $text_id .'" name="'. $text_id .'" type="text" value="'. urldecode($selected) .'" '. $placeholder .''. $datepicker_format .''. $datepicker_mode_return .''. $datepicker_locale .' />';
-					   
+
 				   }
-				   
+
 				   else { // Standard
-				   	$output .= '<input class="alm-filter--textfield textfield" id="'. $text_id .'" name="'. $text_id .'" type="text" value="'. urldecode($selected) .'" '. $placeholder .' />';
-				   	
+						$output .= '<input class="alm-filter--textfield textfield"';
+						$output .= ' id="'. $text_id .'"';
+						$output .= ' name="'. $text_id .'"';
+						$output .= ' type="'. $textfield_type .'"';
+						$output .= ' value="'. urldecode($selected) .'"';
+						$output .= ' '. $placeholder .' />';
 				   }
-				   
+
 				   $output .= ($has_button) ? '<button type="button">'. $obj['button_label'] .'</button>' : '';
 
 				$output .= '</div>';
-				
+
 			$output .= '</div>';
 
 			return $output;
@@ -1672,14 +1751,14 @@ if( !class_exists('ALMFilters') ):
 
     		// Checkbox
 	 		$html .= '<div class="alm-filter" style="padding: 5px 0 20px; margin: 0; clear: both;">';
-	 			$html .= '<li class="alm-filter--checkbox"><a href="javascript:void(0);" class="alm-filter--link field-checkbox active" data-type="checkbox" data-value="design">'. __('Checked', 'ajax-load-more-filters') .'</a></li>';
-	 			$html .= '<li class="alm-filter--checkbox"><a href="javascript:void(0);" class="alm-filter--link field-checkbox" data-type="checkbox" data-value="design">'. __('Unchecked', 'ajax-load-more-filters') .'</a></li>';
+	 			$html .= '<li class="alm-filter--checkbox"><div class="alm-filter--link field-checkbox active" data-type="checkbox" data-value="design">'. __('Checked', 'ajax-load-more-filters') .'</div></li>';
+	 			$html .= '<li class="alm-filter--checkbox"><div class="alm-filter--link field-checkbox" data-type="checkbox" data-value="design">'. __('Unchecked', 'ajax-load-more-filters') .'</div></li>';
 	    	$html .= '</div>';
 
     		// Radio
 	 		$html .= '<div class="alm-filter" style="padding: 10px 0 0; margin: 0; clear: both;">';
-	 			$html .= '<li class="alm-filter--radio"><a href="javascript:void(0);" class="alm-filter--link field-radio active" data-type="radio" data-value="design">'. __('Checked', 'ajax-load-more-filters') .'</a></li>';
-	 			$html .= '<li class="alm-filter--checkbox"><a href="javascript:void(0);" class="alm-filter--link field-radio" data-type="radio" data-value="design">'. __('Unchecked', 'ajax-load-more-filters') .'</a></li>';
+	 			$html .= '<li class="alm-filter--radio"><div class="alm-filter--link field-radio active" data-type="radio" data-value="design">'. __('Checked', 'ajax-load-more-filters') .'</div></li>';
+	 			$html .= '<li class="alm-filter--checkbox"><div class="alm-filter--link field-radio" data-type="radio" data-value="design">'. __('Unchecked', 'ajax-load-more-filters') .'</div></li>';
 	    	$html .= '</div>';
 
     		// Button
@@ -1725,9 +1804,9 @@ if( !class_exists('ALMFilters') ):
 
 	<?php
 	}
-	
-	
-	
+
+
+
 	/*
 	* alm_filters_flatpickr_theme_callback
 	* Set the Flatpickr theme.
@@ -1740,9 +1819,9 @@ if( !class_exists('ALMFilters') ):
 		$options = get_option( 'alm_settings' );
 		if(!isset($options['_alm_filters_flatpickr_theme'])){
 		   $options['_alm_filters_flatpickr_theme'] = 'default';
-		}	
+		}
 		$selected = $options['_alm_filters_flatpickr_theme'];
-		
+
 		$themes = array(
 			array(
 				'name' => 'Default',
@@ -1780,12 +1859,12 @@ if( !class_exists('ALMFilters') ):
 				'name' => 'Material Red',
 				'slug' => 'material_red'
 			)
-		);	
-				
+		);
+
 		$html  = '<label for="_alm_filters_flatpickr_theme">';
 			$html .= __('Select a <a href="https://flatpickr.js.org/themes/" target="blank">Theme</a> for the Datepicker Field Type.', 'ajax-load-more-filters');
 		$html .= '</label>';
-		
+
 		$html  .= '<select id="_alm_filters_flatpickr_theme" name="alm_settings[_alm_filters_flatpickr_theme]">';
 			foreach($themes as $theme){
 				$select_text = ($selected === $theme['slug']) ? ' selected="selected"' : '';
@@ -1794,7 +1873,7 @@ if( !class_exists('ALMFilters') ):
 		$html .= '</select>';
 
 		echo $html;
-		
+
 	}
 
 

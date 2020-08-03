@@ -1,15 +1,14 @@
 <div class="alm-filter--row alm-filter--row_instructions" id="row-instructions">
-   
+
    <?php
-      
       $how_to_intro = __('How to:', 'ajax-load-more-filters');
       $how_to_generic = __('Use <strong>Custom Values</strong> or the <a href="https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#alm_filters_id_key" target="_blank">alm_filter_id_key</a> filter to build the filters for this parameter.', 'ajax-load-more-filters');
       $how_to_override = __('You can override the default listing by using <strong>Custom Values</strong> or the <a href="https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#alm_filters_id_key" target="_blank">alm_filter_id_key</a> filter.', 'ajax-load-more-filters');
-   ?>	
-	
-	
+   ?>
+
+
 	<!-- Author -->
-	<div class="alm-instructions" v-show="filter.key === 'author'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'author'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -21,9 +20,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Meta Query -->
-	<div class="alm-instructions" v-show="filter.key === 'meta'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'meta'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -35,9 +34,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Post Type -->
-	<div class="alm-instructions" v-show="filter.key === 'post_type'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'post_type'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -49,9 +48,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Search -->
-	<div class="alm-instructions" v-show="filter.key === 'search'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'search'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -63,9 +62,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Taxonomy -->
-	<div class="alm-instructions" v-show="filter.key === 'taxonomy'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'taxonomy'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -77,9 +76,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Category -->
-	<div class="alm-instructions" v-show="filter.key === 'category'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'category'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -91,9 +90,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Category AND -->
-	<div class="alm-instructions" v-show="filter.key === 'category__and'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'category__and'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -105,9 +104,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Tag -->
-	<div class="alm-instructions" v-show="filter.key === 'tag'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'tag'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -119,9 +118,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Tag AND -->
-	<div class="alm-instructions" v-show="filter.key === 'tag__and'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'tag__and'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -133,9 +132,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Order -->
-	<div class="alm-instructions" v-show="filter.key === 'order'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'order'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -147,9 +146,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Orderby -->
-	<div class="alm-instructions" v-show="filter.key === 'orderby'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'orderby'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -161,9 +160,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Sort -->
-	<div class="alm-instructions" v-show="filter.key === 'sort'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'sort'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -176,9 +175,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Day -->
-	<div class="alm-instructions" v-show="filter.key === 'day'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'day'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -190,9 +189,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Month -->
-	<div class="alm-instructions" v-show="filter.key === 'month'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'month'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -204,9 +203,9 @@
          </p>
 		</div>
 	</div>
-	
+
 	<!-- Year -->
-	<div class="alm-instructions" v-show="filter.key === 'year'">
+	<div class="alm-instructions whatsthis" v-show="filter.key === 'year'">
 		<a class="alm-instructions--toggle" href="javascript: void(0);" v-on:click="toggleInstructions($event)">
 			<?php _e('What\'s This?', 'ajax-load-more-filters'); ?>
 		</a>
@@ -218,6 +217,6 @@
          </p>
 		</div>
 	</div>
-	
-	
+
+
 </div>

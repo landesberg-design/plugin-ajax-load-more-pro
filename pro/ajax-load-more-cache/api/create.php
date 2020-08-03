@@ -1,8 +1,4 @@
 <?php
-	
-	
-add_action( 'wp_ajax_alm_cache_from_html', 'alm_cache_create_html' );
-add_action( 'wp_ajax_nopriv_alm_cache_from_html', 'alm_cache_create_html' );
    		
 
 /**
@@ -69,3 +65,6 @@ function alm_cache_create_html() {
    wp_send_json($return);
    
 }
+	
+add_action( 'wp_ajax_alm_cache_from_html', 'alm_cache_create_html' );
+add_action( 'wp_ajax_nopriv_alm_cache_from_html', 'alm_cache_create_html' );
