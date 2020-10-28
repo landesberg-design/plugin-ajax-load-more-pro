@@ -1,72 +1,70 @@
 <?php
-
 /**
- * rest_api_init
+ * Init Endpoint.
  */
 add_action( 'rest_api_init', function () {
-   $my_namespace = 'alm-filters';
-   $my_endpoint = '/save';
-   register_rest_route( $my_namespace, $my_endpoint,
-      array(
-         'methods' => 'POST',
-         'callback' => 'save_filter',
-      )
-   );
+	$my_namespace = 'alm-filters';
+	$my_endpoint  = '/save';
+	register_rest_route(
+		$my_namespace,
+		$my_endpoint,
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'save_filter',
+			'permission_callback' => '__return_true',
+		)
+	);
 });
 
 
 
 /**
- * save_filter
- * Save the filter data
+ * Save the filter data.
  *
- * @param $request      $_POST
- * @return $response    json
+ * @param WP_REST_Request $_POST post object
+ * @return $response json response
  * @since 1.0
  */
 function save_filter( WP_REST_Request $request ) {
 
-	error_reporting(E_ALL|E_STRICT);
+	// Get contents of request and convert to array.
+	$data    = json_decode( $request->get_body(), true );
+	$options = json_decode( $data['options'] );
+	$filters = json_decode( $data['filters'] );
 
-	// Get contents of request and convert to array
-	$data = json_decode($request->get_body(), true);
-
-	$options = json_decode($data['options']);
-	$filters = json_decode($data['filters']);
-
-	$filter_array = [];
+	$filter_array       = [];
 	$filter_array['id'] = '';
 
-	if($filters){
+	if ( $filters ) {
 
-		// Loop options and build options array
-		foreach($options as $key => $value){
+		// Loop options and build options array.
+		foreach ( $options as $key => $value ) {
 
-   		// Get the ID
-   		$id = isset($options[$key]->id) ? strtolower($options[$key]->id) : '';
+			// Get the ID.
+			$id = isset( $options[ $key ]->id ) ? strtolower( $options[ $key ]->id ) : '';
 
-   		// Get option from DB
-   		$option = get_option( 'alm_filter_'. $id);
+			// Get option from DB.
+			$option = get_option( 'alm_filter_'. $id );
 
-   		// Set ID and Style
+			// Set ID and Style.
 			$filter_array['id'] = $id;
-			$filter_array['style'] = isset($options[$key]->style) ? $options[$key]->style : '';
+			$filter_array['style'] = isset( $options[ $key ]->style ) ? $options[ $key ]->style : '';
 
-			// Only set button_text if style === change
-			if($filter_array['style'] === 'button'){
-				$filter_array['button_text'] = isset($options[$key]->button_text) ? $options[$key]->button_text : '';
+			// Only set button_text if style === change.
+			if ( $filter_array['style'] === 'button' ) {
+				$filter_array['button_text'] = isset( $options[ $key ]->button_text ) ? $options[ $key ]->button_text : '';
 			}
 
 			$timestamp = current_time( 'timestamp' ); // Get current time
 
-			// Created Date
-			if(!$option){ // if filter doesn't yet exist
+			// Created Date.
+			if ( ! $option ) { // if filter doesn't yet exist.
 				$filter_array['date_created'] = $timestamp;
 			} else {
 
-   			// Get current filter for date created attribute
-   			$filter_option = unserialize($option);
-   			if(!isset($filter_option['date_created'])){
+   			// Get current filter for date created attribute.
+   			$filter_option = unserialize( $option );
+   			if ( ! isset( $filter_option['date_created'] ) ) {
       			// If it doesn't exist, created it.
       			$filter_array['date_created'] = $timestamp;
    			} else {
@@ -176,6 +174,11 @@ function save_filter( WP_REST_Request $request ) {
    			// Classes
    			if(isset($array['classes']) && $array['classes'] === ''){
 	   			unset($array['classes']);
+				}
+
+				// Section Toggle.
+				if ( isset( $array['section_toggle'] ) && $array['section_toggle'] === '' && $array['title'] !== '' ) {
+					unset( $array['section_toggle'] );
 				}
 
 				// Star Rating

@@ -1,24 +1,19 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
-
-/*
- *  alm_list_all_filters
- *  This function will list all filters
+/**
+ * This function will list all filters.
  *
- *  @since	1.5
- *
- *  @param	$filter_id string
- *  @return	n/a
+ * @since 1.5
+ * @param {String} $filter_id the ID.
+ * @param {String} $pos the position.
  */
-function alm_list_all_filters($filter_id, $pos = 'sidebar'){
+function alm_list_all_filters( $filter_id, $pos = 'sidebar' ) {
 
 	$filters = ALMFilters::alm_get_all_filters();
 
-	if($filters) : ?>
+	if ( $filters ) : ?>
 		<div class="filter-listing--wrap">
-
 			<?php if($pos !== 'sidebar'){ ?>
 			<div class="filter-listing--row header">
 				<div class="left">
@@ -29,21 +24,18 @@ function alm_list_all_filters($filter_id, $pos = 'sidebar'){
 				</div>
 			</div>
 			<?php } ?>
-
 			<ul class="filter-listing--ul">
 				<?php
-				foreach( $filters as $filter ) :	// Loop the filters
+				foreach ( $filters as $filter ) :	// Loop the filters.
+					$filter      = preg_replace( '/' . esc_sql( ALM_FILTERS_PREFIX ) . '/', '', $filter, 1 );
+					$filter_data = unserialize( get_option( ALM_FILTERS_PREFIX . $filter ) );
+					$current     = ( $filter === $filter_id ) ? ' class="current"' : '';
 
-					//$filter = str_replace(esc_sql( ALM_FILTERS_PREFIX ), '', $filter);
-				   $filter = preg_replace( '/' .esc_sql( ALM_FILTERS_PREFIX ). '/', '', $filter, 1);
-				   $filter_data = unserialize(get_option(ALM_FILTERS_PREFIX.$filter));
-	            $current = ($filter === $filter_id) ? ' class="current"' : '';
-
-					if($filter_data){ ?>
+					if ( $filter_data ) { ?>
 	   				<li>
 	   					<div class="filter-listing--row">
 
-		   					<?php if($pos !== 'sidebar'){ ?>
+		   					<?php if ( $pos !== 'sidebar' ) { ?>
 		   					<div class="left">
 			   				<?php } ?>
 
@@ -95,18 +87,13 @@ function alm_list_all_filters($filter_id, $pos = 'sidebar'){
 <?php
 }
 
-
-
-/*
- *  alm_empty_filters
- *  This function is called when filters do not exist
+/**
+ * This function is called when filters do not exist
  *
- *  @since	1.5
- *
- *  @param	$pos string
- *  @return	n/a
+ * @since 1.5
+ * @param {String} $pos
  */
-function alm_empty_filters($pos){
+function alm_empty_filters( $pos ) {
 
 	$response = '<div class="alm-no-filters '. $pos .'">';
 		$response .= '<div class="alm-no-filters--inner">';

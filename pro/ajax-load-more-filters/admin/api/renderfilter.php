@@ -1,18 +1,19 @@
 <?php
-
-/*
-*  rest_api_init
-*/
-
+/**
+ * Init Endpoint.
+ */
 add_action( 'rest_api_init', function () {
-   $my_namespace = 'alm-filters';
-   $my_endpoint = '/renderfilter';
-   register_rest_route( $my_namespace, $my_endpoint,
-      array(
-         'methods' => 'POST',
-         'callback' => 'renderfilter',
-      )
-   );
+	$my_namespace = 'alm-filters';
+	$my_endpoint  = '/renderfilter';
+	register_rest_route(
+		$my_namespace,
+		$my_endpoint,
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'renderfilter',
+			'permission_callback' => '__return_true',
+		)
+	);
 });
 
 

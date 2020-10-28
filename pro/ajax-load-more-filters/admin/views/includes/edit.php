@@ -264,10 +264,24 @@
 												data-id="taxonomy"
 												v-on:change="filterChange($event)"
 											>
-											<option value="" :selected="filter.taxonomy === '' ? 'selected' : ''">-- <?php _e('Select Taxonomy', 'ajax-load-more-filters'); ?>--</option>
+											<option value="" :selected="filter.taxonomy === '' ? 'selected' : ''">-- <?php _e( 'Select Taxonomy', 'ajax-load-more-filters' ); ?>--</option>
+											<?php
+												$cats = get_categories();
+												if ( $cats ) {
+											?>
+											<option value="category" :selected="filter.taxonomy === 'category' ? 'selected' : ''"><?php _e( 'Categories', 'ajax-load-more-filters' ); ?></option>
+											<?php }
+
+												$tags = get_tags();
+												if ( $tags ) {
+											?>
+											<option value="post_tag" :selected="filter.taxonomy === 'post_tag' ? 'selected' : ''"><?php _e( 'Tags', 'ajax-load-more-filters' ); ?></option>
+											<?php } ?>
+
 											<?php foreach( $taxonomies as $taxonomy ){ ?>
 												<option value="<?php echo $taxonomy->query_var;?>" :selected="filter.taxonomy === '<?php echo $taxonomy->query_var;?>' ? 'selected' : ''"><?php echo $taxonomy->label; ?></option>
 											<?php } ?>
+
 										</select>
 									</div>
 								</div>
@@ -1042,7 +1056,6 @@
 					</label>
 				</div>
 
-
 				<!-- Desc -->
 				<div class="alm-filter--row not-required" id="row-description">
 					<label>
@@ -1060,7 +1073,6 @@
 					</label>
 				</div>
 
-
 				<!-- Classes -->
 				<div class="alm-filter--row not-required" id="row-classes">
 					<label>
@@ -1074,6 +1086,35 @@
 						</div>
 						<div class="item">
 							<input type="text" id="filter-classes" data-id="classes" :data-index="index" :value="filter.classes" placeholder="row container" v-on:change="filterChange($event)">
+						</div>
+					</label>
+				</div>
+
+				<!-- Toggle -->
+				<div class="alm-filter--row not-required" id="row-section_toggle" v-show="filter.title !== ''">
+					<label>
+						<div class="label">
+							<?php _e('Section Toggle', 'ajax-load-more-filters'); ?>
+							<a
+								title="<?php _e('Allow users to expand and collapse this filter block.', 'ajax-load-more-filters'); ?>"
+								href="javascript:void(0)"
+								class="fa fa-question-circle tooltip" tabindex="-1"
+							></a>
+						</div>
+						<div class="item">
+							<div class="select-wrapper">
+								<select
+									id="filter-section_toggle"
+									class="alm-filter-select"
+									data-id="section_toggle"
+				   	      	:data-index="index"
+						   	   v-on:change="filterChange($event)"
+								>
+									<option value="">-- <?php _e('Select', 'ajax-load-more-filters'); ?> --</option>
+									<option value="true" :selected="filter.section_toggle === 'true' ? 'selected' : ''"><?php _e('True', 'ajax-load-more-filters'); ?></option>
+									<option value="false" :selected="filter.section_toggle === 'false' ? 'selected' : ''"><?php _e('False', 'ajax-load-more-filters'); ?></option>
+								</select>
+							</div>
 						</div>
 					</label>
 				</div>

@@ -426,7 +426,9 @@ $red: #c14040;
 					height: auto;
 					display: block;
 					resize: vertical;
-					min-height: 55px;
+					min-height: 75px;
+					padding: 10px !important;
+					line-height: 1.5 !important;
 				}
 				.checkbox-wrap {
 					display: block;

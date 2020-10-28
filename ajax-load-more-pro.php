@@ -6,7 +6,7 @@ Description: All the add-ons for Ajax Load More in a single installation.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.1.5
+Version: 1.1.7
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -14,8 +14,8 @@ Copyright: Darren Cooney & Connekt Media
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
-define('ALM_PRO_VERSION', '1.1.5');
-define('ALM_PRO_RELEASE', 'July 13, 2020');
+define( 'ALM_PRO_VERSION', '1.1.7' );
+define( 'ALM_PRO_RELEASE', 'October 1, 2020' );
 
 
 

@@ -6,7 +6,7 @@ Description: Ajax Load More add-on to build and manage Ajaxed filters.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.10.0
+Version: 1.10.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
@@ -14,8 +14,8 @@ Copyright: Darren Cooney & Connekt Media
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_FILTERS_VERSION', '1.10.0');
-define('ALM_FILTERS_RELEASE', 'July 13, 2020');
+define('ALM_FILTERS_VERSION', '1.10.1');
+define('ALM_FILTERS_RELEASE', 'October 1, 2020');
 define('ALM_FILTERS_PATH', plugin_dir_path(__FILE__));
 define('ALM_FILTERS_URL', plugins_url('', __FILE__));
 define('ALM_FILTERS_ADMIN_URL', plugins_url('admin/', __FILE__));
@@ -355,8 +355,8 @@ if( !class_exists('ALMFilters') ):
    	 */
 
    	public function includes(){
-
 		   include_once('functions/helpers.php');
+		   include_once('functions/dynamic-filter-vars.php');
 		   include_once('functions/get-hierarchy.php');
 		   include_once('admin/api/save.php');
          include_once('admin/api/renderfilter.php');
@@ -526,6 +526,7 @@ if( !class_exists('ALMFilters') ):
 			            'button_label' => (isset($f['button_label'])) ? $f['button_label'] : '',
 			            'placeholder' => (isset($f['placeholder'])) ? esc_attr($f['placeholder']) : '',
 							'classes' => (isset($f['classes'])) ? ' '. esc_attr($f['classes']) : '',
+							'section_toggle' => (isset($f['section_toggle'])) ? esc_attr($f['section_toggle']) : '',
 			            'star_rating_min' => (isset($f['star_rating_min'])) ? esc_attr($f['star_rating_min']) : '',
 			            'star_rating_max' => (isset($f['star_rating_max'])) ? esc_attr($f['star_rating_max']) : '',
 			            'datepicker_mode' => (isset($f['datepicker_mode'])) ? esc_attr($f['datepicker_mode']) : '',
@@ -555,7 +556,8 @@ if( !class_exists('ALMFilters') ):
                	 *
                	 *  @since 1.1.1
                	 */
-               	$obj['selected_value'] = (isset($f['selected_value'])) ? esc_attr($f['selected_value']) : '';
+						$obj['selected_value'] = (isset($f['selected_value'])) ? esc_attr($f['selected_value']) : '';
+						$obj['selected_value'] = alm_filters_parse_dynamic_vars( $obj['key'], $obj['selected_value'] );
 				      if(has_filter('alm_filters_'. $options_obj['id'] .'_'. $filter_key .'_selected')){
    				      $obj['selected_value'] = apply_filters('alm_filters_'. $options_obj['id'] .'_'. $filter_key .'_selected', $obj['selected_value']);
 				      }
@@ -568,7 +570,9 @@ if( !class_exists('ALMFilters') ):
                	 *
                	 *  @since 1.1.1
                	 */
-               	$obj['default_value'] = (isset($f['default_value']) && trim($f['default_value']) !== '') ? esc_attr($f['default_value']) : '';
+						$obj['default_value'] = (isset($f['default_value']) && trim($f['default_value']) !== '') ? esc_attr($f['default_value']) : '';
+						$obj['default_value'] = alm_filters_parse_dynamic_vars( $obj['key'], $obj['default_value'] );
+
 				      if(has_filter('alm_filters_'. $options_obj['id'] .'_'. $filter_key .'_default')){
    				      $obj['default_value'] = apply_filters('alm_filters_'. $options_obj['id'] .'_'. $filter_key .'_default', $obj['default_value']);
 				      }
@@ -647,11 +651,14 @@ if( !class_exists('ALMFilters') ):
 						}
 
 
+
 						// Build output
 			         $output .= '<div class="alm-filter alm-filter--'. str_replace('_', '', $obj['key']) . $has_selected_value .''. $obj['classes'] .'" id="alm-filter-'. $filterCount .'" data-key="'. $obj['key'] .'" data-fieldtype="'. $obj['field_type'] .'"'. $taxonomy_value . $taxonomy_operator .''. $meta_value . $meta_operator . $meta_type . $author_role .  $default_selected_value .''. $default_value .''. $is_archive .''. $role . $labelledby .'>';
 
-		         	$output .= alm_filters_display_title($options_obj['id'], $obj);
-		         	$output .= alm_filters_display_description($options_obj['id'], $obj);
+						$sectionToggle = ( $obj['section_toggle'] === 'true' ) ? true : false;
+						$output .= alm_filters_display_title( $options_obj['id'], $obj, $sectionToggle );
+						$output .= alm_filters_open_filter_container( $obj, $sectionToggle );
+						$output .= alm_filters_display_description( $options_obj['id'], $obj );
 
 		         	// Determine which $key to implement
 		         	$key = $obj['key'];
@@ -707,12 +714,11 @@ if( !class_exists('ALMFilters') ):
 
                            $output .= self::alm_filters_list_terms($obj, $queryString, $options_obj['id']);
 
-                        }
-
+								}
 			         	}
-
 		         	}
 
+						$output .= alm_filters_close_filter_container();
 			         $output .= '</div>';
 
 		      	}
@@ -812,10 +818,8 @@ if( !class_exists('ALMFilters') ):
 		}
 
 
-
    	// Convert key (shortcode params) to camelCase. e.g. post_type => postType
    	public static function alm_filters_replace_underscore($value){
-
 	   	$underscore = strpos($value, '_');
 	   	if($underscore){
 		   	$charToReplace = substr($value, $underscore+1, 1);
@@ -824,10 +828,8 @@ if( !class_exists('ALMFilters') ):
 
 	   	// If value is year, month or day add '_' before to prevent 404s. e.g. _year
 	   	$value = ($value === 'year' || $value === 'month' || $value === 'day' || $value === 'author') ? '_'. $value : $value;
-
 	   	return $value;
    	}
-
 
 
    	/**
@@ -838,18 +840,15 @@ if( !class_exists('ALMFilters') ):
        * @since 1.0
        */
    	public static function alm_filters_revert_underscore($key){
-
 	   	// If value is _year, _month, _day or _author remove the '_'
 	   	$key = ($key === '_year' || $key === '_month' || $key === '_day' || $key === '_author') ? str_replace('_', '', $key) : $key;
-
 	   	return $key;
    	}
 
 
 
    	/**
-		 * alm_filters_list_custom_values
-		 * Render custom values (cat, tag, custom tax)
+		 * Render custom values (cat, tag, custom tax).
 		 *
 		 * @param {*} $id
 		 * @param {*} $obj
@@ -958,7 +957,7 @@ if( !class_exists('ALMFilters') ):
 
 	   	$return .= self::alm_filters_display_toggle($obj, 'after');
 
-	   	$return .= apply_filters('alm_filters_container_close', self::alm_filters_get_container($obj['field_type'], 'close'));
+	   	$return .= apply_filters( 'alm_filters_container_close', self::alm_filters_get_container( $obj['field_type'], 'close' ) );
 
 	   	return $return;
 
@@ -989,8 +988,8 @@ if( !class_exists('ALMFilters') ):
 	   	if($obj['key'] === '_author' && isset($obj['author_role'])){
 
 		   	$author_args = array(
-			   	'role' => $obj['author_role'],
-			   	'order' => 'DESC',
+			   	'role'    => $obj['author_role'],
+			   	'order'   => 'DESC',
 			   	'orderby' => 'login'
 		   	);
 
@@ -1015,8 +1014,8 @@ if( !class_exists('ALMFilters') ):
 	   	if($obj['key'] === 'category' || $obj['key'] === 'category_and'){
 
 		   	$cat_args = array(
-			   	'order' => 'ASC',
-			   	'orderby' => 'name',
+			   	'order'      => 'ASC',
+			   	'orderby'    => 'name',
 			   	'hide_empty' =>true
 		   	);
 
@@ -1032,8 +1031,8 @@ if( !class_exists('ALMFilters') ):
 	   	if($obj['key'] === '_tag' || $obj['key'] === 'tag' || $obj['key'] === 'tag_and'){
 
 		   	$tag_args = array(
-			   	'order' => 'ASC',
-			   	'orderby' => 'name',
+			   	'order'      => 'ASC',
+			   	'orderby'    => 'name',
 			   	'hide_empty' => true
 		   	);
 

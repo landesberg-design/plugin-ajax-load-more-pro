@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/paging/
 Requires at least: 4.0
-Tested up to: 5.4.1
+Tested up to: 5.5.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.3
+Version: 1.5.4
 
 
 == Copyright ==
@@ -45,12 +45,16 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 5. Activate the plugin in the Plugin dashboard.
 
 
-
 == Upgrade Notice ==
+
 
 == Changelog ==
 
-= 1.5.3 - May 1, 2020 = 
+= 1.5.4 - September 10, 2020 =
+* UPDATE - Updated `First`/`Last` navigation buttons to only display when required. Previously, First and Last may show even though users can access the first and last pages via button navigation.
+
+
+= 1.5.3 - May 1, 2020 =
 * NEW - Added new Scroll to Top functionality for after a paging click event.
 * FIX - Resolved issue with loading transition not displaying properly in some instances.
 * FIX - Added CSS fix for loading issue when Paging CSS is not loaded inline.
@@ -74,7 +78,7 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 = 1.4.2 - May 2, 2019 =
-* FIX - Fixed issue with zero paging results failing to complete Ajax request or trigger callback functions. 
+* FIX - Fixed issue with zero paging results failing to complete Ajax request or trigger callback functions.
 * FIX - Fixed issue with undefined variable in paging URLs when using SEO add-on.
 
 
@@ -95,7 +99,7 @@ When updating to Paging 1.3.0 you must also update core (Ajax Load More)[https:/
 * NEW - Plugin completely re-written in vanilla JS.
 * UPDATE - Updated callback function to be window scoped.
 * NEW - Adding translation file.
-* UPDATE - Improved scroll to element functionality and URL updates. 
+* UPDATE - Improved scroll to element functionality and URL updates.
 
 
 = 1.3.6 - December 6, 2018 =

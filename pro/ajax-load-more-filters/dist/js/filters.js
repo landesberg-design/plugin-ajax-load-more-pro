@@ -8831,6 +8831,77 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "./src/js/frontend/global/UI.js":
+/*!**************************************!*\
+  !*** ./src/js/frontend/global/UI.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.uiToggle = uiToggle;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/*
+ * Expand/Collapse filters.
+ *
+ * @since 1.10.1
+ */
+function uiToggle(elements) {
+	if (!elements) {
+		return false;
+	}
+	[].concat(_toConsumableArray(elements)).forEach(function (item, e) {
+		item.addEventListener("click", function (e) {
+			toggleFilter(this);
+		});
+		// Return/Enter.
+		item.addEventListener("keyup", function (e) {
+			// Number 13 is the "Enter" key on the keyboard
+			if (e.keyCode === 13) {
+				// Cancel the default action, if needed
+				e.preventDefault();
+				// Trigger the button element with a click
+				toggleFilter(e.target);
+			}
+		});
+	});
+}
+
+/**
+ * Toggle a filter
+ *
+ * @param {*} el
+ * @since 1.10.1
+ */
+var toggleFilter = function toggleFilter(el) {
+	if (!el) {
+		return false;
+	}
+	var parent = el.parentNode.parentNode;
+	var target = parent.querySelector(".alm-filter--inner");
+	if (!target) {
+		return false;
+	}
+	if (target && el.getAttribute("aria-expanded") === "true") {
+		target.style.display = "none";
+		target.setAttribute("aria-hidden", true);
+		el.setAttribute("aria-expanded", false);
+	} else {
+		target.style.display = "block";
+		target.setAttribute("aria-hidden", false);
+		el.setAttribute("aria-expanded", true);
+	}
+};
+
+/***/ }),
+
 /***/ "./src/js/frontend/global/Variables.js":
 /*!*********************************************!*\
   !*** ./src/js/frontend/global/Variables.js ***!
@@ -8842,11 +8913,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 module.exports = {
-	url: '',
+	url: "",
 	alm_filtering: false,
 	alm_filtering_popstate: false,
-	almFilters: document.querySelector('.alm-filters-container'),
-	isIE: navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false
+	almFilters: document.querySelector(".alm-filters-container"),
+	isIE: navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false,
+	pushstate: false
 };
 
 /***/ }),
@@ -9509,6 +9581,8 @@ var _StarRating2 = _interopRequireDefault(_StarRating);
 
 var _toggle = __webpack_require__(/*! ./helpers/toggle */ "./src/js/frontend/helpers/toggle.js");
 
+var _UI = __webpack_require__(/*! ./global/UI */ "./src/js/frontend/global/UI.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -9518,8 +9592,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 __webpack_require__(/*! ./helpers/polyfills */ "./src/js/frontend/helpers/polyfills.js");
 
 /*
- * almFiltersInit
- * Initiate the filter object
+ * Initiate the filter objects.
  *
  * @param almFilters element   The container element for the almFilters
  * @since 1.0
@@ -9694,13 +9767,18 @@ var almFiltersInit = function almFiltersInit(almFilters) {
 		(0, _RangeSliders.setRangeSliders)(almFilters.dataset.id, rangeSliders, style);
 	}
 
+	// Toggle Filter Event Handlers
+	var filterToggles = document.querySelectorAll("div.alm-filter--title .alm-filter--toggle");
+	if (filterToggles) {
+		(0, _UI.uiToggle)(filterToggles);
+	}
+
 	// Set currently selected filters
 	(0, _CurrentFilters2.default)(window.location.search);
 };
 
 /**
- * removeSelectedFilter
- * Trigger click event on selected filter
+ * Trigger click event on selected filter.
  *
  * @param element   The clicked element
  * @since 1.0
@@ -9735,8 +9813,7 @@ window.removeSelectedFilter = function (element) {
 };
 
 /**
- * removeSelectedFilterEnter
- * Trigger click event on selected filter when enter clicked
+ * Trigger click event on selected filter when enter clicked.
  *
  * @param element   The clicked element
  * @since 1.0
@@ -9827,11 +9904,17 @@ window.addEventListener("load", function () {
 	}
 });
 
-/*
- * popstate
- * Fires when users click back or forward browser buttons
+/**
+ * Fires when users click back or forward browser buttons.
  */
 window.addEventListener("popstate", function (event) {
+	// Safari popstate fix
+	// Safari triggers a popstate anytime the back button is pressed.
+	// This flag prevents execution from articles or other pages.
+	if (!_Variables2.default.pushstate) {
+		return false; // Exit if pushstate was never initiated
+	}
+
 	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
 
 	if (!almFilters) {
@@ -9853,9 +9936,7 @@ window.addEventListener("popstate", function (event) {
 });
 
 /**
- * almFiltersPaged
- * Created paged URL parameters
- * Triggered from Paging add-on
+ * Created paged URL parameters. Triggered from Paging add-on.
  *
  * @param alm element   Core ALM object
  * @param init boolen
@@ -9926,8 +10007,7 @@ window.almFiltersPaged = function (alm) {
 };
 
 /**
- * reset
- * Reset all filters back to default state
+ * Reset all filters back to default state.
  * Public JS function
  *
  * @param reset boolean
@@ -9963,8 +10043,7 @@ var reset = function reset() {
 exports.reset = reset;
 
 /**
- * almFiltersClear
- * Legacy public function
+ * Legacy public function.
  *
  * @deprecated 1.7.5
  * @since 1.0
@@ -9973,8 +10052,8 @@ exports.reset = reset;
 window.almFiltersClear = function () {
 	var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
-	almfilters.reset(reset);
 	(0, _StarRating.clearHighlightedStars)();
+	almfilters.reset(reset);
 };
 
 /**
@@ -9994,8 +10073,7 @@ var resetFilter = function resetFilter(filter) {
 exports.resetFilter = resetFilter;
 
 /**
- * almFiltersOnload
- * Scroll user to page on page load
+ * Scroll user to page on page load.
  * Fires from core Ajax Load More [core/src/js/ajax-load-more.js]
  *
  * @param {number} page
@@ -10024,8 +10102,7 @@ window.almFiltersOnload = function () {
 };
 
 /**
- * almFiltersAddonComplete
- * Filters Complete function
+ * Filters Complete function.
  * Fires from core Ajax Load More [core/src/js/modules/filtering.js]
  *
  * @param el element   The alm element
@@ -10799,28 +10876,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var dispatch = function dispatch(target, data, url) {
-
 	// Get the target .ajax-load-more element
 	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
 
-	if (typeof alm != 'undefined' && alm != null) {
-
+	if (typeof alm != "undefined" && alm != null) {
 		alm = alm[0];
-		var transition = alm.dataset.transition == null ? 'fade' : alm.dataset.transition;
-		var speed = alm.dataset.speed == null ? '250' : alm.dataset.speed;
+		var transition = alm.dataset.transition == null ? "fade" : alm.dataset.transition;
+		var speed = alm.dataset.speed == null ? "250" : alm.dataset.speed;
 
 		// Analytics
-		if (alm.dataset.filtersAnalytics === 'true') {
+		if (alm.dataset.filtersAnalytics === "true") {
 			(0, _Analytics2.default)();
 		}
 
 		// Debug Info
-		if (alm.dataset.filtersDebug === 'true') {
-			console.log('ALM Filters Debug:', data);
+		if (alm.dataset.filtersDebug === "true") {
+			console.log("ALM Filters Debug:", data);
 		}
 
 		// Dispatch filters to core ALM
-		if (typeof ajaxloadmore.filter === 'function') {
+		if (typeof ajaxloadmore.filter === "function") {
 			ajaxloadmore.filter(transition, speed, data);
 		}
 
@@ -11328,9 +11403,6 @@ var setElementStates = function setElementStates(urlArray) {
 					[].concat(_toConsumableArray(radios)).forEach(function (radio) {
 						(0, _SetCheckboxState2.default)(_valueArray, radio);
 					});
-					if (isStarRating) {
-						clearRatingClass(radios);
-					}
 				} else {
 					(0, _ClearInputs2.default)(radios); // Clear all
 				}
@@ -11340,7 +11412,6 @@ var setElementStates = function setElementStates(urlArray) {
 			case "star_rating":
 				// Star Rating... Duplicate of Radio func
 				var stars = filter.querySelectorAll("div.field-starrating"); // All radios
-				var feedback = filter.querySelector(".alm-star--feedback");
 
 				if (urlArray.hasOwnProperty(key)) {
 					var _valueArray2 = urlArray[key].split("+");
@@ -11456,28 +11527,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * Get the selected terms and append them to data obj
  *
  * @param almFilters element   The filters elements
- * @return null 
+ * @return null
  *
  * @since 1.0
  */
 
 var triggerChange = function triggerChange(almFilters) {
-
 	/*
-    * almFiltersChange
-    * Callback function is dispatched when a filter change event is triggered.
-    *
-    */
+  * almFiltersChange
+  * Callback function is dispatched when a filter change event is triggered.
+  *
+  */
 	if (typeof window.almFiltersChange === "function") {
 		window.almFiltersChange();
 	}
 
 	_Variables2.default.alm_filtering = true;
-	almFilters.classList.add('filtering');
+	almFilters.classList.add("filtering");
 
-	var target = almFilters.dataset.target; // Get target		
+	var target = almFilters.dataset.target; // Get target
 	var data = {}; // Define data object
-	var url = ''; // Build URL
+	var url = ""; // Build URL
 	var count = 0;
 
 	// Get the target .ajax-load-more element
@@ -11488,7 +11558,7 @@ var triggerChange = function triggerChange(almFilters) {
 	var canonicalUrl = alm.dataset.canonicalUrl;
 
 	// Loop all filters
-	var filters = almFilters.querySelectorAll('.alm-filter');
+	var filters = almFilters.querySelectorAll(".alm-filter");
 	[].concat(_toConsumableArray(filters)).forEach(function (filter, e) {
 		count++;
 		data = (0, _BuildDataObj2.default)(filter, data); // Build data obj
@@ -11496,19 +11566,19 @@ var triggerChange = function triggerChange(almFilters) {
 	});
 
 	// Build an object of active filters
-	var activeFiltersObj = url !== '' ? (0, _parseQueryString2.default)(url, true) : '';
+	var activeFiltersObj = url !== "" ? (0, _parseQueryString2.default)(url, true) : "";
 
 	/*
-    * almFiltersActive
-    * Callback function dispatched informing user of the active filters
-    *
-    */
+  * almFiltersActive
+  * Callback function dispatched informing user of the active filters
+  *
+  */
 	if (typeof window.almFiltersActive === "function") {
 		window.almFiltersActive(activeFiltersObj);
 	}
 
 	// Set URL
-	url = url === '' ? canonicalUrl : url;
+	url = url === "" ? canonicalUrl : url;
 
 	var state = {
 		permalink: url
@@ -11516,22 +11586,21 @@ var triggerChange = function triggerChange(almFilters) {
 
 	// If pushstate is enabled and not triggered via popstate
 	if (!_Variables2.default.alm_filtering_popstate) {
-
-		if (typeof window.history.pushState === 'function' && !_Variables2.default.isIE) {
-
-			var almListing = alm.querySelector('.alm-listing');
+		if (typeof window.history.pushState === "function" && !_Variables2.default.isIE) {
+			var almListing = alm.querySelector(".alm-listing");
 
 			// Determine if URL should be updated
-			if (almListing && almListing.dataset.filtersUrl !== 'false') {
+			if (almListing && almListing.dataset.filtersUrl !== "false") {
 				// Send Pushstate
 				// history.replaceState(state, null, url);
 				history.pushState(state, null, url);
+				_Variables2.default.pushstate = true;
 
 				/*
-    * almFiltersURLUpdate
-    * Callback function dispatched after the browser URL has been updated
-    *
-    */
+     * almFiltersURLUpdate
+     * Callback function dispatched after the browser URL has been updated
+     *
+     */
 				if (typeof window.almFiltersURLUpdate === "function") {
 					window.almFiltersURLUpdate(url);
 				}
@@ -11542,7 +11611,7 @@ var triggerChange = function triggerChange(almFilters) {
 
 	data.pause = false; // Disable pause (prevention)
 	data.preloaded = false; // Disable preloaded (prevention)
-	data.target = target; // Set target before data obj is sent	
+	data.target = target; // Set target before data obj is sent
 
 	(0, _Dispatch2.default)(target, data, url); // Dispatch the almFilters() function
 };

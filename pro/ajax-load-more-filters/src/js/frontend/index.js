@@ -14,11 +14,11 @@ import { setDatePickers } from "./types/DatePicker";
 import { setRangeSliders } from "./types/RangeSliders";
 import starRating, { clearHighlightedStars } from "./types/StarRating";
 import { toggleAll, toggleSelect } from "./helpers/toggle";
+import { uiToggle } from "./global/UI";
 require("./helpers/polyfills");
 
 /*
- * almFiltersInit
- * Initiate the filter object
+ * Initiate the filter objects.
  *
  * @param almFilters element   The container element for the almFilters
  * @since 1.0
@@ -204,13 +204,20 @@ let almFiltersInit = (almFilters) => {
 		setRangeSliders(almFilters.dataset.id, rangeSliders, style);
 	}
 
+	// Toggle Filter Event Handlers
+	let filterToggles = document.querySelectorAll(
+		"div.alm-filter--title .alm-filter--toggle"
+	);
+	if (filterToggles) {
+		uiToggle(filterToggles);
+	}
+
 	// Set currently selected filters
 	setCurrentFilters(window.location.search);
 };
 
 /**
- * removeSelectedFilter
- * Trigger click event on selected filter
+ * Trigger click event on selected filter.
  *
  * @param element   The clicked element
  * @since 1.0
@@ -247,8 +254,7 @@ window.removeSelectedFilter = (element) => {
 };
 
 /**
- * removeSelectedFilterEnter
- * Trigger click event on selected filter when enter clicked
+ * Trigger click event on selected filter when enter clicked.
  *
  * @param element   The clicked element
  * @since 1.0
@@ -340,11 +346,17 @@ window.addEventListener("load", function () {
 	}
 });
 
-/*
- * popstate
- * Fires when users click back or forward browser buttons
+/**
+ * Fires when users click back or forward browser buttons.
  */
 window.addEventListener("popstate", function (event) {
+	// Safari popstate fix
+	// Safari triggers a popstate anytime the back button is pressed.
+	// This flag prevents execution from articles or other pages.
+	if (!vars.pushstate) {
+		return false; // Exit if pushstate was never initiated
+	}
+
 	let almFilters =
 		vars.almFilters || document.querySelector(".alm-filters-container");
 
@@ -367,9 +379,7 @@ window.addEventListener("popstate", function (event) {
 });
 
 /**
- * almFiltersPaged
- * Created paged URL parameters
- * Triggered from Paging add-on
+ * Created paged URL parameters. Triggered from Paging add-on.
  *
  * @param alm element   Core ALM object
  * @param init boolen
@@ -446,8 +456,7 @@ window.almFiltersPaged = (alm, init = true) => {
 };
 
 /**
- * reset
- * Reset all filters back to default state
+ * Reset all filters back to default state.
  * Public JS function
  *
  * @param reset boolean
@@ -482,15 +491,14 @@ let reset = function (reset = true) {
 export { reset };
 
 /**
- * almFiltersClear
- * Legacy public function
+ * Legacy public function.
  *
  * @deprecated 1.7.5
  * @since 1.0
  */
 window.almFiltersClear = function (reset = true) {
-	almfilters.reset(reset);
 	clearHighlightedStars();
+	almfilters.reset(reset);
 };
 
 /**
@@ -510,8 +518,7 @@ let resetFilter = function (filter) {
 export { resetFilter };
 
 /**
- * almFiltersOnload
- * Scroll user to page on page load
+ * Scroll user to page on page load.
  * Fires from core Ajax Load More [core/src/js/ajax-load-more.js]
  *
  * @param {number} page
@@ -545,8 +552,7 @@ window.almFiltersOnload = function (alm = null) {
 };
 
 /**
- * almFiltersAddonComplete
- * Filters Complete function
+ * Filters Complete function.
  * Fires from core Ajax Load More [core/src/js/modules/filtering.js]
  *
  * @param el element   The alm element

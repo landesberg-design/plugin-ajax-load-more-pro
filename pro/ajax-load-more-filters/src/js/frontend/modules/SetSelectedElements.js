@@ -56,9 +56,6 @@ let setElementStates = (urlArray) => {
 					[...radios].forEach((radio) => {
 						setCheckboxState(valueArray, radio);
 					});
-					if (isStarRating) {
-						clearRatingClass(radios);
-					}
 				} else {
 					clearInputs(radios); // Clear all
 				}
@@ -67,7 +64,6 @@ let setElementStates = (urlArray) => {
 
 			case "star_rating": // Star Rating... Duplicate of Radio func
 				let stars = filter.querySelectorAll("div.field-starrating"); // All radios
-				let feedback = filter.querySelector(".alm-star--feedback");
 
 				if (urlArray.hasOwnProperty(key)) {
 					let valueArray = urlArray[key].split("+");

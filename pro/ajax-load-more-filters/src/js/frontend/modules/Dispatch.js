@@ -1,6 +1,5 @@
-import analytics from './Analytics';
-import setCurrentFilters from './CurrentFilters';
-
+import analytics from "./Analytics";
+import setCurrentFilters from "./CurrentFilters";
 
 /*
  * dispatch
@@ -15,36 +14,35 @@ import setCurrentFilters from './CurrentFilters';
  */
 
 let dispatch = (target, data, url) => {
-
 	// Get the target .ajax-load-more element
-	let alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="'+ target +'"] .alm-listing.alm-ajax');
+	let alm = document.querySelectorAll(
+		'.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax'
+	);
 
-	if(typeof(alm) != 'undefined' && alm != null){
-
+	if (typeof alm != "undefined" && alm != null) {
 		alm = alm[0];
-		let transition = (alm.dataset.transition == null) ? 'fade' : alm.dataset.transition;
-		let speed = (alm.dataset.speed == null) ? '250' : alm.dataset.speed;
+		let transition =
+			alm.dataset.transition == null ? "fade" : alm.dataset.transition;
+		let speed = alm.dataset.speed == null ? "250" : alm.dataset.speed;
 
 		// Analytics
-		if(alm.dataset.filtersAnalytics === 'true'){
-   		analytics();
-      }
+		if (alm.dataset.filtersAnalytics === "true") {
+			analytics();
+		}
 
 		// Debug Info
-		if(alm.dataset.filtersDebug === 'true'){
-			console.log('ALM Filters Debug:', data);
+		if (alm.dataset.filtersDebug === "true") {
+			console.log("ALM Filters Debug:", data);
 		}
-		
+
 		// Dispatch filters to core ALM
-		if(typeof ajaxloadmore.filter === 'function'){
+		if (typeof ajaxloadmore.filter === "function") {
 			ajaxloadmore.filter(transition, speed, data);
-		}		
-		
+		}
+
 		// Set currently selected filters
-		setCurrentFilters(url);		
-
+		setCurrentFilters(url);
 	}
-
 };
 
 export default dispatch;

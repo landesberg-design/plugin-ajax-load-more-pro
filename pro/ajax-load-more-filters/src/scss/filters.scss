@@ -177,6 +177,7 @@
 	padding: 0;
 	position: relative;
 	transition: opacity 0.25s ease;
+	margin-bottom: 20px;
 	*,
 	*:before,
 	*:after {
@@ -185,8 +186,13 @@
 
 	.alm-filter {
 		display: block;
-		padding: 0 0 10px;
-		margin: 0 0 20px 0;
+		padding: 0;
+		&.hidden {
+			display: none;
+		}
+		&--inner {
+			padding: 0 0 25px 0;
+		}
 		&--submit {
 			display: block;
 			padding: 0;
@@ -211,7 +217,7 @@
 			margin: 0;
 
 			ul {
-				padding-top: 4px;
+				padding-top: 6px;
 			}
 
 			&.alm-filter--align-items {
@@ -489,9 +495,49 @@
 			h3 {
 				font-size: 18px;
 				font-weight: 600;
-				margin: 0;
-				padding: 0 0 20px;
+				margin: 0 0 20px;
+				padding: 0;
 				line-height: 1.15;
+			}
+			.alm-filter--toggle {
+				position: relative;
+				padding: 10px 20px 10px 0;
+				margin: 0 0 10px;
+				cursor: pointer;
+				user-select: none;
+				&:after {
+					top: calc(50% - 3px);
+					transform: translateY(-50%);
+					right: 10px;
+					border: solid transparent;
+					content: "";
+					height: 0;
+					width: 0;
+					position: absolute;
+					pointer-events: none;
+					border-color: rgba(136, 183, 213, 0);
+					border-bottom-color: $color_default_active;
+					border-width: 6px;
+					margin-left: -6px;
+				}
+				&:hover {
+					&:after {
+						border-bottom-color: $color_default_focus;
+					}
+				}
+				&[aria-expanded="false"] {
+					&:after {
+						border: solid transparent;
+						border-top-color: $color_default_active;
+						border-width: 6px;
+						top: calc(50% + 3px);
+					}
+					&:hover {
+						&:after {
+							border-top-color: $color_default_focus;
+						}
+					}
+				}
 			}
 			+ .alm-filter--description {
 				margin-top: -10px;
@@ -502,7 +548,7 @@
 		&--description {
 			p {
 				font-size: 15px;
-				margin: -5px 0 15px;
+				margin: 0 0 15px;
 			}
 		}
 	}
@@ -613,14 +659,26 @@
 	// Edit button
 	.alm-filters-edit {
 		position: absolute;
+		z-index: 1;
 		right: 0;
-		top: 5px;
+		top: -22px;
 		opacity: 0;
 		visibility: hidden;
 		font-size: 13px;
-		padding: 5px;
+		padding: 0 10px;
 		display: inline-block;
-		transition: all $speed ease;
+		color: #333;
+		background-color: #efefef;
+		border-radius: 3px;
+		line-height: 28px;
+		height: 26px;
+		text-decoration: none;
+		font-size: 12px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+		transition: all 0.2s ease;
+		&:hover {
+			background-color: #e1e1e1;
+		}
 	}
 	&:hover {
 		.alm-filters-edit {

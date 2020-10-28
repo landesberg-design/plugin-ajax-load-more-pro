@@ -6,17 +6,17 @@ Description: Ajax Load More extension to replace infinite scroll with paging nav
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.5.3
+Version: 1.5.4
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define('ALM_PAGING_PATH', plugin_dir_path(__FILE__));
-define('ALM_PAGING_URL', plugins_url('', __FILE__));
-define('ALM_PAGING_VERSION', '1.5.3');
-define('ALM_PAGING_RELEASE', 'May 1, 2020');
+define( 'ALM_PAGING_PATH', plugin_dir_path( __FILE__ ) );
+define( 'ALM_PAGING_URL', plugins_url( '', __FILE__ ) );
+define( 'ALM_PAGING_VERSION', '1.5.4' );
+define( 'ALM_PAGING_RELEASE', 'September 10, 2020' );
 
 
 /*
@@ -46,7 +46,7 @@ if( !class_exists('ALMPAGING') ):
    		add_action('admin_enqueue_scripts', array(&$this, 'alm_paging_admin_enqueue_scripts'));
    		add_action('alm_paging_settings', array(&$this, 'alm_paging_settings'));
    		add_filter('alm_paging_shortcode', array(&$this, 'alm_paging_shortcode'), 10, 9);
-   		load_plugin_textdomain( 'ajax-load-more-paging', false, dirname(plugin_basename( __FILE__ )).'/lang/'); //load text domain 	
+   		load_plugin_textdomain( 'ajax-load-more-paging', false, dirname(plugin_basename( __FILE__ )).'/lang/'); //load text domain
    	}
 
 
@@ -66,7 +66,7 @@ if( !class_exists('ALMPAGING') ):
          $return .= ' data-paging-last-label="'.$last_label.'"';
          $return .= ' data-paging-previous-label="'.$previous_label.'"';
          $return .= ' data-paging-next-label="'.$next_label.'"';
-			
+
 			if($scroll){
 				$scroll_values = explode(':', $scroll);
 				if($scroll_values[0] === 'true'){
@@ -78,9 +78,9 @@ if( !class_exists('ALMPAGING') ):
 					}
 				}
 			}
-			
+
          return $return;
-         
+
    	}
 
 
@@ -93,17 +93,17 @@ if( !class_exists('ALMPAGING') ):
    	*/
 
    	function alm_paging_enqueue_scripts(){
-	   	
+
 	   	// Use minified libraries if SCRIPT_DEBUG is turned off
 	   	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
    		// Enqueue JS
    		wp_register_script( 'ajax-load-more-paging', plugins_url( '/core/js/alm-paging'. $suffix .'.js', __FILE__ ), array('ajax-load-more'), ALM_PAGING_VERSION, true );
 
-	   	
+
    		// Enqueue CSS
 	   	$options = get_option( 'alm_settings' );
-	   	
+
    		if(!alm_do_inline_css('_alm_inline_css') && !alm_css_disabled('_alm_paging_disable_css')){ // Not inline or disabled
          	$file = ALM_PAGING_URL.'/core/css/ajax-load-more-paging'. $suffix .'.css';
          	if(class_exists('ALM_ENQUEUE')){

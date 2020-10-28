@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 3.6.1
-Tested up to: 5.4.2
+Tested up to: 5.5.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.1.5
+Version: 1.1.7
 
 == Copyright ==
 Copyright 2020 Darren Cooney, Connekt Media
@@ -48,6 +48,38 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 == Changelog ==
 
+= 1.1.7 - October 1, 2020 =
+
+**Add-on Updates**
+
+Filters
+* NEW - Added new Filter toggle option to allow users to expand/collapse induvidual filter groups. This is turned off by default and must be set to true in each filter group.
+* NEW - Added new `.hidden` CSS class to quickly allow users to hide filters via custom `CSS Class` input in filter admin. Under CSS Classes of each filter you can add a class of `hidden` to hide the entire filter.
+* FIX - Fixed issue in Safari with Filters and Paging add-ons where a back button press would remove ALM content.
+* FIX - Fixed issue with console error related to star field type on `popstate`.
+* FIX - Fixed issue where star rating field would not reset when removing a star filter.
+* UPDATE - Added Category and Tags to Taxonomy filters. Ccategory and tags can now be filtered via Taxonomy query if required.
+
+
+= 1.1.6 - September 10, 2020 =
+
+**UPGRADE NOTICE**
+Users upgrading to WooCommerce add-on version 1.0.2 must also update core Ajax Load More to `5.3.8`. Failure to update will result is broken functionality.
+
+**Add-on Updates**
+
+Filters
+* HOTFIX - Fixed issue with PHP warning messages being displayed in WP 5.5+ warning about REST API issues when `WP_DEBUG` is `true`.
+
+Paging
+* UPDATE - Updated `First`/`Last` navigation buttons to only display when required. Previously, First and Last may show even though users can access the first and last pages via button navigation.
+
+WooCommerce
+* NEW - Added support for [WOOF Filters](https://wordpress.org/plugins/woocommerce-products-filter/) and [Advanced AJAX Product Filters](https://wordpress.org/plugins/woocommerce-ajax-filters/) via Ajax Load More `reset` method.
+* UPDATE - Updated the method ALM sets global WooCommerce configuration data. Previously, data was set in a window scoped JS variable. I've since moved this logic into JSON styled data atributes to allow for dynamic re-rendering of ALM during a filter.
+* UPDATE - Adding WooCommerce `WC requires` and `WC tested up to` meta parameters.
+* UPDATE - Updated the `alm_woocommerce_pagination_class` filter to remove the `.` before the classname.
+* UPDATE - Updated WooCommerce JavaScript to improve performance.
 
 = 1.1.5 - July 13, 2020 =
 
