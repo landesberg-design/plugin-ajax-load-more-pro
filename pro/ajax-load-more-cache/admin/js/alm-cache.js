@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 	"use strict";
 
 	var alm_cache = alm_cache || {};
@@ -28,10 +28,10 @@ jQuery(document).ready(function ($) {
 		timer: null,
 		elapsed_timer: null,
 		elapsed_counter: 0,
-		current: 0,
+		current: 0
 	};
 
-	alm_cache.countRecords = function (dir, file) {
+	alm_cache.countRecords = function(dir, file) {
 		document.querySelector("#dircount").innerHTML = dir;
 		document.querySelector("#filecount").innerHTML = file;
 	};
@@ -43,9 +43,8 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  Generate the elapsed time of the cache build
 	 */
-
-	alm_cache.elapsedTime = function () {
-		generateCache.elapsed_timer = setInterval(function () {
+	alm_cache.elapsedTime = function() {
+		generateCache.elapsed_timer = setInterval(function() {
 			seconds++;
 			if (seconds >= 60) {
 				seconds = 0;
@@ -68,8 +67,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  Init the cache build process of each
 	 */
-
-	alm_cache.buildCache = function () {
+	alm_cache.buildCache = function() {
 		clearInterval(generateCache.timer); // Clear the current timer
 		if (generateCache.current < alm_cache_array.length) {
 			var max = generateCache.array[generateCache.current].max
@@ -89,8 +87,10 @@ jQuery(document).ready(function ($) {
 	 *  Set current cache generatation item
 	 */
 
-	alm_cache.setCurrent = function () {
-		$("li", generateCache.list).eq(generateCache.current).addClass("current");
+	alm_cache.setCurrent = function() {
+		$("li", generateCache.list)
+			.eq(generateCache.current)
+			.addClass("current");
 	};
 
 	/**
@@ -98,8 +98,7 @@ jQuery(document).ready(function ($) {
 	 *  @param {Number} i
 	 *  @param {boolean} success
 	 */
-
-	alm_cache.cacheItemBuilt = function (i, success) {
+	alm_cache.cacheItemBuilt = function(i, success) {
 		if (success) {
 			$("li", generateCache.list)
 				.eq(i)
@@ -116,7 +115,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  When the cache build is complete
 	 */
-	alm_cache.complete = function () {
+	alm_cache.complete = function() {
 		generateCache.txtProcessing.style.display = "none";
 		generateCache.txtPaused.style.display = "none";
 		generateCache.txtComplete.style.display = "block";
@@ -134,8 +133,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  Pause cache generation
 	 */
-
-	alm_cache.pause = function () {
+	alm_cache.pause = function() {
 		//console.log('Pause');
 		generateCache.pause = true;
 
@@ -154,9 +152,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  Resume cache generation
 	 */
-
-	alm_cache.resume = function () {
-		//console.log('Play');
+	alm_cache.resume = function() {
 		generateCache.pause = false;
 
 		generateCache.txtProcessing.style.display = "block";
@@ -165,7 +161,9 @@ jQuery(document).ready(function ($) {
 
 		generateCache.pauseBtn.style.display = "block";
 		generateCache.resumeBtn.style.display = "none";
-		$("li", generateCache.list).eq(generateCache.current).addClass("current");
+		$("li", generateCache.list)
+			.eq(generateCache.current)
+			.addClass("current");
 		alm_cache.elapsedTime();
 	};
 
@@ -173,17 +171,20 @@ jQuery(document).ready(function ($) {
 	 *  Set iFrame source
 	 *  Dynamically update the iframe source
 	 */
-	alm_cache.setIframeSrc = function (url, id, max) {
+	alm_cache.setIframeSrc = function(url, id, max) {
 		$(generateCache.iframe).html(""); // Clear content from iframe div
 
 		// Create iframe
 		$(generateCache.iframe).append(
 			$('<iframe id="myIframe" width="100%"></iframe>')
 		);
-		$("iframe", generateCache.iframe).attr("src", url + "?auto=true");
+		$("iframe", generateCache.iframe).attr(
+			"src",
+			url + "?alm_auto_cache=true"
+		);
 
 		// iframe on load
-		$("iframe", generateCache.iframe).load(function () {
+		$("iframe", generateCache.iframe).on("load", function() {
 			alm_cache.setCurrent();
 			alm_cache.iframeLoaded(
 				$("iframe", generateCache.iframe).get(0),
@@ -197,7 +198,7 @@ jQuery(document).ready(function ($) {
 	 *  iFrame loaded
 	 *  Run function to build cache of current page
 	 */
-	alm_cache.iframeLoaded = function (frame, id, max) {
+	alm_cache.iframeLoaded = function(frame, id, max) {
 		var alm = frame.contentWindow.document.querySelector(
 			'.alm-listing[data-cache-id="' + id + '"]'
 		);
@@ -205,29 +206,26 @@ jQuery(document).ready(function ($) {
 
 		if (alm) {
 			// Cache found
-
 			var parent = alm.parentNode;
 			var btn = parent.querySelector(".alm-load-more-btn");
-			generateCache.timer = setInterval(function () {
+			generateCache.timer = setInterval(function() {
 				if (!generateCache.pause) {
-					// Exit if paused
-
-					// Finished or Max Pages reached
+					// Exit if not paused.
 					if (btn.classList.contains("done") || alm_pages_created > max) {
+						// Finished or Max Pages reached.
 						alm_cache.cacheItemBuilt(generateCache.current, true);
 						generateCache.current++; // Increament the index
-						alm_cache.buildCache(); // Build new cache
+						alm_cache.buildCache(); // Build the next cache
 						generateCache.dircount++;
 						alm_cache.countRecords(
 							generateCache.dircount,
 							generateCache.filecount
 						);
 					}
-
-					// Still work to do
+					// Continue building cache.
 					else {
-						// If ALM not loading
-						if (!parent.classList.contains("alm-loading")) {
+						if (!btn.classList.contains("loading")) {
+							// If ALM not loading
 							generateCache.filecount++;
 							alm_pages_created++;
 							btn.click();
@@ -238,7 +236,7 @@ jQuery(document).ready(function ($) {
 						}
 					}
 				}
-			}, 500);
+			}, 1500);
 		} else {
 			// Cache Not Found
 			alm_cache.cacheItemBuilt(generateCache.current, false);
@@ -249,7 +247,7 @@ jQuery(document).ready(function ($) {
 
 	// Button to Generate Cache
 	if (generateCache.initBtn) {
-		generateCache.initBtn.addEventListener("click", function () {
+		generateCache.initBtn.addEventListener("click", function() {
 			window.location = "admin.php?page=ajax-load-more-cache&action=build";
 		});
 	}
@@ -271,7 +269,7 @@ jQuery(document).ready(function ($) {
 
 	// Rebuild
 	if (generateCache.rebuildBtn) {
-		generateCache.rebuildBtn.addEventListener("click", function () {
+		generateCache.rebuildBtn.addEventListener("click", function() {
 			location.reload();
 		});
 	}
@@ -279,18 +277,21 @@ jQuery(document).ready(function ($) {
 	/**
 	 *  Cache search
 	 *  Search all cache and return items matching URL or Cache ID
-    *
-    *  @since 1.0.0
-
+	 *
+	 *  @since 1.0.0
 	 */
-	$(".alm-cache-search-wrap input").keyup(function () {
+	$(".alm-cache-search-wrap input").keyup(function() {
 		var val = $.trim($(this).val());
 		if (val !== "") {
-			$(".alm-dir-listing").each(function (e) {
+			$(".alm-dir-listing").each(function(e) {
 				var el = $(this);
 				if (
-					$("h3.dir-title", el).text().match(val) ||
-					$("ul.cache-details a", el).text().match(val)
+					$("h3.dir-title", el)
+						.text()
+						.match(val) ||
+					$("ul.cache-details a", el)
+						.text()
+						.match(val)
 				) {
 					el.show();
 				} else {
@@ -308,21 +309,19 @@ jQuery(document).ready(function ($) {
 	 *  @since 1.0.0
 	 */
 
-	alm_cache.deleteCache = function (cache_id, btn, container) {
+	alm_cache.deleteCache = function(cache_id, btn, container) {
 		$.ajax({
 			type: "POST",
 			url: alm_cache_localize.ajax_admin_url,
 			data: {
 				action: "alm_delete_cache",
 				cache: cache_id,
-				nonce: alm_cache_localize.alm_cache_nonce,
+				nonce: alm_cache_localize.alm_cache_nonce
 			},
-			success: function (response) {
+			success: function() {
 				var speed = container.height() > 500 ? 450 : 300;
-
-				container.slideUp(speed, function () {
+				container.slideUp(speed, function() {
 					container.removeClass("deleting").remove();
-
 					if ($(".alm-dir-listing").length === 0) {
 						// If cache is now empty, redirect to cache dashboard.
 						window.location = "admin.php?page=ajax-load-more-cache";
@@ -330,9 +329,9 @@ jQuery(document).ready(function ($) {
 					console.log("Ajax Load More Cache successfully deleted.");
 				});
 			},
-			error: function (xhr, status, error) {
+			error: function(xhr, status, error) {
 				alert("The was an error and the cache could not be deleted.");
-			},
+			}
 		});
 	};
 
@@ -341,7 +340,7 @@ jQuery(document).ready(function ($) {
 	 *
 	 *  @since 1.0.0
 	 */
-	$(document).on("click", ".alm-dir-listing .delete", function (e) {
+	$(document).on("click", ".alm-dir-listing .delete", function(e) {
 		var btn = $(this),
 			cache_id = btn.data("id"),
 			cache_full_path = btn.data("path"),
@@ -364,7 +363,7 @@ jQuery(document).ready(function ($) {
 	 *
 	 *  @since 1.0.0
 	 */
-	$(document).on("click", "form#delete-all-cache button", function (e) {
+	$(document).on("click", "form#delete-all-cache button", function(e) {
 		var container = $("form#delete-all-cache");
 		var path = container.data("path");
 		var msg = window.alm_cache_localize.are_you_sure_full + "\n" + path;
@@ -382,8 +381,10 @@ jQuery(document).ready(function ($) {
 	 *
 	 *  @since 1.7.0
 	 */
-	$("button.cache-full-path-button").on("click", function () {
-		$(this).next("span").css("display", "inline");
+	$("button.cache-full-path-button").on("click", function() {
+		$(this)
+			.next("span")
+			.css("display", "inline");
 		$(this).hide();
 	});
 });

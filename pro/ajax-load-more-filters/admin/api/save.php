@@ -1,4 +1,6 @@
 <?php
+//@codingStandardsIgnoreStart
+
 /**
  * Init Endpoint.
  */
@@ -46,16 +48,25 @@ function save_filter( WP_REST_Request $request ) {
 			// Get option from DB.
 			$option = get_option( 'alm_filter_'. $id );
 
-			// Set ID and Style.
+			// Set Options from `$options` data.
 			$filter_array['id'] = $id;
 			$filter_array['style'] = isset( $options[ $key ]->style ) ? $options[ $key ]->style : '';
+			$filter_array['reset_button'] = isset( $options[ $key ]->reset_button ) ? $options[ $key ]->reset_button : false;
+			$filter_array['reset_button_label'] = isset( $options[ $key ]->reset_button_label ) ? $options[ $key ]->reset_button_label : '';
 
 			// Only set button_text if style === change.
 			if ( $filter_array['style'] === 'button' ) {
 				$filter_array['button_text'] = isset( $options[ $key ]->button_text ) ? $options[ $key ]->button_text : '';
 			}
 
-			$timestamp = current_time( 'timestamp' ); // Get current time
+			// Reset Button.
+			if ( ! $filter_array['reset_button']) {
+				$filter_array['reset_button'] = false;
+				unset($filter_array['reset_button_label']);
+			}
+
+			// Get current time.
+			$timestamp = current_time( 'timestamp' );
 
 			// Created Date.
 			if ( ! $option ) { // if filter doesn't yet exist.
@@ -75,23 +86,26 @@ function save_filter( WP_REST_Request $request ) {
 
 			// Update modified date
 			$filter_array['date_modified'] = $timestamp;
-
 		}
 
 		$filter_array['filters'] = [];
 
-		// convert $filters to array from stdClass Object
+		// Convert $filters to array from stdClass Object.
 		$filters = json_decode(json_encode($filters), true);
-		// alm_pretty_print($filters);
 
+		// Keys that construct their own query.
+		$queryKeyArray = [ "category", "category__and", "tag", "tag__and", "taxonomy", "author" ];
 
-		// Loop each as a $filter
+		// Fields that allow for selection
+		$selectionTypeArray = [ "checkbox", "radio", "select", "select_multiple" ];
+
+		// Loop each item in array as a $filter.
 		foreach($filters as $filter){
 
-   		// confirm atleast a key and field_type are set before pushing into array
+   		// Confirm atleast a key and field_type are set before pushing into array
 			if($filter['key'] && $filter['field_type']){
 
-   			// convert $filter to array from stdClass Object
+   			// Convert $filter to array from stdClass Object
    			$array = json_decode(json_encode($filter), true);
 
    			// Remove items from the array if empty
@@ -121,22 +135,27 @@ function save_filter( WP_REST_Request $request ) {
 	   			unset($array['meta_type']);
    			}
 
-   			// role
+   			// Author Role
    			if(isset($array['author_role']) && $array['author_role'] === ''){
 	   			unset($array['author_role']);
 	   		}
 
-   			// exclude
+   			// Exclude
    			if(isset($array['exclude']) && $array['exclude'] === ''){
 	   			unset($array['exclude']);
-	   		}
+				}
 
-   			// selected value
+				// Show Count
+				if( ! in_array( $filter['key'], $queryKeyArray ) || ! in_array($filter['field_type'], $selectionTypeArray ) ) {
+					$array['show_count'] = false;
+				}
+
+   			// Selected Value
    			if((isset($array['selected_value']) && $array['selected_value'] === '') || $filter['field_type'] === 'text'){
 	   			unset($array['selected_value']);
 	   		}
 
-   			// default value
+   			// Default Value
    			if((isset($array['default_value']) && $array['default_value'] === '')){
 	   			unset($array['default_value']);
 				}
@@ -151,10 +170,17 @@ function save_filter( WP_REST_Request $request ) {
 	   			unset($array['label']);
 	   		}
 
+				// Default Select Value
+   			if($filter['field_type'] !== 'select' || isset($array['default_select_option']) && $array['default_select_option'] === ''){
+	   			unset($array['default_select_option']);
+	   		}
+
    			// Title
    			if(isset($array['title']) && $array['title'] === ''){
-	   			unset($array['title']);
-	   		}
+	   			// unset($array['title']);
+	   		} else {
+					$array['title'] === '';
+				}
 
    			// Description
    			if(isset($array['description']) && empty($array['description'])){
@@ -179,7 +205,16 @@ function save_filter( WP_REST_Request $request ) {
 				// Section Toggle.
 				if ( isset( $array['section_toggle'] ) && $array['section_toggle'] === '' && $array['title'] !== '' ) {
 					unset( $array['section_toggle'] );
+					unset( $array['section_toggle_status'] );
 				}
+				// Section Toggle Status
+				if ( ! $array['section_toggle'] || $array['title'] === '' ) {
+					unset( $array['section_toggle_status'] );
+				}
+				if ( ! isset( $array['section_toggle'] ) ) {
+					$array['section_toggle'] = false;
+				}
+
 
 				// Star Rating
 				if($filter['field_type'] !== 'star_rating'){
@@ -264,24 +299,25 @@ function save_filter( WP_REST_Request $request ) {
 	   			unset($array['rangeslider_reset']);
 	   		}
 
-
 	   		unset($array['order']);
 	   		unset($array['uniqueid']);
+	   		unset($array['hookname']);
 
    			array_push($filter_array['filters'], $array);
 
 			}
-
 		}
-
 	}
 
 
 	// Create the response obj.
-	if(count($filter_array['filters']) > 0 && $filter_array['id'] !== ''){ // If array is larger than just $options and ID is set
+	if ( count( $filter_array['filters'] ) > 0 && $filter_array['id'] !== '' ) {
+		// If array is larger than just $options and ID is set.
 
-   	update_option( 'alm_filter_'. $filter_array['id'], serialize($filter_array) ); // Update/Create option on success
+		// Update/Create option on success.
+		update_option( 'alm_filter_'. $filter_array['id'], serialize($filter_array) );
 
+		// Create response.
 		$response = array(
 			'success' => true,
 			'msg'     => __('Filter saved successfully', 'ajax-load-more-filters '),
@@ -289,7 +325,7 @@ function save_filter( WP_REST_Request $request ) {
 		);
 
 	} else {
-
+		// Create response.
 		$response = array(
 			'success' => false,
 			'msg'     => __('You need to add some filter criteria.', 'ajax-load-more-filters '),
@@ -297,7 +333,5 @@ function save_filter( WP_REST_Request $request ) {
 		);
 
 	}
-
-	wp_send_json($response); // Send JSON response
-
+	wp_send_json($response);
 }

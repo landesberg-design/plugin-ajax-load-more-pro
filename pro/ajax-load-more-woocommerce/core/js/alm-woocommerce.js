@@ -44,10 +44,12 @@ var alm_woo = {};
 					? true
 					: false; // Enable back/fwd button controls
 
-			// First instance of `.alm-woocommerce`
+			// Get Woo container.
 			alm_woo.container = document.querySelector(
 				alm.addons.woocommerce_settings.container
 			);
+
+			// Get first instance of `.alm-woocommerce`.
 			alm_woo.first = alm_woo.container
 				? alm_woo.container.querySelector(".alm-woocommerce:first-child")
 				: "";
@@ -100,9 +102,17 @@ var alm_woo = {};
 
 				// If first page
 				if (page === undefined || page === "") {
-					page = alm_woo.first.dataset.page;
-					permalink = alm_woo.first.dataset.url;
-					pageTitle = alm_woo.first.dataset.pageTitle;
+					// Get first instance of `.alm-woocommerce`.
+					alm_woo.first = alm_woo.container
+						? alm_woo.container.querySelector(
+								".alm-woocommerce:first-child"
+						  )
+						: "";
+					if (alm_woo.first) {
+						page = alm_woo.first.dataset.page;
+						permalink = alm_woo.first.dataset.url;
+						pageTitle = alm_woo.first.dataset.pageTitle;
+					}
 				}
 
 				if (url !== permalink) {

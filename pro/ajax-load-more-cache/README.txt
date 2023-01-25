@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 5.4.2
+Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.7.1
+Version: 1.7.6
 
 
 == Copyright ==
-Copyright 2020 Darren Cooney
+Copyright 2023 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -45,9 +45,33 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 4. Ensure Ajax Load More is installed prior to activating the plugin.
 5. Activate the plugin in the WP plugin dashboard.
 
-
-
 == Changelog ==
+
+= 1.7.6 - January 10, 2023 =
+* FIX: Added fix for PHP deprecation warning that could be displayed on some PHP versions.
+
+
+= 1.7.5 - January 5, 2023 =
+* NEW: Added the ability to clear an individual cache by ID using the `alm_clear_cache` action.
+* UPDATE: Code cleanup and organization.
+
+= 1.7.4 - March 7, 2022 =
+* NEW: Added the ability to clear an individual cache by ID using the `alm_clear_cache` action.
+* UPDATE: Code cleanup and organization.
+
+
+= 1.7.3.1 - April 20, 2021 =
+* UDATES - Various admin styling updates to match the updated look and feel of core Ajax Load More v5.4.5.
+
+
+= 1.7.3 - January 3, 2021 =
+* FIX - Fixed issue with [Auto Cache Generation](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/cache/#auto-generate) and included version of JQuery of WP 5.6.
+* UPDATE - Code cleanup and organization.
+
+
+= 1.7.2 - November 11, 2020 =
+* FIX - Fixed issue with PHP error on Cache admin page when the cache directory does not exist.
+
 
 = 1.7.1 - June 29, 2020 =
 * FIX - Fixed issue with 'Delete cache when new posts are published.` setting causing issues for Editor, Author roles saving and creating posts.

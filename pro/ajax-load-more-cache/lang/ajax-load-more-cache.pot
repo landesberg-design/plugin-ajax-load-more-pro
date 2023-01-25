@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More Cache\n"
-"POT-Creation-Date: 2020-05-01 12:21-0400\n"
+"POT-Creation-Date: 2022-03-07 09:52-0500\n"
 "PO-Revision-Date: 2018-04-16 12:58-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,38 +10,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/includes/cta/writeable.php:2
-msgid "Status"
-msgstr ""
-
-#: ../admin/includes/cta/writeable.php:9
-msgid "Enabled"
-msgstr ""
-
-#: ../admin/includes/cta/writeable.php:10
-msgid "Read/Write access is enabled within the cache directory"
-msgstr ""
-
-#: ../admin/includes/cta/writeable.php:16
-msgid "Access Denied"
-msgstr ""
-
-#: ../admin/includes/cta/writeable.php:19
-msgid ""
-"You must enable read and write access for the Ajax Load More cache directory "
-"to save cache data"
-msgstr ""
-
-#: ../admin/includes/cta/writeable.php:20
-msgid ""
-"Please contact your hosting provider or site administrator for more "
-"information."
+#: ../admin/includes/cta/writeable.php:5
+msgid "Cache Status"
 msgstr ""
 
 #: ../admin/views/auto-generate.php:1
@@ -72,7 +48,7 @@ msgid "Cache created successfully!"
 msgstr ""
 
 #: ../admin/views/auto-generate.php:14
-msgid "View cache"
+msgid "View Cache"
 msgstr ""
 
 #: ../admin/views/auto-generate.php:28
@@ -102,70 +78,62 @@ msgid ""
 "page, the cache build process will stop."
 msgstr ""
 
-#: ../admin/views/cache.php:18 ../ajax-load-more-cache.php:599
+#: ../admin/views/cache.php:24 ../ajax-load-more-cache.php:588
 msgid "Cache deleted successfully"
 msgstr ""
 
-#: ../admin/views/cache.php:32
-msgid "Are you sure you want to delete this cache?"
-msgstr ""
-
-#: ../admin/views/cache.php:36
+#: ../admin/views/cache.php:42
 msgid "Cache"
 msgstr ""
 
-#: ../admin/views/cache.php:37
+#: ../admin/views/cache.php:43
 msgid "Manage your active Ajax Load More Cache"
 msgstr ""
 
 #: ../admin/views/cache.php:62
-msgid "Statistics"
+msgid "Cache Statistics"
 msgstr ""
 
-#: ../admin/views/cache.php:78
+#: ../admin/views/cache.php:111
 msgid "Page"
 msgstr ""
 
-#: ../admin/views/cache.php:78 ../admin/views/cache.php:82
+#: ../admin/views/cache.php:111 ../admin/views/cache.php:115
 msgid "cached"
 msgstr ""
 
-#: ../admin/views/cache.php:82
+#: ../admin/views/cache.php:115
 msgid "File"
 msgstr ""
 
-#: ../admin/views/cache.php:86
-msgid "Are you sure you want to delete the entire Ajax Load More cache?"
-msgstr ""
-
-#: ../admin/views/cache.php:88 ../ajax-load-more-cache.php:674
-#: ../ajax-load-more-cache.php:677
+#: ../admin/views/cache.php:121 ../ajax-load-more-cache.php:679
+#: ../ajax-load-more-cache.php:682
 msgid "Delete Cache"
 msgstr ""
 
-#: ../admin/views/cache.php:95 ../ajax-load-more-cache.php:686
+#: ../admin/views/cache.php:128 ../ajax-load-more-cache.php:693
 msgid "Auto-Generate Cache"
 msgstr ""
 
-#: ../admin/views/cache.php:99
+#: ../admin/views/cache.php:133
 msgid ""
 "You have enabled auto-generation of the Ajax Load More cache. Click the "
 "<strong>Generate Cache</strong> below to start the process."
 msgstr ""
 
-#: ../admin/views/cache.php:103 ../ajax-load-more-cache.php:689
+#: ../admin/views/cache.php:138 ../ajax-load-more-cache.php:696
 msgid "Generate Cache"
 msgstr ""
 
-#: ../admin/views/cache.php:106
+#: ../admin/views/cache.php:142
 msgid "Documentation"
 msgstr ""
 
-#: ../admin/views/cache.php:111
+#: ../admin/views/cache.php:147
 msgid "Did you know you can auto-generate your entire Ajax Load More cache?"
 msgstr ""
 
-#: ../admin/views/cache.php:115
+#: ../admin/views/cache.php:151
 msgid "Learn More"
 msgstr ""
 
@@ -185,120 +153,150 @@ msgid ""
 "created."
 msgstr ""
 
-#: ../admin/views/file-listing.php:13 ../ajax-load-more-cache.php:192
+#: ../admin/views/file-listing.php:13 ../ajax-load-more-cache.php:217
 msgid "Cache Settings"
 msgstr ""
 
-#: ../admin/views/file-listing.php:21
-msgid "Collapse All"
-msgstr ""
-
-#: ../admin/views/file-listing.php:22
-msgid "Expand All"
-msgstr ""
-
-#: ../admin/views/file-listing.php:29
+#: ../admin/views/file-listing.php:17
 msgid "Search cache by ID or URL "
 msgstr ""
 
-#: ../admin/views/file-listing.php:55
+#: ../admin/views/file-listing.php:28
+msgid "Collapse All"
+msgstr ""
+
+#: ../admin/views/file-listing.php:29
+msgid "Expand All"
+msgstr ""
+
+#: ../admin/views/file-listing.php:61 ../admin/views/includes/sub-listing.php:8
 msgid "Delete this cache"
 msgstr ""
 
-#: ../admin/views/file-listing.php:55
+#: ../admin/views/file-listing.php:62 ../admin/views/includes/sub-listing.php:8
 msgid "Delete"
 msgstr ""
 
-#: ../admin/views/file-listing.php:70
-msgid "Cached URL"
-msgstr ""
-
-#: ../admin/views/file-listing.php:71
-msgid "Date Created"
-msgstr ""
-
-#: ../admin/views/file-listing.php:78
-msgid "Cached files in this directory"
-msgstr ""
-
-#: ../admin/views/file-listing.php:105
+#: ../admin/views/includes/empty.php:4
 msgid "Your Ajax Load More cache is currently empty!"
 msgstr ""
 
-#: ../admin/views/file-listing.php:107
+#: ../admin/views/includes/empty.php:6
 msgid "Generate Cache</a>"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:32
-msgid ""
-"You must install and activate <a href=\"https://wordpress.org/plugins/ajax-"
-"load-more/\">Ajax Load More</a> before installing the Ajax Load More Cache "
-"add-on."
+#: ../admin/views/includes/listing.php:13
+#: ../admin/views/includes/sub-listing.php:22
+msgid "Cached files in this directory"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:47
+#: ../admin/views/includes/no-files.php:1
+msgid "No cached files in this directory"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:49
 msgid ""
 "Error accessing uploads/alm-cache directory. This add-on is required to read/"
 "write to your server. Please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:198
+#: ../ajax-load-more-cache.php:66
+msgid ""
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More Cache Add-on."
+msgstr ""
+
+#: ../ajax-load-more-cache.php:67
+msgid "Install Ajax Load More Now"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:173
+msgid "Cache URL"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:174
+msgid "Cache Path: "
+msgstr ""
+
+#: ../ajax-load-more-cache.php:174
+msgid "Show Full Cache Path"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:175
+msgid "Date Created"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:223
 msgid "Published Posts"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:205
+#: ../ajax-load-more-cache.php:230
 msgid "Known Users"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:264
+#: ../ajax-load-more-cache.php:282
 msgid "Unable to create text file!"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:272
+#: ../ajax-load-more-cache.php:290
 msgid ""
 "Unable to write to text file. Please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:322 ../ajax-load-more-cache.php:324
-#: ../ajax-load-more-cache.php:359 ../ajax-load-more-cache.php:393
-#: ../ajax-load-more-cache.php:427
+#: ../ajax-load-more-cache.php:360 ../ajax-load-more-cache.php:362
+#: ../ajax-load-more-cache.php:389 ../ajax-load-more-cache.php:416
+#: ../ajax-load-more-cache.php:441
 msgid "Error opening file - please contact your hosting administrator."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:327 ../ajax-load-more-cache.php:361
-#: ../ajax-load-more-cache.php:395 ../ajax-load-more-cache.php:429
+#: ../ajax-load-more-cache.php:365 ../ajax-load-more-cache.php:391
+#: ../ajax-load-more-cache.php:418 ../ajax-load-more-cache.php:443
 msgid "Error writing to cache file. Please contact your hosting administrator."
+msgstr ""
+
+#: ../ajax-load-more-cache.php:510
+msgid "Error - Cache directory does not exist."
 msgstr ""
 
 #: ../ajax-load-more-cache.php:544
 msgid "Error - Unable to verify nonce."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:668
+#: ../ajax-load-more-cache.php:645
+msgid ""
+"Are you sure you want to delete the following Ajax Load More Cache and all "
+"of it's contents?"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:646
+msgid "Are you sure you want to delete the entire Ajax Load More Cache?"
+msgstr ""
+
+#: ../ajax-load-more-cache.php:671
 msgid "Ajax Load More Cache"
 msgstr ""
 
-#: ../ajax-load-more-cache.php:706
+#: ../ajax-load-more-cache.php:711
 msgid ""
 "Customize your installation of the <a href=\"http://connekthq.com/plugins/"
 "ajax-load-more/cache/\">Cache</a> add-on."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:728
+#: ../ajax-load-more-cache.php:726
 msgid "Delete cache when new posts are published."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:729
+#: ../ajax-load-more-cache.php:727
 msgid ""
 "Cache will be fully cleared whenever a post, page or Custom Post Type is "
 "published or updated."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:754
+#: ../ajax-load-more-cache.php:743
 msgid "Don't cache files for logged in users."
 msgstr ""
 
-#: ../ajax-load-more-cache.php:755
+#: ../ajax-load-more-cache.php:744
 msgid ""
 "Logged in users will retrieve content directly from the database and will "
 "not view any cached content."

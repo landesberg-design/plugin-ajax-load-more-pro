@@ -1,6 +1,6 @@
 <?php
 /**
- * This file holds all functions=ality for the dynamic filter variables.
+ * This file holds all functionality for the dynamic filter variables.
  *
  * @since 1.10.1
  * @package ajax-load-more-filters
@@ -16,8 +16,8 @@
 function alm_filters_parse_dynamic_vars( $key, $value ) {
 
 	// Archive %archive%.
-	if ( '%archive%' === $value && is_archive() ) {
-		$obj   = get_queried_object();
+	if ( '%archive%' === strtolower( $value ) && is_archive() ) {
+		$obj = get_queried_object();
 
 		// Date Query.
 		if ( is_date() ) {

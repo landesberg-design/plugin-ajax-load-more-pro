@@ -5,17 +5,17 @@ Author: Darren Cooney
 Author URI: https://connekthq.com
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/layouts/
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 1.3.0
+Version: 2.0.0
+
 == Copyright ==
-Copyright 2020 Darren Cooney, Connekt Media
+Copyright 2023 Darren Cooney, Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 
 == Description ==
 
@@ -46,6 +46,13 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/
 
 
 == Changelog ==
+
+= 2.0 - January 5, 2023 =
+UPGRADE NOTICE: Layouts has been completely rebuilt and now uses CSS Grid for layout and additional shortcode parameters for configuration.
+
+* UPDATE: Replaced flexbox layout with CSS Grid.
+* UPDATE: Added new Layout shortcode parameters to style the ALM container. `[ajax_load_more layout="true" layouts_cols="2"]`
+* [See Docs](https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/) for more information.
 
 = 1.3.1 - April 22, 2020 =
 * NEW - Added new 4 column grid for each layout.

@@ -8,11 +8,11 @@ Requires at least: 4.0
 Tested up to: 5.4.1
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 1.9.3
+Version: 1.9.4
 
 
 == Copyright ==
-Copyright 2018 Darren Cooney
+Copyright 2022 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -48,8 +48,14 @@ http://connekthq.com/plugins/ajax-load-more/seo/
 
 == Changelog ==
 
+= 1.9.4 - March 7, 2022 =
+* NEW: Adding new setting (`seo_offset`) that allows for offsetting the SEO pagination to start at page/2. This allows for users to run a query before ALM and still use SEO as they normally would.
+* FIX: Fixed issue with SEO and Preloaded element not getting the 'alm-preloaded' classname..
+* UPDATE: Code Cleanup.
+
+
 = 1.9.3 - May 1, 2020 =
-* UPDATE - Updated default setting for `Scroll to Page` to false for better UX and accessibility. 
+* UPDATE - Updated default setting for `Scroll to Page` to false for better UX and accessibility.
 
 
 = 1.9.2 - August 6, 2019 =
@@ -69,7 +75,7 @@ When updating to SEO 1.9.0 you must also update core (Ajax Load More)[https://wo
 * NEW - SEO URLS now hold the original querystring values as new pages are loaded.
 * NEW - Plugin completely re-written in vanilla JS.
 * FIX - Fixed IE11 error with `append()` function.
-* UPDATE - Improved scroll to element functionality and URL updates. 
+* UPDATE - Improved scroll to element functionality and URL updates.
 * UPDATE - Removed jQuery dependancy.
 * UPDATE - Removed Scroll Speed setting as it is no longer used.
 

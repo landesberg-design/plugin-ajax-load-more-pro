@@ -6,41 +6,42 @@ Description: Ajax Load More extension to infinite scroll WordPress users.
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com
-Version: 1.1.1
+Version: 1.1.2
 License: GPL
 Copyright: Darren Cooney & Connekt Media
+// @codingStandardsIgnoreStart
+
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-
 define('ALM_USERS_PATH', plugin_dir_path(__FILE__));
 define('ALM_USERS_URL', plugins_url('', __FILE__));
-define('ALM_USERS_VERSION', '1.1.1');
-define('ALM_USERS_RELEASE', 'August 6, 2019');
+define('ALM_USERS_VERSION', '1.1.2');
+define('ALM_USERS_RELEASE', 'March 31, 2021');
 
-
-
-/*
-*  alm_users_install
-*  Install the Users add-on
-*
-*  @since 1.0
-*/
-
+/**
+ *  Install the Users add-on.
+ *
+ *  @since 1.0
+ */
 register_activation_hook( __FILE__, 'alm_users_install' );
 function alm_users_install() {
    if(!is_plugin_active('ajax-load-more/ajax-load-more.php')){	//if Ajax Load More is activated
-   	die('You must install and activate <a href="https://wordpress.org/plugins/ajax-load-more/">Ajax Load More</a> before installing the Ajax Load More Users add-on.');
+   wp_die('You must install and activate <a href="https://wordpress.org/plugins/ajax-load-more/">Ajax Load More</a> before installing the Ajax Load More Users add-on.');
 	}
 }
 
-
-
 if( !class_exists('ALMUsers') ):
 
+	/**
+	 * User Class.
+	 */
    class ALMUsers{
 
+		/**
+		 * Construct the class.
+		 */
    	function __construct(){
    		add_action( 'alm_users_installed', array(&$this, 'alm_users_installed') );
    	   add_action( 'wp_ajax_alm_users', array(&$this, 'alm_users_query') );
@@ -50,19 +51,16 @@ if( !class_exists('ALMUsers') ):
    		add_action( 'alm_users_settings', array(&$this, 'alm_users_settings' ));
    	}
 
-
-
-   	/*
-   	*  alm_users_preloaded
-   	*  Preload users if preloaded is true in alm shortcode
-   	*
-   	*  @since 1.0
-   	*/
-   	public function alm_users_preloaded($args, $preloaded_amount, $repeater, $theme_repeater){      	
+   	/**
+   	 * Preload users if preloaded is true in alm shortcode
+   	 *
+   	 * @since 1.0
+   	 */
+   	public function alm_users_preloaded($args, $preloaded_amount, $repeater, $theme_repeater){
 
          $id = (isset($args['id'])) ? $args['id'] : '';
          $post_id = (isset($args['post_id'])) ? $args['post_id'] : '';
-         
+
 	   	$offset = (isset($args['offset'])) ? $args['offset'] : 0;
 	   	$preloaded_amount = (isset($preloaded_amount)) ? $preloaded_amount : $args['users_per_page'];
 	   	$role = (isset($args['users_role'])) ? $args['users_role'] : '';
@@ -70,36 +68,43 @@ if( !class_exists('ALMUsers') ):
          $orderby = (isset($args['users_orderby'])) ? $args['users_orderby'] : 'user_login';
          $include = (isset($args['users_include'])) ? $args['users_include'] : false;
          $exclude = (isset($args['users_exclude'])) ? $args['users_exclude'] : false;
-         
+   		$search = (isset($args['search'])) ? $args['search'] : '';
+
          // Custom Fields
    		$meta_key = (isset($args['meta_key'])) ? $args['meta_key'] : '';
    		$meta_value = (isset($args['meta_value'])) ? $args['meta_value'] : '';
    		$meta_compare = (isset($args['meta_compare'])) ? $args['meta_compare'] : '';
-   		if(empty($meta_compare))
-   			$meta_compare = 'IN'; 
-   		if($meta_compare === 'lessthan') $meta_compare = '<'; // do_shortcode fix (shortcode was rendering as HTML)
-   		if($meta_compare === 'lessthanequalto') $meta_compare = '<='; // do_shortcode fix (shortcode was rendering as HTML)
+   		if ( empty( $meta_compare ) ) {
+   			$meta_compare = 'IN';
+			}
+   		if ( $meta_compare === 'lessthan' ) {
+				$meta_compare = '<'; // do_shortcode fix (shortcode was rendering as HTML).
+			}
+   		if ($meta_compare === 'lessthanequalto' ) {
+				$meta_compare = '<='; // do_shortcode fix (shortcode was rendering as HTML).
+			}
    		$meta_relation = (isset($args['meta_relation'])) ? $args['meta_relation'] : '';
-   		if(empty($meta_relation))
+   		if ( empty( $meta_relation ) ) {
    			$meta_relation = 'AND';
+			}
    		$meta_type = (isset($args['meta_type'])) ? $args['meta_type'] : '';
    		if(empty($meta_type))
-   			$meta_type = 'CHAR';   			
-         
+   			$meta_type = 'CHAR';
+
    		$data = $alm_found_posts ='';
 
    		if(!empty($role)){
-      		
-	         // Get decrypted role
+
+	         // Get decrypted role.
 	         $role = alm_role_decrypt($role);
-	         
-	         // Get query type
+
+	         // Get query type.
 	         $role_query = self::get_role_query_type($role);
-	         
-	         // Get user role array	         
+
+	         // Get user role array.
 	         $role = self::get_role_as_array($role, $role_query);
-            
-	         // User Query
+
+	         // User Query.
 	         $preloaded_args = array(
 		      	$role_query => $role,
 		      	'number'	 	=> $preloaded_amount,
@@ -107,26 +112,33 @@ if( !class_exists('ALMUsers') ):
 		      	'orderby' 	=> $orderby,
 		      	'offset'    => $offset
 	         );
-	         // Include
-	         if($include){
-		         $preloaded_args['include'] = array($include);
+
+				// Search.
+            if ( $search ) {
+               $preloaded_args['search'] = $search;
+               $preloaded_args['search_columns'] = apply_filters( 'alm_users_query_search_columns_' . $id, array('user_login', 'display_name', 'user_nicename' ) );
+            }
+
+	         // Include.
+	         if ( $include ) {
+		         $preloaded_args['include'] = explode( ',', $include );
 	         }
-	         // Exclude
-	         if($exclude){
-		         $preloaded_args['exclude'] = array($exclude);
+	         // Exclude.
+	         if ( $exclude ) {
+		         $preloaded_args['exclude'] = explode( ',', $exclude );
 	         }
-	         
-	         // Meta Query
+
+	         // Meta Query.
 	   		if(!empty($meta_key) && !empty($meta_value) || !empty($meta_key) && $meta_compare !== "IN"){
-	      		
-	      		// Parse multiple meta query    
+
+	      		// Parse multiple meta query
 	            $meta_query_total = count(explode(":", $meta_key)); // Total meta_query objects
 	            $meta_keys = explode(":", $meta_key); // convert to array
 	            $meta_value = explode(":", $meta_value); // convert to array
 	            $meta_compare = explode(":", $meta_compare); // convert to array
 	            $meta_type = explode(":", $meta_type); // convert to array
-	            
-	   			// Loop Meta Query
+
+	   			// Loop Meta Query.
 	            $preloaded_args['meta_query'] = array(
 					   'relation' => $meta_relation
 	            );
@@ -134,25 +146,21 @@ if( !class_exists('ALMUsers') ):
 						$preloaded_args['meta_query'][] = alm_get_meta_query($meta_keys[$mq_i], $meta_value[$mq_i], $meta_compare[$mq_i], $meta_type[$mq_i]);
 					}
 				}
-	   	   
-	         // Meta_key, used for ordering by meta value
+
+	         // Meta_key, used for ordering by meta value.
 	         if(!empty($meta_key)){
 		         if (strpos($orderby, 'meta_value') !== false) { // Only order by meta_key, if $orderby is set to meta_value{_num}
 		            $meta_key_single = explode(":", $meta_key);
 	               $preloaded_args['meta_key'] = $meta_key_single[0];
 	            }
 	         }
-	         
-	         
+
 	         /*
-   			 *	alm_users_query_args_{id}
-   			 *
-   			 * ALM Users Filter Hook
+   			 *	ALM Users Filter Hook
    			 *
    			 * @return $args;
    			 */
-   		   $preloaded_args = apply_filters('alm_users_query_args_'.$id, $preloaded_args, $post_id);	         
-
+   		   $preloaded_args = apply_filters('alm_users_query_args_'.$id, $preloaded_args, $post_id);
 
             // WP_User_Query
 	         $user_query = new WP_User_Query( $preloaded_args );
@@ -196,23 +204,20 @@ if( !class_exists('ALMUsers') ):
 			return $results;
 
    	}
-   	
-   	
-   	
-   	/*
-   	*  alm_users_query
-   	*  Query users via wp_user_query, send results via ajax
-   	*  https://codex.wordpress.org/Class_Reference/WP_User_Query
-   	*
-   	*. @return $return   JSON
-   	*  @since 1.0
-   	*/
+
+   	/**
+   	 * Query users via wp_user_query, send results via ajax.
+   	 *
+		 * @see https://codex.wordpress.org/Class_Reference/WP_User_Query
+   	 * @return $return   JSON
+   	 * @since 1.0
+   	 */
    	public function alm_users_query(){
-      	
-      	if(!isset($_GET)){ 
-         	return false; 
+
+      	if ( ! isset( $_GET ) ) {
+         	return false;
          }
-         
+
          $id = (isset($_GET['id'])) ? $_GET['id'] : '';
          $post_id = (isset($_GET['post_id'])) ? $_GET['post_id'] : '';
    		$page = (isset($_GET['page'])) ? $_GET['page'] : 0;
@@ -222,7 +227,8 @@ if( !class_exists('ALMUsers') ):
       	$theme_repeater = (isset($_GET['theme_repeater'])) ? $_GET['theme_repeater'] : 'null';
       	$canonical_url = (isset($_GET['canonical_url'])) ? $_GET['canonical_url'] : $_SERVER['HTTP_REFERER'];
       	$queryType = (isset($_GET['query_type'])) ? $_GET['query_type'] : 'standard'; // Ajax Query Type
-      
+			$search = (isset($_GET['search'])) ? $_GET['search'] : '';
+
          // Users data array - from ajax-load-more.js
          $data = (isset($_GET['users'])) ? $_GET['users'] : '';
          if($data){
@@ -233,26 +239,32 @@ if( !class_exists('ALMUsers') ):
             $include = (isset($data['include'])) ? $data['include'] : false;
             $exclude = (isset($data['exclude'])) ? $data['exclude'] : false;
          }
-         
+
          // Custom Fields
       	$meta_key = (isset($_GET['meta_key'])) ? $_GET['meta_key'] : '';
       	$meta_value = (isset($_GET['meta_value'])) ? $_GET['meta_value'] : '';
       	$meta_compare = (isset($_GET['meta_compare'])) ? $_GET['meta_compare'] : '';
-      	if(empty($meta_compare))
-      		$meta_compare = 'IN'; 
-      	if($meta_compare === 'lessthan') $meta_compare = '<'; // do_shortcode fix (shortcode was rendering as HTML)
-      	if($meta_compare === 'lessthanequalto') $meta_compare = '<='; // do_shortcode fix (shortcode was rendering as HTML)
+      	if ( empty( $meta_compare ) ) {
+      		$meta_compare = 'IN';
+			}
+      	if ( $meta_compare === 'lessthan' ) {
+				$meta_compare = '<'; // do_shortcode fix (shortcode was rendering as HTML)
+			}
+      	if($meta_compare === 'lessthanequalto') {
+				$meta_compare = '<='; // do_shortcode fix (shortcode was rendering as HTML)
+			}
       	$meta_relation = (isset($_GET['meta_relation'])) ? $_GET['meta_relation'] : '';
-      	if(empty($meta_relation))
+      	if(empty($meta_relation)){
       		$meta_relation = 'AND';
-      	$meta_type = (isset($_GET['meta_type'])) ? $_GET['meta_type'] : '';
-      	if(empty($meta_type))
+			}
+      	$meta_type = ( isset( $_GET['meta_type'] ) ) ? $_GET['meta_type'] : '';
+      	if ( empty( $meta_type ) ) {
       		$meta_type = 'CHAR';
-      		
-      
+			}
+
          // Cache Add-on
          $cache_id = (isset($_GET['cache_id'])) ? $_GET['cache_id'] : '';
-      
+
          // Preload Add-on
       	$preloaded = (isset($_GET['preloaded'])) ? $_GET['preloaded'] : false;
       	$preloaded_amount = (isset($_GET['preloaded_amount'])) ? $_GET['preloaded_amount'] : '5';
@@ -263,22 +275,21 @@ if( !class_exists('ALMUsers') ):
       	}else{
          	$alm_loop_count = 0;
       	}
-      
+
          // SEO Add-on
       	$seo_start_page = (isset($_GET['seo_start_page'])) ? $_GET['seo_start_page'] : 1;
-      
-      
-         if(!empty($role)){ // Role Defined
-      
+
+         if ( ! empty( $role ) ) { // Role Defined
+
             // Get decrypted role
-            $role = alm_role_decrypt($role);	         
-            
+            $role = alm_role_decrypt($role);
+
             // Get query type
             $role_query = ALMUsers::get_role_query_type($role);
-            
-            // Get user role array	         
+
+            // Get user role array
             $role = ALMUsers::get_role_as_array($role, $role_query);
-      
+
             // User Query Args
             $args = array(
             	$role_query => $role,
@@ -287,27 +298,33 @@ if( !class_exists('ALMUsers') ):
             	'orderby' 	=> $orderby,
             	'offset' 	=> $offset + ($users_per_page*$page),
             );
-            
+
+				// Search.
+            if ( $search ) {
+               $args['search'] = $search;
+					$args['search_columns'] = apply_filters( 'alm_users_query_search_columns_' . $id, array('user_login', 'display_name', 'user_nicename' ) );
+            }
+
             // Include
-            if($include){
-               $args['include'] = array($include);
+            if ( $include ) {
+               $args['include'] = explode( ',' , $include );
             }
-            
+
             // Exclude
-            if($exclude){
-               $args['exclude'] = array($exclude);
+            if ( $exclude ) {
+               $args['exclude'] = explode( ',' , $exclude );
             }
-            
+
             // Meta Query
-      		if(!empty($meta_key) && !empty($meta_value) || !empty($meta_key) && $meta_compare !== "IN"){
-         		
-         		// Parse multiple meta query    
+      		if ( ! empty( $meta_key ) && ! empty( $meta_value ) || ! empty( $meta_key ) && $meta_compare !== "IN" ) {
+
+         		// Parse multiple meta query
                $meta_query_total = count(explode(":", $meta_key)); // Total meta_query objects
                $meta_keys = explode(":", $meta_key); // convert to array
                $meta_value = explode(":", $meta_value); // convert to array
                $meta_compare = explode(":", $meta_compare); // convert to array
                $meta_type = explode(":", $meta_type); // convert to array
-               
+
       			// Loop Meta Query
                $args['meta_query'] = array(
       			   'relation' => $meta_relation
@@ -316,7 +333,7 @@ if( !class_exists('ALMUsers') ):
       				$args['meta_query'][] = alm_get_meta_query($meta_keys[$mq_i], $meta_value[$mq_i], $meta_compare[$mq_i], $meta_type[$mq_i]);
       			}
       		}
-      	   
+
             // Meta_key, used for ordering by meta value
             if(!empty($meta_key)){
                if (strpos($orderby, 'meta_value') !== false) { // Only order by meta_key, if $orderby is set to meta_value{_num}
@@ -324,47 +341,43 @@ if( !class_exists('ALMUsers') ):
                   $args['meta_key'] = $meta_key_single[0];
                }
             }
-	         
-	         
+
 	         /*
-   			 *	alm_users_query_args_{id}
-   			 *
-   			 * ALM Users Filter Hook
+   			 *	ALM Users Filter Hook
    			 *
    			 * @return $args;
    			 */
    		   $args = apply_filters('alm_users_query_args_'.$id, $args, $post_id);
-      
-      
+
       		// WP_User_Query
-            $user_query = new WP_User_Query( $args );    
-                  
+            $user_query = new WP_User_Query( $args );
+
             if($queryType === 'totalposts') {
-      	      
+
       	      $return = array(
       		   	'totalposts' =>  (!empty($user_query->results)) ? $user_query->total_users : 0
-      		   ); 
-      	      
+      		   );
+
             } else {
-      
+
       	      $alm_page = $page;
       	      $alm_item = 0;
       	      $alm_current = 0;
       	      $alm_page_count = ($page == 0) ? 1 : $page + 1;
-      	
+
       			if (!empty($user_query->results)) {
-      				
+
       				ob_start();
-      	
+
       				$alm_post_count = count($user_query->results); // total for this query
       				$alm_found_posts = $user_query->total_users; // total of entire query
-      	
+
       				foreach ( $user_query->results as $user ) {
-      	
+
       					$alm_item++;
       	            $alm_current++;
       	            $alm_item = ($alm_page_count * $users_per_page) - $users_per_page + $alm_loop_count; // Get current item
-      	
+
       					// Repeater Template
       					if($theme_repeater != 'null' && has_action('alm_get_theme_repeater')){  // Theme Repeater
       						do_action('alm_get_users_theme_repeater', $theme_repeater, $alm_found_posts, $alm_page, $alm_item, $alm_current, $user);
@@ -372,11 +385,11 @@ if( !class_exists('ALMUsers') ):
       						include(alm_get_current_repeater( $repeater, $type )); // Repeater
       					}
       					// End Repeater Template
-      	
+
       				}
       				$data = ob_get_clean();
-      	
-      	
+
+
       				/*
       	          *	alm_cache_file
       	          *
@@ -388,11 +401,11 @@ if( !class_exists('ALMUsers') ):
       	         if(!empty($cache_id) && has_action('alm_cache_installed')){
       	            apply_filters('alm_cache_file', $cache_id, $page, $seo_start_page, $data, $preloaded);
       	         }
-      	
+
       			} else {
       				$data = null;
       			}
-      	
+
       			/*
       			 *	alm_debug
       			 *
@@ -401,53 +414,53 @@ if( !class_exists('ALMUsers') ):
       			 * @return $alm_query/false;
       			 */
       			$debug = (apply_filters('alm_debug', false)) ? $alm_query : false;
-      			
-      			
+
+
       			// Build return JSON
       			$return = array(
       				'html' => $data,
       				'meta' => array(
-      					'postcount'  => (isset($alm_post_count)) ? $alm_post_count : null,
-      					'totalposts' => (isset($alm_found_posts)) ? $alm_found_posts : null,
+      					'postcount'  => (isset($alm_post_count)) ? $alm_post_count : 0,
+      					'totalposts' => (isset($alm_found_posts)) ? $alm_found_posts : 0,
       					'debug' 		 => $debug
       				)
       			);
       		}
-      	
+
       	} else { // Role is empty
-      		
+
       		// Build return JSON
       		$return = array(
       			'html' => null,
       			'meta' => array(
-      				'postcount'  => null,
-      				'totalposts' => null,
+      				'postcount'  => 0,
+      				'totalposts' => 0,
       				'debug' 		 => $debug
       			)
       		);
-      		
+
       	}
-      
+
       	wp_send_json($return);
 
    	}
-   	
-   	
-   	
+
+
+
    	/*
    	*  get_role_query_type
    	*  Return the role query parameter
    	*  https://codex.wordpress.org/Class_Reference/WP_User_Query#User_Role_Parameter
    	*
-   	*  @return string 
+   	*  @return string
    	*  @since 1.1
    	*/
    	public static function get_role_query_type($role){
       	return ($role === 'all') ? 'role' : 'role__in';
    	}
-   	
-   	
-   	
+
+
+
    	/*
    	*  get_role_as_array
    	*  Return the user role(s) as an array
@@ -457,17 +470,17 @@ if( !class_exists('ALMUsers') ):
    	*  @since 1.1
    	*/
    	public static function get_role_as_array($role = 'all'){
-      	
-      	if($role !== 'all'){                
-            $role = preg_replace('/\s+/', '', $role); // Remove whitespace from $role                                 
-            $role = explode(',', $role); // Convert $role to Array 
+
+      	if($role !== 'all'){
+            $role = preg_replace('/\s+/', '', $role); // Remove whitespace from $role
+            $role = explode(',', $role); // Convert $role to Array
          } else {
             $role = '';
          }
-         
+
          return $role;
    	}
-   	
+
 
 
    	/*

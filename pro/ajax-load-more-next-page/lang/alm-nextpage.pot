@@ -1,0 +1,79 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ajax Load More Next Page\n"
+"POT-Creation-Date: 2022-03-06 11:01-0500\n"
+"PO-Revision-Date: 2017-10-05 16:14-0500\n"
+"Last-Translator: Darren Cooney <darren@connekthq.com>\n"
+"Language-Team: \n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: src\n"
+"X-Poedit-SearchPathExcluded-1: dist\n"
+
+#: ajax-load-more-next-page.php:47
+msgid ""
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More Next Page Add-on."
+msgstr ""
+
+#: ajax-load-more-next-page.php:48
+msgid "Install Ajax Load More Now"
+msgstr ""
+
+#: ajax-load-more-next-page.php:669
+msgid "Pages:"
+msgstr ""
+
+#: ajax-load-more-next-page.php:760
+msgid "Next Page Settings"
+msgstr ""
+
+#: ajax-load-more-next-page.php:766
+msgid "Post Types"
+msgstr ""
+
+#: ajax-load-more-next-page.php:780
+msgid "Custom CSS"
+msgstr ""
+
+#: ajax-load-more-next-page.php:795
+msgid ""
+"Customize your installation of the <a href=\"http://connekthq.com/plugins/"
+"ajax-load-more/add-ons/next-page/\">Next Page</a> add-on."
+msgstr ""
+
+#: ajax-load-more-next-page.php:841
+msgid "Activate Next Page functionality on the following post types:"
+msgstr ""
+
+#: ajax-load-more-next-page.php:842
+#, php-format
+msgid ""
+"Once selected, enter the generated Next Page <a href=\"%s\" target=\"_blank"
+"\">shortcode</a> for each post type template."
+msgstr ""
+
+#: ajax-load-more-next-page.php:857
+msgid "Enter the global shortcode for this post type."
+msgstr ""
+
+#: ajax-load-more-next-page.php:900
+msgid ""
+"Activate Next Page functionality on the following slugs: <span style="
+"\"display: block;\">Add one slug per line below.</span>"
+msgstr ""
+
+#: ajax-load-more-next-page.php:920
+msgid ""
+"Enter Custom Next Page CSS <span style=\"display: block;\">Use this option "
+"to hide the existing pagination or inject additional CSS into the post "
+"type template.</span>"
+msgstr ""

@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/users/
 Requires at least: 3.6.1
-Tested up to: 5.2.2
+Tested up to: 5.7
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.1.1
+Version: 1.1.2
 
 
 == Copyright ==
@@ -47,8 +47,13 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/users/
 
 == Changelog ==
 
+= 1.1.2 - March 31, 2021 =
+* FIX - Fixed issue with `include` and `exclude` users by ID not working. This is because the IDs were not being passed in as an array.
+
+
 = 1.1.1 - August 6, 2019 =
 * Added new filter `alm_users_query_args_$id` filter to modify the core `WP_User_Query` used by Ajax Load More. [Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/users/).
+
 
 = 1.1.0 - May 6, 2019 =
 * UPGRADE NOTICE - This update requires Ajax Load More 5.1+.

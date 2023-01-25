@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More Paging\n"
-"POT-Creation-Date: 2019-03-04 12:57-0500\n"
+"POT-Creation-Date: 2022-03-06 10:56-0500\n"
 "PO-Revision-Date: 2017-10-05 16:14-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,40 +10,52 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: src\n"
 "X-Poedit-SearchPathExcluded-1: dist\n"
+"X-Poedit-SearchPathExcluded-2: core\n"
+"X-Poedit-SearchPathExcluded-3: node_modules\n"
 
-#: ajax-load-more-paging.php:157
+#: _out/ajax-load-more-paging.php:156 ajax-load-more-paging.php:178
 msgid "Disable Paging CSS"
 msgstr ""
 
-#: ajax-load-more-paging.php:164
+#: _out/ajax-load-more-paging.php:163 ajax-load-more-paging.php:185
 msgid "Paging Color"
 msgstr ""
 
-#: ajax-load-more-paging.php:185
+#: _out/ajax-load-more-paging.php:177 ajax-load-more-paging.php:199
 msgid ""
 "Customize your installation of the <a href=\"http://connekthq.com/plugins/"
 "ajax-load-more/paging/\">Paging</a> add-on."
 msgstr ""
 
-#: ajax-load-more-paging.php:205
+#: _out/ajax-load-more-paging.php:193 ajax-load-more-paging.php:215
 msgid "I want to use my own CSS styles."
 msgstr ""
 
-#: ajax-load-more-paging.php:205
+#: _out/ajax-load-more-paging.php:193 ajax-load-more-paging.php:215
 msgid "View Paging CSS"
 msgstr ""
 
-#: ajax-load-more-paging.php:250
+#: _out/ajax-load-more-paging.php:219 ajax-load-more-paging.php:241
 msgid "Choose your paging navigation color"
 msgstr ""
 
-#: ajax-load-more-paging.php:262
+#: _out/ajax-load-more-paging.php:231 ajax-load-more-paging.php:253
 msgid "Preview"
+msgstr ""
+
+#: ajax-load-more-paging.php:49
+msgid ""
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More Paging Add-on."
+msgstr ""
+
+#: ajax-load-more-paging.php:50
+msgid "Install Ajax Load More Now"
 msgstr ""

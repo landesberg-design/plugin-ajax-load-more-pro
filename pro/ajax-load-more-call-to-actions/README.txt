@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/call-to-actions/
 Requires at least: 4.0
-Tested up to: 5.1.1
+Tested up to: 5.6
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.0.3
+Version: 1.0.4.1
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2021 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -39,7 +39,17 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 == Changelog ==
 
-= 1.0.2 - May 6, 2019 =
+= 1.0.4.1 - February 16, 2021 =
+* HOTFIX - Fix for potential issues with trailing commas causing fatal errors on servers PHP 7.2.x and lower.
+
+
+= 1.0.4 - February 11, 2021 =
+* UPGRADE NOTICE - You must update core ALM when updating Call to Actions.
+* Update - Updated CTA and Theme Repeaters integration to include new functionality for [passing variables](https://connekthq.com/plugins/ajax-load-more/docs/code-samples/passing-variables/) method.
+* UPDATE - Code clean and refactoring.
+
+
+= 1.0.3 - May 6, 2019 =
 * FIX - Fixed issue if core Ajax Load More is deactivated the add-on will throw a fatal error becasue of undefined methods.
 
 

@@ -1,7 +1,7 @@
-<div class="ajax-load-more-inner-wrapper">   
-   	
+<div class="ajax-load-more-inner-wrapper">
+
    <!-- MAIN COLUMN -->
-	<div class="cnkt-main"> 
+	<div class="cnkt-main stylefree">
 		<div class="alm-filters">
 			<?php include(ALM_FILTERS_PATH .'admin/views/includes/navigation.php'); ?>
 			<div class="repeater-listing">
@@ -11,7 +11,7 @@
 	   			<p><?php _e('Ajax Load More filters are listed below in alphabetical order', 'ajax-load-more-filters'); ?>.</p>
 				</header>
 				<div class="filter-listing--main">
-				   <?php echo alm_list_all_filters($filter_id, 'main'); ?> 
+				   <?php echo alm_list_all_filters($filter_id, 'main'); ?>
 				   <script>
 					   var deleteLink = document.querySelectorAll('.filter-listing--wrap a.delete-filter');
 						for (var i = 0; i < deleteLink.length; i++) {
@@ -26,17 +26,17 @@
 				</div>
 			</div>
 		</div>
-	</div>  		
+	</div>
 	<!-- END MAIN COLUMN -->
-	
-	<aside class="cnkt-sidebar">	   	   	   	   
+
+	<aside class="cnkt-sidebar">
 	   <div id="cnkt-sticky-wrapper">
-		   <div id="cnkt-sticky"> 
+		   <div id="cnkt-sticky">
 	         <?php include(ALM_FILTERS_PATH .'admin/views/cta/whats-new.php'); ?>
 	         <?php include(ALM_FILTERS_PATH .'admin/views/cta/help.php'); ?>
 		   </div>
 	   </div>
 	</aside>
-   
+
    <div class="clear"></div>
-</div> 
+</div>

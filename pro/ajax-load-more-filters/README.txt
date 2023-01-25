@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 Requires at least: 4.0
-Tested up to: 5.5.0
+Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.10.1
+Version: 1.13.0.4
 
 == Copyright ==
-Copyright 2020 Darren Cooney
+Copyright 2023 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -44,6 +44,93 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.13.0.4 - January 10, 2023 =
+* HOTFIX: Adding fix for missing constant name that was causing a fatal error.
+
+
+= 1.13.0.3 - June 24, 2022 =
+* UPDATE: Improved accessibility of admin filter builder.
+* Update: Added localstorage variable for expanding/collapsing admin filters. Filters in the admin will now retain the selected state (expanded/collapse)).
+
+
+= 1.13.0.2 - March 7, 2022 =
+* FIX: Added fix for filters not starting when loading with Ajax.
+
+
+= 1.13.0.1 - January 11, 2022 =
+* HOTFIX - Fixed issue with multiple filters using same filter key (e.g. category, tag) not working.
+* HOTFIX - Fixed issue with filters becoming unresponsive when using an integer target ID.
+* UPDATE - Various admin UX/UI updates.
+* UPDATE - Updated axios HTTP library to latest version.
+
+
+= 1.13.0 - January 10, 2022 =
+* UPGRADE NOTICE - Users updating to Filters v1.13.0 must update core Ajax Load More to the version 5.5.1 or greater.
+* UPGRADE NOTICE - Filters v1.13.0 changes the way Default Values are handled in Ajax Load More. When setting a Default Value the Filters add-on now sets the value in the core Ajax Load More shortcode automatically.
+* NEW - Added support for adding multiple instances of Filters on one page. When multiple instances are present some core functionality like paging URLs and fwd/back button support is disabled.
+* NEW - Added two new hooks for use with Checkbox and Radio filters that allow for injecting items before or after a dynamically generated term list.
+	- `alm_filters_{id}_{key}_before` and `alm_filters_{id}_{key}_after`
+* UPDATE - Updated the functionality of the Default Value setting. In Filters 1.13.0+ setting a Default Value will now automatically set the parameter it in the core `ajax_load_more shortcode`. Users will want to update there shortcodes if they were previously using the Default Value setting.
+* UPDATE - Exposed range sliders to the global window scope (`window.alm_range_{filter_id}`) that allows for developers to hook into the UISlider component and update the functionality if required.
+* FIX - Fixed issue with Section Toggle functionality losing its status when saving and revisiting the filters admin.
+* FIX - Fixed issue with Star Rating filter returning HTML when using the `alm-selected-filters` HTML element.
+
+
+= 1.12.2 - July 8, 2021 =
+* NEW - Added new hook that provides support adjusting the term parameters of the Filters `get_terms` query. This will allow for setting a `parent` or `child_of` taxonomy option to return the children of a specific term.* FIX - Fixed issue with W3C HTML validator errors. [View Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#term-query)
+* FIX - Fixed issue caused by `alm_filters_public_taxonomies` filter working incorrectly to show non-public taxonomies.
+* FIX - Fixed an error with Radio buttons where the selected element was unable to be unchecked in some instances.
+* UPDATE - Adding activation warning if core Ajax Load More is not installed when attempting to install add-on.
+* UPDATE - Code cleanup and optimization.
+
+
+= 1.12.1 - May 5, 2021 =
+* NEW - Added new callback for the Range Slider field type that allows for modification of the start and end value display label. [View Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#almFiltersFormatRangeValues)
+* NEW - Made it easier for uses to find the ID of each filter group by including the dynamic ID under the 'What's This' helper in each filter. e.g. alm_filters_actors_category
+* FIX - Fixed issue with Select 'Default Select Option' not displaying in taxonomy queries.
+* FIX - Fixed issues with duplicate IDs on input and select field types when using multiple Custom Field filters.
+* UPDATE - Updated [alm_filters_{id}_{key}](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/#alm_filters_id_key) filter to accept the current Custom Values as a $values array. This allows users to use Custom Values and the Filter Hook to build the filter options.
+* UPDATE - Improved admin UI/UX of adding/removing filter blocks.
+
+
+= 1.12.0 - April 20, 2021 =
+UPGRADE NOTICE:
+The following two updates affect the Select fieldtype only. You may need to adjust your filters after updating.
+
+* NEW - Added new `Default Select Option` field to replace the `Default Label` field for when using the Select field type.
+	Note: This field will be displayed as the first option in the select dropdown list.
+* NEW - Added HTML `Label` field for Select and Multi-Select field types. This update was added for accessibility and best practices purposes.
+	Note: The `Label` field was previously used as the `Default Label` for each filter.
+
+OTHER CHANGES:
+* NEW - Added support for multiple Ajax Load More filter shortcodes on the same page or page template.
+* NEW - Added aria-label attributes on Selected Filters button for accessibility.
+* NEW - Added dynamic classnames to radio and checkbox <li/> attributes for easier target CSS styling.
+* UPDATE - Updated JavaScript to allow for moving of filter elements on page load. This is useful when a developer wants to move a specific filter group (`.alm-filter--group`) to another location on the page.
+* UPDATE - Removed use `parse_str` for querystring parsing for a custom solution to allow spaces in Custom Field values. Previously, spaces would be converted to `+` for querying.
+* FIX - Fixed issue with hash links causing issues when using back/fwd buttons after a filter and URL changes.
+* FIX - Fixed issue with multi-select input field and [Selected Filters](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/selected-filters/) functionality not working to display the active filters.
+* FIX - Fixed issue with spaces in custom fields and search queries causing problems with selected filters and initial query.
+
+
+= 1.11.0 - January 3, 2021 =
+* NEW - Added `Show Count` setting to display a total count beside each filter item.
+* NEW - Added setting to add a `Reset Filters` button. Under the `Options` for each Filter is a `Reset Filters` option to enable the button on the filter frontend.
+* UPDATE - Added support for selecting by `meta_value` and `meta_value_num` while using the Sorting filter with Custom Fields.
+* FIX - Fixed issue with <select/> field types and the new Hierarchical terms listing not displaying child terms.
+* FIX - Fixed issue with exluded Authors appearing is author list.
+* FIX - Fixed issue with HTML markup in nested radio/checkbox lists.
+* FIX - Fixed potential issue with recurrsion when a taxonomy does not exist and a filter is attemtped to be run.
+* FIX - Added fix for restoring the default values of a checkbox and sort field types.
+
+= 1.10.2 - November 25, 2020 =
+* NEW - Added filter setting to set toggle blocks collapsed on initial page load.
+* NEW - Added new `alm_filters_public_taxonomies` filter to allow for filtering the taxonomy query options in the filter builder. e.g. `add_filter( 'alm_filters_public_taxonomies', '__return_false' );`
+* UPDATE - Added support for multi-level taxonomy terms listings in nested `<ul/>`. Previously only two levels was supported aesthetically.
+* FIX - Fixed issue with hash links (`href="#target"`) causing a popstate which would trigger a filter change event.
+* FIX - Fixed issue in [Selected Filters](https://connekthq.com/plugins/ajax-load-more/add-ons/filters/selected-filters/) where searching with a `+` would cause the string to split into multiple results.
+* FIX - Fixed issue in admin where Author Role would not be selected in the Filter builder.
 
 = 1.10.1 - October 1, 2020 =
 * NEW - Added new Filter toggle option to allow users to expand/collapse induvidual filter groups. This is turned off by default and must be set to true in each filter group.

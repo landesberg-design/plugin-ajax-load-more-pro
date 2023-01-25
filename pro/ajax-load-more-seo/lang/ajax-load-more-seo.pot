@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More SEO\n"
-"POT-Creation-Date: 2019-03-04 12:57-0500\n"
+"POT-Creation-Date: 2022-03-06 11:02-0500\n"
 "PO-Revision-Date: 2017-10-05 16:14-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -18,10 +18,14 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: src\n"
 "X-Poedit-SearchPathExcluded-1: dist\n"
 
-#: ajax-load-more-seo.php:46
+#: ajax-load-more-seo.php:47
 msgid ""
-"You must install and activate <a href=\"https://wordpress.org/plugins/ajax-"
-"load-more/\">Ajax Load More</a> before installing the ALM SEO Add-on."
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More SEO Add-on."
+msgstr ""
+
+#: ajax-load-more-seo.php:48
+msgid "Install Ajax Load More Now"
 msgstr ""
 
 #: ajax-load-more-seo.php:221
@@ -40,40 +44,40 @@ msgstr ""
 msgid "Back/Fwd Buttons"
 msgstr ""
 
-#: ajax-load-more-seo.php:263
+#: ajax-load-more-seo.php:258
 msgid ""
 "Customize your installation of the <a href=\"http://connekthq.com/plugins/"
 "ajax-load-more/seo/\">Search Engine Optimization</a> add-on."
 msgstr ""
 
-#: ajax-load-more-seo.php:283
+#: ajax-load-more-seo.php:274
 msgid "Send page views to Google Analytics."
 msgstr ""
 
-#: ajax-load-more-seo.php:283
+#: ajax-load-more-seo.php:274
 msgid ""
 "Must have a reference to your Google Analytics tracking code on the page."
 msgstr ""
 
-#: ajax-load-more-seo.php:306
+#: ajax-load-more-seo.php:291
 msgid "Enable window scrolling"
 msgstr ""
 
-#: ajax-load-more-seo.php:306
+#: ajax-load-more-seo.php:291
 msgid ""
 "If scrolling is enabled, the users window will scroll to the current page "
 "on 'Load More' action."
 msgstr ""
 
-#: ajax-load-more-seo.php:328
+#: ajax-load-more-seo.php:307
 msgid "Set the scrolltop position of the window when scrolling to post."
 msgstr ""
 
-#: ajax-load-more-seo.php:353
+#: ajax-load-more-seo.php:326
 msgid "Enable Back/Fwd Browser Buttons."
 msgstr ""
 
-#: ajax-load-more-seo.php:353
+#: ajax-load-more-seo.php:326
 msgid ""
 "Allow users to navigate Ajax generated content using the back and forward "
 "browser buttons."

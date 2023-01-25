@@ -1,4 +1,6 @@
-<?php if(!$filter_vue){ ?>
+<?php
+//@codingStandardsIgnoreStart
+if(!$filter_vue){ ?>
 	<script>
 		var alm_filters = '';
 		var alm_filter_id = '';
@@ -15,9 +17,9 @@
 
    <!-- MAIN COLUMN -->
 
-	<div class="cnkt-main">
+	<div class="cnkt-main stylefree">
 		<div class="alm-filters">
-		   <?php include(ALM_FILTERS_PATH .'admin/views/includes/navigation.php'); ?>
+		   <?php include ALM_FILTERS_PATH .'admin/views/includes/navigation.php'; ?>
 		   <div class="repeater-listing">
 
 			   <header class="alm-filter--intro">
@@ -46,7 +48,7 @@
 	   	      		<div class="label">
 		   	      		<?php _e('ID', 'ajax-load-more-filters'); ?>
 		   	      		<a
-			   	      		title="<?php _e('The unique ID for this filter instance.', 'ajax-load-more-filters'); ?>"
+			   	      		title="<?php _e('The unique ID for this filter instance. The ID must be lowercase and be without spaces or hyphens.', 'ajax-load-more-filters'); ?>"
 			   	      		href="javascript:void(0)"
 				   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 					   	   ></a>
@@ -81,7 +83,6 @@
 					   	      	data-id="style"
 										v-on:change="optionsChange($event)"
 									>
-
 		   		      			<option value=""<?php echo (!isset($filter['style'])) ? $selected : ''; ?>>-- <?php _e('Select Style', 'ajax-load-more-filters'); ?> --</option>
 		   		      			<option value="change"<?php echo (isset($filter['style']) && $filter['style'] === 'change') ? $selected : ''; ?>><?php _e('Change', 'ajax-load-more-filters'); ?></option>
 		   		      			<option value="button"<?php echo (isset($filter['style']) && $filter['style'] === 'button') ? $selected : ''; ?>><?php _e('Submit Button', 'ajax-load-more-filters'); ?></option>
@@ -89,18 +90,59 @@
 	   	      			</div>
 		      			</div>
 		      		</label>
+					</div>
+
+					<div class="related-filters--wrap" v-if="data[0].style === 'button'">
+						<div class="alm-filter--row not-required" id="row-button-text" data-id="button-text">
+							<label data-id="button_text">
+								<div class="label">
+									<?php _e('Button Label', 'ajax-load-more-filters'); ?>
+									<a title="<?php _e('Enter a label for the filter submit button.', 'ajax-load-more-filters'); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1"></a>
+								</div>
+								<div class="item">
+									<input type="text" id="filter-button-text" data-id="button_text" :value="data[0].button_text" v-on:change="optionsChange($event)" placeholder="<?php echo apply_filters( 'alm_filters_button_text', __('Submit', 'ajax-load-more-filters') ); ?>">
+								</div>
+							</label>
+						</div>
+					</div>
+
+					<div class="alm-filter--row not-required" id="row-reset_button">
+						<div class="fake-label">
+							<div class="label">
+								<?php _e('Reset Filters', 'ajax-load-more-filters'); ?>
+								<a
+									title="<?php _e('Add a `Reset Filters` button that clears all currently active filters.', 'ajax-load-more-filters'); ?>"
+									href="javascript:void(0)"
+									class="fa fa-question-circle tooltip" tabindex="-1"
+								></a>
+							</div>
+							<div class="item">
+								<div class="checkbox-wrapper">
+									<input type="checkbox" id="filter-reset_button" data-id="reset_button" value="true" :checked="data[0].reset_button === true" v-on:change="optionsChange($event)">
+									<label class="checkbox" for="filter-reset_button">
+										<span><?php _e('Display <strong><em>Reset Filters</em></strong> Button', 'ajax-load-more-filters'); ?></span>
+									</label>
+								</div>
+							</div>
+						</div>
 	            </div>
-	      		<div class="alm-filter--row not-required" id="row-button-text" data-id="button-text" v-if="data[0].style === 'button'">
-		      		<label data-id="button_text">
-		      			<div class="label">
-	   	      			<?php _e('Button Label', 'ajax-load-more-filters'); ?>
-	   	      			<a title="<?php _e('Enter a label for the filter submit button.', 'ajax-load-more-filters'); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1"></a>
-	   	      		</div>
-		      			<div class="item">
-		      				<input type="text" id="filter-button-text" data-id="button_text" :value="data[0].button_text" v-on:change="optionsChange($event)" placeholder="<?php echo apply_filters( 'alm_filters_button_text', __('Submit', 'ajax-load-more-filters') ); ?>">
-		      			</div>
-		      		</label>
-	      		</div>
+					<div class="related-filters--wrap" v-show="data[0].reset_button === true">
+						<div class="alm-filter--row not-required" id="row-reset_button_label">
+							<label data-id="reset_button_label">
+								<div class="label">
+									<?php _e('Reset Button Label', 'ajax-load-more-filters'); ?>
+									<a
+										title="<?php _e('Enter a label for the `Reset Filters` button.', 'ajax-load-more-filters'); ?>"
+										href="javascript:void(0)"
+										class="fa fa-question-circle tooltip" tabindex="-1"
+									></a>
+								</div>
+								<div class="item">
+									<input type="text" id="filter-reset_button_label" data-id="reset_button_label" :value="data[0].reset_button_label" v-on:change="optionsChange($event)" placeholder="<?php echo apply_filters( 'alm_filters_reset_button_label', __('Reset Filters', 'ajax-load-more-filters') ); ?>">
+								</div>
+							</label>
+						</div>
+					</div>
 
 	   		</section>
 
@@ -110,12 +152,8 @@
 	      			<a title="<?php _e('Build a custom filter group by adding and removing filter blocks.', 'ajax-load-more-filters'); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1"></a>
 	   			</h3>
 	   			<div class="toggle-controls" v-show="filters.length > 1">
-	      			<a v-on:click="collapseFilters($event)" href="javascript:void(0);" title="<?php _e('Collapse All Filter Groups', 'ajax-load-more-filters'); ?>">
-		      			&ndash;<span class="offscreen"><?php _e('Collapse All Filters', 'ajax-load-more-filters'); ?></span>
-		      		</a>
-	      			<a class="last" v-on:click="expandFilters($event)" href="javascript:void(0);" title="<?php _e('Expand All Filter Groups', 'ajax-load-more-filters'); ?>">
-		      			&#43;<span class="offscreen"><?php _e('Expand All Filters', 'ajax-load-more-filters'); ?></span>
-		      		</a>
+						<button v-on:click="collapseFilters($event)">&ndash;<span class="offscreen"><?php _e('Collapse All Filters', 'ajax-load-more-filters'); ?></button>
+						<button class="last" v-on:click="expandFilters($event)">&#43;<span class="offscreen"><?php _e('Expand All Filters', 'ajax-load-more-filters'); ?></button>
 	   			</div>
 	   			<i class="fa fa-filter"></i>
 	   		</header>
@@ -163,13 +201,13 @@
 	<!-- END MAIN COLUMN -->
 
 	<!-- SIDEBAR -->
-   <?php include(ALM_FILTERS_PATH .'admin/views/includes/sidebar.php'); ?>
+   <?php include ALM_FILTERS_PATH .'admin/views/includes/sidebar.php'; ?>
    <!-- END SIDEBAR -->
 
    <div class="clear"></div>
 
    <?php if($editing){
-		include(ALM_FILTERS_PATH .'admin/views/includes/output-php.php');
+		include ALM_FILTERS_PATH .'admin/views/includes/output-php.php';
 	}
 	?>
 
@@ -232,7 +270,7 @@
 
 			<!-- Related Filters -->
 			<div class="related-filters" v-bind:class="filter.key">
-				<?php include(ALM_FILTERS_PATH .'admin/views/includes/instructions.php'); ?>
+				<?php include ALM_FILTERS_PATH .'admin/views/includes/instructions.php'; ?>
 
 				<div class="related-filters--wrap no-arrow" v-show="filter.key === 'meta' || filter.key === 'author' || filter.key === 'taxonomy' || checkExclude(filter.key, index)">
 
@@ -242,11 +280,15 @@
 
 					<!-- Taxonomy -->
 					<?php
-					// Taxonomies
+					$public_tax = apply_filters( 'alm_filters_public_taxonomies', true);
 					$tax_args = array(
-						'public'   => true,
-						'_builtin' => false
+						'_builtin' => apply_filters( 'alm_filters_builtin_taxonomies', false)
 					);
+
+					// Add `public` argument if not sepecifically set to false.
+					if( $public_tax ) {
+						$tax_args['public'] = true;
+					}
 					$tax_output = 'objects';
 					$taxonomies = get_taxonomies( $tax_args, $tax_output );
 
@@ -373,12 +415,20 @@
 									<div class="select-wrapper">
 										<?php
 										global $wp_roles;
+										$author_role = '';
 										if($wp_roles){
 											$roles = $wp_roles->get_names();
 											$author_role = '';
 											$decode_f = json_decode($filter_vue);
-											if( isset($decode_f->filters) && isset($decode_f->filters[0]->author_role) ){
-												$author_role = $decode_f->filters[0]->author_role;
+
+											// Get selected author role.
+											if( isset($decode_f->filters) && isset($decode_f->filters) ){
+												foreach( $decode_f->filters as $filter ){
+													if( isset($filter->author_role) && $filter->author_role !== '' ){
+														$author_role = $filter->author_role;
+														break;
+													}
+												}
 											}
 										?>
 										<select
@@ -459,8 +509,12 @@
 			<div class="related-filters--wrap" v-show="filter.field_type === 'checkbox'" id="select-all">
 
 				<div class="alm-filters-inline-desc no-margin">
-				   <h3><?php _e('Toggle Checkbox', 'ajax-load-more-filters'); ?></h3>
-				   <p><?php _e('Add a <strong><em>Select All</em></strong> checkbox option that allows users to <strong>select</strong>/<strong>unselect</strong> all filters with a single click.', 'ajax-load-more-filters'); ?></p>
+				   <h3><?php _e('Toggle Checkbox ', 'ajax-load-more-filters'); ?>
+						<a
+						title="<?php _e('Add a Select All checkbox option that allows users to select/unselect all filters with a single click.', 'ajax-load-more-filters'); ?>"
+						href="javascript:void(0)"
+						class="fa fa-question-circle tooltip" tabindex="-1"></a>
+					</h3>
 				</div>
 
 				<!-- Toggle Location -->
@@ -662,7 +716,7 @@
 	      			<div class="label">
    	      			<?php _e('Display Label', 'ajax-load-more-filters'); ?>
    	      			<a
-         	      		title="<?php _e('The label renders the current start & end values of the slider to the user. The {start} template parameter displays the low value, and {end} displays the high value.', 'ajax-load-more-filters'); ?>"
+         	      		title="<?php _e('The label renders the current start & end values of the slider to the user. The {start} parameter displays the low value, while the {end} parameter displays the high value.', 'ajax-load-more-filters'); ?>"
          	      		href="javascript:void(0)"
       	   	      	class="fa fa-question-circle tooltip" tabindex="-1"
       		   	   ></a>
@@ -848,6 +902,23 @@
 			</div>
 			<!-- End Star Rating -->
 
+			<!-- Default Select Option -->
+			<div class="alm-filter--row not-required" id="row-default-select-option" v-show="filter.field_type === 'select'">
+				<label>
+					<div class="label">
+		   			<?php _e('Default Select Option', 'ajax-load-more-filters'); ?>
+		   			<a
+			      		title="<?php _e('Will be displayed as the first (default) option in the select dropdown list.', 'ajax-load-more-filters'); ?>"
+			      		href="javascript:void(0)"
+		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
+			   	   ></a>
+					</div>
+					<div class="item">
+		   			<input type="text" id="filter-default-select-option" data-id="default_select_option" :data-index="index" :value="filter.default_select_option" placeholder="<?php _e('-- Make a Selection --', 'ajax-load-more-filters'); ?>" v-on:change="filterChange($event)">
+					</div>
+				</label>
+			</div>
+
 			<!-- Custom Values -->
 			<div class="alm-filter--row not-required" id="row-values" v-show="filter.field_type !== 'star_rating' && filter.key !== 'search' && filter.field_type !== 'text' && filter.field_type !== 'range_slider' && filter.field_type !== 'date_picker'">
 				<div class="fake-label">
@@ -859,35 +930,38 @@
 		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 			   	   ></a>
 		   		</div>
-	   			<div class="item">
+	   			<div class="item should-wrap">
 	      			<div class="value-fields-wrap" :data-index="index" data-id="values" :data-key="filter.key">
 		      			<div class="value-fields-wrap--field" v-for="(cv, index) in filter.values" :key="index">
-	   	      			<input
-	   	      			   type="text"
-	   	      			   class="values-label"
-	   	      			   placeholder="<?php _e('Label', 'ajax-load-more-filters'); ?>"
-	   	      			   v-on:change="customValueChange($event)"
-	   	      			   :value="cv.label"
-	                     >
-
-	   	      			<input
-	   	      			   type="text"
-	   	      			   class="values-value"
-	   	      			   placeholder="<?php _e('Value', 'ajax-load-more-filters'); ?>"
-	   	      			   v-on:change="customValueChange($event)"
-	   	      			   :value="cv.value"
-	   	      			   v-show="filter.key !== 'sort'"
-	                     >
-
-	   	      			<input
-	   	      			   type="text"
-	   	      			   class="values-sortvalue"
-	   	      			   placeholder="<?php _e('order:orderby', 'ajax-load-more-filters'); ?>"
-	   	      			   v-on:change="customValueChange($event)"
-	   	      			   :value="cv.value"
-	   	      			   v-show="filter.key === 'sort'"
-	                     >
-
+								<label>
+									<span><?php _e('Label', 'ajax-load-more-filters'); ?></span>
+									<input
+										type="text"
+										class="values-label"
+										placeholder="<?php _e('Label', 'ajax-load-more-filters'); ?>"
+										v-on:change="customValueChange($event)"
+										:value="cv.label"
+									>
+								</label>
+								<label>
+									<span><?php _e('Value', 'ajax-load-more-filters'); ?></span>
+									<input
+										type="text"
+										class="values-value"
+										placeholder="<?php _e('Value', 'ajax-load-more-filters'); ?>"
+										v-on:change="customValueChange($event)"
+										:value="cv.value"
+										v-show="filter.key !== 'sort'"
+									>
+									<input
+										type="text"
+										class="values-sortvalue"
+										placeholder="<?php _e('order:orderby', 'ajax-load-more-filters'); ?>"
+										v-on:change="customValueChange($event)"
+										:value="cv.value"
+										v-show="filter.key === 'sort'"
+									>
+								</label>
 	                     <div class="custom-value-controls">
    	                     <button
    	                        :class="{ disabled: index == filter.values.length-1}"
@@ -932,6 +1006,27 @@
 				</div>
 			</div>
 
+			<!-- Display Count -->
+			<div class="alm-filter--row not-required" id="row-show-count" v-show="checkExclude(filter.key, index) && filter.field_type !== 'text'">
+				<div class="fake-label">
+					<div class="label">
+		   			<?php _e('Show Count', 'ajax-load-more-filters'); ?>
+		   			<a
+			      		title="<?php _e('Show the total number of results beside each filter item.', 'ajax-load-more-filters'); ?>"
+			      		href="javascript:void(0)"
+		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
+			   	   ></a>
+					</div>
+					<div class="item">
+						<div class="checkbox-wrapper">
+							<input type="checkbox" :id="`show_count_${index}`" data-id="show_count" :data-index="index" value="true" :checked="filter.show_count === true" v-on:change="filterChange($event)">
+							<label class="checkbox" :for="`show_count_${index}`">
+								<span><?php _e('Yes', 'ajax-load-more-filters'); ?></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<!-- Pre-Selected Value -->
 			<div class="alm-filter--row not-required" id="row-selected-value" v-show="filter.field_type === 'select' || filter.field_type === 'radio' || filter.field_type === 'checkbox'">
@@ -939,7 +1034,7 @@
 					<div class="label">
 		   			<?php _e('Preselected Value', 'ajax-load-more-filters'); ?>
 		   			<a
-			      		title="<?php _e('Set a preselected state (slug) for this filter block. The value set here will be the element selected on initial page load.', 'ajax-load-more-filters'); ?>"
+			      		title="<?php _e('Set a preselected state (slug) for this filter block. The value set here will be the element selected on initial page load. Separate multiple values with a + symbol. e.g. design+development+app.', 'ajax-load-more-filters'); ?>"
 			      		href="javascript:void(0)"
 		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 			   	   ></a>
@@ -950,14 +1045,13 @@
 				</label>
 			</div>
 
-
 			<!-- Default Value -->
 			<div class="alm-filter--row not-required" id="row-default-value" v-show="filter.field_type !== 'range_slider'">
 				<label>
 					<div class="label">
-		   			<?php _e('Default Value', 'ajax-load-more-filters'); ?>
+		   			<?php _e('Default Value (Fallback)', 'ajax-load-more-filters'); ?>
 		   			<a
-			      		title="<?php _e('Set a default fallback value for this filter block. Default values allow you match parameters set in the core Ajax Load More shortcode.', 'ajax-load-more-filters'); ?>"
+			      		title="<?php _e('Default values allow for setting initial Ajax Load More parameters and provide a fallback for when no filters are selected. Separate multiple values with a comma. e.g. design,development,app.', 'ajax-load-more-filters'); ?>"
 			      		href="javascript:void(0)"
 		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 			   	   ></a>
@@ -967,7 +1061,6 @@
 					</div>
 				</label>
 			</div>
-
 
 			<!-- Placeholder -->
 			<div class="alm-filter--row not-required" id="row-placeholder" v-show="filter.field_type === 'text' || filter.field_type === 'date_picker'">
@@ -986,35 +1079,22 @@
 	   		</label>
 			</div>
 
-
 			<!-- Label -->
 			<div class="alm-filter--row not-required" id="row-label" v-show="checkLabel(filter.field_type, index)">
 				<label>
-	   			<div class="label" v-if="filter.field_type !== 'select'">
+	   			<div class="label">
 	      			<?php _e('Field Label', 'ajax-load-more-filters'); ?>
 	      			<a
-	   	      		title="<?php _e('The label for the <input> element.', 'ajax-load-more-filters'); ?>"
+	   	      		title="<?php _e('The HTML input label for the form element.', 'ajax-load-more-filters'); ?>"
 	   	      		href="javascript:void(0)"
 		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 			   	   ></a>
 	            </div>
-	   			<div class="label" v-else>
-	      			<?php _e('Default Label', 'ajax-load-more-filters'); ?>
-	      			<a
-	   	      		title="<?php _e('The default label of the <select> element.', 'ajax-load-more-filters'); ?>"
-	   	      		href="javascript:void(0)"
-		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
-			   	   ></a>
-	            </div>
-	   			<div class="item" v-if="filter.field_type !== 'select'">
+					<div class="item">
 	      			<input type="text" id="filter-label" data-id="label" :data-index="index" :value="filter.label" v-on:change="filterChange($event)">
-	   			</div>
-	   			<div class="item" v-else>
-	      			<input type="text" id="filter-label" placeholder="<?php _e('-- Select --', 'ajax-load-more-filters'); ?>" data-id="label" :data-index="index" :value="filter.label" v-on:change="filterChange($event)">
-	   			</div>
+					</div>
 	   		</label>
 			</div>
-
 
 			<!-- Button Label -->
 			<div class="alm-filter--row not-required" id="row-button-label" v-show="filter.field_type === 'text' || filter.field_type === 'date_picker'">
@@ -1022,7 +1102,7 @@
 	   			<div class="label">
 	      			<?php _e('Button Label', 'ajax-load-more-filters'); ?>
 		      		<a
-	   	      		title="<?php _e('The text display value of the submit button', 'ajax-load-more-filters'); ?> - <?php _e('Button will only be rendered if a value is present.', 'ajax-load-more-filters'); ?>"
+	   	      		title="<?php _e('The label of the input submit button', 'ajax-load-more-filters'); ?> - <?php _e('A submit button will render only when a value is present.', 'ajax-load-more-filters'); ?>"
 	   	      		href="javascript:void(0)"
 		   	      	class="fa fa-question-circle tooltip" tabindex="-1"
 			   	   ></a>
@@ -1051,7 +1131,7 @@
 							></a>
 						</div>
 						<div class="item">
-							<input type="text" id="filter-title" data-id="title" :data-index="index" :value="filter.title" v-on:change="filterChange($event)">
+							<input type="text" id="filter-title" data-id="title" :data-index="index" :value="filter.title" v-on:keyup="filterChange($event)">
 						</div>
 					</label>
 				</div>
@@ -1066,9 +1146,10 @@
 								href="javascript:void(0)"
 								class="fa fa-question-circle tooltip" tabindex="-1"
 							></a>
+							<!-- <button v-on:click="toggleHelp($event)" aria-expanded="false">Help</button> -->
 						</div>
 						<div class="item">
-							<textarea id="filter-description" rows="#" data-id="description" :data-index="index" :value="filter.description" v-on:change="filterChange($event)"></textarea>
+							<textarea id="filter-description" rows="#" data-id="description" :data-index="index" :value="filter.description" v-on:keyup="filterChange($event)"></textarea>
 						</div>
 					</label>
 				</div>
@@ -1085,16 +1166,16 @@
 							></a>
 						</div>
 						<div class="item">
-							<input type="text" id="filter-classes" data-id="classes" :data-index="index" :value="filter.classes" placeholder="row container" v-on:change="filterChange($event)">
+							<input type="text" id="filter-classes" data-id="classes" :data-index="index" :value="filter.classes" placeholder="row container" v-on:keyup="filterChange($event)">
 						</div>
 					</label>
 				</div>
 
 				<!-- Toggle -->
 				<div class="alm-filter--row not-required" id="row-section_toggle" v-show="filter.title !== ''">
-					<label>
+					<div class="fake-label">
 						<div class="label">
-							<?php _e('Section Toggle', 'ajax-load-more-filters'); ?>
+							<?php _e('Filter Toggle', 'ajax-load-more-filters'); ?>
 							<a
 								title="<?php _e('Allow users to expand and collapse this filter block.', 'ajax-load-more-filters'); ?>"
 								href="javascript:void(0)"
@@ -1102,27 +1183,55 @@
 							></a>
 						</div>
 						<div class="item">
-							<div class="select-wrapper">
-								<select
-									id="filter-section_toggle"
-									class="alm-filter-select"
-									data-id="section_toggle"
-				   	      	:data-index="index"
-						   	   v-on:change="filterChange($event)"
-								>
-									<option value="">-- <?php _e('Select', 'ajax-load-more-filters'); ?> --</option>
-									<option value="true" :selected="filter.section_toggle === 'true' ? 'selected' : ''"><?php _e('True', 'ajax-load-more-filters'); ?></option>
-									<option value="false" :selected="filter.section_toggle === 'false' ? 'selected' : ''"><?php _e('False', 'ajax-load-more-filters'); ?></option>
-								</select>
+							<div class="checkbox-wrapper">
+								<input type="checkbox" :id="`section_toggle_${index}`" data-id="section_toggle" :data-index="index" value="true" :checked="filter.section_toggle !== '' && filter.section_toggle === true" v-on:change="filterChange($event)">
+								<label class="checkbox" :for="`section_toggle_${index}`">
+									<span><?php _e('Display Toggle', 'ajax-load-more-filters'); ?></span>
+								</label>
 							</div>
 						</div>
-					</label>
+					</div>
+				</div>
+
+				<!-- Toggle All -->
+				<div class="related-filters--wrap" v-show="filter.title !== '' && filter.section_toggle === true">
+
+					<div class="alm-filters-inline-desc no-margin">
+						<h3><?php _e('Toggle Options', 'ajax-load-more-filters'); ?></h3>
+					</div>
+
+					<!-- Toggle Status -->
+					<div class="alm-filter--row not-required">
+						<label>
+							<div class="label">
+								<?php _e('Initial Toggle State', 'ajax-load-more-filters'); ?>
+								<a
+									title="<?php _e('Set the initial open/closed state for the Block Toggle on page load.', 'ajax-load-more-filters'); ?>"
+									href="javascript:void(0)"
+									class="fa fa-question-circle tooltip" tabindex="-1"
+								></a>
+							</div>
+							<div class="item">
+								<div class="select-wrapper">
+									<select
+										id="filter-section_toggle_status"
+										class="alm-filter-select"
+										data-id="section_toggle_status"
+										:data-index="index"
+										v-on:change="filterChange($event)"
+									>
+										<option value="expanded" :selected="filter.section_toggle_status === 'expanded' ? 'selected' : ''"><?php _e('Expanded', 'ajax-load-more-filters'); ?></option>
+										<option value="collapsed" :selected="filter.section_toggle_status === 'collapsed' ? 'selected' : ''"><?php _e('Collapsed', 'ajax-load-more-filters'); ?></option>
+									</select>
+								</div>
+							</div>
+						</label>
+					</div>
 				</div>
 
 			</div>
 
 		</div>
-
 
 		<div class="alm-filter--controls">
 		   <button class="button alm-remove-filter" v-on:click="removeFilter($event)" :data-index="index" :class="{ disabled: filters.length == 1 }"><?php _e('Remove Filter', 'ajax-load-more-filters'); ?></button>

@@ -1,41 +1,88 @@
 <?php
 
+/**
+ * Render Reset/Clear Button.
+ *
+ * @param object $options The filter config.
+ * @param object $obj The filter object.
+ * @return string $output
+ * @since 1.11.0
+ */
+function alm_filters_render_controls( $options, $obj ) {
+
+	$output     = '';
+	$reset_btn  = '';
+	$submit_btn = '';
+
+	// Reset Button.
+	if ( $options['reset_button'] && ! empty( $options['reset_button_label'] ) ) {
+		$has_qs    = ( $_GET ) ? true : false;
+		$classname = apply_filters( 'alm_filters_reset_button_class', 'alm-filters--reset-button' );
+		$btn_class = ( $has_qs ) ? $classname : $classname . ' hidden';
+
+		$reset_btn .= '<div class="alm-filters--reset">';
+		$reset_btn .= '<button type="reset" id="alm-filters-reset-button" class="' . $btn_class . '"><span>' . $options['reset_button_label'] . '</span></button>';
+		$reset_btn .= '</div>';
+	}
+
+	// Submit Button.
+	$hide_submit = ( $obj['count'] === '1' && ! empty( $obj['button_label'] ) && 'text' === $obj['field_type'] ) ? true : false; // Hide Submit button if count is 1 and field type is textfield.
+	if ( 'button' === $options['style'] && ! $hide_submit ) {
+		$submit_btn .= '<div class="alm-filters--submit">';
+		$submit_btn .= '<button type="button" class="alm-filters--button"><span>' . $options['button_text'] . '</span></button>';
+		$submit_btn .= '</div>';
+	}
+
+	// Build output.
+	if ( ! empty( $reset_btn ) || ! empty( $submit_btn ) ) {
+		$output .= '<div class="alm-filters--controls">';
+		$output .= $reset_btn;
+		$output .= $submit_btn;
+		$output .= '</div>';
+	}
+
+	return $output;
+}
 
 /**
  * Render filter label.
  *
- * @param $id string
- * @param $obj array
+ * @param string $id
+ * @param array  $obj
+ * @param string $target
  * @since 1.8.4
  */
-function alm_filters_display_label( $id = '', $obj = '' ) {
+function alm_filters_render_label( $id = '', $obj = '', $target = '' ) {
 
-	if ( empty( $id ) || empty( $obj ) || !isset( $obj['label'] ) ) {
-		return false; // Exit if empty.
+	if ( empty( $id ) || empty( $obj ) || empty( $target ) || ! isset( $obj['label'] ) ) {
+		return;
 	}
+
 	$filter_key = alm_filters_get_filter_key( $obj );
 	$value      = $obj['label'];
 
-	if ( empty( $value ) && !has_filter( 'alm_filters_'. $id . '_' . $filter_key .'_label' ) ){
-		return false; // Exit if title is empty && filter doesn't exist.
+	if ( empty( $value ) && ! has_filter( 'alm_filters_' . $id . '_' . $filter_key . '_label' ) ) {
+		return; // Exit if title is empty && filter doesn't exist.
 	}
-	$output = apply_filters( 'alm_filters_'. $id . '_' . $filter_key .'_label', $value );
+
+	$output = '<label for="' . $target . '">' . apply_filters( 'alm_filters_' . $id . '_' . $filter_key . '_label', $value ) . '</label>';
 	return $output;
 }
 
 /**
  * Render filter title.
  *
- * @param array $id
- * @param array $obj
+ * @param array   $id
+ * @param array   $obj
  * @param boolean $toggle
+ * @param boolean $section_toggle_status
  * @since 1.0
  * @updated 1.10.1
  */
-function alm_filters_display_title( $id = '', $obj = '', $toggle = false ) {
+function alm_filters_display_title( $id = '', $obj = '', $toggle = false, $section_toggle_status = 'expanded' ) {
 
 	if ( empty( $id ) || empty( $obj ) || ! isset( $obj['title'] ) ) {
-		return false; // exit if empty.
+		return false; // Exit if empty.
 	}
 
 	$filter_key = alm_filters_get_filter_key( $obj );
@@ -45,9 +92,11 @@ function alm_filters_display_title( $id = '', $obj = '', $toggle = false ) {
 		return false; // Exit if title is empty && filter doesn't exist.
 	}
 
+	$aria_expanded = ( 'expanded' === $section_toggle_status ) ? 'true' : 'false';
+
 	$toggle_opts = '';
 	if ( $toggle ) {
-		$toggle_opts = ' class="alm-filter--toggle" tabindex="0" aria-expanded="true" aria-controls="alm-filter-' . $filter_key . '-inner" role="button"';
+		$toggle_opts = ' class="alm-filter--toggle" tabindex="0" aria-expanded="' . $aria_expanded . '" aria-controls="alm-filter-' . $filter_key . '-inner" role="button"';
 	}
 
 	$output  = '<div class="alm-filter--title">';
@@ -80,7 +129,7 @@ function alm_filters_display_description( $id = '', $obj = '' ) {
 	}
 
 	$output  = '<div class="alm-filter--description">';
-	$output .= '<' . apply_filters( 'alm_filters_description_element', 'p' ) . ' id="alm-filter-' . $filter_key . '-description' .'">';
+	$output .= '<' . apply_filters( 'alm_filters_description_element', 'p' ) . ' id="alm-filter-' . $filter_key . '-description' . '">';
 	$output .= htmlspecialchars_decode( apply_filters( 'alm_filters_' . $id . '_' . $filter_key . '_description', $value ) );
 	$output .= '</' . apply_filters( 'alm_filters_description_element', 'p' ) . '>';
 	$output .= '</div>';
@@ -115,7 +164,7 @@ function alm_filters_get_filter_key( $obj = '' ) {
  * @param string $slug The slug of the URL
  * @since 1.8.1
  */
-function alm_filters_build_url( $obj, $slug ){
+function alm_filters_build_url( $obj, $slug ) {
 	if ( ! $obj || $obj['base_url'] === '' || ! $slug ) {
 		return false;
 	}
@@ -126,8 +175,6 @@ function alm_filters_build_url( $obj, $slug ){
 	$url = $obj['base_url'] . '?' . $params . '=' . $slug;
 	return $url;
 }
-
-
 
 /**
  * Get URL Query param for link URLs (Radio/Checkbox).
@@ -150,8 +197,6 @@ function alm_filters_get_queryParam( $obj ) {
 
 	return $param;
 }
-
-
 
 /**
  * Is the current page a front page or an archive, add _ to prevent redirects.
@@ -185,20 +230,24 @@ function alm_filters_remove_underscore( $str ) {
 /**
  * Open the `inner` wrapper for each filter.
  *
- * @param array $obj
+ * @param array   $obj
  * @param boolean $toggle
+ * @param string  $section_toggle_status
  * @since 1.10.1
  */
-function alm_filters_open_filter_container( $obj = '', $toggle = false ) {
+function alm_filters_open_filter_container( $obj = '', $toggle = false, $section_toggle_status = 'expanded' ) {
 
 	if ( empty( $obj ) ) {
-		return false; // exit if empty.
+		return false; // Exit if empty.
 	}
 
-	$key  = alm_filters_get_filter_key( $obj );
-	$aria = ( $toggle ) ? ' aria-hidden="false" aria-labelledby="alm-filter-' . $key . '-title" id="alm-filter-' . $key . '-inner"' : '';
+	$aria_hidden = ( 'expanded' === $section_toggle_status ) ? 'false' : 'true';
+	$style       = ( 'collapsed' === $section_toggle_status ) ? ' style="display: none;"' : '';
 
-	return '<div class="alm-filter--inner"' . $aria . '>';
+	$key  = alm_filters_get_filter_key( $obj );
+	$aria = ( $toggle ) ? ' aria-hidden="' . $aria_hidden . '" aria-labelledby="alm-filter-' . $key . '-title" id="alm-filter-' . $key . '-inner"' : '';
+
+	return '<div class="alm-filter--inner"' . $aria . $style . '>';
 }
 
 /**
@@ -208,4 +257,44 @@ function alm_filters_open_filter_container( $obj = '', $toggle = false ) {
  */
 function alm_filters_close_filter_container() {
 	return '</div>';
+}
+
+/**
+ * Render the text for `show_count`.
+ *
+ * @param boolean $show_count Should we display the count.
+ * @param object  $item The current filter item.
+ * @param boolean $html Render html or just a count.
+ * @since 1.11.0
+ */
+function alm_filters_build_count( $show_count, $item, $html ) {
+
+	if ( ! isset( $show_count ) || ! $show_count ) {
+		return '';
+	}
+	$title = apply_filters( 'alm_filters_show_count_title', $item->count . __( ' results for ', 'ajax-load-more-filters' ) . $item->name, $item );
+	$text  = apply_filters( 'alm_filters_show_count_display', $item->count, $item->count );
+	return ( $html ) ? ' <span class="alm-filter-count" title="' . $title . '">' . $text . '</span>' : $text;
+}
+
+/**
+ * The possible values for the sort order.
+ */
+function alm_filters_get_order_array() {
+	return array(
+		'id',
+		'author',
+		'title',
+		'name',
+		'type',
+		'date',
+		'modified',
+		'parent',
+		'rand',
+		'relevance',
+		'menu_order',
+		'post__in',
+		'post__name_in',
+		'post_parent__in',
+	);
 }

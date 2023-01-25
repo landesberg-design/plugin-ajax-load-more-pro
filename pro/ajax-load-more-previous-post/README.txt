@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/single-post/
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.7
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.4
+Version: 1.5.4
 
 
 == Copyright ==
-Copyright 2020 Darren Cooney
+Copyright 2023 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -49,10 +49,39 @@ http://connekthq.com/plugins/ajax-load-more/single-post/
 
 == Changelog ==
 
+= 1.5.4 - January 5, 2023 =
+* NEW: Added new `almSinglePostsLoaded` JavaScript callback discpatched after the plugin has completed the initial setup.
+* UPDATE: Added new admin prompt when activating plugin without core Ajax Load More installed.
+* UPDATE: Code cleanup and organization.
+
+
+= 1.5.3 - March 31, 2021 =
+* FIX - Fixed potential ordering issue with using a custom query on sites with a large amount of posts.
+* UPDATE - Added console warning if Ajax Load More is unable to locate target post element specified in shortcode.
+* UPDATE - Added functionality that allows Ajax Load More to fetch elements outside the Single Posts target element and pull them in for display in each load more action.
+
+
+= 1.5.2 - February 11, 2021 =
+* NEW - Added post preview functionality - [View Example](https://connekthq.com/accessibility-and-ajax-load-more/?showads=showpreview).
+* FIX - Fixed URL issues with nesting Next Page add-on inside Single Posts add-on.
+* UPDATE - PHP and JS code cleanup.
+* UPDATE - Various updates to support PHP 8.0+.
+
+
+= 1.5.1 - January 3, 2021 =
+* Fix - Fixed issue with custom query returning all posts if the query was empty.
+* FIX - Fixed issue with new custom query feature failing to pass the correct data to the shortcode.
+
+
+= 1.5.0 - November 11, 2020 =
+* NEW - Added support for custom queries using core taxonomy, category and tag query parameters in Ajax Load More 🎉
+
+
 = 1.4.4 - April 22, 2020 =
 * FIX - Fixed issue with anchor links taking user to the top of the page.
 * FIX - Fixed issue with encoded characters in post titles.
 * UPDATE - Added support for Yoast page titles.
+
 
 = 1.4.3 - March 18, 2020 =
 * NEW - Added new Single Post [implementation](https://connekthq.com/plugins/ajax-load-more/add-ons/single-posts/#implementation) technique. Users are no longer required to use a Repeater Template when using this add-on.
@@ -60,7 +89,7 @@ http://connekthq.com/plugins/ajax-load-more/single-post/
 
 = 1.4.2 - October 1, 2019 =
 * NEW - Added option to display a reading progress bar. `single_post_progress_bar` is the shortcode parameter - please view the Shortcode Builder for implementation help.
-* UPDATE - Updated default `Scroll to Post` behaviour setting to false. 
+* UPDATE - Updated default `Scroll to Post` behaviour setting to false.
 
 
 = 1.4.1 - May 29, 2019 =
@@ -80,7 +109,7 @@ This update relates to fixes applied to Ajax Load More `5.1.1`
 * NEW - Added update to allow for offsetting first post. Users can now set `offset="1"` in the `[ajax_load_more]` shortcode and render a custom single template before Ajax Load More.
 * NEW - Added new `getOffset` function to more reliably get the correct permalink URL while scrolling.
 * UPDATE - Update Google Analytics Tracking script.
-* UPDATE - Improved scroll to element functionality and URL updates. 
+* UPDATE - Improved scroll to element functionality and URL updates.
 * UPDATE - Removed Scroll Speed function and it has been deprecated.
 * UPDATE - Updated scroll to element function to use core ALM almScroll function.
 * UPDATE - Setting `$wp_query->in_the_loop` and `$wp_query->is_feed` to true for allowing various 3rd plugins to run hooks ion Ajax content.

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More Filters\n"
-"POT-Creation-Date: 2020-10-01 17:08-0400\n"
+"POT-Creation-Date: 2022-01-11 14:41-0500\n"
 "PO-Revision-Date: 2017-10-05 16:14-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -18,700 +18,794 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: src\n"
 "X-Poedit-SearchPathExcluded-1: dist\n"
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
+"X-Poedit-SearchPathExcluded-3: vendor\n"
 
-#: admin/api/renderfilter.php:59
+#: _out/admin/api/renderfilter.php:59 admin/api/renderfilter.php:59
 msgid "Error accessing filter"
 msgstr ""
 
-#: admin/api/save.php:287
+#: _out/admin/api/save.php:323 admin/api/save.php:323
 msgid "Filter saved successfully"
 msgstr ""
 
-#: admin/api/save.php:295
+#: _out/admin/api/save.php:331 admin/api/save.php:331
 msgid "You need to add some filter criteria."
 msgstr ""
 
-#: admin/functions.php:20
+#: _out/admin/functions.php:20 _out/ajax-load-more-filters.php:682
+#: admin/functions.php:22 ajax-load-more-filters.php:678
 msgid "Filter"
 msgstr ""
 
-#: admin/functions.php:23
+#: _out/admin/functions.php:23 admin/functions.php:25
 msgid "Date"
 msgstr ""
 
-#: admin/functions.php:47
+#: _out/admin/functions.php:47 admin/functions.php:51
 msgid "filter block(s) in this filter"
 msgstr ""
 
-#: admin/functions.php:52
+#: _out/admin/functions.php:52 admin/functions.php:56
 msgid "Edit"
 msgstr ""
 
-#: admin/functions.php:56
+#: _out/admin/functions.php:56 admin/functions.php:60
 msgid "Delete Filter"
 msgstr ""
 
-#: admin/functions.php:57 admin/functions.php:60
-#: admin/views/includes/edit.php:137
+#: _out/admin/functions.php:57 _out/admin/functions.php:60
+#: _out/admin/views/includes/edit.php:179 admin/functions.php:61
+#: admin/functions.php:64 admin/views/includes/edit.php:179
 msgid "Delete"
 msgstr ""
 
-#: admin/functions.php:68 admin/views/includes/edit.php:146
+#: _out/admin/functions.php:68 _out/admin/views/includes/edit.php:188
+#: admin/functions.php:72 admin/views/includes/edit.php:188
 msgid "Published"
 msgstr ""
 
-#: admin/functions.php:101
+#: _out/admin/functions.php:101 admin/functions.php:106
 msgid "It appears you don't have any filters!"
 msgstr ""
 
-#: admin/functions.php:104
+#: _out/admin/functions.php:104 admin/functions.php:109
 msgid "The first step in filtering with Ajax Load More is to create one!"
 msgstr ""
 
-#: admin/functions.php:108 ajax-load-more-filters.php:1457
+#: _out/admin/functions.php:108 _out/ajax-load-more-filters.php:1564
+#: admin/functions.php:113 ajax-load-more-filters.php:1560
 msgid "Create Filter"
 msgstr ""
 
+#: _out/admin/views/cta/filter-list.php:2
+#: _out/admin/views/includes/dashboard.php:10
 #: admin/views/cta/filter-list.php:2 admin/views/includes/dashboard.php:10
 msgid "Your Filters"
 msgstr ""
 
-#: admin/views/cta/help.php:2
+#: _out/admin/views/cta/help.php:2 admin/views/cta/help.php:2
 msgid "Help"
 msgstr ""
 
-#: admin/views/cta/help.php:4
+#: _out/admin/views/cta/help.php:4 admin/views/cta/help.php:4
 msgid ""
 "View the Filters documentation for information on implementation methods, "
 "hooks and callback functions"
 msgstr ""
 
-#: admin/views/cta/help.php:7
+#: _out/admin/views/cta/help.php:7 admin/views/cta/help.php:7
 msgid "View Documentation"
 msgstr ""
 
-#: admin/views/cta/whats-new.php:2
+#: _out/admin/views/cta/whats-new.php:2 admin/views/cta/whats-new.php:2
 msgid "What's New"
 msgstr ""
 
-#: admin/views/cta/whats-new.php:8
+#: _out/admin/views/cta/whats-new.php:8 admin/views/cta/whats-new.php:8
 msgid "Learn More"
 msgstr ""
 
-#: admin/views/filters.php:50 admin/views/includes/edit.php:109
-msgid "Filters"
-msgstr ""
-
-#: admin/views/filters.php:51
-msgid "Build and manage your Ajax Load More filters"
-msgstr ""
-
+#: _out/admin/views/includes/dashboard.php:11
 #: admin/views/includes/dashboard.php:11
 msgid "Ajax Load More filters are listed below in alphabetical order"
 msgstr ""
 
-#: admin/views/includes/edit.php:25
+#: _out/admin/views/includes/edit.php:27 admin/views/includes/edit.php:27
 msgid "Create New Filter"
 msgstr ""
 
-#: admin/views/includes/edit.php:26
+#: _out/admin/views/includes/edit.php:28 admin/views/includes/edit.php:28
 msgid "Build a new Ajax Load More filter by adjusting the options below"
 msgstr ""
 
-#: admin/views/includes/edit.php:29 ajax-load-more-filters.php:752
+#: _out/admin/views/includes/edit.php:31 _out/ajax-load-more-filters.php:682
+#: admin/views/includes/edit.php:31 ajax-load-more-filters.php:678
 msgid "Edit Filter"
 msgstr ""
 
-#: admin/views/includes/edit.php:30
+#: _out/admin/views/includes/edit.php:32 admin/views/includes/edit.php:32
 msgid "Adjust the options below to edit this filter"
 msgstr ""
 
-#: admin/views/includes/edit.php:30
+#: _out/admin/views/includes/edit.php:32 admin/views/includes/edit.php:32
 msgid "any changes made to the filter must be saved before they take effect"
 msgstr ""
 
-#: admin/views/includes/edit.php:36
+#: _out/admin/views/includes/edit.php:38 admin/views/includes/edit.php:38
 msgid "Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:37
+#: _out/admin/views/includes/edit.php:39 admin/views/includes/edit.php:39
 msgid ""
 "Set up your filter options by entering a filter ID and selecting the "
 "interaction style."
 msgstr ""
 
-#: admin/views/includes/edit.php:47
+#: _out/admin/views/includes/edit.php:49 admin/views/includes/edit.php:49
 msgid "ID"
 msgstr ""
 
-#: admin/views/includes/edit.php:49
-msgid "The unique ID for this filter instance."
+#: _out/admin/views/includes/edit.php:51 admin/views/includes/edit.php:51
+msgid ""
+"The unique ID for this filter instance. The ID must be lowercase and be "
+"without spaces or hyphens."
 msgstr ""
 
-#: admin/views/includes/edit.php:73
+#: _out/admin/views/includes/edit.php:75 admin/views/includes/edit.php:75
 msgid "Style"
 msgstr ""
 
-#: admin/views/includes/edit.php:74
+#: _out/admin/views/includes/edit.php:76 admin/views/includes/edit.php:76
 msgid "Select a user interaction for this filter."
 msgstr ""
 
-#: admin/views/includes/edit.php:85
+#: _out/admin/views/includes/edit.php:86 admin/views/includes/edit.php:86
 msgid "Select Style"
 msgstr ""
 
-#: admin/views/includes/edit.php:86
+#: _out/admin/views/includes/edit.php:87 admin/views/includes/edit.php:87
 msgid "Change"
 msgstr ""
 
-#: admin/views/includes/edit.php:87
+#: _out/admin/views/includes/edit.php:88 admin/views/includes/edit.php:88
 msgid "Submit Button"
 msgstr ""
 
-#: admin/views/includes/edit.php:96 admin/views/includes/edit.php:1023
+#: _out/admin/views/includes/edit.php:99
+#: _out/admin/views/includes/edit.php:1107 admin/views/includes/edit.php:99
+#: admin/views/includes/edit.php:1107
 msgid "Button Label"
 msgstr ""
 
-#: admin/views/includes/edit.php:97
+#: _out/admin/views/includes/edit.php:100 admin/views/includes/edit.php:100
 msgid "Enter a label for the filter submit button."
 msgstr ""
 
-#: admin/views/includes/edit.php:100 admin/views/includes/edit.php:1031
-#: ajax-load-more-filters.php:504 ajax-load-more-filters.php:1773
+#: _out/admin/views/includes/edit.php:103
+#: _out/admin/views/includes/edit.php:1115 _out/ajax-load-more-filters.php:475
+#: _out/ajax-load-more-filters.php:1842 admin/views/includes/edit.php:103
+#: admin/views/includes/edit.php:1115 ajax-load-more-filters.php:471
+#: ajax-load-more-filters.php:1838
 msgid "Submit"
 msgstr ""
 
-#: admin/views/includes/edit.php:110
+#: _out/admin/views/includes/edit.php:112
+#: _out/admin/views/includes/edit.php:141 _out/ajax-load-more-filters.php:477
+#: admin/views/includes/edit.php:112 admin/views/includes/edit.php:141
+#: ajax-load-more-filters.php:473
+msgid "Reset Filters"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:114 admin/views/includes/edit.php:114
+msgid "Add a `Reset Filters` button that clears all currently active filters."
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:123 admin/views/includes/edit.php:123
+msgid "Display <strong><em>Reset Filters</em></strong> Button"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:133 admin/views/includes/edit.php:133
+msgid "Reset Button Label"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:135 admin/views/includes/edit.php:135
+msgid "Enter a label for the `Reset Filters` button."
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:151 admin/views/includes/edit.php:151
+msgid "Filters"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:152 admin/views/includes/edit.php:152
 msgid "Build a custom filter group by adding and removing filter blocks."
 msgstr ""
 
-#: admin/views/includes/edit.php:113
+#: _out/admin/views/includes/edit.php:155 admin/views/includes/edit.php:155
 msgid "Collapse All Filter Groups"
 msgstr ""
 
-#: admin/views/includes/edit.php:114
+#: _out/admin/views/includes/edit.php:156 admin/views/includes/edit.php:156
 msgid "Collapse All Filters"
 msgstr ""
 
-#: admin/views/includes/edit.php:116
+#: _out/admin/views/includes/edit.php:158 admin/views/includes/edit.php:158
 msgid "Expand All Filter Groups"
 msgstr ""
 
-#: admin/views/includes/edit.php:117
+#: _out/admin/views/includes/edit.php:159 admin/views/includes/edit.php:159
 msgid "Expand All Filters"
 msgstr ""
 
-#: admin/views/includes/edit.php:130
+#: _out/admin/views/includes/edit.php:172 admin/views/includes/edit.php:172
 msgid "Add Filter"
 msgstr ""
 
-#: admin/views/includes/edit.php:151
+#: _out/admin/views/includes/edit.php:193 admin/views/includes/edit.php:193
 msgid "Last Modified"
 msgstr ""
 
-#: admin/views/includes/edit.php:182
+#: _out/admin/views/includes/edit.php:224 admin/views/includes/edit.php:224
 msgid "Filter Block"
 msgstr ""
 
-#: admin/views/includes/edit.php:199
+#: _out/admin/views/includes/edit.php:241 admin/views/includes/edit.php:241
 msgid "Key"
 msgstr ""
 
-#: admin/views/includes/edit.php:201
+#: _out/admin/views/includes/edit.php:243 admin/views/includes/edit.php:243
 msgid "Select a query parameter (required)."
 msgstr ""
 
-#: admin/views/includes/edit.php:215
+#: _out/admin/views/includes/edit.php:257 admin/views/includes/edit.php:257
 msgid "Select Query Parameter"
 msgstr ""
 
-#: admin/views/includes/edit.php:224
+#: _out/admin/views/includes/edit.php:266 admin/views/includes/edit.php:266
 msgid "Toggle filter parameters"
 msgstr ""
 
-#: admin/views/includes/edit.php:225
+#: _out/admin/views/includes/edit.php:267 admin/views/includes/edit.php:267
 msgid "Toggle View"
 msgstr ""
 
-#: admin/views/includes/edit.php:240
+#: _out/admin/views/includes/edit.php:282 admin/views/includes/edit.php:282
 msgid "Query Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:257
+#: _out/admin/views/includes/edit.php:303 admin/views/includes/edit.php:303
 msgid "Taxonomy"
 msgstr ""
 
-#: admin/views/includes/edit.php:267
+#: _out/admin/views/includes/edit.php:313 admin/views/includes/edit.php:313
 msgid "Select Taxonomy"
 msgstr ""
 
-#: admin/views/includes/edit.php:272
+#: _out/admin/views/includes/edit.php:318 admin/views/includes/edit.php:318
 msgid "Categories"
 msgstr ""
 
-#: admin/views/includes/edit.php:278
+#: _out/admin/views/includes/edit.php:324 admin/views/includes/edit.php:324
 msgid "Tags"
 msgstr ""
 
-#: admin/views/includes/edit.php:292
+#: _out/admin/views/includes/edit.php:338 admin/views/includes/edit.php:338
 msgid "Operator"
 msgstr ""
 
-#: admin/views/includes/edit.php:318
+#: _out/admin/views/includes/edit.php:364 admin/views/includes/edit.php:364
 msgid "Meta Key"
 msgstr ""
 
-#: admin/views/includes/edit.php:320
+#: _out/admin/views/includes/edit.php:366 admin/views/includes/edit.php:366
 msgid "Enter custom field name"
 msgstr ""
 
-#: admin/views/includes/edit.php:327
+#: _out/admin/views/includes/edit.php:373 admin/views/includes/edit.php:373
 msgid "Compare"
 msgstr ""
 
-#: admin/views/includes/edit.php:337
+#: _out/admin/views/includes/edit.php:383 admin/views/includes/edit.php:383
 msgid "Select a Meta Operator"
 msgstr ""
 
-#: admin/views/includes/edit.php:347
+#: _out/admin/views/includes/edit.php:393 admin/views/includes/edit.php:393
 msgid "Type"
 msgstr ""
 
-#: admin/views/includes/edit.php:357
+#: _out/admin/views/includes/edit.php:403 admin/views/includes/edit.php:403
 msgid "Select a Meta Type"
 msgstr ""
 
-#: admin/views/includes/edit.php:371
+#: _out/admin/views/includes/edit.php:417 admin/views/includes/edit.php:417
 msgid "Role"
 msgstr ""
 
-#: admin/views/includes/edit.php:391
+#: _out/admin/views/includes/edit.php:445 admin/views/includes/edit.php:445
 msgid "Select an Author Role"
 msgstr ""
 
-#: admin/views/includes/edit.php:410
+#: _out/admin/views/includes/edit.php:464 admin/views/includes/edit.php:464
 msgid "Exclude"
 msgstr ""
 
-#: admin/views/includes/edit.php:412
+#: _out/admin/views/includes/edit.php:466 admin/views/includes/edit.php:466
 msgid "Comma separated list of IDs to exclude from the filter."
 msgstr ""
 
-#: admin/views/includes/edit.php:434
+#: _out/admin/views/includes/edit.php:488 admin/views/includes/edit.php:488
 msgid "Field Type"
 msgstr ""
 
-#: admin/views/includes/edit.php:436
+#: _out/admin/views/includes/edit.php:490 admin/views/includes/edit.php:490
 msgid "Select a form element style for this filter (required)."
 msgstr ""
 
-#: admin/views/includes/edit.php:450
+#: _out/admin/views/includes/edit.php:504 admin/views/includes/edit.php:504
 msgid "Select Field Type"
 msgstr ""
 
-#: admin/views/includes/edit.php:462
-msgid "Toggle Checkbox"
+#: _out/admin/views/includes/edit.php:516 admin/views/includes/edit.php:516
+msgid "Toggle Checkbox "
 msgstr ""
 
-#: admin/views/includes/edit.php:463
+#: _out/admin/views/includes/edit.php:518 admin/views/includes/edit.php:518
 msgid ""
-"Add a <strong><em>Select All</em></strong> checkbox option that allows "
-"users to <strong>select</strong>/<strong>unselect</strong> all filters with "
-"a single click."
+"Add a Select All checkbox option that allows users to select/unselect all "
+"filters with a single click."
 msgstr ""
 
-#: admin/views/includes/edit.php:470
+#: _out/admin/views/includes/edit.php:528 admin/views/includes/edit.php:528
 msgid "Position"
 msgstr ""
 
-#: admin/views/includes/edit.php:472
+#: _out/admin/views/includes/edit.php:530 admin/views/includes/edit.php:530
 msgid "Select the placement of the toggle checkbox."
 msgstr ""
 
-#: admin/views/includes/edit.php:486
+#: _out/admin/views/includes/edit.php:544 admin/views/includes/edit.php:544
 msgid "None (Do not display)"
 msgstr ""
 
-#: admin/views/includes/edit.php:487
+#: _out/admin/views/includes/edit.php:545 admin/views/includes/edit.php:545
 msgid "Before (Displayed before filters)"
 msgstr ""
 
-#: admin/views/includes/edit.php:488
+#: _out/admin/views/includes/edit.php:546 admin/views/includes/edit.php:546
 msgid "After (Displayed after filters)"
 msgstr ""
 
-#: admin/views/includes/edit.php:499 admin/views/includes/edit.php:868
+#: _out/admin/views/includes/edit.php:557
+#: _out/admin/views/includes/edit.php:941
+#: _out/admin/views/includes/edit.php:945 admin/views/includes/edit.php:557
+#: admin/views/includes/edit.php:941 admin/views/includes/edit.php:945
 msgid "Label"
 msgstr ""
 
-#: admin/views/includes/edit.php:501
+#: _out/admin/views/includes/edit.php:559 admin/views/includes/edit.php:559
 msgid "The text to be rendered as the toggle checkbox label."
 msgstr ""
 
-#: admin/views/includes/edit.php:507 ajax-load-more-filters.php:553
+#: _out/admin/views/includes/edit.php:565 _out/ajax-load-more-filters.php:530
+#: admin/views/includes/edit.php:565 ajax-load-more-filters.php:526
 msgid "Select All"
 msgstr ""
 
-#: admin/views/includes/edit.php:520
+#: _out/admin/views/includes/edit.php:578 admin/views/includes/edit.php:578
 msgid ""
 "The <strong>Date Picker</strong> field type uses the <a href=\"https://"
 "flatpickr.js.org/\" target=\"_blank\">Flatpickr JS</a> library to display a "
 "calendar select input field."
 msgstr ""
 
-#: admin/views/includes/edit.php:525
+#: _out/admin/views/includes/edit.php:583 admin/views/includes/edit.php:583
 msgid "Date Picker Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:526
+#: _out/admin/views/includes/edit.php:584 admin/views/includes/edit.php:584
 msgid "Date Formatting Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:526
+#: _out/admin/views/includes/edit.php:584 admin/views/includes/edit.php:584
 msgid "Available Locales"
 msgstr ""
 
-#: admin/views/includes/edit.php:526
+#: _out/admin/views/includes/edit.php:584 admin/views/includes/edit.php:584
 msgid "Select the 2 digit locale from the list"
 msgstr ""
 
-#: admin/views/includes/edit.php:533
+#: _out/admin/views/includes/edit.php:591 admin/views/includes/edit.php:591
 msgid "Mode"
 msgstr ""
 
-#: admin/views/includes/edit.php:535
+#: _out/admin/views/includes/edit.php:593 admin/views/includes/edit.php:593
 msgid ""
 "Select the type of date picker. Choose between single, multiple or a date "
 "range."
 msgstr ""
 
-#: admin/views/includes/edit.php:549
+#: _out/admin/views/includes/edit.php:607 admin/views/includes/edit.php:607
 msgid "Select Mode"
 msgstr ""
 
-#: admin/views/includes/edit.php:550
+#: _out/admin/views/includes/edit.php:608 admin/views/includes/edit.php:608
 msgid "Single Date"
 msgstr ""
 
-#: admin/views/includes/edit.php:551
+#: _out/admin/views/includes/edit.php:609 admin/views/includes/edit.php:609
 msgid "Multiple Dates"
 msgstr ""
 
-#: admin/views/includes/edit.php:552
+#: _out/admin/views/includes/edit.php:610 admin/views/includes/edit.php:610
 msgid "Range"
 msgstr ""
 
-#: admin/views/includes/edit.php:562
+#: _out/admin/views/includes/edit.php:620 admin/views/includes/edit.php:620
 msgid "Date Format"
 msgstr ""
 
-#: admin/views/includes/edit.php:564
+#: _out/admin/views/includes/edit.php:622 admin/views/includes/edit.php:622
 msgid ""
 "The date format displayed to the user when a date is selected. Default = Y-"
 "m-d."
 msgstr ""
 
-#: admin/views/includes/edit.php:580
+#: _out/admin/views/includes/edit.php:638 admin/views/includes/edit.php:638
 msgid "Localization"
 msgstr ""
 
-#: admin/views/includes/edit.php:582
+#: _out/admin/views/includes/edit.php:640 admin/views/includes/edit.php:640
 msgid "Choose a locale (language) for the date picker. Default = en"
 msgstr ""
 
-#: admin/views/includes/edit.php:600
+#: _out/admin/views/includes/edit.php:658 admin/views/includes/edit.php:658
 msgid ""
 "The <strong>Range Slider</strong> field type uses the <a href=\"https://"
 "refreshless.com/nouislider/\" target=\"_blank\">noUiSlider</a> library to "
 "display a draggable range selector."
 msgstr ""
 
-#: admin/views/includes/edit.php:601
+#: _out/admin/views/includes/edit.php:659 admin/views/includes/edit.php:659
 msgid ""
 "Range Sliders are most commonly used when querying for custom field values "
 "such as product price (WooCommerce) or width/height measurements."
 msgstr ""
 
-#: admin/views/includes/edit.php:606
+#: _out/admin/views/includes/edit.php:664 admin/views/includes/edit.php:664
 msgid "Range Slider Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:607
+#: _out/admin/views/includes/edit.php:665 admin/views/includes/edit.php:665
 msgid "Set the min/max value and other noUiSlider configuration options."
 msgstr ""
 
-#: admin/views/includes/edit.php:614 admin/views/includes/edit.php:819
+#: _out/admin/views/includes/edit.php:672
+#: _out/admin/views/includes/edit.php:877 admin/views/includes/edit.php:672
+#: admin/views/includes/edit.php:877
 msgid "Min Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:616
+#: _out/admin/views/includes/edit.php:674 admin/views/includes/edit.php:674
 msgid "Set the minimum value of the slider."
 msgstr ""
 
-#: admin/views/includes/edit.php:630 admin/views/includes/edit.php:836
+#: _out/admin/views/includes/edit.php:688
+#: _out/admin/views/includes/edit.php:894 admin/views/includes/edit.php:688
+#: admin/views/includes/edit.php:894
 msgid "Max Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:632
+#: _out/admin/views/includes/edit.php:690 admin/views/includes/edit.php:690
 msgid "Set the maximum value of the slider."
 msgstr ""
 
-#: admin/views/includes/edit.php:646
+#: _out/admin/views/includes/edit.php:704 admin/views/includes/edit.php:704
 msgid "Steps"
 msgstr ""
 
-#: admin/views/includes/edit.php:648
+#: _out/admin/views/includes/edit.php:706 admin/views/includes/edit.php:706
 msgid "Make the slide handles jump between intervals on drag - default is 1."
 msgstr ""
 
-#: admin/views/includes/edit.php:663
+#: _out/admin/views/includes/edit.php:721 admin/views/includes/edit.php:721
 msgid "Display Label"
 msgstr ""
 
-#: admin/views/includes/edit.php:665
+#: _out/admin/views/includes/edit.php:723 admin/views/includes/edit.php:723
 msgid ""
 "The label renders the current start & end values of the slider to the user. "
-"The {start} template parameter displays the low value, and {end} displays "
-"the high value."
+"The {start} parameter displays the low value, while the {end} parameter "
+"displays the high value."
 msgstr ""
 
-#: admin/views/includes/edit.php:679
+#: _out/admin/views/includes/edit.php:737 admin/views/includes/edit.php:737
 msgid "Orientation"
 msgstr ""
 
-#: admin/views/includes/edit.php:681
+#: _out/admin/views/includes/edit.php:739 admin/views/includes/edit.php:739
 msgid ""
 "Vertical sliders default to 200px in height. You can adjust this using "
 "custom CSS."
 msgstr ""
 
-#: admin/views/includes/edit.php:695
+#: _out/admin/views/includes/edit.php:753 admin/views/includes/edit.php:753
 msgid "Horizontal"
 msgstr ""
 
-#: admin/views/includes/edit.php:696
+#: _out/admin/views/includes/edit.php:754 admin/views/includes/edit.php:754
 msgid "Vertical"
 msgstr ""
 
-#: admin/views/includes/edit.php:706
+#: _out/admin/views/includes/edit.php:764 admin/views/includes/edit.php:764
 msgid "Show Decimals"
 msgstr ""
 
-#: admin/views/includes/edit.php:708
+#: _out/admin/views/includes/edit.php:766 admin/views/includes/edit.php:766
 msgid "Render decimals in the range slider display."
 msgstr ""
 
-#: admin/views/includes/edit.php:722 admin/views/includes/edit.php:749
-#: admin/views/includes/edit.php:1114
+#: _out/admin/views/includes/edit.php:780
+#: _out/admin/views/includes/edit.php:807 admin/views/includes/edit.php:780
+#: admin/views/includes/edit.php:807
 msgid "True"
 msgstr ""
 
-#: admin/views/includes/edit.php:723 admin/views/includes/edit.php:750
-#: admin/views/includes/edit.php:1115
+#: _out/admin/views/includes/edit.php:781
+#: _out/admin/views/includes/edit.php:808 admin/views/includes/edit.php:781
+#: admin/views/includes/edit.php:808
 msgid "False"
 msgstr ""
 
-#: admin/views/includes/edit.php:733
+#: _out/admin/views/includes/edit.php:791 admin/views/includes/edit.php:791
 msgid "Reset Button"
 msgstr ""
 
-#: admin/views/includes/edit.php:735
+#: _out/admin/views/includes/edit.php:793 admin/views/includes/edit.php:793
 msgid "Display a reset button to clear range slider values."
 msgstr ""
 
-#: admin/views/includes/edit.php:757
+#: _out/admin/views/includes/edit.php:815 admin/views/includes/edit.php:815
 #, php-format
 msgid "Use the %s hook to adjust the `Reset` button label."
 msgstr ""
 
-#: admin/views/includes/edit.php:764
+#: _out/admin/views/includes/edit.php:822 admin/views/includes/edit.php:822
 msgid "Range Slider Defaults"
 msgstr ""
 
-#: admin/views/includes/edit.php:765
+#: _out/admin/views/includes/edit.php:823 admin/views/includes/edit.php:823
 msgid "Set the default start and end position of the drag handles."
 msgstr ""
 
-#: admin/views/includes/edit.php:771
+#: _out/admin/views/includes/edit.php:829 admin/views/includes/edit.php:829
 msgid "Start Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:773
+#: _out/admin/views/includes/edit.php:831 admin/views/includes/edit.php:831
 msgid "If no value is set, handle will start at the Min value."
 msgstr ""
 
-#: admin/views/includes/edit.php:787
+#: _out/admin/views/includes/edit.php:845 admin/views/includes/edit.php:845
 msgid "End Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:789
+#: _out/admin/views/includes/edit.php:847 admin/views/includes/edit.php:847
 msgid "If no value is set, handle will start at the Max value"
 msgstr ""
 
-#: admin/views/includes/edit.php:806
+#: _out/admin/views/includes/edit.php:864 admin/views/includes/edit.php:864
 msgid ""
 "The <strong>Star Rating</strong> field type uses a <strong>Custom Field</"
 "strong> query for a numeric value."
 msgstr ""
 
-#: admin/views/includes/edit.php:807
+#: _out/admin/views/includes/edit.php:865 admin/views/includes/edit.php:865
 msgid ""
 "You must have an existing custom field that stores an average rating value. "
 "This rating field must contain a numeric value up to a max of 10."
 msgstr ""
 
-#: admin/views/includes/edit.php:812
+#: _out/admin/views/includes/edit.php:870 admin/views/includes/edit.php:870
 msgid "Star Rating Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:821
+#: _out/admin/views/includes/edit.php:879 admin/views/includes/edit.php:879
 msgid "Select the minimum star rating value."
 msgstr ""
 
-#: admin/views/includes/edit.php:838
+#: _out/admin/views/includes/edit.php:896 admin/views/includes/edit.php:896
 msgid "Select the maximum star rating value."
 msgstr ""
 
-#: admin/views/includes/edit.php:855
+#: _out/admin/views/includes/edit.php:913 admin/views/includes/edit.php:913
+msgid "Default Select Option"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:915 admin/views/includes/edit.php:915
+msgid ""
+"Will be displayed as the first (default) option in the select dropdown list."
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:921 admin/views/includes/edit.php:921
+msgid "-- Make a Selection --"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:930 admin/views/includes/edit.php:930
 msgid "Custom Values"
 msgstr ""
 
-#: admin/views/includes/edit.php:857
+#: _out/admin/views/includes/edit.php:932 admin/views/includes/edit.php:932
 msgid "Create customized filters by adding custom labels and values."
 msgstr ""
 
-#: admin/views/includes/edit.php:876
+#: _out/admin/views/includes/edit.php:951
+#: _out/admin/views/includes/edit.php:955 admin/views/includes/edit.php:951
+#: admin/views/includes/edit.php:955
 msgid "Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:885
+#: _out/admin/views/includes/edit.php:963 admin/views/includes/edit.php:963
 msgid "order:orderby"
 msgstr ""
 
-#: admin/views/includes/edit.php:899 admin/views/includes/edit.php:900
+#: _out/admin/views/includes/edit.php:977
+#: _out/admin/views/includes/edit.php:978 admin/views/includes/edit.php:977
+#: admin/views/includes/edit.php:978
 msgid "Move Down"
 msgstr ""
 
-#: admin/views/includes/edit.php:908 admin/views/includes/edit.php:909
+#: _out/admin/views/includes/edit.php:986
+#: _out/admin/views/includes/edit.php:987 admin/views/includes/edit.php:986
+#: admin/views/includes/edit.php:987
 msgid "Move Up"
 msgstr ""
 
-#: admin/views/includes/edit.php:917 admin/views/includes/edit.php:918
+#: _out/admin/views/includes/edit.php:995
+#: _out/admin/views/includes/edit.php:996 admin/views/includes/edit.php:995
+#: admin/views/includes/edit.php:996
 msgid "Remove"
 msgstr ""
 
-#: admin/views/includes/edit.php:929
+#: _out/admin/views/includes/edit.php:1007 admin/views/includes/edit.php:1007
 msgid "Add Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:940
+#: _out/admin/views/includes/edit.php:1017 admin/views/includes/edit.php:1017
+msgid "Show Count"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1019 admin/views/includes/edit.php:1019
+msgid "Show the total number of results beside each filter item."
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1028 admin/views/includes/edit.php:1028
+msgid "Yes"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1039 admin/views/includes/edit.php:1039
 msgid "Preselected Value"
 msgstr ""
 
-#: admin/views/includes/edit.php:942
+#: _out/admin/views/includes/edit.php:1041 admin/views/includes/edit.php:1041
 msgid ""
 "Set a preselected state (slug) for this filter block. The value set here "
-"will be the element selected on initial page load."
+"will be the element selected on initial page load. Separate multiple values "
+"with a + symbol. e.g. design+development+app."
 msgstr ""
 
-#: admin/views/includes/edit.php:958
-msgid "Default Value"
+#: _out/admin/views/includes/edit.php:1056 admin/views/includes/edit.php:1056
+msgid "Default Value (Fallback)"
 msgstr ""
 
-#: admin/views/includes/edit.php:960
+#: _out/admin/views/includes/edit.php:1058 admin/views/includes/edit.php:1058
 msgid ""
-"Set a default fallback value for this filter block. Default values allow "
-"you match parameters set in the core Ajax Load More shortcode."
+"Default values allow for setting initial Ajax Load More parameters and "
+"provide a fallback for when no filters are selected. Separate multiple "
+"values with a comma. e.g. design,development,app."
 msgstr ""
 
-#: admin/views/includes/edit.php:976
+#: _out/admin/views/includes/edit.php:1073 admin/views/includes/edit.php:1073
 msgid "Placeholder Text"
 msgstr ""
 
-#: admin/views/includes/edit.php:978
+#: _out/admin/views/includes/edit.php:1075 admin/views/includes/edit.php:1075
 msgid "Placeholder text displayed on the <input> element."
 msgstr ""
 
-#: admin/views/includes/edit.php:994
+#: _out/admin/views/includes/edit.php:1090 admin/views/includes/edit.php:1090
 msgid "Field Label"
 msgstr ""
 
-#: admin/views/includes/edit.php:996
-msgid "The label for the <input> element."
+#: _out/admin/views/includes/edit.php:1092 admin/views/includes/edit.php:1092
+msgid "The HTML input label for the form element."
 msgstr ""
 
-#: admin/views/includes/edit.php:1002
-msgid "Default Label"
+#: _out/admin/views/includes/edit.php:1109 admin/views/includes/edit.php:1109
+msgid "The label of the input submit button"
 msgstr ""
 
-#: admin/views/includes/edit.php:1004
-msgid "The default label of the <select> element."
+#: _out/admin/views/includes/edit.php:1109 admin/views/includes/edit.php:1109
+msgid "A submit button will render only when a value is present."
 msgstr ""
 
-#: admin/views/includes/edit.php:1013
-msgid "-- Select --"
-msgstr ""
-
-#: admin/views/includes/edit.php:1025
-msgid "The text display value of the submit button"
-msgstr ""
-
-#: admin/views/includes/edit.php:1025
-msgid "Button will only be rendered if a value is present."
-msgstr ""
-
-#: admin/views/includes/edit.php:1039
+#: _out/admin/views/includes/edit.php:1123 admin/views/includes/edit.php:1123
 msgid "Filter Block Options"
 msgstr ""
 
-#: admin/views/includes/edit.php:1046
+#: _out/admin/views/includes/edit.php:1130 admin/views/includes/edit.php:1130
 msgid "Title"
 msgstr ""
 
-#: admin/views/includes/edit.php:1048
+#: _out/admin/views/includes/edit.php:1132 admin/views/includes/edit.php:1132
 msgid ""
 "Add an optional title for this filter block. Titles are displayed as <h3> "
 "elements above the form element."
 msgstr ""
 
-#: admin/views/includes/edit.php:1063
+#: _out/admin/views/includes/edit.php:1147 admin/views/includes/edit.php:1147
 msgid "Description"
 msgstr ""
 
-#: admin/views/includes/edit.php:1065
+#: _out/admin/views/includes/edit.php:1149 admin/views/includes/edit.php:1149
 msgid ""
 "Add an optional short description for this filter block. Descriptions are "
 "displayed as paragraphs below the Title. HTML markup is allowed."
 msgstr ""
 
-#: admin/views/includes/edit.php:1080
+#: _out/admin/views/includes/edit.php:1165 admin/views/includes/edit.php:1165
 msgid "CSS Classes"
 msgstr ""
 
-#: admin/views/includes/edit.php:1082
+#: _out/admin/views/includes/edit.php:1167 admin/views/includes/edit.php:1167
 msgid "Add custom CSS classnames to the filter block container."
 msgstr ""
 
-#: admin/views/includes/edit.php:1097
-msgid "Section Toggle"
+#: _out/admin/views/includes/edit.php:1182 admin/views/includes/edit.php:1182
+msgid "Filter Toggle"
 msgstr ""
 
-#: admin/views/includes/edit.php:1099
+#: _out/admin/views/includes/edit.php:1184 admin/views/includes/edit.php:1184
 msgid "Allow users to expand and collapse this filter block."
 msgstr ""
 
-#: admin/views/includes/edit.php:1113
-msgid "Select"
+#: _out/admin/views/includes/edit.php:1193 admin/views/includes/edit.php:1193
+msgid "Display Toggle"
 msgstr ""
 
-#: admin/views/includes/edit.php:1128
+#: _out/admin/views/includes/edit.php:1204 admin/views/includes/edit.php:1204
+msgid "Toggle Options"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1211 admin/views/includes/edit.php:1211
+msgid "Initial Toggle State"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1213 admin/views/includes/edit.php:1213
+msgid "Set the initial open/closed state for the Block Toggle on page load."
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1227 admin/views/includes/edit.php:1227
+msgid "Expanded"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1228 admin/views/includes/edit.php:1228
+msgid "Collapsed"
+msgstr ""
+
+#: _out/admin/views/includes/edit.php:1241 admin/views/includes/edit.php:1241
 msgid "Remove Filter"
 msgstr ""
 
+#: _out/admin/views/includes/hookname.php:4
+#: admin/views/includes/hookname.php:4
+msgid "The unique id for this filter is:"
+msgstr ""
+
+#: _out/admin/views/includes/instructions.php:4
 #: admin/views/includes/instructions.php:4
 msgid "How to:"
 msgstr ""
 
+#: _out/admin/views/includes/instructions.php:5
 #: admin/views/includes/instructions.php:5
 msgid ""
 "Use <strong>Custom Values</strong> or the <a href=\"https://connekthq.com/"
@@ -720,6 +814,7 @@ msgid ""
 "parameter."
 msgstr ""
 
+#: _out/admin/views/includes/instructions.php:6
 #: admin/views/includes/instructions.php:6
 msgid ""
 "You can override the default listing by using <strong>Custom Values</"
@@ -728,400 +823,482 @@ msgid ""
 "a> filter."
 msgstr ""
 
+#: _out/admin/views/includes/instructions.php:13
+#: _out/admin/views/includes/instructions.php:28
+#: _out/admin/views/includes/instructions.php:43
+#: _out/admin/views/includes/instructions.php:58
+#: _out/admin/views/includes/instructions.php:73
+#: _out/admin/views/includes/instructions.php:88
+#: _out/admin/views/includes/instructions.php:103
+#: _out/admin/views/includes/instructions.php:118
+#: _out/admin/views/includes/instructions.php:133
+#: _out/admin/views/includes/instructions.php:148
+#: _out/admin/views/includes/instructions.php:163
+#: _out/admin/views/includes/instructions.php:178
+#: _out/admin/views/includes/instructions.php:205
+#: _out/admin/views/includes/instructions.php:220
+#: _out/admin/views/includes/instructions.php:235
 #: admin/views/includes/instructions.php:13
-#: admin/views/includes/instructions.php:27
-#: admin/views/includes/instructions.php:41
-#: admin/views/includes/instructions.php:55
-#: admin/views/includes/instructions.php:69
-#: admin/views/includes/instructions.php:83
-#: admin/views/includes/instructions.php:97
-#: admin/views/includes/instructions.php:111
-#: admin/views/includes/instructions.php:125
-#: admin/views/includes/instructions.php:139
-#: admin/views/includes/instructions.php:153
-#: admin/views/includes/instructions.php:167
-#: admin/views/includes/instructions.php:182
-#: admin/views/includes/instructions.php:196
-#: admin/views/includes/instructions.php:210
+#: admin/views/includes/instructions.php:28
+#: admin/views/includes/instructions.php:43
+#: admin/views/includes/instructions.php:58
+#: admin/views/includes/instructions.php:73
+#: admin/views/includes/instructions.php:88
+#: admin/views/includes/instructions.php:103
+#: admin/views/includes/instructions.php:118
+#: admin/views/includes/instructions.php:133
+#: admin/views/includes/instructions.php:148
+#: admin/views/includes/instructions.php:163
+#: admin/views/includes/instructions.php:178
+#: admin/views/includes/instructions.php:205
+#: admin/views/includes/instructions.php:220
+#: admin/views/includes/instructions.php:235
 msgid "What's This?"
 msgstr ""
 
+#: _out/admin/views/includes/instructions.php:16
 #: admin/views/includes/instructions.php:16
 msgid "The <span>author</span> query parameter will filter posts by Author."
 msgstr ""
 
+#: _out/admin/views/includes/instructions.php:19
 #: admin/views/includes/instructions.php:19
 msgid ""
 "Author filters are auto-generated and displayed in alphabetical order based "
 "on the selected author role."
 msgstr ""
 
-#: admin/views/includes/instructions.php:30
+#: _out/admin/views/includes/instructions.php:31
+#: admin/views/includes/instructions.php:31
 msgid ""
 "The <span>meta_query</span> query parameter will filter posts by custom "
 "field value."
 msgstr ""
 
-#: admin/views/includes/instructions.php:33
+#: _out/admin/views/includes/instructions.php:34
+#: admin/views/includes/instructions.php:34
 msgid ""
 "Custom Field filters are not auto-generated and must be created manually."
 msgstr ""
 
-#: admin/views/includes/instructions.php:44
+#: _out/admin/views/includes/instructions.php:46
+#: admin/views/includes/instructions.php:46
 msgid ""
 "The <span>post_type</span> query parameter will filter posts by Post Type."
 msgstr ""
 
-#: admin/views/includes/instructions.php:47
+#: _out/admin/views/includes/instructions.php:49
+#: admin/views/includes/instructions.php:49
 msgid "Post Type filters are not auto-generated."
 msgstr ""
 
-#: admin/views/includes/instructions.php:58
+#: _out/admin/views/includes/instructions.php:61
+#: admin/views/includes/instructions.php:61
 msgid ""
 "The <span>search</span> query parameter will filter posts by search term."
 msgstr ""
 
-#: admin/views/includes/instructions.php:61
+#: _out/admin/views/includes/instructions.php:64
+#: admin/views/includes/instructions.php:64
 msgid ""
-"Use the textfield field type to render an input for searching. Enter Button "
-"text to render a separate submit button for submitting the search."
+"Use the textfield field type to render an input for searching. Entering a "
+"`Button Label` will render a separate submit button for submitting the "
+"field value."
 msgstr ""
 
-#: admin/views/includes/instructions.php:72
+#: _out/admin/views/includes/instructions.php:76
+#: admin/views/includes/instructions.php:76
 msgid ""
 "The <span>taxonomy</span> query parameter will filter posts by taxonomy "
 "term slug."
 msgstr ""
 
-#: admin/views/includes/instructions.php:75
+#: _out/admin/views/includes/instructions.php:79
+#: admin/views/includes/instructions.php:79
 msgid ""
 "Taxonomy term filters are auto-generated and displayed in alphabetical "
 "order."
 msgstr ""
 
-#: admin/views/includes/instructions.php:86
+#: _out/admin/views/includes/instructions.php:91
+#: admin/views/includes/instructions.php:91
 msgid ""
 "The <span>category</span> query parameter will filter posts (by slug) that "
 "are tagged with <u>any</u> of the chosen filters."
 msgstr ""
 
-#: admin/views/includes/instructions.php:89
-#: admin/views/includes/instructions.php:103
+#: _out/admin/views/includes/instructions.php:94
+#: _out/admin/views/includes/instructions.php:109
+#: admin/views/includes/instructions.php:94
+#: admin/views/includes/instructions.php:109
 msgid ""
 "Category filters are auto-generated and displayed in alphabetical order "
 "based on the categories active on your website."
 msgstr ""
 
-#: admin/views/includes/instructions.php:100
+#: _out/admin/views/includes/instructions.php:106
+#: admin/views/includes/instructions.php:106
 msgid ""
 "The <span>category__and</span> query parameter will filter posts (by ID) "
 "that have been tagged with <u>all</u> of the chosen filters."
 msgstr ""
 
-#: admin/views/includes/instructions.php:114
+#: _out/admin/views/includes/instructions.php:121
+#: admin/views/includes/instructions.php:121
 msgid ""
 "The <span>tag</span> query parameter will filter posts (by slug) that are "
 "tagged with <u>any</u> of the chosen filters."
 msgstr ""
 
-#: admin/views/includes/instructions.php:117
-#: admin/views/includes/instructions.php:131
+#: _out/admin/views/includes/instructions.php:124
+#: _out/admin/views/includes/instructions.php:139
+#: admin/views/includes/instructions.php:124
+#: admin/views/includes/instructions.php:139
 msgid ""
 "Tag filters are auto-generated and displayed in alphabetical order based on "
 "the tags active on your website."
 msgstr ""
 
-#: admin/views/includes/instructions.php:128
+#: _out/admin/views/includes/instructions.php:136
+#: admin/views/includes/instructions.php:136
 msgid ""
 "The <span>tag__and</span> query parameter will filter posts (by ID) that "
 "have been tagged with <u>all</u> of the chosen filters."
 msgstr ""
 
-#: admin/views/includes/instructions.php:142
+#: _out/admin/views/includes/instructions.php:151
+#: admin/views/includes/instructions.php:151
 msgid ""
 "The <span>order</span> query parameter designates the ascending or "
 "descending order of the `orderby` parameter. The value of this filter can "
-"only be `ASC` or `DESC` as shown in the <a href=\"https://codex.wordpress."
-"org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters\" target=\"_blank"
-"\">Docs</a>."
+"only be `ASC` or `DESC` as shown in the <a href=\"https://developer."
+"wordpress.org/reference/classes/wp_query/#order-orderby-parameters\" target="
+"\"_blank\">Docs</a>."
 msgstr ""
 
-#: admin/views/includes/instructions.php:156
+#: _out/admin/views/includes/instructions.php:166
+#: admin/views/includes/instructions.php:166
 msgid ""
 "The <span>orderby</span> query parameter will order posts by the selected "
-"value. All `orderby` parameters found in the <a href=\"https://codex."
-"wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters\" "
-"target=\"_blank\">Docs</a> can be used as the value for this."
+"value. All `orderby` parameters found in the <a href=\"https://developer."
+"wordpress.org/reference/classes/wp_query/#order-orderby-parameters\" target="
+"\"_blank\">Docs</a> can be used as the value for this."
 msgstr ""
 
-#: admin/views/includes/instructions.php:170
+#: _out/admin/views/includes/instructions.php:182
+#: admin/views/includes/instructions.php:182
 msgid ""
 "The <span>sort</span> query parameter requires both an <strong>Order</"
-"strong> and <strong>Orderby</strong> value to be present. Separate each "
-"with  colon punctuation (order:orderby)."
+"strong> and <strong>Orderby</strong> value to be present - sort values must "
+"be colon separated."
 msgstr ""
 
-#: admin/views/includes/instructions.php:171
+#: _out/admin/views/includes/instructions.php:186
+#: admin/views/includes/instructions.php:186
+msgid "Custom Fields"
+msgstr ""
+
+#: _out/admin/views/includes/instructions.php:187
+#: admin/views/includes/instructions.php:187
 msgid ""
-"When sorting by custom field value, the orderby value should be the custom "
-"field key (DESC:my_field)."
+"When sorting by custom field values, the sort orderby value must be the "
+"custom field key."
 msgstr ""
 
-#: admin/views/includes/instructions.php:185
+#: _out/admin/views/includes/instructions.php:191
+#: admin/views/includes/instructions.php:191
+msgid ""
+"An optional 3rd parameter can also be set for <strong>meta_value</strong> "
+"(default) or <strong>meta_value_num</strong>."
+msgstr ""
+
+#: _out/admin/views/includes/instructions.php:208
+#: admin/views/includes/instructions.php:208
 msgid ""
 "The <span>day</span> query parameter will filter content by a day of the "
 "month."
 msgstr ""
 
-#: admin/views/includes/instructions.php:199
+#: _out/admin/views/includes/instructions.php:223
+#: admin/views/includes/instructions.php:223
 msgid ""
 "The <span>month</span> query parameter will filter content by the month of "
 "the year."
 msgstr ""
 
-#: admin/views/includes/instructions.php:213
+#: _out/admin/views/includes/instructions.php:238
+#: admin/views/includes/instructions.php:238
 msgid ""
 "The <span>year</span> query parameter will filter content by the year of "
 "the post."
 msgstr ""
 
-#: admin/views/includes/navigation.php:2
+#: _out/admin/views/includes/navigation.php:4
+#: admin/views/includes/navigation.php:4
 msgid "Dashboard"
 msgstr ""
 
-#: admin/views/includes/navigation.php:4
+#: _out/admin/views/includes/navigation.php:10
+#: admin/views/includes/navigation.php:10
 msgid "Create"
 msgstr ""
 
-#: admin/views/includes/navigation.php:5
+#: _out/admin/views/includes/navigation.php:15
+#: admin/views/includes/navigation.php:15
 msgid "Tools"
 msgstr ""
 
+#: _out/admin/views/includes/output-php.php:3
 #: admin/views/includes/output-php.php:3
 msgid "Generated PHP"
 msgstr ""
 
+#: _out/admin/views/includes/output-php.php:4
 #: admin/views/includes/output-php.php:4
 msgid ""
-"The following PHP has been generated from your filter selections and can be "
-"added directly to a WordPress template in place of the filter shortcode"
+"The following PHP has been generated from your filter selection. Add this "
+"code can be added directly to a WordPress template in place of the filter "
+"shortcode."
 msgstr ""
 
-#: admin/views/includes/output-php.php:8
+#: _out/admin/views/includes/output-php.php:5
+#: admin/views/includes/output-php.php:5
 msgid ""
-"Don't forget to update the <strong>{your_alm_id}</strong> value with your "
-"Ajax Load More ID"
+"<strong>Note</strong>: Do <u>NOT</u> delete this filter from the WordPress "
+"backend - it is still required for frontend functionality."
 msgstr ""
 
+#: _out/admin/views/includes/output-php.php:9
 #: admin/views/includes/output-php.php:9
+msgid ""
+"Don't forget to replace the <strong>{YOUR_ALM_ID}</strong> value above with "
+"your Ajax Load More ID."
+msgstr ""
+
+#: _out/admin/views/includes/output-php.php:10
+#: admin/views/includes/output-php.php:10
 msgid "Close Window"
 msgstr ""
 
-#: admin/views/includes/sidebar.php:8
-msgid "Shortcode Output"
-msgstr ""
-
-#: admin/views/includes/sidebar.php:9
-msgid ""
-"Use the following shortcode to generate this Ajax Load More filter instance"
-msgstr ""
-
-#: admin/views/includes/sidebar.php:16
+#: _out/admin/views/includes/sidebar.php:21
+#: admin/views/includes/sidebar.php:21
 msgid ""
 "Don't forget to update the <strong>target</strong> parameter with your Ajax "
 "Load More ID"
 msgstr ""
 
-#: admin/views/includes/sidebar.php:19
-msgid "Copy Shortcode"
-msgstr ""
-
-#: admin/views/includes/sidebar.php:20
-msgid "Generate PHP"
-msgstr ""
-
-#: admin/views/includes/tools.php:13
+#: _out/admin/views/includes/tools.php:13 admin/views/includes/tools.php:13
 msgid "Export Filter Groups"
 msgstr ""
 
-#: admin/views/includes/tools.php:14
+#: _out/admin/views/includes/tools.php:14 admin/views/includes/tools.php:14
 msgid ""
 "Select the filter groups you would like to export. Use the export button to "
 "export to a .json file which you can then import to another ALM Filters "
 "instance"
 msgstr ""
 
-#: admin/views/includes/tools.php:20
+#: _out/admin/views/includes/tools.php:20 admin/views/includes/tools.php:20
 msgid "Select Filter Groups for Export"
 msgstr ""
 
-#: admin/views/includes/tools.php:22
+#: _out/admin/views/includes/tools.php:22 admin/views/includes/tools.php:22
 msgid "Toggle All"
 msgstr ""
 
-#: admin/views/includes/tools.php:38
+#: _out/admin/views/includes/tools.php:38 admin/views/includes/tools.php:38
 msgid "Export"
 msgstr ""
 
-#: admin/views/includes/tools.php:48
+#: _out/admin/views/includes/tools.php:48 admin/views/includes/tools.php:48
 msgid "Import Filter Groups"
 msgstr ""
 
-#: admin/views/includes/tools.php:49
+#: _out/admin/views/includes/tools.php:49 admin/views/includes/tools.php:49
 msgid ""
 "Select the Ajax Load More JSON file you would like to import. When you "
 "click the import button below, ALM will import the filter groups"
 msgstr ""
 
-#: admin/views/includes/tools.php:54
+#: _out/admin/views/includes/tools.php:54 admin/views/includes/tools.php:54
 msgid "Select File"
 msgstr ""
 
-#: admin/views/includes/tools.php:58
+#: _out/admin/views/includes/tools.php:58 admin/views/includes/tools.php:58
 msgid "Import"
 msgstr ""
 
-#: ajax-load-more-filters.php:109
+#: _out/ajax-load-more-filters.php:59 ajax-load-more-filters.php:55
+msgid ""
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More Filters Add-on."
+msgstr ""
+
+#: _out/ajax-load-more-filters.php:60 ajax-load-more-filters.php:56
+msgid "Install Ajax Load More Now"
+msgstr ""
+
+#: _out/ajax-load-more-filters.php:127 ajax-load-more-filters.php:123
 msgid "filter was successfully deleted"
 msgstr ""
 
-#: ajax-load-more-filters.php:217
+#: _out/ajax-load-more-filters.php:216 ajax-load-more-filters.php:212
 msgid "Filter successfully updated."
 msgstr ""
 
-#: ajax-load-more-filters.php:255
+#: _out/ajax-load-more-filters.php:250 ajax-load-more-filters.php:246
 msgid "No filter groups selected"
 msgstr ""
 
-#: ajax-load-more-filters.php:281
+#: _out/ajax-load-more-filters.php:271 ajax-load-more-filters.php:267
 msgid "Incorrect file type"
 msgstr ""
 
-#: ajax-load-more-filters.php:293
+#: _out/ajax-load-more-filters.php:283 ajax-load-more-filters.php:279
 msgid "Import file empty"
 msgstr ""
 
-#: ajax-load-more-filters.php:299 ajax-load-more-filters.php:310
-#: ajax-load-more-filters.php:316 ajax-load-more-filters.php:322
+#: _out/ajax-load-more-filters.php:289 _out/ajax-load-more-filters.php:299
+#: _out/ajax-load-more-filters.php:305 _out/ajax-load-more-filters.php:310
+#: ajax-load-more-filters.php:285 ajax-load-more-filters.php:295
+#: ajax-load-more-filters.php:301 ajax-load-more-filters.php:306
 msgid "JSON file formatted incorrectly"
 msgstr ""
 
-#: ajax-load-more-filters.php:343
+#: _out/ajax-load-more-filters.php:331 ajax-load-more-filters.php:327
 msgid " successfully imported"
 msgstr ""
 
-#: ajax-load-more-filters.php:350
+#: _out/ajax-load-more-filters.php:335 ajax-load-more-filters.php:331
 msgid "An error has occurred"
 msgstr ""
 
-#: ajax-load-more-filters.php:1251
+#: _out/ajax-load-more-filters.php:371 ajax-load-more-filters.php:367
+msgid "Remove filter "
+msgstr ""
+
+#: _out/ajax-load-more-filters.php:1341 ajax-load-more-filters.php:1337
 msgid "stars and up"
 msgstr ""
 
-#: ajax-load-more-filters.php:1251
+#: _out/ajax-load-more-filters.php:1341 ajax-load-more-filters.php:1337
 msgid "star and up"
 msgstr ""
 
-#: ajax-load-more-filters.php:1252
+#: _out/ajax-load-more-filters.php:1342 ajax-load-more-filters.php:1338
 msgid "stars"
 msgstr ""
 
-#: ajax-load-more-filters.php:1359
+#: _out/ajax-load-more-filters.php:1449 ajax-load-more-filters.php:1445
 msgid "Reset"
 msgstr ""
 
-#: ajax-load-more-filters.php:1451
+#: _out/ajax-load-more-filters.php:1556 ajax-load-more-filters.php:1552
 msgid "Are you sure you want to delete"
 msgstr ""
 
-#: ajax-load-more-filters.php:1452
+#: _out/ajax-load-more-filters.php:1557 ajax-load-more-filters.php:1553
 msgid "Ordering Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1453
+#: _out/ajax-load-more-filters.php:1558 ajax-load-more-filters.php:1554
 msgid "Date Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1454
+#: _out/ajax-load-more-filters.php:1559 ajax-load-more-filters.php:1555
 msgid "Category Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1455
+#: _out/ajax-load-more-filters.php:1560 ajax-load-more-filters.php:1556
 msgid "Beta"
 msgstr ""
 
-#: ajax-load-more-filters.php:1456
+#: _out/ajax-load-more-filters.php:1561 ajax-load-more-filters.php:1557
+msgid "Basic Form Fields"
+msgstr ""
+
+#: _out/ajax-load-more-filters.php:1562 ajax-load-more-filters.php:1558
+msgid "Advanced Form Fields"
+msgstr ""
+
+#: _out/ajax-load-more-filters.php:1563 ajax-load-more-filters.php:1559
 msgid "Tag Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1458
+#: _out/ajax-load-more-filters.php:1565 ajax-load-more-filters.php:1561
 msgid "Save Changes"
 msgstr ""
 
-#: ajax-load-more-filters.php:1459
+#: _out/ajax-load-more-filters.php:1566 ajax-load-more-filters.php:1562
 msgid "Filter Saved"
 msgstr ""
 
-#: ajax-load-more-filters.php:1656
+#: _out/ajax-load-more-filters.php:1726 ajax-load-more-filters.php:1722
 msgid "Disable Filter CSS"
 msgstr ""
 
-#: ajax-load-more-filters.php:1663
+#: _out/ajax-load-more-filters.php:1733 ajax-load-more-filters.php:1729
 msgid "Color"
 msgstr ""
 
-#: ajax-load-more-filters.php:1670
+#: _out/ajax-load-more-filters.php:1740 ajax-load-more-filters.php:1736
 msgid "Datepicker Theme"
 msgstr ""
 
-#: ajax-load-more-filters.php:1691
+#: _out/ajax-load-more-filters.php:1758 ajax-load-more-filters.php:1754
 msgid ""
 "Customize your installation of the <a href=\"http://connekthq.com/plugins/"
 "ajax-load-more/filters/\">Filters</a> add-on."
 msgstr ""
 
-#: ajax-load-more-filters.php:1711
+#: _out/ajax-load-more-filters.php:1776 ajax-load-more-filters.php:1772
 msgid "I want to use my own CSS styles."
 msgstr ""
 
-#: ajax-load-more-filters.php:1711
+#: _out/ajax-load-more-filters.php:1776 ajax-load-more-filters.php:1772
 msgid "View Filter CSS"
 msgstr ""
 
-#: ajax-load-more-filters.php:1747
+#: _out/ajax-load-more-filters.php:1816 ajax-load-more-filters.php:1812
 msgid "Choose the color of your filter elements"
 msgstr ""
 
-#: ajax-load-more-filters.php:1749
+#: _out/ajax-load-more-filters.php:1818 ajax-load-more-filters.php:1814
 msgid "Default"
 msgstr ""
 
-#: ajax-load-more-filters.php:1750
+#: _out/ajax-load-more-filters.php:1819 ajax-load-more-filters.php:1815
 msgid "Blue"
 msgstr ""
 
-#: ajax-load-more-filters.php:1751
+#: _out/ajax-load-more-filters.php:1820 ajax-load-more-filters.php:1816
 msgid "Red"
 msgstr ""
 
-#: ajax-load-more-filters.php:1752
+#: _out/ajax-load-more-filters.php:1821 ajax-load-more-filters.php:1817
 msgid "Green"
 msgstr ""
 
-#: ajax-load-more-filters.php:1757
+#: _out/ajax-load-more-filters.php:1826 ajax-load-more-filters.php:1822
 msgid "Preview"
 msgstr ""
 
-#: ajax-load-more-filters.php:1761 ajax-load-more-filters.php:1767
+#: _out/ajax-load-more-filters.php:1830 _out/ajax-load-more-filters.php:1836
+#: ajax-load-more-filters.php:1826 ajax-load-more-filters.php:1832
 msgid "Checked"
 msgstr ""
 
-#: ajax-load-more-filters.php:1762 ajax-load-more-filters.php:1768
+#: _out/ajax-load-more-filters.php:1831 _out/ajax-load-more-filters.php:1837
+#: ajax-load-more-filters.php:1827 ajax-load-more-filters.php:1833
 msgid "Unchecked"
 msgstr ""
 
-#: ajax-load-more-filters.php:1872
+#: _out/ajax-load-more-filters.php:1936 ajax-load-more-filters.php:1932
 msgid ""
 "Select a <a href=\"https://flatpickr.js.org/themes/\" target=\"blank"
 "\">Theme</a> for the Datepicker Field Type."
+msgstr ""
+
+#: _out/functions/helpers.php:275 functions/helpers.php:275
+msgid " results for "
 msgstr ""

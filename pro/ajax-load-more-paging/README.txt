@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/paging/
 Requires at least: 4.0
-Tested up to: 5.5.0
+Tested up to: 5.9.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.4
+Version: 1.5.6.1
 
 
 == Copyright ==
-Copyright 2020 Darren Cooney
+Copyright 2022 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -23,7 +23,7 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 = Extend Ajax Load More with a numbered paging navigation! =
 
-Replace the default Ajax Load More lazy load/infinite scrolling functionality with a paging navigation system.
+Replace the default Ajax Load More lazy load/infinite scrolling functionality with an Ajax powered paging navigation system.
 http://connekthq.com/plugins/ajax-load-more/paging/
 
 == Installation ==
@@ -49,6 +49,23 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 == Changelog ==
+
+= 1.5.6.1 - March 7, 2022 =
+* Update: Improved initial loading animations.
+* Update: Code cleanup and re-organization.
+
+
+= 1.5.6 - January 10, 2022 =
+* NEW - Added new `almPagingComplete` callback that is dispatched once the Paging DOM elements have completed any transiations following an Ajax request.
+```
+window.almPagingComplete = function(){
+  console.log( 'Callback: almPagingComplete tiggered' );
+};
+```
+
+= 1.5.5 - April 20, 2021 =
+* FIX - Fixed issue with the loading of the paging navigation for users who have disabled the Paging CSS. On page load, all page number would be shown when CSS was disabled.
+
 
 = 1.5.4 - September 10, 2020 =
 * UPDATE - Updated `First`/`Last` navigation buttons to only display when required. Previously, First and Last may show even though users can access the first and last pages via button navigation.

@@ -5,14 +5,14 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 5.4.2
+Tested up to: 6.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.4.6
+Version: 1.6.3
 
 
 == Copyright ==
-Copyright 2020 Connekt Media
+Copyright 2022 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -48,6 +48,42 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 
 
 == Changelog ==
+
+= 1.6.3 - January 6, 2023 =
+* FIX: Added DOM loaded event that double checks browser URL vs HTML stored URL for scrolling purposes and to prevent errors.
+* UPDATE: Various code, build updates and overall code cleanup.
+
+= 1.6.2 - June 24, 2022 =
+* NEW: Added new functionality for Nextpage autoload based on taxonomy terms. This allows conditionally inject a shortcode for certain terms only.
+e.g. `[ajax_load_more nextpage="true" taxonomy="actors" taxonomy_terms="will-smith, chris-rock"]
+
+= 1.6.1 - March 7, 2022 =
+* Update: Added update to exclude some unnessasary post types from the automatic installation.
+* Fix: Adding `page` post type to the automatic installation settings.
+
+= 1.6.0 - January 9, 2022 =
+* NEW - Added support for automatic implementation of the Next Page add-on. Simply select the desired post types then enter the shortcode on the Settings > Next Page screen inside Ajax Load More and you are good to go 🎉
+* NEW - Added new `alm_nextpage_the_content` hook that provides a method to run a custom content filter on individual pages in each Ajax request.
+```
+function my_nextpage_content( $content, $page ) {
+	$content = "<h3>Page: ${page}</h3>" . $content;
+	return $content;
+}
+add_filter( 'alm_nextpage_the_content', 'my_nextpage_content', 10, 2 );
+```
+
+= 1.5.0.1 - February 16, 2021 =
+* HOTFIX - Fix for potential issues with trailing commas causing fatal errors on servers PHP 7.2.x and lower.
+
+
+= 1.5.0 - February 11, 2021 =
+* UPGRADE NOTICE - You must update core ALM when updating Next Page add-on.
+* NEW - Added new Page Title Template option that allow for updating the browser title when each load more action. e.g. `Page 3 of 15 | My Post Title | Site Title`.
+* FIX - Fixed issue with fwd/back buttons and interaction between Ajax loaded pages.
+* FIX - Fixed issues with nesting Next Page inside Single Posts add-on. They now work together seemlessly :)
+* UPDATE - PHP and JS code cleanup.
+* UPDATE - Various updates to support PHP 8.0+.
+
 
 = 1.4.6 - June 29, 2020 =
 * FIX - Fixed issue with querystrings in paging URLs when using Next Page + Cache add-ons.
