@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 Requires at least: 4.0
-Tested up to: 6.1
+Tested up to: 6.0.0
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.13.0.4
+Version: 2.0.1
 
 == Copyright ==
 Copyright 2023 Darren Cooney
@@ -25,6 +25,7 @@ Create custom Ajax Load More filters in seconds.
 
 http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
+
 == Installation ==
 
 = Uploading in WordPress Dashboard =
@@ -35,6 +36,7 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 4. Click 'Install Now'
 5. Activate the plugin in the Plugin dashboard
 
+
 = Using FTP =
 
 1. Download `ajax-load-more-filters.zip`.
@@ -43,7 +45,50 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 4. Ensure Ajax Load More is installed prior to activating the plugin.
 5. Activate the plugin in the WP plugin dashboard.
 
+
+== Upgrade Notice ==
+
+
 == Changelog ==
+
+= 2.0.2 - February 25, 2023 =
+ * FIX: Fixed issue with parsing filters & facets on archive templates/pages.
+ * FIX: Fixed querystring params not being passed to query on taxonomy archive pages.
+ * FIX: Fixed dyanmic filter values not working on archive pages.
+ * FIX: Fixed issue with PHP generator output and sort field.
+ * NEW: Added `alm_filters_range_slider_steps` hook to adjust the default input steps when using the Range Slider.
+ * NEW: Added `alm_filters_textfield_submit_label` to filter textfield submit button labels.
+ * NEW: Added `alm_filters_textfield_placeholder` to filter of the textfield input placeholder.
+ * NEW: Added `alm_filters_css_classes` to allow for filtering of container classnames.
+
+
+= 2.0.1 - February 16, 2023 =
+* FIX: Fixed PHP warning that could be displayed in debug log about undefined `facet` array key.
+* FIX: Fixed issue with unwanted `]`character being rendered in some instances of select drop menus.
+* FIX: Fixed issue with select displaying result count even if not checked in Filter admin.
+
+
+= 2.0.0 - February 14, 2023 =
+UPGRADE NOTICE:
+This filters update requires updating core Ajax Load More plugin to 5.6.0
+
+* NEW: Added Facet Filtering.
+* NEW: Added duplicate filters functionality that allows for easy duplication of filters.
+* NEW: Added ability to sort filter dashboard columns by column headers.
+* NEW: Added filter preview functionality.
+* NEW: Added support for `include_children` parameter when running a taxonomy query.
+* NEW: Added support for passing filter ID to `alm_filters( ID, ALM_ID)` PHP method.
+* NEW: Added ability to safely delete filters from WP backend when using the `alm_filters()` PHP method for initiating a filter.
+* FIX: Fixed issues with Selected Filters display and item counter.
+* FIX: Added checker function to confirm taxonomy exists before attempting to render a tax filter which will prevent frontend PHP warnings.
+* FIX: Fixed issue with almFiltersActive callback function not working correctly.
+* FIX: Fixed issue with Reset button not hiding in the correct instances.
+* FIX: Fixed issue with category__and and tag__and checkboxes not remaining selected on page reload.
+* FIX: Fixed bug with `default_values` not being maintained on tax and meta queries in some instances.
+* UPDATE: Various admin UI/UX updates.
+* UPDATE: Cleaned up Filter builder JavaScript to make it easier for future updates.
+* UPDATE: Improved taxonomy and meta query handling on deep linked queries.
+
 
 = 1.13.0.4 - January 10, 2023 =
 * HOTFIX: Adding fix for missing constant name that was causing a fatal error.

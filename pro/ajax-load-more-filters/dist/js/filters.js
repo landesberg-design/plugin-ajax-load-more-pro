@@ -8845,24 +8845,27 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.uiToggle = uiToggle;
+exports.setCheckboxLimits = setCheckboxLimits;
+exports.updateCheckboxLimits = updateCheckboxLimits;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-/*
+/**
  * Expand/Collapse filters.
  *
+ * @param {NodeList} elements Filter elements.
  * @since 1.10.1
  */
 function uiToggle(elements) {
 	if (!elements) {
-		return false;
+		return;
 	}
-	[].concat(_toConsumableArray(elements)).forEach(function (item, e) {
-		item.addEventListener("click", function (e) {
+	[].concat(_toConsumableArray(elements)).forEach(function (item) {
+		item.addEventListener("click", function () {
 			toggleFilter(this);
 		});
 		// Return/Enter.
-		item.addEventListener("keyup", function (e) {
+		item.addEventListener("keyup", function () {
 			// Number 13 is the "Enter" key on the keyboard
 			if (e.keyCode === 13) {
 				// Cancel the default action, if needed
@@ -8875,19 +8878,19 @@ function uiToggle(elements) {
 }
 
 /**
- * Toggle a filter
+ * Toggle a filter group.
  *
- * @param {*} el
+ * @param {Element} el The HTML element.
  * @since 1.10.1
  */
 var toggleFilter = function toggleFilter(el) {
 	if (!el) {
-		return false;
+		return;
 	}
 	var parent = el.parentNode.parentNode;
 	var target = parent.querySelector(".alm-filter--inner");
 	if (!target) {
-		return false;
+		return;
 	}
 	if (target && el.getAttribute("aria-expanded") === "true") {
 		target.style.display = "none";
@@ -8899,6 +8902,89 @@ var toggleFilter = function toggleFilter(el) {
 		el.setAttribute("aria-expanded", true);
 	}
 };
+
+/**
+ * Click event for checkbox toggles.
+ *
+ * @param {event} e The click event.
+ */
+function checkboxLimitHandler(e) {
+	var button = e.currentTarget;
+	var parent = button.parentNode;
+	var items = parent.querySelectorAll("li.alm-filters-limit");
+
+	if (button.classList.contains("open")) {
+		button.classList.remove("open");
+		button.innerHTML = button.dataset.open;
+		[].concat(_toConsumableArray(items)).forEach(function (item) {
+			item.style.display = "none";
+		});
+	} else {
+		button.classList.add("open");
+		button.innerHTML = button.dataset.close;
+		[].concat(_toConsumableArray(items)).forEach(function (item) {
+			item.style.display = "";
+		});
+	}
+}
+
+/**
+ * Expand/collapse checkbox groups.
+ *
+ * @param {NodeList} buttons Array of button elements.
+ * @since 2.0.0
+ */
+function setCheckboxLimits(buttons) {
+	if (!buttons) {
+		return;
+	}
+	[].concat(_toConsumableArray(buttons)).forEach(function (button) {
+		// Add click event.
+		button.addEventListener("click", checkboxLimitHandler);
+	});
+}
+
+/**
+ * Set the display of checkbox limit toggles.
+ *
+ * @param {Element} element The Filter HTML element.
+ */
+function updateCheckboxLimits(element) {
+	if (!element) {
+		return;
+	}
+	var button = element.querySelector("a.alm-filter--checkbox-limit");
+	if (!button) {
+		return;
+	}
+
+	button.removeEventListener("click", checkboxLimitHandler);
+
+	var limit = parseInt(button.dataset.limit);
+	var template = button.dataset.template;
+	var parent = button.parentNode;
+	var items = parent.querySelectorAll("li.field-parent:not(.disabled)");
+	var count = items.length;
+	var diff = count - limit;
+
+	var open = template.replace("%total%", diff);
+
+	button.classList.remove("open");
+	if (count <= limit) {
+		button.style.display = "none";
+	} else {
+		button.style.display = "inline-block";
+		button.innerHTML = open;
+		button.addEventListener("click", checkboxLimitHandler);
+
+		// Loop list items and set display.
+		[].concat(_toConsumableArray(items)).forEach(function (item, index) {
+			if (index >= limit) {
+				item.style.display = "none";
+			}
+		});
+	}
+}
 
 /***/ }),
 
@@ -8914,6 +9000,7 @@ var toggleFilter = function toggleFilter(el) {
 
 var almClassName = ".alm-listing[data-filters=true]";
 var className = ".alm-filters.alm-filters-container";
+var facetsClassName = ".alm-filters.alm-filters-facets";
 
 module.exports = {
 	url: "",
@@ -8922,7 +9009,9 @@ module.exports = {
 	alm_core: document.querySelectorAll(almClassName),
 	alm_core_classname: almClassName,
 	alm_filters: document.querySelectorAll(className),
+	alm_filters_facets: document.querySelectorAll(facetsClassName),
 	filters_classname: className,
+	filter_classname: ".alm-filter",
 	almFilters: document.querySelector(className),
 	reset_btn_classname: "button#alm-filters-reset-button",
 	isIE: navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false,
@@ -9704,6 +9793,10 @@ var _Dispatch = __webpack_require__(/*! ./modules/Dispatch */ "./src/js/frontend
 
 var _Dispatch2 = _interopRequireDefault(_Dispatch);
 
+var _Facets = __webpack_require__(/*! ./modules/Facets */ "./src/js/frontend/modules/Facets.js");
+
+var _Facets2 = _interopRequireDefault(_Facets);
+
 var _ParseQuerystring = __webpack_require__(/*! ./modules/ParseQuerystring */ "./src/js/frontend/modules/ParseQuerystring.js");
 
 var _ParseQuerystring2 = _interopRequireDefault(_ParseQuerystring);
@@ -9866,7 +9959,7 @@ var almFiltersInit = function almFiltersInit(filter) {
 	// Textfield Button Event listeners
 	var almFiltertextButtons = filter.querySelectorAll(".alm-filter--text-wrap.has-button button");
 	if (almFiltertextButtons) {
-		[].concat(_toConsumableArray(almFiltertextButtons)).forEach(function (button, e) {
+		[].concat(_toConsumableArray(almFiltertextButtons)).forEach(function (button) {
 			button.addEventListener("click", almFiltersClick);
 		});
 	}
@@ -9876,7 +9969,7 @@ var almFiltersInit = function almFiltersInit(filter) {
 		// Loop all items and add the event listener
 		var almFilterItems = filter.querySelectorAll(".alm-filter--item");
 		if (almFilterItems) {
-			[].concat(_toConsumableArray(almFilterItems)).forEach(function (item, e) {
+			[].concat(_toConsumableArray(almFilterItems)).forEach(function (item) {
 				item.addEventListener("change", almFiltersClick);
 			});
 		}
@@ -9893,8 +9986,8 @@ var almFiltersInit = function almFiltersInit(filter) {
 	// Reset Button
 	var resetButton = filter && filter.querySelector(_Variables2.default.reset_btn_classname);
 	if (resetButton) {
-		resetButton.addEventListener("click", function (e) {
-			almFiltersClear(true, filter);
+		resetButton.addEventListener("click", function () {
+			window.almFiltersClear(true, filter);
 		});
 	}
 
@@ -9911,30 +10004,50 @@ var almFiltersInit = function almFiltersInit(filter) {
 		});
 	}
 
-	// Init Datepickers
+	// Datepicker init.
 	var datePickers = filter.querySelectorAll("input.alm-flatpickr");
 	if (datePickers) {
 		(0, _DatePicker.setDatePickers)(filter.dataset.id, datePickers);
 	}
 
-	// Init rangeSliders
+	// RangeSlider init.
 	var rangeSliders = filter.querySelectorAll("div.alm-range-slider");
 	if (rangeSliders) {
 		(0, _RangeSliders.setRangeSliders)(filter.dataset.id, rangeSliders, style);
 	}
 
-	// Toggle Filter Event Handlers
+	// Toggle Filter button.
 	var filterToggles = filter.querySelectorAll("div.alm-filter--title .alm-filter--toggle");
 	if (filterToggles) {
 		(0, _UI.uiToggle)(filterToggles);
+	}
+
+	// Checkbox Limit buttons.
+	var checkboxLimitToggles = filter.querySelectorAll("a.alm-filter--checkbox-limit");
+	if (checkboxLimitToggles) {
+		(0, _UI.setCheckboxLimits)(checkboxLimitToggles);
 	}
 
 	// Set currently selected filters.
 	(0, _CurrentFilters2.default)(window.location.search);
 };
 
-// Reset Button.
-window.almFiltersActive = function (filter, obj) {
+/**
+ * Facets callback dispatched from core ALM.
+ *
+ * @param {object} facets The current facets.
+ */
+window.almFiltersFacets = function (facets) {
+	(0, _Facets2.default)(facets);
+};
+
+/**
+ * Reset Button Callback.
+ *
+ * @param {Element} filter The current filter element.
+ * @param {object} obj The active filters object.
+ */
+window.almFiltersResetStatus = function (filter, obj) {
 	var resetButton = filter && filter.querySelector(_Variables2.default.reset_btn_classname);
 	if (resetButton) {
 		if (obj === "") {
@@ -9948,8 +10061,7 @@ window.almFiltersActive = function (filter, obj) {
 /**
  * Trigger click event on selected filter.
  *
- * @param element   The clicked element.
- * @since 1.0
+ * @param {Element} element The clicked element.
  */
 window.removeSelectedFilter = function (element) {
 	var almFilters = _Variables2.default.almFilters;
@@ -9982,8 +10094,7 @@ window.removeSelectedFilter = function (element) {
 /**
  * Trigger click event on selected filter when enter clicked.
  *
- * @param element   The clicked element
- * @since 1.0
+ * @param {Element} element The clicked element
  */
 window.removeSelectedFilterEnter = function (event) {
 	if (!event) {
@@ -10024,6 +10135,7 @@ window.removeSelectedFilterEnter = function (event) {
 
 /**
  * Initiate Ajax Load More filters.
+ *
  * Public JS function.
  *
  * @param {string} target The filter instance ID.
@@ -10095,7 +10207,7 @@ window.addEventListener("popstate", function (event) {
 	var almFilters = _Variables2.default.almFilters || document.querySelector(_Variables2.default.filters_classname);
 
 	// Exit if element does not exist.
-	// Exit pushstate was never initiated.
+	// Exit if pushstate was never initiated.
 	// Exit if multiple instances.
 	if (!almFilters || !_Variables2.default.pushstate || (0, _multipleInstances2.default)()) {
 		return;
@@ -10115,7 +10227,7 @@ window.addEventListener("popstate", function (event) {
 
 	// Empty URL or empty querystring
 	if (url === "" || url === null || querystring === "") {
-		almFiltersClear(false);
+		window.almFiltersClear(false);
 		if (resetButton) {
 			resetButton.classList.add("hidden");
 		}
@@ -10148,7 +10260,7 @@ window.almFiltersPaged = function (alm) {
  * Public JS function
  *
  * @param {boolean} reset      Should this reset the entire filter.
- * @param {HTMLElement} filter An optional filter element to pass.
+ * @param {Element} filter An optional filter element to pass.
  * @since 1.7.5
  */
 var reset = function reset() {
@@ -10197,9 +10309,9 @@ window.almFiltersClear = function () {
 
 /**
  * Reset an individual filter group `almfilters.restoreDefault()`
- * Public JS function
+ * Public JS function.
  *
- * @param {HTMLElement} filter The HTML element to reset.
+ * @param {Element} filter The HTML element to reset.
  * @since 1.7.5
  */
 var resetFilter = function resetFilter(filter) {
@@ -10243,7 +10355,7 @@ window.almFiltersOnload = function () {
  * Filters Complete function.
  * Fires from core Ajax Load More [core/src/js/modules/filtering.js]
  *
- * @param {HTMLElement} el The alm element.
+ * @param {Element} el The alm element.
  * @since 1.0
  */
 window.almFiltersAddonComplete = function () {
@@ -10382,6 +10494,7 @@ var buildDataObj = function buildDataObj(filter, data) {
 	var isArchive = filter.dataset.isArchive;
 	var taxonomy = filter.dataset.taxonomy;
 	var taxonomyOperator = filter.dataset.taxonomyOperator;
+	var taxonomyIncludeChildren = filter.dataset.taxonomyIncludeChildren;
 	var metaKey = filter.dataset.metaKey;
 	var metaCompare = filter.dataset.metaCompare;
 	var metaType = filter.dataset.metaType;
@@ -10423,12 +10536,12 @@ var buildDataObj = function buildDataObj(filter, data) {
 		// Need to prepend : to add multiple values
 		if (!data.hasOwnProperty("taxonomy")) {
 			terms = (0, _GetTerms2.default)(filter, data);
-
 			data.taxonomy = "";
 
 			if (terms) {
 				data.taxonomy = taxonomy;
 				data.taxonomyOperator = taxonomyOperator;
+				data.taxonomyIncludeChildren = taxonomyIncludeChildren;
 				data.taxonomyTerms = terms;
 			}
 		} else {
@@ -10437,11 +10550,13 @@ var buildDataObj = function buildDataObj(filter, data) {
 			var oldTaxonomy = data.taxonomy !== "" && typeof data.taxonomy !== "undefined" ? data.taxonomy + ":" : "";
 			var oldTaxonomyTerms = data.taxonomyTerms !== "" && typeof data.taxonomyTerms !== "undefined" ? data.taxonomyTerms + ":" : "";
 			var oldtaxonomyOperator = data.taxonomyOperator !== "" && typeof data.taxonomyOperator !== "undefined" ? data.taxonomyOperator + ":" : "";
+			var oldtaxonomyIncludeChildren = data.taxonomyIncludeChildren !== "" && typeof data.taxonomyIncludeChildren !== "undefined" ? data.taxonomyIncludeChildren + ":" : "";
 
 			if (terms) {
 				data.taxonomy = "" + oldTaxonomy + taxonomy;
-				data.taxonomyOperator = "" + oldtaxonomyOperator + taxonomyOperator;
 				data.taxonomyTerms = "" + oldTaxonomyTerms + terms;
+				data.taxonomyOperator = "" + oldtaxonomyOperator + taxonomyOperator;
+				data.taxonomyIncludeChildren = "" + oldtaxonomyIncludeChildren + taxonomyIncludeChildren;
 			}
 		}
 	}
@@ -10834,12 +10949,19 @@ function buildSelections(obj) {
 				// Get text of the filter, not the slug
 				var _value = (0, _getKeyValue2.default)(key, values[n]);
 
-				// Confirm value exits
+				// Confirm value exits.
 				if (_value) {
-					// Strip all HTML.
-					// @see https://stackoverflow.com/a/5002161/921927
-					_value = _value.replace(/<\/?[^>]+(>|$)/g, "");
+					// Remove span `.alm-filter-count` from display.
+					var temp = document.createElement("div");
+					temp.innerHTML = _value;
+					var spanCount = temp.querySelector("span.alm-filter-count, span.alm-filter-counter");
+					if (spanCount) {
+						spanCount.remove(); // Remove span counter.
+						_value = temp.textContent;
+					}
 
+					// Strip all remaining HTML tags -> https://stackoverflow.com/a/5002161/921927.
+					_value = _value.replace(/<\/?[^>]+(>|$)/g, "");
 					items += "<li>";
 					items += '<div onclick="window.removeSelectedFilter(this);" onkeyup="window.removeSelectedFilterEnter(event);" data-key="' + key + '" data-value="' + values[n] + '" tabindex="0" aria-label="' + window.alm_filters_localize.remove_active_filter + "" + values[n] + '">';
 					items += _value;
@@ -11074,6 +11196,221 @@ exports.default = dispatch;
 
 /***/ }),
 
+/***/ "./src/js/frontend/modules/Facets.js":
+/*!*******************************************!*\
+  !*** ./src/js/frontend/modules/Facets.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _UI = __webpack_require__(/*! ../global/UI */ "./src/js/frontend/global/UI.js");
+
+var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
+
+var _Variables2 = _interopRequireDefault(_Variables);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Set the facets.
+ *
+ * @param {object} facets The current facets.
+ */
+var setFacets = function setFacets(facets) {
+	if (!facets) {
+		return;
+	}
+
+	console.log(facets);
+
+	// Get all filters.
+	var filters = _Variables2.default.alm_filters_facets;
+	var target = _Variables2.default.filter_classname;
+	var facetGroups = [];
+
+	if (!filters) {
+		return;
+	}
+
+	// Loop filters and pull out all potential facets.
+	filters && filters.forEach(function (group) {
+		var filters = group.querySelectorAll(target + "[data-key=taxonomy],\n\t\t\t\t" + target + "[data-key=meta],\n\t\t\t\t" + target + "[data-key=_author],\n\t\t\t\t" + target + "[data-key=_year],\n\t\t\t\t" + target + "[data-key=_month],\n\t\t\t\t" + target + "[data-key=_day],\n\t\t\t\t" + target + "[data-key=category],\n\t\t\t\t" + target + "[data-key=category_and],\n\t\t\t\t" + target + "[data-key=tag],\n\t\t\t\t" + target + "[data-key=tag_and]");
+		group.classList.add("alm-filters-facets-loaded");
+		facetGroups.push(Array.from(filters));
+	});
+
+	if (!facetGroups) {
+		return;
+	}
+
+	// Flatten the array and loop results.
+	facetGroups.flat().forEach(function (element) {
+		var key = element.dataset.key; // Get the filter key by dataset.
+		var fieldtype = element.dataset.fieldtype; // Get the field type key by dataset.
+		var archive = element.dataset.isArchive ? true : false; // Is this an archive page?
+		switch (key) {
+			case "taxonomy":
+				var slug = element.dataset.taxonomy; // Get the taxonomy slug.
+				slug = archive ? slug.replace(/^_/, "") : slug; // Remove leading underscore if archive.
+
+				var taxonomies = facets.taxonomies && facets.taxonomies[slug] ? facets.taxonomies[slug] : "";
+				parseTerms(taxonomies, element, fieldtype);
+				break;
+
+			case "category":
+				var cats = facets.category ? facets.category : ""; // Get the category slug.
+				parseTerms(cats, element, fieldtype);
+				break;
+
+			case "category_and":
+				var category_and = facets.category__and ? facets.category__and : "";
+				parseTerms(category_and, element, fieldtype);
+				break;
+
+			case "tag":
+				var tag = facets.tag ? facets.tag : ""; // Get the tag slug.
+				parseTerms(tag, element, fieldtype);
+				break;
+
+			case "tag_and":
+				var tag_and = facets.tag__and ? facets.tag__and : ""; //Get the tag__and slug.
+				parseTerms(tag_and, element, fieldtype);
+				break;
+
+			case "meta":
+				var metaKey = element.dataset.metaKey; // Get the meta key.
+				var meta = facets.meta && facets.meta[metaKey] ? facets.meta[metaKey] : "";
+				parseTerms(meta, element, fieldtype);
+				break;
+
+			case "_author":
+				var authors = facets.author ? facets.author : ""; // Get the author slug.
+				parseTerms(authors, element, fieldtype);
+				break;
+
+			case "_year":
+				var year = facets.year ? facets.year : ""; // Get the year slug.
+				parseTerms(year, element, fieldtype);
+				break;
+
+			case "_month":
+				var month = facets.month ? facets.month : ""; // Get the month slug.
+				parseTerms(month, element, fieldtype);
+				break;
+
+			case "_day":
+				var day = facets.day ? facets.day : ""; // Get the day slug.
+				parseTerms(day, element, fieldtype);
+				break;
+
+			default:
+				break;
+		}
+	});
+};
+exports.default = setFacets;
+
+/**
+ * Parse taxonomy and meta filters.
+ *
+ * @param {object}  facets    Object containing the available facets.
+ * @param {Element} element   The facet HTML element.
+ * @param {string}  fieldtype The fieldtype.
+ */
+
+function parseTerms(facets, element, fieldtype) {
+	var facetArray = facets ? Object.keys(facets) : [];
+	var hideInactive = element.parentNode.classList.contains("alm-filters-facets-hide-inactive");
+
+	switch (fieldtype) {
+		case "radio":
+		case "checkbox":
+			var items = element.querySelectorAll("li");
+			items && items.forEach(function (item) {
+				var value = item.firstChild.dataset.value;
+				var found = facetArray.includes(value);
+				var count = facets && facets[value] ? parseInt(facets[value]) : 0;
+				var target = item.querySelector(".alm-filter--link");
+
+				var counter = target.querySelector(".alm-filter-counter");
+				if (counter) {
+					counter.innerHTML = count;
+				}
+
+				// 0 items returned.
+				if (count === 0) {
+					target.classList.add("disabled");
+					target.classList.remove("active");
+				}
+
+				// `Hide Inactive` option.
+				if (hideInactive) {
+					if (found) {
+						item.removeAttribute("style");
+					} else {
+						item.style.display = "none";
+					}
+				}
+
+				if (!found && !target.classList.contains("active")) {
+					target.classList.add("disabled");
+					target.classList.remove("active");
+				} else {
+					target.classList.remove("disabled");
+				}
+			});
+
+			if (hideInactive) {
+				// Show/Hide checkbox limit buttons.
+				(0, _UI.updateCheckboxLimits)(element);
+			}
+
+			break;
+
+		case "select":
+		case "select_multiple":
+			var select = element.querySelector("select");
+			var showCount = select.dataset.count === "true";
+
+			var active = false;
+			Array.from(select.options).forEach(function (option) {
+				var value = option.value;
+				if (value !== "#") {
+					var count = facets && facets[value] ? facets[value] : "0";
+					var name = option.dataset.name;
+					if (showCount) {
+						var countTemplate = select.dataset.countTemplate;
+						var countDisplay = " " + countTemplate.replace("%count%", count);
+						option.innerHTML = "" + name + countDisplay;
+					}
+
+					var found = facetArray.includes(value);
+					active = found ? true : active;
+					option.disabled = found ? false : true;
+				}
+			});
+			// Disable entire select if no found items.
+			select.disabled = active ? false : true;
+
+			if (select.disabled) {
+				select.classList.add("disabled");
+			} else {
+				select.classList.remove("disabled");
+			}
+
+			break;
+	}
+}
+
+/***/ }),
+
 /***/ "./src/js/frontend/modules/GetSortOrder.js":
 /*!*************************************************!*\
   !*** ./src/js/frontend/modules/GetSortOrder.js ***!
@@ -11284,31 +11621,32 @@ exports.default = getTerms;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
-/*
- * parseQueryString
+/**
  * Parse the querystring URL
  *
+ * @param {string} queryString The querystring.
+ * @return {array} The querystring as an array.
  * @since 1.0
  */
 var parseQuerystring = function parseQuerystring(queryString) {
-  var params = {},
-      queries,
-      temp,
-      i,
-      l;
+	var params = {},
+	    queries,
+	    temp,
+	    i,
+	    l;
 
-  // Split into key/value pairs
-  queries = queryString.split("&");
+	// Split into key/value pairs
+	queries = queryString.split("&");
 
-  // Convert the array of strings into an object
-  for (i = 0, l = queries.length; i < l; i++) {
-    temp = queries[i].split('=');
-    params[temp[0]] = temp[1];
-  }
+	// Convert the array of strings into an object
+	for (i = 0, l = queries.length; i < l; i++) {
+		temp = queries[i].split("=");
+		params[temp[0]] = temp[1];
+	}
 
-  return params;
+	return params;
 };
 
 exports.default = parseQuerystring;
@@ -11344,8 +11682,8 @@ var almFiltersTimer = "";
 /**
  * Update browser URL on scroll.
  *
- * @param {HTMLElemnt} almFilters The Filters.
- * @param {HTMLElemnt} almListing The Ajax Load More listing.
+ * @param {Element} almFilters The Filters.
+ * @param {Element} almListing The Ajax Load More listing.
  * @since 1.7
  */
 var onScroll = function onScroll(almFilters, almListing) {
@@ -11442,20 +11780,18 @@ exports.default = onScroll;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-/*
- * setCheckboxState
- * Set checked state of checkbox
+/**
+ * Set checked state of checkbox.
  *
- * @param {Array} array Array of selected filter values
- * @param {HTMLElement} setCheckboxState The current checkbox in the loop
+ * @param {array}   array    Array of selected filter values.
+ * @param {Element} checkbox The current checkbox in the loop.
  * @since 1.0
  */
 var setCheckboxState = function setCheckboxState(array, checkbox) {
-	var chkVal = checkbox.dataset.value;
-	var isStarRating = checkbox.classList.contains("field-starrating");
+	var value = checkbox.dataset.value;
 
 	// If checkbox value is found in array set as .active
-	if (array.indexOf(chkVal) > -1) {
+	if (array.indexOf(value) > -1) {
 		checkbox.classList.add("active");
 		checkbox.setAttribute("aria-checked", true);
 	} else {
@@ -11504,16 +11840,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-/*
+/**
  * Get the selected terms and build the data obj.
  *
- * @param filter element   The container element for the current filter set
- * @param data object   The data obj for the filter
- * @return data
- *
+ * @param {object} filter Object containing selected filter properties.
  * @since 1.0
  */
-
 var setElementStates = function setElementStates(urlArray) {
 	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
 	if (!almFilters) {
@@ -11615,7 +11947,6 @@ var setElementStates = function setElementStates(urlArray) {
 
 			default:
 				// Textfield
-
 				var textfield = filter.querySelector("input[type=text]");
 				if (urlArray.hasOwnProperty(key)) {
 					textfield.value = urlArray[key];
@@ -11711,7 +12042,7 @@ var triggerChange = function triggerChange(filterGroup) {
 	var filters = filterGroup.querySelectorAll(".alm-filter--group");
 
 	// Loop all filters.
-	[].concat(_toConsumableArray(filters)).forEach(function (filter, e) {
+	[].concat(_toConsumableArray(filters)).forEach(function (filter) {
 		count++;
 		data = (0, _BuildDataObj2.default)(filter, data); // Build data obj
 		if (!hasMultple) {
@@ -11726,7 +12057,12 @@ var triggerChange = function triggerChange(filterGroup) {
   * Callback function dispatched informing user of the active filters.
   */
 	if (typeof window.almFiltersActive === "function") {
-		window.almFiltersActive(filterGroup, activeFiltersObj);
+		window.almFiltersActive(activeFiltersObj);
+	}
+
+	// Set the reset button status.
+	if (typeof window.almFiltersResetStatus === "function") {
+		window.almFiltersResetStatus(filterGroup, activeFiltersObj);
 	}
 
 	// Set URL

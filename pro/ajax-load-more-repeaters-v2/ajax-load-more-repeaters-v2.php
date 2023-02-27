@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.5.9
+ * Version: 2.5.10
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -15,8 +15,8 @@
 
 define( 'ALM_UNLIMITED_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_UNLIMITED_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_UNLIMITED_VERSION', '2.5.9' );
-define( 'ALM_UNLIMITED_RELEASE', 'January 5, 2023' );
+define( 'ALM_UNLIMITED_VERSION', '2.5.10' );
+define( 'ALM_UNLIMITED_RELEASE', 'February 14, 2023' );
 
 /**
  * Core activation hook function.
@@ -335,9 +335,10 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 
 					foreach ( $rows as $repeater ) :
 						$i++;
-						$repeater_file  = $repeater->name;
-						$repeater_name  = 'Template #' . $i;
-						$repeater_alias = $repeater->alias;
+						$repeater_file    = $repeater->name;
+						$repeater_name    = 'Template #' . $i;
+						$repeater_alias   = $repeater->alias;
+						$repeater_content = $repeater->repeaterDefault; // phpcs:ignore
 						if ( ! empty( $repeater_alias ) ) { // Set alias.
 							$heading = $repeater_alias;
 						} else {
@@ -364,11 +365,11 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 									<div class="column column--half">
 										<label class="template-title has-margin-btm" for="id-<?php echo esc_html( $repeater_file ); ?>">
 											<?php esc_html_e( 'Template ID:', 'ajax-load-more-repeaters-v2' ); ?>
-											<span><?php esc_html_e( 'The unique ID assigned to this template (non-editable).', 'ajax-load-more-repeaters-v2' ); ?></span>
+											<span><?php esc_html_e( 'The unique ID assigned to this template.', 'ajax-load-more-repeaters-v2' ); ?></span>
 										</label>
 										<input type="text" class="disabled-input" id="id-<?php echo esc_html( $repeater_file ); ?>" value="<?php echo esc_html( $repeater_file ); ?>" readonly="readonly">
 									</div>
-								</div><!-- /.alm-row -->
+								</div>
 
 								<div class="alm-row alm-row--margin-btm">
 									<div class="column column--two-third">
@@ -382,20 +383,32 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 												do_action( 'alm_get_layouts' ); // Layouts - Template Selection.
 											?>
 										</div>
-									</div><!-- /.alm-row -->
+									</div>
 
 									<div class="alm-row alm-row--margin-btm">
 										<div class="column textarea-wrap">
 											<?php
-												$filename = $base_dir . '/' . $repeater_file . '.php';
+											$filename = $base_dir . '/' . $repeater_file . '.php';
+
+											$content = '';
+											if ( file_exists( $filename ) ) {
 												// phpcs:ignore
 												$handle   = fopen( $filename, 'r' );
 												// phpcs:ignore
 												$content = filesize( $filename ) !== 0 ? fread( $handle, filesize( $filename ) ) : '';
 												// phpcs:ignore
 												fclose( $handle );
+											}
 											?>
-											<textarea rows="10" id="<?php echo esc_html( $repeater_file ); ?>" class="_alm_repeater"><?php echo $content ? $content : ''; //phpcs:ignore ?></textarea>
+											<?php
+											if ( ! $content ) {
+												// Add warning if template doesn't exist in filesystem.
+												?>
+											<p class="warning-callout notify missing-template" style="margin: 5px 0 15px;">
+												<?php esc_attr_e( 'This template is missing from the filesystem. Click the "Save Template" button below to save the template.', 'ajax-load-more-repeaters-v2' ); ?>
+											</p>
+											<?php } ?>
+											<textarea rows="10" id="<?php echo esc_html( $repeater_file ); ?>" class="_alm_repeater"><?php echo $content ? $content : $repeater_content; //phpcs:ignore ?></textarea>
 											<script>
 											var editor_<?php echo esc_html( $repeater_file ); ?> = CodeMirror.fromTextArea(document.getElementById("<?php echo esc_html( $repeater_file ); ?>"),
 											{
@@ -409,7 +422,7 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 											});
 											</script>
 										</div>
-									</div><!-- /.alm-row -->
+									</div>
 
 									<div class="alm-row">
 										<div class="column">
@@ -428,10 +441,10 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 												unset( $repeater_options );
 												?>
 										</div>
-									</div><!-- /.alm-row -->
+									</div>
 
-								</div><!-- /.wrap -->
-							</div><!-- /.expand-wrap -->
+								</div>
+							</div>
 							<div class="clear"></div>
 						</div>
 					</div><!-- /.row.template -->

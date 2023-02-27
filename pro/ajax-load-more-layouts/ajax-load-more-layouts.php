@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.0
+ * Version: 2.0.1
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package ALMLayouts
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_LAYOUTS_VERSION', '2.0.0' );
-define( 'ALM_LAYOUTS_RELEASE', 'January 5, 2023' );
+define( 'ALM_LAYOUTS_VERSION', '2.0.1' );
+define( 'ALM_LAYOUTS_RELEASE', 'February 14, 2023' );
 define( 'ALM_LAYOUTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_LAYOUTS_URL', plugins_url( '', __FILE__ ) );
 
@@ -136,7 +136,8 @@ if ( ! class_exists( 'ALMLayouts' ) ) :
 		 */
 		public function alm_layouts_enqueue_scripts() {
 			if ( ! alm_do_inline_css( '_alm_inline_css' ) && class_exists( 'ALM_ENQUEUE' ) ) {
-				$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off
+				// Use minified libraries if SCRIPT_DEBUG is turned off.
+				$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 				$file   = ALM_LAYOUTS_URL . '/core/css/ajax-load-more-layouts' . $suffix . '.css';
 				ALM_ENQUEUE::alm_enqueue_css( 'ajax-load-more-layouts', $file );
 			}
@@ -261,7 +262,7 @@ if ( ! class_exists( 'ALMLayouts' ) ) :
 	 * @return void
 	 */
 	function alm_is_last( $number ) {
-		if ( $number % 3 == 0 ) {
+		if ( $number % 3 == 0 ) { // phpcs:ignore
 			echo 'last';
 		}
 	}
@@ -273,7 +274,7 @@ if ( ! class_exists( 'ALMLayouts' ) ) :
 	 * @return void
 	 */
 	function alm_is_4col_last( $number ) {
-		if ( $number % 4 == 0 ) {
+		if ( $number % 4 == 0 ) { // phpcs:ignore
 			echo 'last';
 		}
 	}

@@ -128,7 +128,9 @@
   display: block;
   clear: both;
   padding: 0;
+  margin: 0;
   overflow: visible;
+  list-style: none;
 }
 
 .alm-layouts .alm-listing .alm-layout * {
@@ -182,95 +184,132 @@
   margin: 0 0 1em;
 }
 
-/* Grid */
-.alm-layouts .alm-listing.alm-grid {
-  margin-bottom: 10px;
+/********** Grid **********/
+.alm-layouts .alm-grid {
+  margin-bottom: 20px;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-no-transition,
-.alm-layouts .alm-listing.alm-grid.alm-has-transition .alm-reveal {
+.alm-layouts .alm-grid.alm-has-transition {
+  margin-bottom: 0;
+}
+
+.alm-layouts .alm-grid + .alm-btn-wrap {
+  padding-top: 0;
+}
+
+.alm-layouts .alm-grid.alm-no-transition,
+.alm-layouts:not(.alm-paging) .alm-grid.alm-has-transition .alm-reveal,
+.alm-layouts.alm-paging .alm-grid.alm-has-transition .alm-paging-content {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 20px;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-no-transition:after,
-.alm-layouts .alm-listing.alm-grid.alm-has-transition .alm-reveal:after {
+.alm-layouts .alm-grid.alm-no-transition:after,
+.alm-layouts:not(.alm-paging) .alm-grid.alm-has-transition .alm-reveal:after,
+.alm-layouts.alm-paging .alm-grid.alm-has-transition .alm-paging-content:after {
   display: none;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-has-transition .alm-reveal + .alm-reveal {
-  margin-top: 20px;
+.alm-layouts .alm-grid.alm-has-transition .alm-reveal {
+  margin-bottom: 20px;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-none,
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-none .alm-reveal {
+.alm-layouts .alm-grid.alm-has-transition .alm-reveal:empty {
+  display: none !important;
+}
+
+.alm-layouts .alm-grid.alm-grid-gap-none.alm-has-transition .alm-reveal {
+  margin-bottom: 0;
+}
+
+.alm-layouts .alm-grid.alm-grid-gap-sm.alm-has-transition .alm-reveal {
+  margin-bottom: 5px;
+}
+
+.alm-layouts .alm-grid.alm-grid-gap-md.alm-has-transition .alm-reveal {
+  margin-bottom: 10px;
+}
+
+.alm-layouts .alm-grid.alm-grid-gap-none,
+.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-none .alm-reveal,
+.alm-layouts.alm-paging .alm-grid.alm-grid-gap-none .alm-paging-content {
   gap: 0;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-md,
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-md .alm-reveal {
+.alm-layouts .alm-grid.alm-grid-gap-md,
+.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-md .alm-reveal,
+.alm-layouts.alm-paging .alm-grid.alm-grid-gap-md .alm-paging-content {
   gap: 10px;
 }
 
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-sm,
-.alm-layouts .alm-listing.alm-grid.alm-grid-gap-sm .alm-reveal {
+.alm-layouts .alm-grid.alm-grid-gap-sm,
+.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-sm .alm-reveal,
+.alm-layouts.alm-paging .alm-grid.alm-grid-gap-sm .alm-paging-content {
   gap: 5px;
 }
 
 @media screen and (min-width: 768px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-2,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-2 .alm-reveal {
-    grid-template-columns: repeat(2, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-2,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-2 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-2 .alm-paging-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 769px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-3,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-3 .alm-reveal {
-    grid-template-columns: repeat(3, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-3,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-3 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-3 .alm-paging-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 769px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-4,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-4 .alm-reveal {
-    grid-template-columns: repeat(2, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-4,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-4 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-4 .alm-paging-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 1025px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-4,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-4 .alm-reveal {
-    grid-template-columns: repeat(4, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-4,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-4 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-4 .alm-paging-content {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 769px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-5,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-5 .alm-reveal {
-    grid-template-columns: repeat(3, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-5,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-5 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-5 .alm-paging-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 1025px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-5,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-5 .alm-reveal {
-    grid-template-columns: repeat(5, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-5,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-5 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-5 .alm-paging-content {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 769px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-6,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-6 .alm-reveal {
-    grid-template-columns: repeat(3, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-6,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-6 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-6 .alm-paging-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 1025px) {
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-6,
-  .alm-layouts .alm-listing.alm-grid.alm-grid-cols-6 .alm-reveal {
-    grid-template-columns: repeat(6, 1fr);
+  .alm-layouts .alm-grid.alm-grid-cols-6,
+  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-6 .alm-reveal,
+  .alm-layouts.alm-paging .alm-grid.alm-grid-cols-6 .alm-paging-content {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 
@@ -279,29 +318,56 @@
 .alm-layouts .alm-listing .alm-default {
   background: none;
   list-style: none;
-  padding: 0 0 0 165px;
+  padding: 0;
+  margin: 0;
   -webkit-transition: all 0.35s ease;
   -o-transition: all 0.35s ease;
   transition: all 0.35s ease;
-  min-height: 150px;
+  min-height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  width: 100%;
+}
+
+.alm-layouts .alm-listing .alm-default.align-items-center {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.alm-layouts .alm-listing .alm-default.align-items-end {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.alm-layouts .alm-listing .alm-default > a,
+.alm-layouts .alm-listing .alm-default > img.wp-post-image {
+  width: 150px;
+  margin-right: 15px;
+}
+
+.alm-layouts .alm-listing .alm-default > .details {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.alm-layouts .alm-listing .alm-default > .details :last-child {
+  margin-bottom: 0;
 }
 
 .alm-layouts .alm-listing .alm-default img {
   max-width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
   -webkit-border-radius: 3px;
           border-radius: 3px;
 }
 
 .alm-layouts .alm-listing .alm-default p {
   text-align: left;
-}
-
-.alm-layouts .alm-listing .alm-default p:last-of-type {
-  margin-bottom: 0;
 }
 
 /* Call to Action */
@@ -343,7 +409,7 @@
 }
 
 .alm-layouts .alm-listing .alm-cta .details {
-  padding: 20px 20px;
+  padding: 15px 15px;
   display: block;
   border-top: none;
   position: relative;
@@ -351,7 +417,7 @@
 
 .alm-layouts .alm-listing .alm-cta h3 {
   color: #333;
-  margin: 0 0 20px;
+  margin: 0 0 15px;
   text-decoration: none;
 }
 
@@ -814,12 +880,8 @@
 
 @media screen and (max-width: 1024px) {
   /* Default */
-  .alm-layouts .alm-listing .alm-default {
-    min-height: 120px;
-    padding: 0 0 0 135px;
-  }
-  .alm-layouts .alm-listing .alm-default img {
-    max-width: 120px;
+  .alm-layouts .alm-listing .alm-default > a,
+  .alm-layouts .alm-listing .alm-default > img.wp-post-image {
     width: 120px;
   }
   /* Overlay */
@@ -892,14 +954,9 @@
 /* Small Mobile */
 @media screen and (max-width: 480px) {
   /* Default */
-  .alm-layouts .alm-listing .alm-default {
-    min-height: 80px;
-    padding: 0 0 0 96px;
-  }
-  .alm-layouts .alm-listing .alm-default img {
-    max-width: 80px;
+  .alm-layouts .alm-listing .alm-default > a,
+  .alm-layouts .alm-listing .alm-default > img.wp-post-image {
     width: 80px;
-    height: auto;
   }
   /* Gallery */
   .alm-layouts .alm-listing .alm-gallery .overlay-details {

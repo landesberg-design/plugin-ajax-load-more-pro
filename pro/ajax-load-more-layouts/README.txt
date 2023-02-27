@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 2.0.0
+Version: 2.0.1
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -44,8 +44,16 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/
 5. Activate the plugin in the Plugin dashboard
 
 
-
 == Changelog ==
+
+= 2.0.1 - February 14, 2023 =
+* UPDATE - Updated the exported CSS of default layout to allow for image sizes of any dimensions.
+* UPDATE - Added support for Paging addon and new layouts.
+* UPDATE - Added uniform spacing below listing and load more button.
+* FIX - Added missing Gallery layout to layout listing.
+* FIX - Fixed issue with gap spacing and load more elements.
+* FIX - Various spacing and alignment tweaks using minmax for columns.
+
 
 = 2.0 - January 5, 2023 =
 UPGRADE NOTICE: Layouts has been completely rebuilt and now uses CSS Grid for layout and additional shortcode parameters for configuration.

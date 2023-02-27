@@ -74,7 +74,7 @@ class Plugin {
 		$this->include_widgets_files();
 
 		// Register Widgets.
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\ALMElementorPosts() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\ALMElementorPosts() );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class Plugin {
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 
 		// Register widgets.
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
 	}
 }
 

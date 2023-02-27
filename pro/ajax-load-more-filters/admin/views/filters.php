@@ -1,41 +1,42 @@
 <?php
+/**
+ * This file builds the filter builder interface/view for the WP admin.
+ *
+ * @package ALMFilters
+ */
 
-$editing   = $deleted = false;
-$filter_id = $filter_vue = '';
-$section   = 'dashboard';
-
+$editing      = false;
+$deleted      = false;
+$filter_id    = '';
+$filter_vue   = '';
+$section      = 'dashboard';
+$query_params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
 // Export/Import, New.
-if ( isset( $_GET['action'] ) ) {
-	if ( $_GET['action'] === 'tools' ) {
+if ( isset( $query_params['action'] ) ) {
+	if ( $query_params['action'] === 'tools' ) {
 		$section = 'tools';
 	}
-	if ( $_GET['action'] === 'new' ) {
+	if ( $query_params['action'] === 'new' ) {
 		$section = 'new';
 	}
 }
 
 // Edit Filter [EDIT Mode].
-if ( isset( $_GET['filter'] ) ) {
-	$filter = get_option( 'alm_filter_' . $_GET['filter'] );
+if ( isset( $query_params['filter'] ) ) {
+	$filter = get_option( 'alm_filter_' . $query_params['filter'] );
 	if ( $filter ) {
-		$filter_id  = $_GET['filter'];
+		$filter_id  = $query_params['filter'];
 		$section    = 'edit';
 		$editing    = true;
 		$filter     = unserialize( $filter ); // Unseralize the filter array.
-		$filter_vue = json_encode( $filter ); // encode json to read in Vue.
+		$filter_vue = wp_json_encode( $filter ); // encode json to read in Vue.
 	}
 }
 
 // Delete Filter.
 $deleted_filter = '';
-if ( isset( $_GET['delete_filter'] ) ) {
-	$deleted_filter = $_GET['delete_filter'];
-	// Confirm option exists.
-	if ( ! empty( get_option( 'alm_filter_' . $_GET['delete_filter'] ) ) ) {
-		delete_option( 'alm_filter_' . $_GET['delete_filter'] );
-		$deleted = true;
-		$section = 'dashboard';
-	}
+if ( isset( $query_params['delete_filter'] ) ) {
+	$section = 'dashboard';
 }
 
 $selected = ' selected="selected"';
@@ -46,7 +47,7 @@ $selected = ' selected="selected"';
 		<header class="header-wrap">
 			<h1>
 				<?php echo esc_html( ALM_TITLE ); ?>: <strong><?php esc_html_e( 'Filters', 'ajax-load-more-filters' ); ?></strong>
-				<em><?php esc_html_e( 'Build and manage your Ajax Load More filters', 'ajax-load-more-filters' ); ?></em>
+				<em><?php esc_html_e( 'Build and manage your Ajax Load More filters.', 'ajax-load-more-filters' ); ?></em>
 			</h1>
 		</header>
 		<?php

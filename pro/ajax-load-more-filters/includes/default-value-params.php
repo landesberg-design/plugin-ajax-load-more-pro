@@ -6,16 +6,14 @@
  * @package ALMFilters
  */
 
-// Only run if Filters are present.
+// Only run if filters are present.
 if ( $alm_filters_array ) {
 
 	// Loop all filters to get the default_values.
 	foreach ( $alm_filters_array as $alm_filter ) {
-
 		if ( isset( $alm_filter['default_value'] ) && ! empty( trim( $alm_filter['default_value'] ) ) ) {
-
 			$alm_default_key = $alm_filter['key'];
-			$value           = $alm_filter['default_value'];
+			$value           = alm_filters_parse_dynamic_vars( $alm_default_key, $alm_filter['default_value'] );
 
 			switch ( $alm_default_key ) {
 

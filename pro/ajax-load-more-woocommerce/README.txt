@@ -8,10 +8,10 @@ Requires at least: 4.0
 Tested up to: 5.5.0
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.2.0
+Version: 1.2.1
 
 == Copyright ==
-Copyright 2021 Connekt Media
+Copyright 2023 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -42,6 +42,10 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.2.1 - February 25, 2023 =
+* Update: Added support for disabling Images Loaded functionality via Customizer setting.
+
 
 = 1.2.0 - July 8, 2021 =
 * UPGRADE NOTICE - Users are required to update core Ajax Load More to v5.5 or greater when updating this add-on.

@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 5.9.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.6.1
+Version: 1.5.6.2
 
 
 == Copyright ==
@@ -49,6 +49,10 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 == Changelog ==
+
+= 1.5.6.2 - February 14, 2023 =
+* FIX: Fixed potential CSS issue with double loading icon when using Paging and Filters add-ons together.
+
 
 = 1.5.6.1 - March 7, 2022 =
 * Update: Improved initial loading animations.

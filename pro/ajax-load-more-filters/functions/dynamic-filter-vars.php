@@ -2,21 +2,20 @@
 /**
  * This file holds all functionality for the dynamic filter variables.
  *
- * @since 1.10.1
- * @package ajax-load-more-filters
+ * @package ALMFilters
  */
 
 /**
  * Parse dynamic variables in a filter config.
  *
- * @param string $key
- * @param string $value
- * @return string $value
+ * @param string $key The filter key.
+ * @param string $value The filter value.
+ * @return string $value The updated value.
  */
 function alm_filters_parse_dynamic_vars( $key, $value ) {
 
-	// Archive %archive%.
-	if ( '%archive%' === strtolower( $value ) && is_archive() ) {
+	// Archive `%archive%`.
+	if ( strtolower( $value ) === '%archive%' && is_archive() ) {
 		$obj = get_queried_object();
 
 		// Date Query.
@@ -33,10 +32,13 @@ function alm_filters_parse_dynamic_vars( $key, $value ) {
 		}
 
 		// Taxonomy, Tag, Category.
-		if ( 'taxonomy' === $key || 'tag' === $key || 'category' === $key ) {
+		if ( $key === 'taxonomy' || $key === 'tag' || $key === 'category' ) {
 			if ( is_tax() || is_category() || is_tag() ) {
 				$value = $obj->slug;
 			}
+		}
+		if ( $key === 'tag__and' || $key === 'category__and' ) {
+			$value = $obj->term_taxonomy_id;
 		}
 
 		// Author.
@@ -50,6 +52,11 @@ function alm_filters_parse_dynamic_vars( $key, $value ) {
 				$value = $obj->name;
 			}
 		}
+	}
+
+	// Time.
+	if ( strtolower( $value ) === '%time%' ) {
+		$value = time();
 	}
 
 	return $value;

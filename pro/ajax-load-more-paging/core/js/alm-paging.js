@@ -112,10 +112,10 @@ var almPaging = {};
 	almPaging.init = true;
 
 	/**
-  * almBuildPagination
-  * Build the pagination for the menu
-  * @param {String} data The total number of pages
-  * @param {Object} alm The main ALM object
+  * Build the pagination for the menu.
+  *
+  * @param {string} data The total number of pages.
+  * @param {object} alm The ALM object.
   */
 	window.almBuildPagination = function (data, alm) {
 		var posts_per_page = alm.orginal_posts_per_page,
@@ -299,10 +299,10 @@ var almPaging = {};
 	};
 
 	/**
-  * updateNextPrevLinks
-  * Update the next and previous links
-  * @param {*} alm
-  * @param {*} page
+  * Update the next and previous links.
+  *
+  * @param {object} alm The ALM object.
+  * @param {Element} container The HTML container.
   */
 	almPaging.updateNextPrevLinks = function (alm, container) {
 		var alm_paging_controls = alm.addons.paging_controls;
@@ -327,8 +327,8 @@ var almPaging = {};
 	/**
   * showFirstLast
   * Determine whether to show/hide the first and last buttons
-  * @param {*} alm
-  * @param {*} pagingWrap
+  * @param {object} alm The ALM object.
+  * @param {Element} pagingWrap The wrapper HTML element.
   */
 	almPaging.showFirstLast = function (alm, pagingWrap) {
 		var alm_paging_controls = alm.addons.paging_controls;
@@ -364,9 +364,10 @@ var almPaging = {};
 	};
 
 	/**
-  * Set the href of the button links
-  * @param {*} alm
-  * @param {*} page
+  * Set the href of the button links.
+  *
+  * @param {object} alm The ALM object.
+  * @param {Number} page Page number.
   */
 	almPaging.setHref = function (alm, page) {
 		var href = "";
@@ -381,10 +382,10 @@ var almPaging = {};
 	};
 
 	/**
-  * Fade in element
+  * Fade in element.
   *
-  * @param {*} element
-  * @param {*} speed
+  * @param {Element} element Target HTML element.
+  * @param {number} speed Transition speed.
   */
 	almPaging.fadeIn = function (element, speed) {
 		speed = speed / 10;
@@ -405,8 +406,9 @@ var almPaging = {};
 	};
 
 	/**
-  * Fade in pagination after content is loaded
-  * @param {Element} nav The navigation HTML element
+  * Fade in pagination after content is loaded.
+  *
+  * @param {HTMLElement} nav The navigation HTML element
   */
 	window.almFadePageControls = function (controls, speed) {
 		if (controls) {
@@ -418,9 +420,9 @@ var almPaging = {};
 	/**
   * Set current navigation item (Click Event)
   *
-  * @param {String} current Current page number
-  * @param {Element} obj The main ALM element `.alm-listing`
-  * @param {Object} alm The main ALM object
+  * @param {string} current Current page number.
+  * @param {HTMLElement} obj The main ALM element `.alm-listing`.
+  * @param {object} alm The ALM object.
   */
 	var firstRun = true;
 	window.almSetCurrentPage = function (current, obj, alm) {
@@ -532,10 +534,10 @@ var almPaging = {};
 	/**
   * Display paging buttons in proper location
   *
-  * @param {Element} obj The main ALM element container
-  * @param {Object} alm The main ALM object
-  * @param {String} totalPages Total pages
-  * @param {String} current Current page number
+  * @param {HTMLElement} obj The main ALM element container.
+  * @param {object} alm The ALM object.
+  * @param {string} totalPages Total pages.
+  * @param {string} current Current page number.
   * @return null
   */
 
@@ -581,7 +583,8 @@ var almPaging = {};
 
 	/**
   * Paging Empty - Set the height to 0 and remove loading class
-  * @return null
+  *
+  * @param {object} alm The ALM object.
   */
 	window.almPagingEmpty = function (alm) {
 		alm.listing.style.height = "auto";
@@ -590,11 +593,10 @@ var almPaging = {};
 	};
 
 	/**
-  * Paging Complete - when paging has completed and posts have been loaded
+  * Paging Complete - when paging has completed and posts have been loaded.
   *
-  * @param {Object} alm The main ALM object
+  * @param {object} alm The ALM object.
   */
-
 	window.almOnPagingComplete = function (alm) {
 		var container = alm.main.querySelector(".alm-reveal");
 
@@ -646,8 +648,9 @@ var almPaging = {};
 	};
 
 	/**
-  * Set the height of the paging containers
-  * @param {Object} alm The main ALM object
+  * Set the height of the paging containers.
+  *
+  * @param {object} alm The ALM object.
   */
 	almPaging.setHeight = function (alm) {
 		var container = alm.main.querySelector(".alm-reveal");
@@ -669,8 +672,9 @@ var almPaging = {};
 	};
 
 	/**
-  * Window Resize function - resize container on resize
-  * @param {Object} alm The main ALM object
+  * Window Resize function - resize container on resize.
+  *
+  * @param {object} alm The ALM object.
   */
 	window.almOnWindowResize = function (alm) {
 		almPaging.setHeight(alm);

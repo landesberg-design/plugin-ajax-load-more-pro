@@ -87,7 +87,7 @@ class ALMElementorPosts extends Widget_Base {
 	 * @access protected
 	 * @author @dcooney
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$options = get_option( 'alm_settings' );
 		$options = ( has_filter( 'alm_settings' ) ) ? apply_filters( 'alm_settings', $options ) : $options;

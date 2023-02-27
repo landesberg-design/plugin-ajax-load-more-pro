@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.2.0
- * WC requires at least: 3.0
- * WC tested up to: 5.4.1
+ * Version: 1.2.1
+ * WC requires at least: 5.0
+ * WC tested up to: 7.4.0
  *
  * @package ALMWooCommerce
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_WOO_VERSION', '1.2.0' );
-define( 'ALM_WOO_RELEASE', 'July 8, 2021' );
+define( 'ALM_WOO_VERSION', '1.2.1' );
+define( 'ALM_WOO_RELEASE', 'February 25, 2023' );
 
 /**
  * Plugin activation hook.
@@ -31,7 +31,7 @@ function alm_woo_install() {
 		set_transient( 'alm_woocommerce_admin_notice', true, 5 );
 	}
 	if ( ! alm_is_woo_activated() ) {
-		wp_die( __( 'WooCommerce must be installed and activated in order to use Ajax Load More WooCommerce Add-on', 'alm-woocommerce' ) );
+		wp_die( esc_html__( 'WooCommerce must be installed and activated in order to use Ajax Load More WooCommerce Add-on', 'alm-woocommerce' ) );
 	}
 }
 register_activation_hook( __FILE__, 'alm_woo_install' );
@@ -42,6 +42,7 @@ register_activation_hook( __FILE__, 'alm_woo_install' );
  * @since 1.0
  */
 function alm_is_woo_activated() {
+	// phpcs:ignore
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 		return true;
 	} else {
@@ -64,8 +65,7 @@ function alm_woocommerce_admin_notice() {
 		$message    .= '<p>' . __( 'You must install and activate the core Ajax Load More plugin before using the Ajax Load More WooCommerce Add-on.', 'alm-woocommerce' ) . '</p>';
 		$message    .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Ajax Load More Now', 'alm-woocommerce' ) ) . '</p>';
 		$message    .= '</div>';
-		echo $message;
-		// deactivate_plugins( '/' . $plugin . '/' . $plugin . '.php' );
+		echo wp_kses_post( $message );
 		delete_transient( 'alm_woocommerce_admin_notice' );
 	}
 }
@@ -78,22 +78,22 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 	 */
 	class ALMWooCommerce {
 
-		function __construct() {
-
+		/**
+		 * Constructor function.
+		 */
+		public function __construct() {
 			define( 'ALM_WOO_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'ALM_WOO_URL', plugins_url( '', __FILE__ ) );
 			define( 'ALM_WOO_PREFIX', 'alm_woo_' );
 
-			add_action( 'alm_woocommerce_installed', array( &$this, 'alm_woocommerce_installed' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_woocommerce_enqueue_scripts' ) );
-			add_filter( 'alm_woocommerce_shortcode', array( &$this, 'alm_woocommerce_shortcode' ), 10, 3 );
-			add_action( 'woocommerce_before_shop_loop', array( &$this, 'alm_woocommerce_before_shop_loop' ) );
-			add_action( 'woocommerce_after_shop_loop', array( &$this, 'alm_woocommerce_after_shop_loop' ) );
-			add_action( 'alm_woocommerce_settings', array( &$this, 'alm_woocommerce_settings' ) );
+			add_action( 'alm_woocommerce_installed', [ &$this, 'alm_woocommerce_installed' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_woocommerce_enqueue_scripts' ] );
+			add_filter( 'alm_woocommerce_shortcode', [ &$this, 'alm_woocommerce_shortcode' ], 10, 3 );
+			add_action( 'woocommerce_before_shop_loop', [ &$this, 'alm_woocommerce_before_shop_loop' ] );
+			add_action( 'woocommerce_after_shop_loop', [ &$this, 'alm_woocommerce_after_shop_loop' ] );
+			add_action( 'alm_woocommerce_settings', [ &$this, 'alm_woocommerce_settings' ] );
+			load_plugin_textdomain( 'alm-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 			$this->includes();
-
-			load_plugin_textdomain( 'alm-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' ); // load text domain.
-
 		}
 
 		/**
@@ -132,13 +132,13 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			}
 
 			// Configuration.
-			$woo_config = array(
+			$woo_config = [
 				'post_type'         => 'product',
 				'container_element' => 'div',
 				'classes'           => 'stylefree',
 				'columns'           => alm_woo_get_loop_prop( 'columns', '3' ),
 				'per_page'          => alm_woo_get_loop_prop( 'per_page', 6 ),
-			);
+			];
 
 			/**
 			 * WooCommerce hook to filter columns, per_page, classes etc
@@ -150,7 +150,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			$orderby    = apply_filters( 'alm_woocommerce_orderby', 'menu_order title' );
 
 			// Defaults.
-			$args = array(
+			$args = [
 				'id'             => 'alm_woocommerce',
 				'woo'            => 'true',
 				'post_type'      => $woo_config['post_type'],
@@ -160,7 +160,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 				'orderby'        => $orderby,
 				'container_type' => $woo_config['container_element'],
 				'css_classes'    => $woo_config['classes'],
-			);
+			];
 
 			// ALM Cache.
 			if ( has_action( 'alm_cache_installed' ) && ! is_customize_preview() ) {
@@ -274,7 +274,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			ALM_LOCALIZE::add_localized_var( 'post_count', 3, $id );
 
 			// Create localized Paged URLs.
-			$url_array      = array();
+			$url_array      = [];
 			$posts_per_page = $args['posts_per_page'];
 			$pages          = ceil( $total_posts / $posts_per_page );
 
@@ -291,7 +291,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 
 				} else {
 					global $wp;
-					$base_url = home_url( add_query_arg( array(), $wp->request ) );
+					$base_url = home_url( add_query_arg( [], $wp->request ) );
 					$url      = $base_url . str_replace( '{page}', $i, $permalink_structure );
 
 				}
@@ -308,7 +308,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			$previous_products = get_option( ALM_WOO_PREFIX . 'previous_products' );
 			$previous_products = apply_filters( 'alm_woocommerce_previous_products', $previous_products );
 
-			$params = array(
+			$params = [
 				'container'  => isset( $container_class ) && ! empty( $container_class ) ? $container_class : apply_filters( 'alm_woocommerce_container', 'ul.products' ),
 				'products'   => isset( $products_class ) && ! empty( $products_class ) ? $products_class : apply_filters( 'alm_woocommerce_products', '.product' ),
 				'results'    => apply_filters( 'alm_woocommerce_results', '.woocommerce-result-count' ),
@@ -317,22 +317,25 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 				'paged'      => wc_get_loop_prop( 'current_page' ),
 				'pages'      => $pages,
 				'paged_urls' => $url_array,
-			);
+			];
 
 			// Scrolltop and Controls.
-			$scrolltop = get_option( ALM_WOO_PREFIX . 'scrolltop' ) ? get_option( ALM_WOO_PREFIX . 'scrolltop' ) : 50;
-			$scrolltop = apply_filters( 'alm_woocommerce_scrolltop', $scrolltop );
-			$controls  = get_option( ALM_WOO_PREFIX . 'controls' ) ? get_option( ALM_WOO_PREFIX . 'controls' ) : 'true';
-			$controls  = apply_filters( 'alm_woocommerce_controls', $controls );
+			$scrolltop     = get_option( ALM_WOO_PREFIX . 'scrolltop' ) ? get_option( ALM_WOO_PREFIX . 'scrolltop' ) : 50;
+			$scrolltop     = apply_filters( 'alm_woocommerce_scrolltop', $scrolltop );
+			$controls      = get_option( ALM_WOO_PREFIX . 'controls' ) ? get_option( ALM_WOO_PREFIX . 'controls' ) : 'true';
+			$controls      = apply_filters( 'alm_woocommerce_controls', $controls );
+			$images_loaded = get_option( ALM_WOO_PREFIX . 'images_loaded' ) ? get_option( ALM_WOO_PREFIX . 'images_loaded' ) : 'true';
+			$images_loaded = apply_filters( 'alm_woocommerce_images_loaded', $images_loaded );
 
-			$params['settings'] = array(
+			$params['settings'] = [
 				'scrolltop'           => $scrolltop,
 				'controls'            => $controls,
+				'images_loaded'       => $images_loaded,
 				'previous_products'   => $previous_products,
 				'previous_page_link'  => wc_get_loop_prop( 'current_page' ) > 1 ? get_pagenum_link() : '',
 				'previous_page_label' => apply_filters( 'alm_woocommerce_previous_link', __( 'Previous Products', 'alm-woocommerce' ) ),
 				'previous_page_sep'   => apply_filters( 'alm_woocommerce_previous_link_sep', ' - ' ),
-			);
+			];
 
 			$data  = ' data-woo="true"';
 			$data .= 'data-woo-settings="' . htmlspecialchars( wp_json_encode( $params ), ENT_QUOTES, 'UTF-8' ) . '"';
@@ -367,7 +370,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			$return .= $hide_orderby; // Hide Orderby (If set).
 			$return .= '</style>';
 
-			echo $return;
+			echo $return; // phpcs:ignore
 		}
 
 		/**
@@ -390,7 +393,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 			// Enqueue JS.
-			wp_register_script( 'ajax-load-more-woocommerce', plugins_url( '/core/js/alm-woocommerce' . $suffix . '.js', __FILE__ ), array( 'ajax-load-more' ), ALM_WOO_VERSION, true );
+			wp_register_script( 'ajax-load-more-woocommerce', plugins_url( '/core/js/alm-woocommerce' . $suffix . '.js', __FILE__ ), [ 'ajax-load-more' ], ALM_WOO_VERSION, true );
 
 		}
 
@@ -409,13 +412,15 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 	}
 
 	/**
-	 *  Sanitize the license activation
+	 * Sanitize the license activation.
 	 *
-	 *  @since 1.0.1
+	 * @param string $new The license key.
+	 * @return string The license key.
+	 * @since 1.0.1
 	 */
 	function alm_woocommerce_sanitize_license( $new ) {
 		$old = get_option( 'alm_woocommerce_license_key' );
-		if ( $old && $old != $new ) {
+		if ( $old && $old !== $new ) {
 			delete_option( 'alm_woocommerce_license_status' );
 		}
 		return $new;
@@ -426,16 +431,14 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 	 *
 	 * @since 1.0
 	 */
-	function ALMWooCommerce() {
-		global $ALMWooCommerce;
-		if ( ! isset( $ALMWooCommerce ) ) {
-			$ALMWooCommerce = new ALMWooCommerce();
+	function alm_woocommerce() {
+		global $alm_woocommerce;
+		if ( ! isset( $alm_woocommerce ) ) {
+			$alm_woocommerce = new ALMWooCommerce();
 		}
-		return $ALMWooCommerce;
+		return $alm_woocommerce;
 	}
-
-	// initialize.
-	ALMWooCommerce();
+	alm_woocommerce();
 
 endif;
 
@@ -450,12 +453,12 @@ function alm_woocommerce_plugin_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_WOO_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_WOO_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

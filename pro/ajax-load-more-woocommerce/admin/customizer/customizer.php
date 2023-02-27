@@ -5,10 +5,11 @@
  * @package ALMWooCommerce
  */
 
+ // Include customizer file.
 require_once 'class.customizer.php';
 
 /**
- * Register Cusomizer Fields.
+ * Register Customizer Fields.
  *
  * @param Class $wp_customize The Cusomizer class.
  */
@@ -427,6 +428,30 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 			'type'        => 'number',
 			'input_attrs' => array(
 				'step' => 10,
+			),
+		)
+	);
+
+	// ImagesLoaded.
+	$wp_customize->add_setting(
+		ALM_WOO_PREFIX . 'images_loaded',
+		array(
+			'default'    => 'true',
+			'capability' => 'edit_theme_options',
+			'type'       => 'option',
+		)
+	);
+	$wp_customize->add_control(
+		ALM_WOO_PREFIX . 'images_loaded',
+		array(
+			'section'     => 'woocommerce_alm_display',
+			'priority'    => 2,
+			'label'       => __( 'Images Loaded', 'alm-woocommerce' ),
+			'description' => __( 'Wait for all images to load before displaying ajax loaded content.', 'alm-woocommerce' ),
+			'type'        => 'select',
+			'choices'     => array(
+				'true'  => __( 'True', 'alm-woocommerce' ),
+				'false' => __( 'False', 'alm-woocommerce' ),
 			),
 		)
 	);

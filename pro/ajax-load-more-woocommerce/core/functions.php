@@ -1,5 +1,11 @@
 <?php
 /**
+ * Plugin helper functions.
+ *
+ * @package ALMWooCommerce
+ */
+
+/**
  * Is cache ALM enabled on shop main page.
  *
  * @since 1.1
@@ -39,7 +45,7 @@ function alm_woo_is_shop_archive_cache() {
  *
  * @since 1.0
  */
-function alm_woo_is_shop_enabled(){
+function alm_woo_is_shop_enabled() {
 	$show = ( null === get_option( ALM_WOO_PREFIX . 'shop_main' ) || empty( get_option( ALM_WOO_PREFIX . 'shop_main' ) ) ) ? false : true;
 	if ( is_shop() && ! $show ) {
 		return false;

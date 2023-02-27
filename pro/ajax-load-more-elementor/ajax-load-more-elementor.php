@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.1.2
- * Elementor tested up to: 3.2.5
- * Elementor Pro tested up to: 3.3.1
+ * Version: 1.1.3
+ * Elementor tested up to: 3.11.0
+ * Elementor Pro tested up to: 3.11.0
  *
  * @package ALMElementor
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_ELEMENTOR_VERSION', '1.1.2' );
-define( 'ALM_ELEMENTOR_RELEASE', 'July 8, 2021' );
+define( 'ALM_ELEMENTOR_VERSION', '1.1.3' );
+define( 'ALM_ELEMENTOR_RELEASE', 'February 14, 2023' );
 
 /**
  * Plugin activation hook.

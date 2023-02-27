@@ -5,15 +5,15 @@ Author: Connekt Media
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 5.8.0
+Tested up to: 6.1.0
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.1.2
+Version: 1.1.3
 
 Infinite scroll Elementor widget content with Ajax Load More.
 
 == Copyright ==
-Copyright 2020 Connekt Media
+Copyright 2023 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY;
@@ -44,6 +44,10 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/elementor/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.1.3 - February 14, 2023 =
+* FIX - Updated widget function to fix issues with function deprecation notices.
+
 
 = 1.1.2 - July 8, 2021 =
 * NEW - Added support for lazy loading images.
