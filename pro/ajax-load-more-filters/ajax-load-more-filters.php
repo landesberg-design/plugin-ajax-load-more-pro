@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.0.2
+ * Version: 2.0.2.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.0.2' );
-define( 'ALM_FILTERS_RELEASE', 'February 25, 2023' );
+define( 'ALM_FILTERS_VERSION', '2.0.2.1' );
+define( 'ALM_FILTERS_RELEASE', 'March 9, 2023' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -606,7 +606,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 				$atts
 			);
 			$id      = esc_attr( $args['id'] );
-			$target  = esc_attr( $args['target'] );
+			$target  = sanitize_key( $args['target'] );
 			$filter  = get_option( ALM_FILTERS_PREFIX . $id ); // Get the option.
 			$preview = esc_attr( $args['preview'] );
 

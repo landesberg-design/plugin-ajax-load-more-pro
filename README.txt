@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.2.16
+Version: 1.2.17
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -49,15 +49,20 @@ This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5
 
 == Changelog ==
 
+= 1.2.17 - March 9, 2023 =
+**Filters - 2.0.2.1 **
+* HOTFIX: Sanitizing filters target parameter with `sanitize_key` to coincide with core ALM `5.6.0.4` release.
+
+
 = 1.2.16 - February 25, 2023 =
 **Filters - 2.0.2 **
 * FIX: Fixed issue with parsing filters & facets on archive templates/pages.
 * FIX: Fixed querystring params not being passed to query on taxonomy archive pages.
-* FIX: Fixed dyanmic filter values not working on archive pages.
+* FIX: Fixed dynamic filter values not working on archive pages.
 * FIX: Fixed issue with PHP generator output and sort field.
 * NEW: Added `alm_filters_range_slider_steps` hook to adjust the default input steps when using the Range Slider.
 * NEW: Added `alm_filters_textfield_submit_label` to filter textfield submit button labels.
-* NEW: Added `alm_filters_textfield_placeholder` to filter of the textfield input placeholder.
+* NEW: Added `alm_filters_textfield_placeholder` to filter the textfield input placeholder.
 * NEW: Added `alm_filters_css_classes` to allow for filtering of container classnames.
 
 **WooCommerce - 1.2.1 **

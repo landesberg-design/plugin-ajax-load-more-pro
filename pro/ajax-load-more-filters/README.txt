@@ -4,11 +4,11 @@ Contributors: dcooney
 Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
-Requires at least: 4.0
-Tested up to: 6.0.0
+Requires at least: 5.0
+Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 2.0.1
+Version: 2.0.2.1
 
 == Copyright ==
 Copyright 2023 Darren Cooney
@@ -50,6 +50,10 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 2.0.2.1 - March 9, 2023 =
+* HOTFIX: Sanitizing filters target parameter with `sanitize_key` to coincide with core ALM `5.6.0.4` release.
+
 
 = 2.0.2 - February 25, 2023 =
  * FIX: Fixed issue with parsing filters & facets on archive templates/pages.
