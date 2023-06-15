@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More WooCommerce\n"
-"POT-Creation-Date: 2020-11-10 09:24-0500\n"
+"POT-Creation-Date: 2023-06-11 09:53-0400\n"
 "PO-Revision-Date: 2018-06-20 13:05-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -10,225 +10,242 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
-"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: core/src\n"
 "X-Poedit-SearchPathExcluded-1: admin/src\n"
 
-#: ajax-load-more-elementor.php:52
+#: ajax-load-more-elementor.php:54
 msgid ""
-"You must install and activate <a href=\"https://wordpress.org/plugins/ajax-"
-"load-more/\">Ajax Load More</a> before installing the ALM Elementor Add-on."
+"You must install and activate the core Ajax Load More plugin before using "
+"the Ajax Load More Elementor Add-on."
 msgstr ""
 
 #: ajax-load-more-elementor.php:55
+msgid "Install Ajax Load More Now"
+msgstr ""
+
+#: ajax-load-more-elementor.php:65
 msgid ""
-"Elementor Pro must be installed and activated in order to use the Ajax Load "
-"More Elementor Add-on"
+"Elementor Pro must be installed and activated to use the Ajax Load More "
+"Elementor Add-on"
 msgstr ""
 
 #: module/widget.php:47
-msgid "Elementor Posts Widget Connector"
+msgid "Elementor Widget Connector"
 msgstr ""
 
-#: module/widget.php:98
+#: module/widget.php:99
 msgid "Shortcode Builder"
 msgstr ""
 
-#: module/widget.php:104
+#: module/widget.php:106
 msgid "Target"
 msgstr ""
 
-#: module/widget.php:106
-msgid "Enter the ID or Classname of the Elementor Posts widget."
+#: module/widget.php:108
+msgid "Enter the ID or Classname of the targeted Elementor widget."
 msgstr ""
 
-#: module/widget.php:115
+#: module/widget.php:118
 msgid "Update URL"
 msgstr ""
 
-#: module/widget.php:117
+#: module/widget.php:120
 msgid "Update the browser URL as pages are loaded and come into view."
 msgstr ""
 
-#: module/widget.php:124
+#: module/widget.php:128
 msgid "Loading Style"
 msgstr ""
 
-#: module/widget.php:127
+#: module/widget.php:131
 msgid "-- Make a Selection --"
 msgstr ""
 
-#: module/widget.php:128
+#: module/widget.php:132
 msgid "Button - Default"
 msgstr ""
 
-#: module/widget.php:129
+#: module/widget.php:133
 msgid "Button - Blue"
 msgstr ""
 
-#: module/widget.php:130
+#: module/widget.php:134
 msgid "Button - Green"
 msgstr ""
 
-#: module/widget.php:131
+#: module/widget.php:135
 msgid "Button - Purple"
 msgstr ""
 
-#: module/widget.php:132
+#: module/widget.php:136
 msgid "Button - Grey"
 msgstr ""
 
-#: module/widget.php:133
+#: module/widget.php:137
 msgid "Button - White"
 msgstr ""
 
-#: module/widget.php:134
+#: module/widget.php:138
 msgid "Button - Light Grey"
 msgstr ""
 
-#: module/widget.php:135
+#: module/widget.php:139
 msgid "Infinite Scroll - Classic"
 msgstr ""
 
-#: module/widget.php:136
+#: module/widget.php:140
 msgid "Infinite Scroll - Skype"
 msgstr ""
 
-#: module/widget.php:137
+#: module/widget.php:141
 msgid "Infinite Scroll - Ring"
 msgstr ""
 
-#: module/widget.php:138
+#: module/widget.php:142
 msgid "Infinite Scroll - Fading Blocks"
 msgstr ""
 
-#: module/widget.php:139
+#: module/widget.php:143
 msgid "Infinite Scroll - Fading Circles"
 msgstr ""
 
-#: module/widget.php:140
+#: module/widget.php:144
 msgid "Infinite Scroll - Chasing Arrows"
 msgstr ""
 
-#: module/widget.php:142
+#: module/widget.php:146
 msgid ""
 "Select an Ajax loading style - choose between a Button or Infinite Scroll."
 msgstr ""
 
-#: module/widget.php:151
+#: module/widget.php:156
 msgid "Button Label"
 msgstr ""
 
-#: module/widget.php:153
+#: module/widget.php:158
 msgid "The text of the Load More button."
 msgstr ""
 
-#: module/widget.php:154 module/widget.php:155
+#: module/widget.php:159 module/widget.php:160
 msgid "Older Posts"
 msgstr ""
 
-#: module/widget.php:163
+#: module/widget.php:169
 msgid "Button Loading Label"
 msgstr ""
 
-#: module/widget.php:165
+#: module/widget.php:171
 msgid "Update the button label while content is loading."
 msgstr ""
 
-#: module/widget.php:166
+#: module/widget.php:172
 msgid "Loading..."
 msgstr ""
 
-#: module/widget.php:174
-msgid "Scrolling"
+#: module/widget.php:181
+msgid "Button Done Label"
 msgstr ""
 
-#: module/widget.php:176
-msgid "Load additional pages as users scroll the page."
+#: module/widget.php:183
+msgid ""
+"Update the text of the Load More button when no content remains to be loaded."
 msgstr ""
 
 #: module/widget.php:184
+msgid "No Post Remaining..."
+msgstr ""
+
+#: module/widget.php:193
+msgid "Scrolling"
+msgstr ""
+
+#: module/widget.php:195
+msgid "Load additional pages as users scroll the page."
+msgstr ""
+
+#: module/widget.php:204
 msgid "Scroll Override"
 msgstr ""
 
-#: module/widget.php:190
+#: module/widget.php:210
 msgid ""
 "Allow scrolling to initiate the loading of posts. If false, users will have "
 "to click the `Load More` button to begin."
 msgstr ""
 
-#: module/widget.php:197
+#: module/widget.php:218
 msgid "Scroll Distance"
 msgstr ""
 
-#: module/widget.php:203
+#: module/widget.php:224
 msgid ""
 "The distance (in pixels) from the bottom of the screen to trigger a post "
 "load."
 msgstr ""
 
-#: module/widget.php:212
+#: module/widget.php:232
 msgid "Previous Posts Link Label"
 msgstr ""
 
-#: module/widget.php:214
+#: module/widget.php:234
 msgid ""
 "The text displayed when the previous posts link is rendered. Leave empty to "
 "not render component."
 msgstr ""
 
-#: module/widget.php:215 module/widget.php:216
+#: module/widget.php:235 module/widget.php:236
 msgid "← Previous Posts"
 msgstr ""
 
-#: module/widget.php:227
+#: module/widget.php:248
 msgid "Back/Fwd Button"
 msgstr ""
 
-#: module/widget.php:229
+#: module/widget.php:250
 msgid ""
 "Enable navigation between Ajax loaded content using back and forward browser "
 "buttons."
 msgstr ""
 
-#: module/widget.php:239
+#: module/widget.php:261
 msgid "Scroll Offset"
 msgstr ""
 
-#: module/widget.php:241
+#: module/widget.php:263
 msgid ""
 "Set the offset top position of the window. The scroll offset determines at "
 "which point the URL will update while scrolling through Ajax loaded pages."
 msgstr ""
 
-#: module/widget.php:256
+#: module/widget.php:279
 msgid "Integrations"
 msgstr ""
 
-#: module/widget.php:261
+#: module/widget.php:285
 msgid "Cache"
 msgstr ""
 
-#: module/widget.php:263
+#: module/widget.php:287
 msgid "Enable Ajax Load More Cache on this instance."
 msgstr ""
 
-#: module/widget.php:267
+#: module/widget.php:291
+msgid "False"
+msgstr ""
+
+#: module/widget.php:292
 msgid "True"
 msgstr ""
 
-#: module/widget.php:268
-msgid "false"
+#: module/widget.php:382
+msgid "Elementor Widget Connector for Ajax Load More"
 msgstr ""
 
-#: module/widget.php:331 module/widget.php:356
-msgid "Elementor Posts Widget Connector for Ajax Load More"
-msgstr ""
-
-#: module/widget.php:333 module/widget.php:359
+#: module/widget.php:385
 msgid "Preview or launch the live URL to view Ajax Load More content."
 msgstr ""

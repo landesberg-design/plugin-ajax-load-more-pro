@@ -93,13 +93,15 @@ class ALMElementorPosts extends Widget_Base {
 		$options = ( has_filter( 'alm_settings' ) ) ? apply_filters( 'alm_settings', $options ) : $options;
 		$style   = ( isset( $options['_alm_btn_color'] ) ) ? ' ' . $options['_alm_btn_color'] : ' default';
 
-		$this->start_controls_section( 'section_content',
+		$this->start_controls_section(
+			'section_content',
 			[
 				'label' => __( 'Shortcode Builder', 'alm-elementor' ),
 			]
 		);
 
-		$this->add_control( 'target',
+		$this->add_control(
+			'target',
 			[
 				'label'       => __( 'Target', 'alm-elementor' ),
 				'type'        => Controls_Manager::TEXT,
@@ -110,7 +112,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'url',
+		$this->add_control(
+			'url',
 			[
 				'label'       => __( 'Update URL', 'alm-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -119,25 +122,26 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'loading_style',
+		$this->add_control(
+			'loading_style',
 			[
 				'label'       => __( 'Loading Style', 'alm-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => [
-					''                        => __('-- Make a Selection --', 'alm-elementor' ),
-					'default'                 => __('Button - Default', 'alm-elementor' ),
-					'blue'                    => __('Button - Blue', 'alm-elementor' ),
-					'green'                   => __('Button - Green', 'alm-elementor' ),
-					'purple'                  => __('Button - Purple', 'alm-elementor' ),
-					'grey'                    => __('Button - Grey', 'alm-elementor' ),
-					'white'                   => __('Button - White', 'alm-elementor' ),
-					'light-grey'              => __('Button - Light Grey', 'alm-elementor' ),
-					'infinite classic'        => __('Infinite Scroll - Classic', 'alm-elementor' ),
-					'infinite skype'          => __('Infinite Scroll - Skype', 'alm-elementor' ),
-					'infinite ring'           => __('Infinite Scroll - Ring', 'alm-elementor' ),
-					'infinite fading-blocks'  => __('Infinite Scroll - Fading Blocks', 'alm-elementor' ),
-					'infinite fading-circles' => __('Infinite Scroll - Fading Circles', 'alm-elementor' ),
-					'infinite chasing-arrows' => __('Infinite Scroll - Chasing Arrows', 'alm-elementor' ),
+					''                        => __( '-- Make a Selection --', 'alm-elementor' ),
+					'default'                 => __( 'Button - Default', 'alm-elementor' ),
+					'blue'                    => __( 'Button - Blue', 'alm-elementor' ),
+					'green'                   => __( 'Button - Green', 'alm-elementor' ),
+					'purple'                  => __( 'Button - Purple', 'alm-elementor' ),
+					'grey'                    => __( 'Button - Grey', 'alm-elementor' ),
+					'white'                   => __( 'Button - White', 'alm-elementor' ),
+					'light-grey'              => __( 'Button - Light Grey', 'alm-elementor' ),
+					'infinite classic'        => __( 'Infinite Scroll - Classic', 'alm-elementor' ),
+					'infinite skype'          => __( 'Infinite Scroll - Skype', 'alm-elementor' ),
+					'infinite ring'           => __( 'Infinite Scroll - Ring', 'alm-elementor' ),
+					'infinite fading-blocks'  => __( 'Infinite Scroll - Fading Blocks', 'alm-elementor' ),
+					'infinite fading-circles' => __( 'Infinite Scroll - Fading Circles', 'alm-elementor' ),
+					'infinite chasing-arrows' => __( 'Infinite Scroll - Chasing Arrows', 'alm-elementor' ),
 				],
 				'description' => __( 'Select an Ajax loading style - choose between a Button or Infinite Scroll.', 'alm-elementor' ),
 				'default'     => $style,
@@ -146,7 +150,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'button_label',
+		$this->add_control(
+			'button_label',
 			[
 				'label'       => __( 'Button Label', 'alm-elementor' ),
 				'type'        => Controls_Manager::TEXT,
@@ -158,7 +163,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'button_loading_label',
+		$this->add_control(
+			'button_loading_label',
 			[
 				'label'       => __( 'Button Loading Label', 'alm-elementor' ),
 				'type'        => Controls_Manager::TEXT,
@@ -169,7 +175,20 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'scroll',
+		$this->add_control(
+			'button_done_label',
+			[
+				'label'       => __( 'Button Done Label', 'alm-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => __( 'Update the text of the Load More button when no content remains to be loaded.', 'alm-elementor' ),
+				'placeholder' => __( 'No Post Remaining...', 'alm-elementor' ),
+				'default'     => '',
+				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
+			'scroll',
 			[
 				'label'       => __( 'Scrolling', 'alm-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -179,11 +198,12 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'pause_override',
+		$this->add_control(
+			'pause_override',
 			[
-				'label'     => __( 'Scroll Override', 'alm-elementor' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'condition' =>
+				'label'       => __( 'Scroll Override', 'alm-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'condition'   =>
 					[
 						'scroll' => 'yes',
 					],
@@ -192,11 +212,12 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'scroll_distance',
+		$this->add_control(
+			'scroll_distance',
 			[
-				'label'     => __( 'Scroll Distance', 'alm-elementor' ),
-				'type'      => Controls_Manager::NUMBER,
-				'condition' =>
+				'label'       => __( 'Scroll Distance', 'alm-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'condition'   =>
 					[
 						'scroll' => 'yes',
 					],
@@ -205,9 +226,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-
-
-		$this->add_control( 'previous_link_label',
+		$this->add_control(
+			'previous_link_label',
 			[
 				'label'       => __( 'Previous Posts Link Label', 'alm-elementor' ),
 				'type'        => Controls_Manager::TEXT,
@@ -222,7 +242,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'controls',
+		$this->add_control(
+			'controls',
 			[
 				'label'       => __( 'Back/Fwd Button', 'alm-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -234,7 +255,8 @@ class ALMElementorPosts extends Widget_Base {
 			]
 		);
 
-		$this->add_control( 'scrolltop',
+		$this->add_control(
+			'scrolltop',
 			[
 				'label'       => __( 'Scroll Offset', 'alm-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
@@ -251,18 +273,20 @@ class ALMElementorPosts extends Widget_Base {
 
 		if ( has_action( 'alm_cache_installed' ) ) {
 
-			$this->start_controls_section( 'integrations',
+			$this->start_controls_section(
+				'integrations',
 				[
 					'label' => __( 'Integrations', 'alm-elementor' ),
 				]
 			);
-			$this->add_control( 'cache',
+			$this->add_control(
+				'cache',
 				[
 					'label'       => __( 'Cache', 'alm-elementor' ),
 					'type'        => Controls_Manager::TEXT,
 					'description' => __( 'Enable Ajax Load More Cache on this instance.', 'alm-elementor' ),
 					'type'        => Controls_Manager::SELECT,
-					'options' =>
+					'options'     =>
 						[
 							'false' => __( 'False', 'alm-elementor' ),
 							'true'  => __( 'True', 'alm-elementor' ),
@@ -284,21 +308,21 @@ class ALMElementorPosts extends Widget_Base {
 	 * @author @dcooney
 	 */
 	protected function render() {
-
 		$settings = $this->get_settings_for_display();
 
-		$target          = $settings['target'];
-		$url             = $settings['url'] && 'yes' === $settings['url'] ? 'true' : 'false';
-		$controls        = $settings['controls'] && 'yes' === $settings['controls'] ? 'true' : 'false';
-		$link_label      = $settings['previous_link_label'];
-		$scrolltop       = $settings['scrolltop'] ? $settings['scrolltop'] : '50';
-		$loading_style   = $settings['loading_style'];
-		$button_label    = $settings['button_label'];
-		$button_loading  = $settings['button_loading_label'];
-		$scroll          = $settings['scroll'];
-		$scroll_distance = $settings['scroll_distance'];
-		$pause_override  = $settings['pause_override'];
-		$cache           = ( $settings['cache'] && 'true' === $settings['cache'] ) ? true : false;
+		$target               = $settings['target'];
+		$url                  = $settings['url'] && $settings['url'] === 'yes' ? 'true' : 'false';
+		$controls             = $settings['controls'] && $settings['controls'] === 'yes' ? 'true' : 'false';
+		$link_label           = $settings['previous_link_label'];
+		$scrolltop            = $settings['scrolltop'] ? $settings['scrolltop'] : '50';
+		$loading_style        = $settings['loading_style'];
+		$button_label         = $settings['button_label'];
+		$button_loading_label = $settings['button_loading_label'];
+		$button_done_label    = $settings['button_done_label'];
+		$scroll               = $settings['scroll'];
+		$scroll_distance      = $settings['scroll_distance'];
+		$pause_override       = $settings['pause_override'];
+		$cache                = isset( $settings['cache'] ) && $settings['cache'] === 'true' ? true : false;
 
 		$shortcode  = '[ajax_load_more';
 		$shortcode .= ' elementor="posts"';
@@ -308,19 +332,20 @@ class ALMElementorPosts extends Widget_Base {
 		$shortcode .= ' elementor_controls="' . $controls . '"';
 		$shortcode .= ' elementor_scrolltop="' . $scrolltop . '"';
 
-		$shortcode .= ( $loading_style ) ? ' loading_style="' . $loading_style . '"' : '';
+		$shortcode .= $loading_style ? ' loading_style="' . $loading_style . '"' : '';
 
-		$shortcode .= ( $button_label ) ? ' button_label="' . $button_label . '"' : '';
-		$shortcode .= ( $button_loading ) ? ' button_loading_label="' . $button_loading . '"' : '';
+		$shortcode .= $button_label ? ' button_label="' . $button_label . '"' : '';
+		$shortcode .= $button_loading_label ? ' button_loading_label="' . $button_loading_label . '"' : '';
+		$shortcode .= $button_done_label ? ' button_done_label="' . $button_done_label . '"' : '';
 
-		$shortcode .= ( 'yes' === $scroll ) ? ' scroll="true"' : ' scroll="false"';
-		$shortcode .= ( 'yes' === $pause_override && 'yes' === $scroll ) ? ' pause_override="true"' : '';
-		$shortcode .= ( 'yes' === $scroll ) ? ' scroll_distance="' . $scroll_distance . '"' : '';
+		$shortcode .= $scroll === 'yes' ? ' scroll="true"' : ' scroll="false"';
+		$shortcode .= $pause_override === 'yes' && $scroll === 'yes' ? ' pause_override="true"' : '';
+		$shortcode .= $scroll === 'yes' ? ' scroll_distance="' . $scroll_distance . '"' : '';
 
 		if ( $cache ) { // Cache.
 			$cache_id   = str_replace( '#', '', $target );
 			$cache_id   = str_replace( '.', '', $cache_id );
-			$shortcode .= ' cache="true" cache_id="' . strtolower( $cache_id ) . '"';
+			$shortcode .= ' cache="true" cache_id="elementor-' . strtolower( $cache_id ) . '"';
 		}
 
 		$shortcode .= ']';
@@ -351,14 +376,16 @@ class ALMElementorPosts extends Widget_Base {
 		view.addInlineEditingAttributes( 'target', 'none' );
 		#>
 		<?php
-		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { ?>
+		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			?>
 			<div style="<?php echo self::CSS; ?>">
 				<?php _e( 'Elementor Widget Connector for Ajax Load More', 'alm-elementor' ); ?>
 				<br/>
 				<span style="opacity: 0.75; font-weight: 400;">';
-				<?php _e('Preview or launch the live URL to view Ajax Load More content.', 'alm-elementor' ); ?>
+				<?php _e( 'Preview or launch the live URL to view Ajax Load More content.', 'alm-elementor' ); ?>
 				</span>
 			</div>
-		<?php }
+			<?php
+		}
 	}
 }

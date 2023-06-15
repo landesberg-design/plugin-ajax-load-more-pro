@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/single-post/
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.4
+Version: 1.5.5
 
 
 == Copyright ==
@@ -48,6 +48,11 @@ http://connekthq.com/plugins/ajax-load-more/single-post/
 
 
 == Changelog ==
+
+= 1.5.5 - June 11, 2023 =
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE: Code cleanup and organization.
+
 
 = 1.5.4 - January 5, 2023 =
 * NEW: Added new `almSinglePostsLoaded` JavaScript callback discpatched after the plugin has completed the initial setup.

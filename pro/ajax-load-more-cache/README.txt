@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 6.1
+Tested up to: 5.7.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.7.6
+Version: 1.7.5
 
 
 == Copyright ==
@@ -47,13 +47,24 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 
 == Changelog ==
 
-= 1.7.6 - January 10, 2023 =
-* FIX: Added fix for PHP deprecation warning that could be displayed on some PHP versions.
+= 2.0.0 - June 11, 2023 =
+* NOTICE: Cache 2.0 is not compatible with Ajax Load More 5.x or lower.
+* NOTICE: After this update the current ALM cache will be cleared and a new cache will be created when requested.
+* NEW: Cache 2.0 is now compatible with all Ajax Load More add-ons and extensions.
+* NEW: Cache 2.0 introduces a new cache directory structure, file naming convention.
+- NEW: Cached pages now use [MD5 hash](https://en.wikipedia.org/wiki/MD5) as the file names. This adds more stability and removes complexity from fetching the cached files.
+* NEW: Added new cache_id template variables `%post_id%` & %post_slug% that allows for dynamically injecting the post id or slug into the cache_id. `[ajax_load_more cache="true" cache_id="my-cache-id-%post_id%"]`
+* NEW: Added new REST API endpoints for creating and fetching cached files from the server.
+* NEW: Added support for Elementor and WooCommerce add-ons.
+* FIX: Fixed various issues with Filters add-on compatibility.
+* FIX: Fixed issue with load more button not shutting down on the last page of results.
+* UPDATE: Code cleanup and optimization.
 
 
 = 1.7.5 - January 5, 2023 =
 * NEW: Added the ability to clear an individual cache by ID using the `alm_clear_cache` action.
 * UPDATE: Code cleanup and organization.
+
 
 = 1.7.4 - March 7, 2022 =
 * NEW: Added the ability to clear an individual cache by ID using the `alm_clear_cache` action.

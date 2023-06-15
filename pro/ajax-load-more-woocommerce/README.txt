@@ -5,10 +5,10 @@ Author: Connekt Media
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 5.5.0
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.2.1
+Version: 1.2.2
 
 == Copyright ==
 Copyright 2023 Connekt Media
@@ -41,7 +41,12 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 4. Ensure Ajax Load More is installed prior to activating the plugin.
 5. Activate the plugin in the WP plugin dashboard.
 
-== Changelog ==
+== Changelog == 
+
+= 1.2.2 - June 11, 2023 =
+* UPDATE: WooCommerce version bump.
+* UPDATE: Code cleanup and optimization.
+
 
 = 1.2.1 - February 25, 2023 =
 * Update: Added support for disabling Images Loaded functionality via Customizer setting.

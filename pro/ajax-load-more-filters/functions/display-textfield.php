@@ -105,7 +105,7 @@ function alm_filters_display_textfield( $id, $obj, $querystring ) {
 		// Replace `+` with ` | ` for range mode.
 		$selected = $datepicker_mode === 'range' ? str_replace( '+', ' | ', $selected ) : $selected;
 
-		$output .= '<input class="alm-filter--textfield textfield alm-flatpickr" id="' . $text_id . '-' . $obj['index'] . '" name="' . $text_id . '" type="text" value="' . urldecode( $selected ) . '" ' . $placeholder . '' . $datepicker_format . '' . $datepicker_mode_return . '' . $datepicker_locale . ' />';
+		$output .= '<input class="alm-filter--textfield textfield alm-flatpickr" id="' . $text_id . '-' . $obj['index'] . '" name="' . $text_id . '" type="text" value="' . esc_attr( $selected ) . '" ' . $placeholder . '' . $datepicker_format . '' . $datepicker_mode_return . '' . $datepicker_locale . ' />';
 
 	} else {
 		// Standard.
@@ -113,7 +113,7 @@ function alm_filters_display_textfield( $id, $obj, $querystring ) {
 		$output .= ' id="' . $text_id . '-' . $obj['index'] . '"';
 		$output .= ' name="' . $text_id . '"';
 		$output .= ' type="' . $textfield_type . '"';
-		$output .= ' value="' . urldecode( $selected ) . '"';
+		$output .= ' value="' . esc_attr( $selected ) . '"';
 		$output .= ' ' . $placeholder . ' />';
 	}
 

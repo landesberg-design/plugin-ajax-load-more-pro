@@ -575,13 +575,13 @@ var almNextpage = {};
   * On DOM loaded set the data-url to the current browser URL.
   * Note: This is a cached HTML content fix.
   */
-	window.addEventListener("DOMContentLoaded", function () {
-		var url = window.location.href;
-		var element = document.querySelector(".alm-nextpage");
-		if (element) {
-			element.dataset.url = url;
-		}
-	});
+	// window.addEventListener("DOMContentLoaded", function() {
+	// 	var url = window.location.href;
+	// 	var element = document.querySelector(".alm-nextpage");
+	// 	if (element) {
+	// 		element.dataset.url = url;
+	// 	}
+	// });
 })();
 
 /***/ })

@@ -8,7 +8,7 @@ Requires at least: 5.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 2.0.2.1
+Version: 2.0.2.2
 
 == Copyright ==
 Copyright 2023 Darren Cooney
@@ -50,6 +50,12 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 2.0.2.2 - June 11, 2023 =
+* UPDATE: Various security fixes and data escaping.
+* FIX: Suppressed php 8.1+ warnings about `FILTER_SANITIZE_STRING` being deprecated.
+* Fix: Fixed issue with decimal values in range slider being displayed in URL when not required.
+
 
 = 2.0.2.1 - March 9, 2023 =
 * HOTFIX: Sanitizing filters target parameter with `sanitize_key` to coincide with core ALM `5.6.0.4` release.

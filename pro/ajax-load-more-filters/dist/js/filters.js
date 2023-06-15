@@ -11228,8 +11228,6 @@ var setFacets = function setFacets(facets) {
 		return;
 	}
 
-	console.log(facets);
-
 	// Get all filters.
 	var filters = _Variables2.default.alm_filters_facets;
 	var target = _Variables2.default.filter_classname;
@@ -12430,6 +12428,18 @@ function setRangeSliders(filter_id, rangeSliders) {
 			}
 		};
 
+		if (!decimals) {
+			// Remove decimals.
+			options.format = {
+				to: function to(v) {
+					return v | 0;
+				},
+				from: function from(v) {
+					return v | 0;
+				}
+			};
+		}
+
 		// Custom config options
 		var opt_var = filter_id !== "" ? "alm_nouislider_opts_" + filter_id : "alm_nouislider_opts"; // Dynamic Variable Name
 		var alm_nouislider_opts = window[opt_var]; // Get window variable
@@ -12446,7 +12456,7 @@ function setRangeSliders(filter_id, rangeSliders) {
 		// Update
 		target.noUiSlider.on("update", function () {
 			var value = this.get();
-			label.innerHTML = parseRangeValue(value, min, max, display_label, decimals, filter_id);
+			label.innerHTML = parseRangeValue(value, min, max, display_label, filter_id);
 		});
 
 		// End
@@ -12468,12 +12478,12 @@ function setRangeSliders(filter_id, rangeSliders) {
 
 		// Change
 		target.noUiSlider.on("change", function () {
-			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style, filter_id);
+			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, style, filter_id);
 		});
 
 		// Set
 		target.noUiSlider.on("set", function () {
-			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style);
+			onChange(this, label, input, resetBtn, min, max, start_reset, end_reset, display_label, style);
 		});
 
 		// Reset Range Slider
@@ -12494,9 +12504,9 @@ function setRangeSliders(filter_id, rangeSliders) {
  * Function dispatched after `change` or `set`
  *
  */
-function onChange(el, label, input, resetBtn, min, max, start_reset, end_reset, display_label, decimals, style, filter_id) {
+function onChange(el, label, input, resetBtn, min, max, start_reset, end_reset, display_label, style, filter_id) {
 	var value = el.get();
-	label.innerHTML = parseRangeValue(value, min, max, display_label, decimals, filter_id);
+	label.innerHTML = parseRangeValue(value, min, max, display_label, filter_id);
 	input.value = value;
 
 	// If style is change, submit the form on change
@@ -12515,14 +12525,14 @@ function onChange(el, label, input, resetBtn, min, max, start_reset, end_reset, 
 /**
  * Parse the range slider display label.
  *
- * @param {string} value The current value.
- * @param {string} min Min slider value.
- * @param {string} max Max slider value.
+ * @param {string} value         The current value.
+ * @param {string} min           Min slider value.
+ * @param {string} max           Max slider value.
  * @param {string} display_label Show the label.
- * @param {boolean} decimals DIsplay the decimal places.
- * @param {string} filter_id The ID of the filter group.
+ * @param {string} filter_id     The ID of the filter group.
+ * @return {string}              The parsed label.
  */
-function parseRangeValue(value, min, max, display_label, decimals, filter_id) {
+function parseRangeValue(value, min, max, display_label, filter_id) {
 	if (!value && value.length !== 2) {
 		return false;
 	}
@@ -12530,9 +12540,6 @@ function parseRangeValue(value, min, max, display_label, decimals, filter_id) {
 	var returnVal = display_label;
 	var start_val = value[0] ? value[0] : min;
 	var end_val = value[1] ? value[1] : max;
-
-	start_val = !decimals ? parseFloat(start_val).toFixed(0) : parseFloat(start_val).toFixed(2);
-	end_val = !decimals ? parseFloat(end_val).toFixed(0) : parseFloat(end_val).toFixed(2);
 
 	// Hook for formatting range values.
 	if (typeof almFiltersFormatRangeValues === "function") {
@@ -12556,6 +12563,10 @@ function parseRangeValue(value, min, max, display_label, decimals, filter_id) {
 /**
  * Show/Hide Reset Button
  *
+ * @param {HTMLElement} button      The reset button.
+ * @param {array}       value       The start and end value.
+ * @param {string|int}  start_reset Start value.
+ * @param {string|int}  end_reset   End value.
  */
 function toggleResetBtn(button, value, start_reset, end_reset) {
 	if (parseInt(value[0]) !== parseInt(start_reset) || parseInt(value[1]) !== parseInt(end_reset)) {

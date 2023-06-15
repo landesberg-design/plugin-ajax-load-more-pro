@@ -5,19 +5,17 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/comments/
 Requires at least: 4.0
-Tested up to: 5.3.0
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.2.0.1
-
+Version: 1.2.1
 
 == Copyright ==
-Copyright 2019 Darren Cooney
+Copyright 2023 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
-This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 
 == Description ==
 
@@ -47,6 +45,11 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/comments/
 
 == Changelog ==
 
+= 1.2.1 -June 11, 2023 =
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE: Code cleanup.
+
+
 = 1.2.0.1 - November 18, 2019 =
 * FIX - Fixed issue with using Paging, Preloaded and Comments together would cause pagination to be off by a page.
 * UPDATE - Removed legacy REST API route
@@ -60,7 +63,7 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/comments/
 
 
 = 1.1.4 - March 8, 2019 =
-* FIX - Fixed issue with preloaded comments not working because of an incorrectly `comments_post_id`. 
+* FIX - Fixed issue with preloaded comments not working because of an incorrectly `comments_post_id`.
 
 
 = 1.1.3 - December 6, 2018 =
@@ -75,7 +78,7 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/comments/
 
 = 1.1.1 - September 6, 2016 =
 * MILESTONE - Must update core Ajax Load More to 2.12.0 when updating this add-on.
-* FIX - Updated alm_comments_query() to return totalposts and postcount in json array - this is required for the latest Ajax Load More update. 
+* FIX - Updated alm_comments_query() to return totalposts and postcount in json array - this is required for the latest Ajax Load More update.
 
 
 = 1.1 - May 27, 2016 =

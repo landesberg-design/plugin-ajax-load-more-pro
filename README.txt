@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 4.0
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.2.17
+Version: 1.2.18
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -48,6 +48,51 @@ http://connekthq.com/ajax-load-more/pro/
 This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5.6.0 for compatibility with the Filters add-on 2.0 update.
 
 == Changelog ==
+
+= 1.2.18 - June 11, 2023 =
+
+**Cache - 2.0.0 **
+* NOTICE: Cache 2.0 is not compatible with Ajax Load More 5.x or lower.
+* NOTICE: After this update the current ALM cache will be cleared and a new cache will be created when requested.
+* NEW: Cache 2.0 is now compatible with all Ajax Load More add-ons and extensions.
+* NEW: Cache 2.0 introduces a new cache directory structure, file naming convention.
+- NEW: Cached pages now use [MD5 hash](https://en.wikipedia.org/wiki/MD5) as the file names. This adds more stability and removes complexity from fetching the cached files.
+* NEW: Added new cache_id template variables `%post_id%` & %post_slug% that allows for dynamically injecting the post id or slug into the cache_id. `[ajax_load_more cache="true" cache_id="my-cache-id-%post_id%"]`
+* NEW: Added new REST API endpoints for creating and fetching cached files from the server.
+* NEW: Added support for Elementor and WooCommerce add-ons.
+* FIX: Fixed various issues with Filters add-on compatibility.
+* FIX: Fixed issue with load more button not shutting down on the last page of results.
+* UPDATE: Code cleanup and optimization.
+
+
+**Comments - 1.2.1 **
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE: Code cleanup.
+
+**Elementor - 1.1.4 **
+* NEW: Added Elementor widget setting for `button_done_label` shortcode parameter.
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE - Code cleanup.
+* UPDATE - Elementor compatibility version bump and testing.
+* FIX - Fix for PHP warning about undefined `cache` index.
+
+**Filters - 2.0.2.2 **
+* UPDATE: Various security fixes and data escaping.
+* FIX: Suppressed php 8.1+ warnings about `FILTER_SANITIZE_STRING` being deprecated.
+* Fix: Fixed issue with decimal values in range slider being displayed in URL when not required.
+
+**Next Page - 1.6.4 **
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* FIX: Fixed issue with paged URLs not loading the correct page.
+
+**Single Posts - 1.5.5 **
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE: Code cleanup and organization.
+
+**WooCommerce - 1.2.2 **
+* UPDATE: WooCommerce version bump.
+* UPDATE: Code cleanup and optimization.
+
 
 = 1.2.17 - March 9, 2023 =
 **Filters - 2.0.2.1 **

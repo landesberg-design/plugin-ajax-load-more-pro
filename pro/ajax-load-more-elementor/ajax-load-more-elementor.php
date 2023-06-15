@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.1.3
- * Elementor tested up to: 3.11.0
- * Elementor Pro tested up to: 3.11.0
+ * Version: 1.1.4
+ * Elementor tested up to: 3.13.4
+ * Elementor Pro tested up to: 3.13.2
  *
  * @package ALMElementor
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_ELEMENTOR_VERSION', '1.1.3' );
-define( 'ALM_ELEMENTOR_RELEASE', 'February 14, 2023' );
+define( 'ALM_ELEMENTOR_VERSION', '1.1.4' );
+define( 'ALM_ELEMENTOR_RELEASE', 'June 11, 2023' );
 
 /**
  * Plugin activation hook.
@@ -54,8 +54,7 @@ function alm_elementor_admin_notice() {
 		$message    .= '<p>' . __( 'You must install and activate the core Ajax Load More plugin before using the Ajax Load More Elementor Add-on.', 'alm-elementor' ) . '</p>';
 		$message    .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Ajax Load More Now', 'alm-elementor' ) ) . '</p>';
 		$message    .= '</div>';
-		echo $message;
-		// deactivate_plugins( '/' . $plugin . '/' . $plugin . '.php' );
+		echo wp_kses_post( $message );
 		delete_transient( 'alm_elementor_admin_notice' );
 	}
 
@@ -64,7 +63,7 @@ function alm_elementor_admin_notice() {
 		$message  = '<div class="error">';
 		$message .= '<p>' . __( 'Elementor Pro must be installed and activated to use the Ajax Load More Elementor Add-on', 'alm-elementor' ) . '</p>';
 		$message .= '</div>';
-		echo $message;
+		echo wp_kses_post( $message );
 		delete_transient( 'alm-elementor-admin-notice' );
 	}
 }
@@ -245,7 +244,7 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 	 */
 	function alm_elementor_sanitize_license( $new ) {
 		$old = get_option( 'alm_elementor_license_key' );
-		if ( $old && $new != $old ) {
+		if ( $old && $new !== $old ) {
 			delete_option( 'alm_elementor_license_status' );
 		}
 		return $new;

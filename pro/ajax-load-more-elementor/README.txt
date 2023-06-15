@@ -5,10 +5,10 @@ Author: Connekt Media
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 6.1.0
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.1.3
+Version: 1.1.4
 
 Infinite scroll Elementor widget content with Ajax Load More.
 
@@ -44,6 +44,14 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/elementor/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.1.4 - June 11, 2023 =
+* NEW: Added Elemeentor widget setting for `button_done_label` shortcode parameter.
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* UPDATE - Code cleanup.
+* UPDATE - Elementor compatability version bump and testing.
+* FIX - Fix for PHP warning about undefined `cache` index.
+
 
 = 1.1.3 - February 14, 2023 =
 * FIX - Updated widget function to fix issues with function deprecation notices.

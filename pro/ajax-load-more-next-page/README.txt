@@ -5,19 +5,17 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 6.0
+Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.6.3
-
+Version: 1.6.4
 
 == Copyright ==
-Copyright 2022 Connekt Media
+Copyright 2023 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 
 == Description ==
 
@@ -25,7 +23,6 @@ The Next Page add-on will provide functionality for infinite scrolling and lazy 
 Load and display multipage WordPress content on demand using the <!–-nextpage–-> Quicktag and Ajax Load More.
 
 The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quicktags to split the post_content of the current page (or post) into separate pages – as users load paginated content, the browser address bar updates to the page currently in view and pageviews can be sent to Google Analytics for tracking.
-
 
 == Installation ==
 
@@ -37,7 +34,6 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 4. Click 'Install Now'
 5. Activate the plugin in the Plugin dashboard
 
-
 = Using FTP =
 
 1. Download `ajax-load-more-next-page.zip`.
@@ -46,8 +42,12 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 4. Ensure Ajax Load More is installed prior to activating the plugin.
 5. Activate the plugin in the Plugin dashboard.
 
-
 == Changelog ==
+
+= 1.6.4 - June 11, 2023 =
+* UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
+* FIX: Fixed issue with paged URLs not loading the correct page.
+
 
 = 1.6.3 - January 6, 2023 =
 * FIX: Added DOM loaded event that double checks browser URL vs HTML stored URL for scrolling purposes and to prevent errors.

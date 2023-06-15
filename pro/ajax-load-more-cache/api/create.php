@@ -7,56 +7,74 @@
  */
 
 /**
- * Create Cache from HTML data
+ * Custom API route for creating a cached file from params.
  *
- * @since 1.0
- * @return array
+ * @author ConnektMedia <support@connekthq.com>
+ * @since 2.0
  */
-function alm_cache_create_html() {
-	if ( ! wp_verify_nonce( $_POST['security'], 'ajax_load_more_nonce' ) ) {
-		wp_send_json_error( 'Invalid security token.' );
-		wp_die();
-	};
 
-	$html            = ( isset( $_POST['html'] ) ) ? trim( stripcslashes( $_POST['html'] ) ) : false;
-	$cache_id        = ( isset( $_POST['cache_id'] ) ) ? $_POST['cache_id'] : '';
-	$cache_logged_in = ( isset( $_POST['cache_logged_in'] ) ) ? $_POST['cache_logged_in'] : false;
-	$do_create_cache = ( 'true' === $cache_logged_in && is_user_logged_in() ) ? false : true;
-	$canonical_url   = ( isset( $_POST['canonical_url'] ) ) ? esc_url( $_POST['canonical_url'] ) : esc_url( $_SERVER['HTTP_REFERER'] );
-	$name            = ( isset( $_POST['name'] ) ) ? $_POST['name'] : 0; // The name for the cached page.
+add_action(
+	'rest_api_init',
+	function () {
+		$my_namespace = 'ajax-load-more/cache';
+		$my_endpoint  = '/create';
+		register_rest_route(
+			$my_namespace,
+			$my_endpoint,
+			[
+				'methods'             => 'POST',
+				'callback'            => 'alm_cache_create',
+				'args'                => [],
+				'permission_callback' => function () {
+					return true;
+				},
+			]
+		);
+	}
+);
 
-	if ( ! $html || ! $name || ! has_action( 'alm_cache_installed' ) || ! $do_create_cache ) { // Exit if required.
+/**
+ * Create Cache from HTML data.
+ *
+ * @param WP_REST_Request $request Rest request object.
+ */
+function alm_cache_create( WP_REST_Request $request ) {
+	$form_data = $request->get_params();
+
+	// Pluck data from request.
+	$html            = isset( $form_data['html'] ) ? trim( stripcslashes( $form_data['html'] ) ) : false;
+	$cache_id        = isset( $form_data['cache_id'] ) ? $form_data['cache_id'] : '';
+	$cache_logged_in = isset( $form_data['cache_logged_in'] ) ? $form_data['cache_logged_in'] : false;
+	$do_create_cache = $cache_logged_in === 'true' && is_user_logged_in() ? false : true;
+	$canonical_url   = isset( $form_data['canonical_url'] ) ? esc_url( $form_data['canonical_url'] ) : esc_url( $_SERVER['HTTP_REFERER'] );
+	$name            = isset( $form_data['name'] ) ? $form_data['name'] : 0;
+	$postcount       = isset( $form_data['postcount'] ) ? $form_data['postcount'] : 1;
+	$totalposts      = isset( $form_data['totalposts'] ) ? $form_data['totalposts'] : 1;
+
+	if ( ! has_action( 'alm_cache_installed' ) || ! $do_create_cache ) {
 		return false;
 	}
 
-	/**
-	 * Cache Add-on hook.
-	 * Create cache directory + meta .txt file.
-	 *
-	 * @return null
-	 */
-	if ( ! empty( $cache_id ) && has_action( 'alm_cache_create_dir' ) && $do_create_cache ) {
-		apply_filters( 'alm_cache_create_dir', $cache_id, $canonical_url );
+	// Handle missing data.
+	if ( ! $cache_id || ! $name || ! $html ) {
+		return new WP_REST_Response(
+			[
+				'success' => false,
+				'msg'     => __( 'An error has occurred while creating the Ajax Load More cache.', 'ajax-load-more-cache' ),
+			],
+			401
+		);
 	}
 
-	/**
-	 * Cache Add-on hook.
-	 * If Cache is enabled, check the cache file.
-	 *
-	 * @param string  $cache_id        ID of the ALM cache
-	 * @param boolean $do_create_cache Should cache be created for this user
-	 */
-	if ( ! empty( $cache_id ) ) {
-		apply_filters( 'alm_html_cache_file', $cache_id, $name, $html );
-	}
+	// Create cache file.
+	ALMCache::create_cache_file( $cache_id, $name, $canonical_url, $html, $postcount, $totalposts );
 
-	$return = array(
-		'success' => true,
-		'msg'     => 'Cache created for post ' . $name . '.'
+	// Send the response.
+	return new WP_REST_Response(
+		[
+			'success' => true,
+			'msg'     => __( 'Cache created successfully for:', 'ajax-load-more-cache' ) . ' ' . $name,
+		],
+		200
 	);
-
-	wp_send_json( $return );
 }
-
-add_action( 'wp_ajax_alm_cache_from_html', 'alm_cache_create_html' );
-add_action( 'wp_ajax_nopriv_alm_cache_from_html', 'alm_cache_create_html' );

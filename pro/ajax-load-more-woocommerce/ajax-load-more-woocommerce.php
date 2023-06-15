@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.2.1
+ * Version: 1.2.2
  * WC requires at least: 5.0
- * WC tested up to: 7.4.0
+ * WC tested up to: 7.7.2
  *
  * @package ALMWooCommerce
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_WOO_VERSION', '1.2.1' );
-define( 'ALM_WOO_RELEASE', 'February 25, 2023' );
+define( 'ALM_WOO_VERSION', '1.2.2' );
+define( 'ALM_WOO_RELEASE', 'June 11, 2023' );
 
 /**
  * Plugin activation hook.
@@ -31,7 +31,7 @@ function alm_woo_install() {
 		set_transient( 'alm_woocommerce_admin_notice', true, 5 );
 	}
 	if ( ! alm_is_woo_activated() ) {
-		wp_die( esc_html__( 'WooCommerce must be installed and activated in order to use Ajax Load More WooCommerce Add-on', 'alm-woocommerce' ) );
+		wp_die( esc_html__( 'WooCommerce must be installed and activated to use the Ajax Load More WooCommerce Add-on', 'alm-woocommerce' ) );
 	}
 }
 register_activation_hook( __FILE__, 'alm_woo_install' );
@@ -114,20 +114,23 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_woocommerce_after_shop_loop() {
-
-			if ( ! alm_is_woo_archive() ) { // WooCommerce Archive.
+			if ( ! alm_is_woo_archive() ) {
+				// WooCommerce Archive.
 				return false;
 			}
 
-			if ( ! alm_woo_is_shop_enabled() ) { // Shop.
+			if ( ! alm_woo_is_shop_enabled() ) {
+				// Shop.
 				return false;
 			}
 
-			if ( ! alm_woo_is_shop_archive_enabled() ) { // Shop Archives.
+			if ( ! alm_woo_is_shop_archive_enabled() ) {
+				// Shop Archives.
 				return false;
 			}
 
-			if ( ! alm_woo_is_shop_search_enabled() ) { // Product Search.
+			if ( ! alm_woo_is_shop_search_enabled() ) {
+				// Product Search.
 				return false;
 			}
 
@@ -234,10 +237,10 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 		 * @since 1.1
 		 */
 		public static function alm_woocommerce_get_cache_id() {
-
 			$cache_id = 'woo-shop'; // Default ID.
 
-			if ( is_product_category() || is_product_tag() ) { // Shop Archives.
+			if ( is_product_category() || is_product_tag() ) {
+				// Shop Archives.
 				$obj = get_queried_object();
 				if ( isset( $obj->taxonomy ) && isset( $obj->slug ) ) {
 					$taxonomy = $obj->taxonomy;
@@ -264,7 +267,6 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 		 * @since 1.0.2
 		 */
 		public function alm_woocommerce_shortcode( $id, $args ) {
-
 			if ( ! alm_is_woo_archive() ) { // Exit if not an archive page.
 				return false;
 			}
@@ -280,7 +282,6 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 
 			// Create paged URLs.
 			for ( $i = 1; $i <= $pages; $i++ ) {
-
 				// Core WooCommerce Hook.
 				$permalink_structure = apply_filters( 'alm_woocommerce_permalink_structure', get_option( ALM_WOO_PREFIX . 'permalink_structure' ) );
 
@@ -288,12 +289,10 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 					$url = htmlspecialchars_decode( get_pagenum_link( $i ) );
 					$url = str_replace( '%5B', '[', $url );
 					$url = str_replace( '%5D', ']', $url );
-
 				} else {
 					global $wp;
 					$base_url = home_url( add_query_arg( [], $wp->request ) );
 					$url      = $base_url . str_replace( '{page}', $i, $permalink_structure );
-
 				}
 				array_push( $url_array, $url );
 			}
@@ -349,16 +348,18 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_woocommerce_before_shop_loop() {
-
-			if ( ! alm_is_woo_archive() ) { // Exit if not WooCommerce archive page.
+			if ( ! alm_is_woo_archive() ) {
+				// Exit if not WooCommerce archive page.
 				return false;
 			}
 
-			if ( ! alm_woo_is_shop_enabled() ) { // Shop.
+			if ( ! alm_woo_is_shop_enabled() ) {
+				// Shop.
 				return false;
 			}
 
-			if ( ! alm_woo_is_shop_archive_enabled() ) { // Shop Archives.
+			if ( ! alm_woo_is_shop_archive_enabled() ) {
+				// Shop Archives.
 				return false;
 			}
 
@@ -366,8 +367,7 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 			$hide_orderby    = alm_woo_hide_orderby();
 
 			$return  = '<style>';
-			$return .= $hide_pagination; // Hide Pagination.
-			$return .= $hide_orderby; // Hide Orderby (If set).
+			$return .= $hide_pagination . $hide_orderby; // Hide Pagination & Orderby (If set).
 			$return .= '</style>';
 
 			echo $return; // phpcs:ignore
@@ -388,13 +388,11 @@ if ( ! class_exists( 'ALMWooCommerce' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_woocommerce_enqueue_scripts() {
-
 			// Use minified libraries if SCRIPT_DEBUG is turned off.
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 			// Enqueue JS.
 			wp_register_script( 'ajax-load-more-woocommerce', plugins_url( '/core/js/alm-woocommerce' . $suffix . '.js', __FILE__ ), [ 'ajax-load-more' ], ALM_WOO_VERSION, true );
-
 		}
 
 		/**

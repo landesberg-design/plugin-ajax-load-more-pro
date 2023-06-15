@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.0.2.1
+ * Version: 2.0.2.2
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.0.2.1' );
-define( 'ALM_FILTERS_RELEASE', 'March 9, 2023' );
+define( 'ALM_FILTERS_VERSION', '2.0.2.2' );
+define( 'ALM_FILTERS_RELEASE', 'June 11, 2023' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -234,7 +234,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 2.0
 		 */
 		public function alm_filters_rebuild_facets() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['rebuild_facet_index'] ) ) {
 				$filter_id = $params['rebuild_facet_index'];
 				$filter    = get_option( ALM_FILTERS_PREFIX . $filter_id );
@@ -263,7 +263,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 2.0
 		 */
 		public function alm_filters_duplicate_filter() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['duplicate_filter'] ) && isset( $params['filter_id'] ) ) {
 				$id         = $params['duplicate_filter'];
 				$new        = $params['filter_id'];
@@ -310,7 +310,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_deleted() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['delete_filter'] ) ) {
 				$filter_id = $params['delete_filter'];
 
@@ -420,7 +420,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.6
 		 */
 		public function alm_filters_updated() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['filter_updated'] ) ) {
 				$msg = str_replace( '+', ' ', $params['filter_updated'] );
 				$this->alm_filters_add_admin_notice( '<i class="fa fa-check-square" style="color: #46b450";></i>&nbsp; ' . $msg . '!', 'success' );
@@ -433,7 +433,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_export() {
-			$params = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_POST, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['alm_filters_export'] ) ) {
 				$filename = 'alm-filters';
 				if ( ! empty( $params['filter_keys'] ) ) {
@@ -465,7 +465,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_import() {
-			$params = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_POST, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			if ( isset( $params['alm_filters_import'] ) ) {
 				$file = $_FILES['alm_import_file'];
 
@@ -1319,7 +1319,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 *  @since 1.0
 		 */
 		public static function alm_filters_get_page_num() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 			$pg     = isset( $params['pg'] ) ? $params['pg'] : 1;
 			return $pg;
 		}

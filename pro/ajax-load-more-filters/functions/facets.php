@@ -535,7 +535,7 @@ function alm_filters_has_facets( $target ) {
  * @return array Array of query params.
  */
 function alm_filters_facet_get_querystring() {
-	$params  = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+	$params  = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
 	$is_ajax = isset( $params ) && isset( $params['facets'] );
 	if ( $is_ajax ) {
 		// Ajax request.

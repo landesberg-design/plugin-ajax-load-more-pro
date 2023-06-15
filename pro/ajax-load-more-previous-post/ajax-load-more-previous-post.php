@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.5.4
+ * Version: 1.5.5
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PREV_POST_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PREV_POST_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PREV_POST_VERSION', '1.5.4' );
-define( 'ALM_PREV_POST_RELEASE', 'January 5, 2023' );
+define( 'ALM_PREV_POST_VERSION', '1.5.5' );
+define( 'ALM_PREV_POST_RELEASE', 'June 11, 2023' );
 
 /**
  * Activation hook.
@@ -55,9 +55,7 @@ function alm_single_post_admin_notice() {
 }
 add_action( 'admin_notices', 'alm_single_post_admin_notice' );
 
-
 if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
-
 	/**
 	 * Initiate the class.
 	 */
@@ -69,8 +67,8 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		public function __construct() {
 			add_action( 'alm_prev_post_installed', array( &$this, 'alm_prev_post_installed' ) );
 			add_action( 'alm_single_post_installed', array( &$this, 'alm_single_post_installed' ) );
-			add_action( 'wp_ajax_alm_get_single', array( &$this, 'alm_query_single_post' ) );
-			add_action( 'wp_ajax_nopriv_alm_get_single', array( &$this, 'alm_query_single_post' ) );
+			add_action( 'wp_ajax_alm_get_single', array( &$this, 'alm_get_single_post' ) );
+			add_action( 'wp_ajax_nopriv_alm_get_single', array( &$this, 'alm_get_single_post' ) );
 			add_filter( 'alm_single_post_inc', array( &$this, 'alm_single_post_inc' ), 10, 5 );
 			add_filter( 'alm_single_post_args', array( &$this, 'alm_single_post_args' ), 10, 2 );
 			add_filter( 'alm_single_post_shortcode', array( &$this, 'alm_single_post_shortcode' ), 10, 10 );
@@ -121,7 +119,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @since 1.0
 		 * @return void
 		 */
-		public function alm_query_single_post() {
+		public function alm_get_single_post() {
 			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
 
 			$init            = isset( $params['init'] ) ? $params['init'] : false;
@@ -130,12 +128,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			$tax             = isset( $params['taxonomy'] ) ? $params['taxonomy'] : '';
 			$exclude_terms   = isset( $params['excluded_terms'] ) ? $params['excluded_terms'] : '';
 			$post_type       = isset( $params['post_type'] ) ? $params['post_type'] : 'post';
-			$order           = isset( $params['order'] ) && ! empty( $params['order'] ) ? $params['order'] : 'previous';
+			$order           = isset( $params['order'] ) && $params['order'] ? $params['order'] : 'previous';
 
 			// Order - If order is `latest` and first run and ordered by latest, set posts to load in order by date.
 			$order = $init === 'false' && $order === 'latest' ? 'previous' : $order;
 
-			$array = array(
+			$array = [
 				'init'            => $init,
 				'id'              => $id,
 				'exclude_post_id' => $exclude_post_id,
@@ -143,11 +141,11 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 				'exclude_terms'   => $exclude_terms,
 				'postType'        => $post_type,
 				'order'           => $order,
-			);
+			];
 
 			$data = self::alm_get_single_posts_data( $array );
-			wp_send_json( $data );
 
+			wp_send_json( $data );
 		}
 
 		/**
@@ -157,34 +155,28 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @return array
 		 */
 		public static function alm_get_single_posts_data( $array ) {
-
 			if ( $array && $array['id'] ) {
 
 				switch ( $array['order'] ) {
-
-					// Get the latest (newest) post
+					// Get the latest (newest) post.
 					case 'latest':
 						$data = self::alm_get_latest_post( $array['exclude_post_id'], $array['postType'], $array['tax'], $array['exclude_terms'] );
 						return $data;
-					break;
 
-					// Get next post ordered by date
+					// Get next post ordered by date.
 					case 'next':
 						$data = self::alm_get_next_post( $array['id'], $array['tax'], $array['exclude_terms'], $array['exclude_post_id'] );
 						return $data;
-					break;
 
-					// Get previous post ordered by date
+					// Get previous post ordered by date.
 					case 'previous':
 						$data = self::alm_get_previous_post( $array['id'], $array['tax'], $array['exclude_terms'], $array['exclude_post_id'] );
 						return $data;
-					break;
 
-					// Get post ID array (use as default for ease)
+					// Get post ID array (use as default for ease).
 					default:
 						$data = self::alm_get_post_in_array( $array['id'], $array['order'] );
 						return $data;
-					break;
 				}
 			}
 		}
@@ -192,7 +184,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		/**
 		 * Get the next post in the array.
 		 *
-		 * @param string $id The post ID.
+		 * @param string $id    Post ID.
 		 * @param array  $array The array of post IDs.
 		 * @return JSON
 		 * @since 1.0
@@ -202,12 +194,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			global $post;
 
 			// Store the existing post object for later so we don't lose it.
-			$oldGlobal = $post;
-
-			$previous_post = '';
+			$old_global = $post;
 
 			// Remove whitespace and convert to array.
 			$array = explode( ',', str_replace( ' ', '', $array ) );
+
+			$previous_post = '';
 
 			if ( in_array( $id, $array, true ) ) {
 				// ID found in array.
@@ -222,7 +214,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			}
 
 			// Reset global $post object.
-			$post = $oldGlobal;
+			$post = $old_global;
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $previous_post );
@@ -244,22 +236,22 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			global $post;
 
 			// Store the existing post object for later so we don't lose it.
-			$oldGlobal = $post;
+			$old_global = $post;
 
 			// Get post object.
-			$post = get_post( $id );
+			$post = get_post( $id ); // phpcs:ignore
 
 			// Get Previous Post.
-			$previous_post = ( ! empty( $tax ) ) ? get_previous_post( true, $exclude_terms, $tax ) : get_previous_post( false, $exclude_terms );
+			$previous_post = ! empty( $tax ) ? get_previous_post( true, $exclude_terms, $tax ) : get_previous_post( false, $exclude_terms );
 
 			// If Previous Post === Original post.
-			if ( $previous_post && $previous_post->ID == $exclude_post_id ) {
-				$post          = get_post( $previous_post->ID );
+			if ( $previous_post && $previous_post->ID === $exclude_post_id ) {
+				$post          = get_post( $previous_post->ID ); // phpcs:ignore
 				$previous_post = ( ! empty( $tax ) ) ? get_previous_post( true, $exclude_terms, $tax ) : get_previous_post( false, $exclude_terms );
 			}
 
 			// Reset global $post object.
-			$post = $oldGlobal;
+			$post = $old_global; // phpcs:ignore
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $previous_post );
@@ -281,22 +273,22 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			global $post;
 
 			// Store the existing post object for later so we don't lose it.
-			$oldGlobal = $post;
+			$old_global = $post;
 
 			// Get post object.
-			$post = get_post( $id );
+			$post = get_post( $id ); // phpcs:ignore
 
 			// Get Previous Post.
 			$next_post = ! empty( $tax ) ? get_next_post( true, $exclude_terms, $tax ) : get_next_post( false, $exclude_terms );
 
 			// If Previous Post === Original post.
-			if ( $next_post && $next_post->ID == $exclude_post_id ) {
+			if ( $next_post && $next_post->ID === $exclude_post_id ) {
 				$post      = get_post( $previous_post->ID );
 				$next_post = ( ! empty( $tax ) ) ? get_next_post( true, $exclude_terms, $tax ) : get_next_post( false, $exclude_terms );
 			}
 
 			// Reset global $post object.
-			$post = $oldGlobal;
+			$post = $old_global;
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $next_post );
@@ -318,13 +310,13 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			global $post;
 
 			// Store the existing post object for later so we don't lose it.
-			$oldGlobal = $post;
+			$old_global = $post;
 
 			// Get post object.
 			$previous_post = get_post( self::alm_query_latest_post_id( $id, $post_type, $taxonomy, $exclude_terms ) );
 
 			// Reset global $post object.
-			$post = $oldGlobal; // phpcs:ignore
+			$post = $old_global; // phpcs:ignore
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $previous_post );
@@ -345,15 +337,15 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		public static function alm_query_latest_post_id( $id, $post_type, $taxonomy, $exclude_terms ) {
 
 			// Get latest post not including the current.
-			$args = array(
+			$args = [
 				'post_type'        => $post_type,
 				'posts_per_page'   => 1,
-				'post__not_in'     => array( $id ),
+				'post__not_in'     => [ $id ],
 				'orderby'          => 'date',
 				'order'            => 'DESC',
 				'fields'           => 'ids',
 				'suppress_filters' => false,
-			);
+			];
 
 			// If $in_same_term, loop all tax terms and query based on the terms.
 			if ( $taxonomy ) {
@@ -431,7 +423,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 
 			}
 
-			$data['current_id'] = $id;
+			$data['current_id'] = (int) $id;
 			$data['permalink']  = get_permalink( $id );
 			$data['title']      = wp_strip_all_tags( get_the_title( $id ) );
 
@@ -600,9 +592,10 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @param string $query_args The query to build.
 		 */
 		public static function alm_single_post_custom_query( $post_id = '', $query_order = 'previous', $query_args = null ) {
+			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
 
-			// Exit if this is an ajax request.
-			if ( isset( $_GET ) && isset( $_GET['alm_page'] ) ) {
+			// Exit if this is an Ajax request as this should run on page load only.
+			if ( isset( $params ) && isset( $params['alm_page'] ) ) {
 				return false;
 			}
 
@@ -628,15 +621,16 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 				);
 			}
 
-			/*
+			/**
 			 * Query Hook.
 			 *
-			 * @return $args;
+			 * @return array Updated query args.
 			 */
 			$args = apply_filters( 'alm_single_post_query_args_' . $args['alm_id'], $args, $post_id );
 
 			// WP Query.
 			$alm_custom_query = new WP_Query( $args );
+
 			if ( $alm_custom_query->have_posts() ) {
 				return implode( ',', $alm_custom_query->posts );
 			} else {

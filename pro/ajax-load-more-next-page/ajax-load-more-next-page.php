@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Plugin Name: Ajax Load More: Next Page
  * Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/next-page/
@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.6.3
+ * Version: 1.6.4
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_NEXTPAGE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_NEXTPAGE_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_NEXTPAGE_VERSION', '1.6.3' );
-define( 'ALM_NEXTPAGE_RELEASE', 'January 5, 2023' );
+define( 'ALM_NEXTPAGE_VERSION', '1.6.4' );
+define( 'ALM_NEXTPAGE_RELEASE', 'June 11, 2023' );
 
 /**
  * Activation hook.
@@ -67,7 +67,6 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * Construct function.
 		 */
 		public function __construct() {
-
 			$this->init = true;
 			add_action( 'alm_nextpage_installed', array( &$this, 'alm_nextpage_installed' ) );
 			add_filter( 'alm_init_nextpage', array( &$this, 'alm_init_nextpage' ), 10, 7 );
@@ -104,7 +103,6 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * @since 1.6.0
 		 */
 		public function alm_nextpage_the_content( $content ) {
-
 			if ( ! $this->init ) {
 				return $content;
 			}
@@ -154,10 +152,8 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 					return $content;
 				}
 			}
-
 			return $content;
 		}
-
 
 		/**
 		 * Enqueue plugin scripts.
@@ -166,7 +162,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_nextpage_enqueue_scripts() {
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			wp_register_script(
 				'ajax-load-more-nextpage',
 				plugins_url( '/dist/js/alm-next-page' . $suffix . '.js', __FILE__ ),
@@ -178,38 +174,32 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 			wp_localize_script(
 				'ajax-load-more-nextpage',
 				'alm_nextpage_localize',
-				array(
+				[
 					'leading_slash'  => self::get_leading_slash(),
 					'trailing_slash' => self::get_trailing_slash(),
-				)
+				]
 			);
 		}
 
 		/**
-		 * Get filter hook value.
+		 * Add a leading slash (/) before the page number.
 		 *
 		 * @author ConnektMedia
 		 * @since 1.1
 		 * @return string
 		 */
 		public static function get_leading_slash() {
-			/*
-			 * Add a leading slash (/) before the page number
-			 */
 			return apply_filters( 'alm_nextpage_leading_slash', false ) ? '/' : '';
 		}
 
 		/**
-		 * Get filter hook value.
+		 * Remove the trailing slash (/) at the end of the URL.
 		 *
 		 * @author ConnektMedia
 		 * @since 1.1
 		 * @return string
 		 */
 		public static function get_trailing_slash() {
-			/*
-			 * Remove the trailing slash (/) at the end of the URL
-			 */
 			return apply_filters( 'alm_nextpage_remove_trailing_slash', false ) ? '' : '/';
 		}
 
@@ -234,56 +224,46 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 			$canonical_url = isset( $params['canonical_url'] ) ? $params['canonical_url'] : $_SERVER['HTTP_REFERER'];
 
 			// Cache Add-on.
-			$cache_id = isset( $params['cache_id'] ) ? $params['cache_id'] : '';
+			$cache_id        = isset( $params['cache_id'] ) ? $params['cache_id'] : '';
+			$cache_slug      = isset( $params['cache_slug'] ) && $params['cache_slug'] ? $params['cache_slug'] : '';
+			$cache_logged_in = isset( $params['cache_logged_in'] ) ? $params['cache_logged_in'] : false;
+			$do_create_cache = $cache_logged_in === 'true' && is_user_logged_in() ? false : true;
 
 			// Paging Add-on.
 			$paging = 'false' === $paging ? false : $paging;
 
-			/**
-			 *  Create cache directory + meta .txt file.
-			 *
-			 * @return null
-			 */
-			if ( ! empty( $cache_id ) && has_action( 'alm_cache_create_dir' ) ) {
-				apply_filters( 'alm_cache_create_dir', $cache_id, $canonical_url ); // phpcs:ignore
-				$page_cache = ''; // set our page cache variable.
-			}
-
 			if ( $data ) {
-
 				$nextpage  = isset( $data['nextpage'] ) ? $data['nextpage'] : false;
-				$post_id   = isset( $data['post_id'] ) ? $data['post_id'] : 'null';
-				$startpage = isset( $data['startpage'] ) ? $data['startpage'] : 'null';
+				$post_id   = isset( $data['post_id'] ) ? $data['post_id'] : null;
+				$startpage = isset( $data['startpage'] ) ? $data['startpage'] : 0;
 				$base_url  = get_permalink( $post_id ); // base_url.
-				$is_cache  = ! empty( $cache_id ) && has_action( 'alm_cache_installed' ) ? true : false;
 				$nested    = isset( $data['nested'] ) && 'true' === $data['nested'] ? true : false;
 
 				if ( 'totalpages' === $query_type ) {
 					// Get totalpages for Paging Add-on.
 					wp_send_json(
-						array(
+						[
 							'totalpages' => apply_filters( 'alm_nextpage_total_pages', $post_id, $id ),
-						)
+						]
 					);
 
 				} else {
 					// Regular nextpage query.
 					$postcount = 1;
 
-					if ( $startpage > 1 ) { // if $startpage > 1 (e.g. user lands on /3/ etc.).
+					// if $startpage > 1 (e.g. user lands on /3/ etc.).
+					if ( $startpage > 1 ) {
 						if ( ! $paging ) {
 							$page = $page + $startpage;
 						}
 					} else {
 						if ( ! $paging ) {
-							$page = $page + 1;
+							$page = $page + 1; //phpcs:ignore
 						}
 					}
 
-					if ( 'true' === $nextpage ) {
-
+					if ( $nextpage === 'true' ) {
 						global $post;
-
 						$new_post = get_post( $post_id ); // Must be called $post.
 
 						// Run setup_postdata for oEmbeds in content.
@@ -301,7 +281,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 						$content = self::alm_nextpage_content( $content, $id );
 
 						// Get total page count.
-						$length = count( $content );
+						$totalposts = count( $content );
 
 						if ( isset( $content[ $page ] ) ) {
 
@@ -319,7 +299,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 							$current   = $page + 1;
 							$permalink = $base_url . self::get_leading_slash() . ( $current ) . self::get_trailing_slash();
 
-							$html = apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $length, false, $is_cache, $nested );
+							$html = apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $totalposts, false, $nested );
 
 							/**
 							 * ALM Nextpage Filter Hook
@@ -353,39 +333,42 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 							$html .= apply_filters( 'alm_nextpage_wrap_end', '' );
 
 							if ( ! empty( $content ) ) {
-								$return = array(
+								$return = [
 									'html' => $html,
-									'meta' => array(
+									'meta' => [
 										'postcount'  => $postcount,
-										'totalposts' => $length - $startpage,
-									),
-								);
+										'totalposts' => $totalposts,
+										'type'       => 'standard',
+									],
+								];
+
+								/**
+								 * Cache Add-on.
+								 * Create the cache file.
+								 */
+								if ( $cache_id && method_exists( 'ALMCache', 'create_cache_file' ) && $do_create_cache ) {
+									$cache_page = $page + 1;
+									ALMCache::create_cache_file( $cache_id, $cache_slug, $canonical_url, $html, 1, $totalposts );
+								}
 							} else {
-								$return = array(
+								$return = [
 									'html' => '',
-									'meta' => array(
+									'meta' => [
 										'postcount'  => null,
 										'totalposts' => null,
-									),
-								);
-							}
-
-							/**
-							 * Cache Add-on hook
-							 * If Cache is enabled, check the cache file
-							 */
-							if ( ! empty( $content ) && $is_cache ) {
-								$cache_page = $page + 1;
-								apply_filters( 'alm_nextpage_cache_file', $cache_id, $cache_page, $html );
+										'type'       => 'standard',
+									],
+								];
 							}
 						} else {
-							$return = array(
+							$return = [
 								'html' => '',
-								'meta' => array(
+								'meta' => [
 									'postcount'  => null,
 									'totalposts' => null,
-								),
-							);
+									'type'       => 'standard',
+								],
+							];
 						}
 						wp_send_json( $return );
 					}
@@ -409,49 +392,97 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * @return string $the_content
 		 */
 		public static function alm_init_nextpage( $post_id = null, $page = 0, $is_paged = false, $paging = false, $div_id = '', $id = '', $nested = false ) {
+			if ( ! $post_id ) {
+				return false; // Exit early if missing post_id.
+			}
+
 			$the_content = '';
 			$nested      = isset( $nested ) && 'true' === $nested ? true : false;
+			$the_post    = get_post( $post_id );
+			$content     = $the_post->post_content;
+			$content     = self::alm_nextpage_content( $content, $id ); // Get the content.
+			$totalposts  = count( $content ); // Get total page count.
+			$page     = $page - 1; // phpcs:ignore
+			$current     = $page;
 
-			if ( $post_id ) {
+			// Has user disabled loading previous pages.
+			if ( has_filter( 'alm_nextpage_paged' ) ) {
+				$nextpage_is_paged = apply_filters( 'alm_nextpage_paged', false );
+				if ( ! $nextpage_is_paged ) {
+					$current = $current + 1; // phpcs:ignore
+				}
+			}
 
-				$the_post = get_post( $post_id );
-				$content  = $the_post->post_content;
-				$content  = self::alm_nextpage_content( $content, $id ); // Get the content.
-				$length   = count( $content ); // Get total page count.
-				$page     = $page - 1; // phpcs:ignore
-				$current  = $page;
+			if ( ! $is_paged ) {
 
-				// Has user disabled loading previous pages.
-				if ( has_filter( 'alm_nextpage_paged' ) ) {
-					$nextpage_is_paged = apply_filters( 'alm_nextpage_paged', false );
-					if ( ! $nextpage_is_paged ) {
-						$current = $current + 1; // phpcs:ignore
-					}
+				// Not paged, return only a single page.
+				$base_url = get_permalink( $post_id );
+				if ( $current > 1 ) {
+					$permalink = $base_url . self::get_leading_slash() . ( $current ) . self::get_trailing_slash();
+				} else {
+					$permalink = $base_url;
 				}
 
-				if ( ! $is_paged ) {
+				$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $totalposts, true, $nested );
 
-					// Not paged, return only a single page.
-					$base_url = get_permalink( $post_id );
-					if ( $current > 1 ) {
-						$permalink = $base_url . self::get_leading_slash() . ( $current ) . self::get_trailing_slash();
-					} else {
-						$permalink = $base_url;
-					}
+				/**
+				 * ALM Nextpage Filter Hook.
+				 *
+				 * @return string
+				 */
+				if ( has_filter( 'alm_nextpage_before' ) ) {
+					$the_content .= apply_filters( 'alm_nextpage_before', $page + 1 );
+				}
 
-					$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $length, true, $nested );
+				// Filter WP Content.
+				$content_filtered = apply_filters( 'the_content', $content[ $page ] ); // phpcs:ignore
+
+				/**
+				 * ALM Nextpage Filter Hook.
+				 *
+				 * @return string
+				 */
+				if ( has_filter( 'alm_nextpage_the_content' ) ) {
+					$content_filtered = apply_filters( 'alm_nextpage_the_content', $content_filtered, $page + 1 );
+				}
+
+				$the_content .= $content_filtered;
+
+				/**
+				 *  ALM Nextpage Filter Hook
+				 *
+				 * @return string
+				 */
+				if ( has_filter( 'alm_nextpage_after' ) ) {
+					$the_content .= apply_filters( 'alm_nextpage_after', $page + 1 );
+				}
+
+				$the_content .= apply_filters( 'alm_nextpage_wrap_end', '</div>' );
+
+			} else {
+
+				// Split pages up into individual content blocks.
+
+				if ( 'true' === $paging ) {
+					// Paging Add-on.
+
+					$permalink    = get_permalink( $post_id );
+					$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $page, $totalposts, true, $nested );
 
 					/**
-					 * ALM Nextpage Filter Hook.
+					 * ALM Nextpage Filter Hook
 					 *
 					 * @return string
-					 */
+					*/
 					if ( has_filter( 'alm_nextpage_before' ) ) {
 						$the_content .= apply_filters( 'alm_nextpage_before', $page + 1 );
 					}
 
+					// Prepend `alm_nextpage_break_{id}` value to page.
+					$content[ $page ] = apply_filters( 'alm_nextpage_break_' . $id, '' ) . $content[ $page ];
+
 					// Filter WP Content.
-					$content_filtered = apply_filters( 'the_content', $content[ $page ] ); // phpcs:ignore
+					$content_filtered = apply_filters( 'the_content', $content[ $page ] );  // phpcs:ignore
 
 					/**
 					 * ALM Nextpage Filter Hook.
@@ -465,7 +496,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 					$the_content .= $content_filtered;
 
 					/**
-					 *  ALM Nextpage Filter Hook
+					 * ALM Nextpage Filter Hook
 					 *
 					 * @return string
 					 */
@@ -473,32 +504,38 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 						$the_content .= apply_filters( 'alm_nextpage_after', $page + 1 );
 					}
 
-					$the_content .= apply_filters( 'alm_nextpage_wrap_end', '</div>' );
+					$the_content .= apply_filters( 'alm_nextpage_wrap_end', '' );
 
 				} else {
+					// Standard.
 
-					// Split pages up into individual content blocks.
+					for ( $i = 0; $i <= $page; $i++ ) { // Loop pages and build return.
 
-					if ( 'true' === $paging ) {
-						// Paging Add-on.
+						if ( $i < 1 ) {
+							$permalink = get_permalink( $post_id );
+						} else {
+							$permalink = get_permalink( $post_id ) . self::get_leading_slash() . ( $i + 1 ) . self::get_trailing_slash();
+						}
 
-						$permalink    = get_permalink( $post_id );
-						$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $page, $length, true, $nested );
+						$current      = $i + 1;
+						$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $totalposts, true );
 
-						/*
-						*  ALM Nextpage Filter Hook
-						*
-						* @return HTML/PHP
-						*/
+						/**
+						 * ALM Nextpage Filter Hook
+						 *
+						 * @return string
+						 */
 						if ( has_filter( 'alm_nextpage_before' ) ) {
 							$the_content .= apply_filters( 'alm_nextpage_before', $page + 1 );
 						}
 
-						// Prepend `alm_nextpage_break_{id}` value to page.
-						$content[ $page ] = apply_filters( 'alm_nextpage_break_' . $id, '' ) . $content[ $page ];
+						if ( $i > 0 ) {
+							// Prepend `alm_nextpage_break_{id}` value to page.
+							$content[ $i ] = apply_filters( 'alm_nextpage_break_' . $id, '' ) . $content[ $i ];
+						}
 
-						// Filter WP Content.
-						$content_filtered = apply_filters( 'the_content', $content[ $page ] );  // phpcs:ignore
+						// Filter WP content.
+						$content_filtered = apply_filters( 'the_content', $content[ $i ] ); // phpcs:ignore
 
 						/**
 						 * ALM Nextpage Filter Hook.
@@ -506,89 +543,34 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 						 * @return string
 						 */
 						if ( has_filter( 'alm_nextpage_the_content' ) ) {
-							$content_filtered = apply_filters( 'alm_nextpage_the_content', $content_filtered, $page + 1 );
+							$content_filtered = apply_filters( 'alm_nextpage_the_content', $content_filtered, $i + 1 );
 						}
 
 						$the_content .= $content_filtered;
 
-						/*
-						*  ALM Nextpage Filter Hook
-						*
-						* @return HTML/PHP
-						*/
+						/**
+						 * ALM Nextpage Filter Hook
+						 *
+						 * @return string
+						 */
 						if ( has_filter( 'alm_nextpage_after' ) ) {
 							$the_content .= apply_filters( 'alm_nextpage_after', $page + 1 );
 						}
 
 						$the_content .= apply_filters( 'alm_nextpage_wrap_end', '' );
-
-					} else {
-						// Standard.
-
-						for ( $i = 0; $i <= $page; $i++ ) { // Loop pages and build return.
-
-							if ( $i < 1 ) {
-								$permalink = get_permalink( $post_id );
-							} else {
-								$permalink = get_permalink( $post_id ) . self::get_leading_slash() . ( $i + 1 ) . self::get_trailing_slash();
-							}
-
-							$current      = $i + 1;
-							$the_content .= apply_filters( 'alm_nextpage_wrap_start', $post_id, $permalink, $current, $length, true );
-
-							/*
-							*  ALM Nextpage Filter Hook
-							*
-							* @return HTML/PHP
-							*/
-							if ( has_filter( 'alm_nextpage_before' ) ) {
-								$the_content .= apply_filters( 'alm_nextpage_before', $page + 1 );
-							}
-
-							if ( $i > 0 ) {
-								// Prepend `alm_nextpage_break_{id}` value to page.
-								$content[ $i ] = apply_filters( 'alm_nextpage_break_' . $id, '' ) . $content[ $i ];
-							}
-
-							// Filter WP content.
-							$content_filtered = apply_filters( 'the_content', $content[ $i ] ); // phpcs:ignore
-
-							/**
-							 * ALM Nextpage Filter Hook.
-							 *
-							 * @return string
-							 */
-							if ( has_filter( 'alm_nextpage_the_content' ) ) {
-								$content_filtered = apply_filters( 'alm_nextpage_the_content', $content_filtered, $i + 1 );
-							}
-
-							$the_content .= $content_filtered;
-
-							/*
-							*  ALM Nextpage Filter Hook
-							*
-							* @return HTML/PHP
-							*/
-							if ( has_filter( 'alm_nextpage_after' ) ) {
-								$the_content .= apply_filters( 'alm_nextpage_after', $page + 1 );
-							}
-
-							$the_content .= apply_filters( 'alm_nextpage_wrap_end', '' );
-
-						}
 					}
 				}
-
-				$localized_id = ( ! empty( $id ) ) ? 'ajax-load-more-' . $id : $div_id;
-
-				// Add Localized `page` variable.
-				ALM_LOCALIZE::add_localized_var( 'page', $page || $current, $localized_id );
-
-				// Add Localized `total_posts` variable.
-				ALM_LOCALIZE::add_localized_var( 'total_posts', $length, $localized_id );
-
-				return $the_content;
 			}
+
+			$localized_id = ! empty( $id ) ? 'ajax-load-more-' . $id : $div_id;
+
+			// Add Localized `page` variable.
+			ALM_LOCALIZE::add_localized_var( 'page', $page || $current, $localized_id );
+
+			// Add Localized `total_posts` variable.
+			ALM_LOCALIZE::add_localized_var( 'total_posts', $totalposts, $localized_id );
+
+			return $the_content;
 		}
 
 		/**
@@ -597,8 +579,8 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * @author ConnektMedia
 		 * @since 1.0
 		 * @param string $post_id The post ID.
-		 * @param string $id The Ajax Load More ID.
-		 * @return int $total_pages
+		 * @param string $id      The Ajax Load More ID.
+		 * @return int            Total page count.
 		 */
 		public function alm_nextpage_total_pages( $post_id = null, $id = '' ) {
 			$total_pages = 0;
@@ -614,24 +596,28 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		/**
 		 * Return the html wrapper for nextpage content.
 		 *
+		 * @param string|int $post_id The post ID.
+		 * @param string     $url     The current URL.
+		 * @param string|int $page    The current page number.
+		 * @param string|int $total   The total pages.
+		 * @param boolean    $init    Is this the initial load.
+		 * @param boolean    $nested  Is this a nested ALM instance.
+		 * @return string             Generated HTML.
 		 * @author ConnektMedia
 		 * @since 1.0
 		 */
-		public function alm_nextpage_wrap_start( $post_id = 0, $url = '', $page = 0, $total = 0, $init = false, $is_cache = false, $nested = false ) {
-
+		public function alm_nextpage_wrap_start( $post_id = 0, $url = '', $page = 0, $total = 0, $init = false, $nested = false ) {
 			$totalpages = $page === 0 ? ' data-total-posts="' . $total . '"' : '';
 			$page_num   = $page === 0 ? '1' : $page;
-
-			if ( ! $is_cache && ! $nested ) {
+			if ( ! $nested ) {
 				if ( $init ) {
 					// First load only, get current permalink including querystring.
-					$url = ( $_SERVER['QUERY_STRING'] ) ? $url . '?' . $_SERVER['QUERY_STRING'] : $url;
+					$url = $_SERVER['QUERY_STRING'] ? $url . '?' . $_SERVER['QUERY_STRING'] : $url;
 				} else {
 					$querysrting = self::alm_nextpage_get_querystring();
-					$url         = ( $querysrting ) ? $url . '?' . $querysrting : $url;
+					$url         = $querysrting ? $url . '?' . $querysrting : $url;
 				}
 			}
-
 			return '<div class="alm-nextpage post-' . $post_id . '" data-id="' . $post_id . '" data-title="' . get_the_title( $post_id ) . '" data-url="' . $url . '" data-page="' . $page_num . '" data-pages="' . $total . '"' . $totalpages . '>';
 		}
 
@@ -643,8 +629,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 * @return string
 		 */
 		public function alm_nextpage_wrap_end() {
-			$wrap = '</div>';
-			return $wrap;
+			return '</div>';
 		}
 
 		/**
@@ -658,14 +643,12 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 		 */
 		public static function alm_nextpage_content( $content = '', $id = '' ) {
 			/*
-			 *	Get content break element
-			 * ALM Nextpage Core Filter Hook
+			 *	Get content break element.
+			 * ALM Nextpage Core Filter Hook.
 			 *
 			 * @return $content;
 			 */
-			$content = explode( apply_filters( 'alm_nextpage_break_' . $id, '<!--nextpage-->' ), $content );
-
-			return $content;
+			return explode( apply_filters( 'alm_nextpage_break_' . $id, '<!--nextpage-->' ), $content );
 		}
 
 		/**
@@ -713,7 +696,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 
 			$output = '';
 			if ( $url ) {
-				$parts = parse_url( $url ); // Parse the full URL.
+				$parts = wp_parse_url( $url ); // Parse the full URL.
 
 				if ( isset( $parts['query'] ) ) {
 					parse_str( $parts['query'], $querystring ); // Parse querystring.
@@ -863,7 +846,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 					$active = in_array( $name, $alm_post_types, true ) ? ' active' : '';
 					$html  .= '<div class="nextpage-option">';
 					$html  .= '<div class="nextpage-option--type">';
-					$html  .= '<input id="post_type_' . $name . '" type="checkbox" name="alm_settings[' . $opt . '][post_types][]" ' . checked( in_array( $name, $alm_post_types ), 1, false ) . ' value="' . $name . '" />';
+					$html  .= '<input id="post_type_' . $name . '" type="checkbox" name="alm_settings[' . $opt . '][post_types][]" ' . checked( in_array( $name, $alm_post_types, true ), 1, false ) . ' value="' . $name . '" />';
 					$html  .= '<label for="post_type_' . $name . '">' . $singular . '</label>';
 					$html  .= '</div>';
 					$html  .= '<div class="nextpage-option--shortcode' . $active . '">';
@@ -895,7 +878,6 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 			</script>
 			<?php
 		}
-
 		echo $html; // phpcs:ignore
 	}
 

@@ -10,7 +10,7 @@ $deleted      = false;
 $filter_id    = '';
 $filter_vue   = '';
 $section      = 'dashboard';
-$query_params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+$query_params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
 // Export/Import, New.
 if ( isset( $query_params['action'] ) ) {
 	if ( $query_params['action'] === 'tools' ) {

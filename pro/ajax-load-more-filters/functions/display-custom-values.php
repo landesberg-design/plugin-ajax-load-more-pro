@@ -37,12 +37,12 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 	// Loop custom values.
 	foreach ( $custom_values as $index => $v ) {
 		$items_count++;
-		$name          = $v['label'];
-		$slug          = $v['value'];
-		$nested        = ( isset( $v['nested'] ) && $v['nested'] ) ? true : false;
+		$name          = esc_attr( $v['label'] );
+		$slug          = esc_attr( $v['value'] );
+		$nested        = isset( $v['nested'] ) && $v['nested'] ? true : false;
 		$obj['id']     = $key . '-' . $field_type . '-' . $obj['count'];
 		$fieldname_val = $key . '-' . $field_type . '-' . $obj['count'];
-		$fieldname     = ( $field_type === 'radio' ) ? ' name="' . $fieldname_val . '"' : '';
+		$fieldname     = $field_type === 'radio' ? ' name="' . $fieldname_val . '"' : '';
 
 		if ( $name === '' && $slug === '' ) {
 			// Exit this iteration if name and slug are empty.
@@ -79,7 +79,7 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 			case 'select':
 			case 'select_multiple':
 				if ( ! empty( $match_array ) ) {
-					$selected = ( in_array( $slug, $match_array, true ) ) ? ' selected="selected"' : '';
+					$selected = in_array( $slug, $match_array, true ) ? ' selected="selected"' : '';
 				}
 				$parent = $nested ? ' - ' : '';
 
@@ -93,8 +93,8 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 				$data_count          = ALMFilters::$facets && $obj['show_count'] ? ' data-count="true"' : ''; // Data attribute for facets.
 				$data_count_template = ALMFilters::$facets && $obj['show_count'] ? ' data-count-template="' . apply_filters( 'alm_filters_show_count_select_display', '(%count%)' ) . '"' : ''; // Data attribute for facets.
 
-				$return .= '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . $slug . '" data-name="' . $name . '"' . $selected . $data_count . $data_count_template . '>';
-				$return .= $parent . $name;
+				$return .= '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . esc_attr( $slug ) . '" data-name="' . $name . '"' . $selected . $data_count . $data_count_template . '>';
+				$return .= esc_attr( $parent ) . esc_attr( $name );
 				$return .= '</option>';
 
 				break;
@@ -124,7 +124,6 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 				$return .= ALMFilters::$facets && $obj['show_count'] ? '<span class="alm-filter-counter"></span>' : '';
 				$return .= '</div>';
 				$return .= '</li>';
-
 		}
 	}
 
