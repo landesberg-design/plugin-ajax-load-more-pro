@@ -5,17 +5,9 @@
  * @package ajax-load-more-cache
  */
 
-// Cache deleted msg.
-if ( isset( $result ) && $cache_deleted ) {
-	echo '<div class="cache-cleared"><i class="fa fa-check-square-o"></i> ';
-	echo wp_kses_post( $result );
-	echo '<span class="remove"><a href="admin.php?page=ajax-load-more-cache">' . esc_attr__( 'Got it', 'ajax-load-more-cache' ) . '</a></span>';
-	echo '</div>';
-}
 ?>
-
 <h2><?php esc_attr_e( 'Cache Dashboard', 'ajax-load-more-cache' ); ?></h2>
-<p><?php echo wp_kses_post( __( 'All cached files in your Ajax Load More cache are listed below - the listing is grouped by the <strong>Cache ID</strong> assigned when your <a href="admin.php?page=ajax-load-more-shortcode-builder">Shortcode</a> was created.', 'ajax-load-more-cache' ) ); ?></small></p>
+<p><?php echo wp_kses_post( __( 'All cached files in your Ajax Load More cache are listed below. The cache listing is grouped by the <strong>Cache ID</strong> assigned when your <a href="admin.php?page=ajax-load-more-shortcode-builder">Shortcode</a> was created.', 'ajax-load-more-cache' ) ); ?></small></p>
 <p>
 	<a href="admin.php?page=ajax-load-more#cache_settings">
 		<strong><?php esc_attr_e( 'Cache Settings', 'ajax-load-more-cache' ); ?></strong>
@@ -31,18 +23,16 @@ if ( isset( $result ) && $cache_deleted ) {
 	<i class="fa fa-search"></i>
 </div>
 
-<hr class="cache-break"/>
+<hr class="cache-break" />
 
 <div class="alm-cache-listing no-shadow">
 	<div class="row no-brd">
-		<?php if ( ! $cache_deleted ) { ?>
 		<span class="toggle-all" tabindex="0">
 			<span class="inner-wrap">
 				<em class="collapse"><?php esc_attr_e( 'Collapse All', 'ajax-load-more-cache' ); ?></em>
 				<em class="expand"><?php esc_attr_e( 'Expand All', 'ajax-load-more-cache' ); ?></em>
 			</span>
 		</span>
-		<?php } ?>
 
 		<?php
 		// Loop Cache Directories.
@@ -82,11 +72,11 @@ if ( isset( $result ) && $cache_deleted ) {
 				echo '</div>';
 			}
 		}
-
-		// Empty.
-		if ( $directoy_total === 0 ) {
-			include ALM_CACHE_ADMIN_PATH . 'admin/views/includes/empty.php';
-		}
 		?>
 	</div>
 </div>
+<?php
+// Empty.
+if ( $directoy_total === 0 ) {
+	include ALM_CACHE_ADMIN_PATH . 'admin/views/includes/empty.php';
+}

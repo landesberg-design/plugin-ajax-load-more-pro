@@ -1,22 +1,24 @@
 <?php
-/*
-Plugin Name: Ajax Load More: Pro
-Plugin URI: https://connekthq.com/plugins/ajax-load-more/pro/
-Description: All the add-ons for Ajax Load More in a single installation.
-Author: Darren Cooney
-Twitter: @KaptonKaos
-Author URI: https://connekthq.com
-Version: 1.2.18
-License: GPL
-Copyright: Darren Cooney & Connekt Media
-*/
+/**
+ * Plugin Name: Ajax Load More: Pro
+ * Plugin URI: https://connekthq.com/plugins/ajax-load-more/pro/
+ * Description: All the add-ons for Ajax Load More in a single installation.
+ * Author: Darren Cooney
+ * Twitter: @KaptonKaos
+ * Author URI: https://connekthq.com
+ * Version: 1.2.19
+ * License: GPL
+ * Copyright: Darren Cooney & Connekt Media
+ *
+ * @package ALMPro
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ALM_PRO_VERSION', '1.2.18' );
-define( 'ALM_PRO_RELEASE', 'June 11, 2023' );
+define( 'ALM_PRO_VERSION', '1.2.19' );
+define( 'ALM_PRO_RELEASE', 'July 27, 2023' );
 
 /**
  * Plugin installation hook
@@ -24,12 +26,11 @@ define( 'ALM_PRO_RELEASE', 'June 11, 2023' );
  * @since 1.0
  */
 function alm_pro_install() {
-	if ( ! is_plugin_active( 'ajax-load-more/ajax-load-more.php' ) ) { // if Ajax Load More is activated.
-		die( __( 'You must install and activate <a href="https://wordpress.org/plugins/ajax-load-more/">Ajax Load More</a> before installing Ajax Load More Pro.', 'ajax-load-more-pro' ) );
+	if ( ! is_plugin_active( 'ajax-load-more/ajax-load-more.php' ) ) {
+		set_transient( 'alm_pro_admin_notice', true, 5 );
+
 	} else {
-
 		global $ajax_load_more;
-
 		if ( ! $ajax_load_more ) {
 			return false;
 		}
@@ -51,6 +52,27 @@ function alm_pro_install() {
 }
 register_activation_hook( __FILE__, 'alm_pro_install' );
 
+/**
+ * Display admin notice if plugin does not meet the requirements.
+ *
+ * @since 1.2.19
+ */
+function alm_pro_admin_notice() {
+	$slug   = 'ajax-load-more';
+	$plugin = $slug . '-pro';
+	// Ajax Load More Notice.
+	if ( get_transient( 'alm_pro_admin_notice' ) ) {
+		$install_url = get_admin_url() . '/update.php?action=install-plugin&plugin=' . $slug . '&_wpnonce=' . wp_create_nonce( 'install-plugin_' . $slug );
+		$message     = '<div class="error">';
+		$message    .= '<p>' . __( 'You must install and activate the core Ajax Load More plugin before using Ajax Load More Pro.', 'ajax-load-more-pro' ) . '</p>';
+		$message    .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Ajax Load More Now', 'ajax-load-more-pro' ) ) . '</p>';
+		$message    .= '</div>';
+		echo wp_kses_post( $message );
+		delete_transient( 'alm_pro_admin_notice' );
+	}
+}
+add_action( 'admin_notices', 'alm_pro_admin_notice' );
+
 if ( ! class_exists( 'ALMPro' ) ) :
 
 	/**
@@ -64,8 +86,8 @@ if ( ! class_exists( 'ALMPro' ) ) :
 		public function __construct() {
 			add_action( 'alm_pro_installed', array( &$this, 'alm_pro_installed' ) );
 			add_action( 'plugins_loaded', array( &$this, 'alm_pro_load_addons' ) );
-			add_action( 'wp_ajax_alm_pro_toggle_activation', array(&$this, 'alm_pro_toggle_activation' ) );
-			load_plugin_textdomain( 'ajax-load-more-pro', false, dirname( plugin_basename( __FILE__ ) ).'/lang/' );
+			add_action( 'wp_ajax_alm_pro_toggle_activation', array( &$this, 'alm_pro_toggle_activation' ) );
+			load_plugin_textdomain( 'ajax-load-more-pro', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 			$this->constants();
 		}
 
@@ -95,7 +117,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 			// Loop addons.
 			foreach ( $ajax_load_more->alm_return_addons() as $plugin ) {
 				if ( ! has_action( $plugin['action'] ) ) {
-					if ( 'active' === get_option( ALM_PRO_OPTION_PREFIX . $plugin['slug']) ) {
+					if ( 'active' === get_option( ALM_PRO_OPTION_PREFIX . $plugin['slug'] ) ) {
 						require_once 'pro/' . $plugin['path'] . '/' . $plugin['path'] . '.php';
 					}
 				}
@@ -118,7 +140,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 		 */
 		public function alm_pro_toggle_activation() {
 
-			$nonce = $_POST["nonce"];
+			$nonce = $_POST['nonce'];
 			$slug  = $_POST['slug'];
 
 			if ( $slug && current_user_can( apply_filters( 'alm_custom_user_role', 'edit_theme_options' ) ) ) {
@@ -140,7 +162,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 					'success' => true,
 					'slug'    => $slug,
 					'result'  => $result,
-					'msg'     => esc_html__( 'Add-on status updated', 'ajax-load-more-pro' )
+					'msg'     => esc_html__( 'Add-on status updated', 'ajax-load-more-pro' ),
 				);
 				wp_send_json( $return );
 
@@ -149,7 +171,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 					'success' => false,
 					'slug'    => $slug,
 					'result'  => $result,
-					'msg'     => esc_html__( 'Add-on status NOT updated', 'ajax-load-more-pro' )
+					'msg'     => esc_html__( 'Add-on status NOT updated', 'ajax-load-more-pro' ),
 				);
 				wp_send_json( $return );
 
@@ -195,7 +217,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 	 */
 	function alm_pro_sanitize_license( $new ) {
 		$old = get_option( 'alm_pro_license_key' );
-		if( $old && $old != $new ) {
+		if ( $old && $old != $new ) {
 			delete_option( 'alm_proe_license_status' ); // new license has been entered, so must reactivate.
 		}
 		return $new;
@@ -208,7 +230,7 @@ if ( ! class_exists( 'ALMPro' ) ) :
 	 */
 	function ALMPro() {
 		global $ALMPro;
-		if( ! isset( $ALMPro ) ) {
+		if ( ! isset( $ALMPro ) ) {
 			$ALMPro = new ALMPro();
 		}
 		return $ALMPro;
@@ -232,7 +254,7 @@ function alm_pro_plugin_updater() {
 			'version' => ALM_PRO_VERSION,
 			'license' => $license_key,
 			'item_id' => ALM_PRO_ITEM_NAME,
-			'author'  => 'Darren Cooney'
+			'author'  => 'Darren Cooney',
 		)
 	);
 }

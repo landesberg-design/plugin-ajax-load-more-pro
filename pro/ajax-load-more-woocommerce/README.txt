@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.2.2
+Version: 1.2.3
 
 == Copyright ==
 Copyright 2023 Connekt Media
@@ -42,6 +42,10 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog == 
+
+= 1.2.3 - July 27, 2023 =
+* UPDATE: Updated the WooCommerce admin page to use the new Ajax Load More 6.1 layout.
+
 
 = 1.2.2 - June 11, 2023 =
 * UPDATE: WooCommerce version bump.

@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.2.18
+Version: 1.2.19
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -49,6 +49,38 @@ This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5
 
 == Changelog ==
 
+= 1.2.19 - July 27, 2023 =
+* UPDATE: Updated Pro settings page to match Ajax Load More 6.1 admin layout.
+
+**Cache - 2.0.1 **
+* UPDATE: Updated cache admin page to reflect new admin styling.
+* UPDATE: Updated various cache dashboard styles.
+* FIX: Fixed spelling issues with REST API test notice.
+* FIX: Fixed URL error in admin display of cache listing.
+
+**Custom Repeaters - 2.5.11**
+* UPDATE: Admin UI updates to match core Ajax Load More 6.1 updates.
+* UPDATE: Code cleanup and organization.
+
+** Filters - 2.1.0 **
+* FIX: Fixed issue with `attachment` post type and facets not returning results due to `post_status` not being set to `inherit`.
+* FIX: Updated the facet naming convention to allow facets to be reused with multiple instances of Ajax Load More and queries.
+* FIX: Added fix for deep link custom field queries not working if a duplicate `meta_key` has been set for ordering.
+* FIX: Allow for decimals in Range Slider input steps.
+* FIX: Removed orphaned quote in the Select listing for taxonomy terms.
+* FIX: Fixed issue with Default Values being incorrectly added to a query when using Radio field type.
+* UPDATE: Adding support for new `sort_key` parameter in Ajax Load More 6.1 that adds better control for ordering results by custom field key.
+* UPDATE: Updated admin pages to match new Ajax Load More 6.1 admin layout.
+* UPDATE: Various code cleanup tasks and file structure organizations.
+
+**Layouts - 2.0.2 **
+* UPDATE: Updated layout listing design and display.
+* UPDATE: Updated various elements to match new core Ajax Load More 6.1 admin styling.
+
+**WooCommerce - 1.2.3 **
+* UPDATE: Updated the WooCommerce admin page to use the new Ajax Load More 6.1 admin layout.
+
+
 = 1.2.18 - June 11, 2023 =
 
 **Cache - 2.0.0 **
@@ -56,7 +88,7 @@ This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5
 * NOTICE: After this update the current ALM cache will be cleared and a new cache will be created when requested.
 * NEW: Cache 2.0 is now compatible with all Ajax Load More add-ons and extensions.
 * NEW: Cache 2.0 introduces a new cache directory structure, file naming convention.
-- NEW: Cached pages now use [MD5 hash](https://en.wikipedia.org/wiki/MD5) as the file names. This adds more stability and removes complexity from fetching the cached files.
+* NEW: Cached pages now use [MD5 hash](https://en.wikipedia.org/wiki/MD5) as the file names. This adds more stability and removes complexity from fetching the cached files.
 * NEW: Added new cache_id template variables `%post_id%` & %post_slug% that allows for dynamically injecting the post id or slug into the cache_id. `[ajax_load_more cache="true" cache_id="my-cache-id-%post_id%"]`
 * NEW: Added new REST API endpoints for creating and fetching cached files from the server.
 * NEW: Added support for Elementor and WooCommerce add-ons.

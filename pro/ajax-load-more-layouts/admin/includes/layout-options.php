@@ -1,53 +1,62 @@
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="standard">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Default', 'ajax-load-more' ); ?>
+<?php
+/**
+ * Layout list options.
+ *
+ * @package AjaxLoadMoreLayouts.
+ */
+
+$alm_layouts = [
+	[
+		'label' => __( 'Default', 'ajax-load-more-layouts' ),
+		'type'  => 'standard',
+	],
+	[
+		'label' => __( 'Blog Card', 'ajax-load-more-layouts' ),
+		'type'  => 'blog-card',
+	],
+	[
+		'label' => __( 'Blog Card #2', 'ajax-load-more-layouts' ),
+		'type'  => 'blog-card-two',
+	],
+	[
+		'label' => __( 'Blog Card #3', 'ajax-load-more-layouts' ),
+		'type'  => 'blog-card-three',
+	],
+	[
+		'label' => __( 'Call to Action', 'ajax-load-more-layouts' ),
+		'type'  => 'cta',
+	],
+	[
+		'label' => __( 'Gallery', 'ajax-load-more-layouts' ),
+		'type'  => 'gallery',
+	],
+	[
+		'label' => __( 'Card Flip', 'ajax-load-more-layouts' ),
+		'type'  => 'card-flip',
+	],
+	[
+		'label' => __( 'Column Grid', 'ajax-load-more-layouts' ),
+		'type'  => 'grid',
+	],
+];
+?>
+
+<ul>
+<?php
+foreach ( $alm_layouts as $alm_layout ) {
+	?>
+	<li>
+		<button class="layout" data-type="<?php echo esc_attr( $alm_layout['type'] ); ?>">
+			<i class="fa fa-file-code-o" aria-hidden="true"></i>
+			<span><?php echo esc_attr( $alm_layout['label'] ); ?></span>
+		</button>
+	</li>
+	<?php
+}
+?>
+</ul>
+<div class="drop-cta">
+	<a class="button button-primary" href="https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/#layouts" target="_blank">
+		<?php esc_attr_e( 'Preview Layouts', 'ajax-load-more-layouts' ); ?>
 	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="blog-card">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Blog Card', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="blog-card-two">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Blog Card #2', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="blog-card-three">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Blog Card #3', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="cta">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Call to Action', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="gallery">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Gallery', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="card-flip">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Card Flip', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-	<a style="border-bottom: none;" href="javascript:void(0);" class="layout" data-type="grid">
-		<i class="fa fa-file-code-o" aria-hidden="true"></i>
-		<?php _e( 'Column Grid', 'ajax-load-more' ); ?>
-	</a>
-</li>
-<li>
-   <a style="border-bottom: none;" href="https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/#layouts" class="external" target="_blank"><i class="fa fa-picture-o"></i>
-	  <?php _e( 'View Designs', 'ajax-load-more' ); ?>
-   </a>
-</li>
+</div>

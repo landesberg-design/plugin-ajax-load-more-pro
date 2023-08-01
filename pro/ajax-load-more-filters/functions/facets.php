@@ -34,7 +34,8 @@ function alm_filters_get_facets( $args = [], $facet_id = '' ) {
 	 *
 	 * @see https://developer.wordpress.org/apis/transients/
 	 */
-	$transient_name = alm_filters_facet_transient( $facet_id );
+	$alm_id         = array_key_exists( 'alm_id', $args ) ? $args['alm_id'] : '';
+	$transient_name = alm_filters_facet_get_transient_name( $facet_id, $alm_id );
 	$transient      = get_transient( $transient_name );
 	if ( $transient ) {
 		return $transient; // If found, return the transient data.
@@ -254,6 +255,11 @@ function alm_filters_build_facet_index( $filter ) {
 		'post_status'    => 'publish',
 		'posts_per_page' => -1,
 	);
+
+	// Set `inherit` post_status for attachments.
+	if ( in_array( 'attachment', $post_types, true ) ) {
+		$args['post_status'] = [ 'publish', 'inherit' ];
+	}
 
 	$filters = isset( $filter ) && isset( $filter['filters'] ) ? $filter['filters'] : [];
 	$facets  = alm_filters_pluck_facet_keys( $filters );
@@ -535,7 +541,7 @@ function alm_filters_has_facets( $target ) {
  * @return array Array of query params.
  */
 function alm_filters_facet_get_querystring() {
-	$params  = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
+	$params  = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
 	$is_ajax = isset( $params ) && isset( $params['facets'] );
 	if ( $is_ajax ) {
 		// Ajax request.
@@ -553,34 +559,25 @@ function alm_filters_facet_get_querystring() {
 /**
  * Build and return a transient name based on query arg params.
  *
- * @param string $id The facet ID.
- * @return string    The generated transient name as a string from URL.
+ * @param string $id     The facet ID.
+ * @param string $alm_id The Ajax Load More ID.
+ * @return string        The generated transient name as a string from URL.
  */
-function alm_filters_facet_transient( $id = '' ) {
-	if ( empty( $id ) ) {
+function alm_filters_facet_get_transient_name( $id = '', $alm_id = '' ) {
+	if ( empty( $id ) || empty( $alm_id ) ) {
 		// Bail early if empty.
 		return '';
 	}
-	$out = '';
 
-	// Parse querystring into array.
-	$params = alm_filters_facet_get_querystring();
+	// Parse querystring into array and then into a string.
+	$params = implode( '-', alm_filters_facet_get_querystring() );
 
-	if ( $params ) {
-		// Loop all params to build output.
-		// e.g. `__author_1_category_design_general_design`.
-		foreach ( $params as $key => $value ) {
-			$value = str_replace( '-', '_', $value ); // Replace `-`.
-			$value = str_replace( '+', '_', $value ); // Replace `+`.
-			$value = str_replace( '&', '_', $value ); // Replace `&`.
-			$value = str_replace( ' ', '_', $value ); // Replace ` `.
-			$out  .= '_' . $key . '_' . $value;
-		}
-	}
+	// Create unique MD5 hash from params.
+	$hash = md5( $alm_id . $params );
 
 	// Return the unique transient name.
-	// e.g. alm_facet_filter_{id}_category_design_tag_help.
-	return strtolower( ALM_FILTERS_FACET_PREFIX . $id . $out );
+	// e.g. alm_facet_filter_{id}_{alm_id}_d41d8cd98f00b204e980099.
+	return strtolower( ALM_FILTERS_FACET_PREFIX . $id . '_' . $hash );
 }
 
 /******************* - *********************/

@@ -9,10 +9,13 @@
 <div class="cta">
 	<h3><?php esc_html_e( 'What\'s New', 'ajax-load-more-filters' ); ?></h3>
 	<div class="cta-inner">
-		<p>🔥 Filters v1.5 introduces <strong>import</strong> and <strong>export</strong> functionality of Ajax Load More filters!</p>
+		<p>🔥 Filters v2.0 introduces a faceted search and filter experience for Ajax Load More!</p>
 	</div>
 	<div class="major-publishing-actions">
-		<a href="<?php echo esc_html( ALM_FILTERS_BASE_URL ); ?>&action=tools" class="button">
+		<a href="https://connekthq.com/plugins/ajax-load-more/add-ons/filters/facet-filtering/" class="button button-primary" target="_blank">
+			<?php esc_html_e( 'View Example', 'ajax-load-more-filters' ); ?>
+		</a>
+		<a href="https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/facets/" class="button" target="_blank">
 			<?php esc_html_e( 'Learn More', 'ajax-load-more-filters' ); ?>
 		</a>
 	</div>

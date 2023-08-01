@@ -306,7 +306,7 @@ function alm_filters_build_terms_select( $id, $obj, $match_array, $selected, $te
 		}
 
 		// Create the <option />.
-		echo '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . $slug . '" data-name="' . $display_name . '"' . $selected . '">';  // phpcs:ignore
+		echo '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . $slug . '" data-name="' . $display_name . '"' . $selected . '>';  // phpcs:ignore
 		echo $display_name;  // phpcs:ignore
 		echo '</option>';
 	}

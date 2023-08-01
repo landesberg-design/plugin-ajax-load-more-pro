@@ -8,15 +8,12 @@
 
 ?>
 <div class="ajax-load-more-inner-wrapper">
-
-	<!-- MAIN COLUMN -->
 	<div class="cnkt-main stylefree">
 		<div class="alm-filters">
 			<?php require ALM_FILTERS_PATH . 'admin/views/includes/navigation.php'; ?>
-			<div class="repeater-listing">
-
-				<?php $the_filters = ALMFilters::alm_get_all_filters(); ?>
-				<?php if ( $the_filters ) : ?>
+			<div class="alm-content-wrap">
+				<?php $alm_filters = ALMFilters::alm_get_all_filters(); ?>
+				<?php if ( $alm_filters ) : ?>
 				<section class="alm-filter-tools-wrap" id="export">
 					<header class="alm-filter--intro full">
 						<h2><?php esc_attr_e( 'Export Filters', 'ajax-load-more-filters' ); ?></h2>
@@ -27,11 +24,11 @@
 					<?php
 					echo '<ul class="alm-import-wrap">';
 					echo '<span>' . esc_attr__( 'Select Filters for Export', 'ajax-load-more-filters' ) . '</span>';
-					if ( count( $the_filters ) > 1 ) {
+					if ( count( $alm_filters ) > 1 ) {
 						echo '<li><label><input type="checkbox" id="toggle-all-filters" name="filter_keys_master" value="">' . esc_attr__( 'Toggle All', 'ajax-load-more-filters' ) . '</label></li>';
 					}
 						echo '<div class="export-columns">';
-					foreach ( $the_filters as $filter ) {
+					foreach ( $alm_filters as $filter ) {
 						?>
 									<li>
 									<label>
@@ -55,7 +52,7 @@
 
 				<section
 				<?php
-				if ( $the_filters ) {
+				if ( $alm_filters ) {
 					echo 'style="padding-top: 30px;"'; }
 				?>
 				id="import">
@@ -79,15 +76,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- END MAIN COLUMN -->
-
-	<aside class="cnkt-sidebar">
-		<div id="cnkt-sticky-wrapper">
-			<div id="cnkt-sticky">
-				<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/help.php'; ?>
-			</div>
-		</div>
+	<aside class="cnkt-sidebar" data-sticky>
+		<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/help.php'; ?>
 	</aside>
-
-	<div class="clear"></div>
 </div>

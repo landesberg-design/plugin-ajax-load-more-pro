@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 5.7.0
+Tested up to: 6.2.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.7.5
+Version: 2.0.1
 
 
 == Copyright ==
@@ -46,6 +46,13 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 2.0.1 - July 27, 2023 =
+* UPDATE: Updated cache admin page to reflect new admin styling.
+* UPDATE: Updated various cache dashboard styles.
+* FIX: Fixed spelling issues with REST API test notice.
+* FIX: Fixed URL error in admin display of cache listing.
+
 
 = 2.0.0 - June 11, 2023 =
 * NOTICE: Cache 2.0 is not compatible with Ajax Load More 5.x or lower.

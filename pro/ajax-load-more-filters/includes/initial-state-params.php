@@ -4,6 +4,7 @@
  * Get filters and operators and over write shortcode parameters based on filter state.
  *
  * @package ALMFilters
+ * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
 $filters_target = isset( $target ) ? preg_replace( '/\s/', '', $target ) : ''; // Get the target parameters.

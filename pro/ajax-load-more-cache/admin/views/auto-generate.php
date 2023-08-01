@@ -31,7 +31,7 @@
 	<?php if ( $alm_cache_array ) { ?>
 	<div class="iframe-target"></div>
 	<script>
-	   var alm_cache_array = <?php echo $alm_cache_array; ?>;
+		var alm_cache_array = <?php echo $alm_cache_array; ?>;
 	</script>
 	<ul class="alm-generate-cache--list">
 		<?php
@@ -39,7 +39,6 @@
 			echo '<li data-id="' . $cache->id . '" data-url="' . $cache->url . '">' . $cache->id . ' <small><a href="' . $cache->url . '" target="_blank">' . $cache->url . '</a></small></li>';
 		}
 		?>
-
 	</ul>
 	<div class="alm-generate-cache--controls">
 		<button class="button cache-pause"><i class="fa fa-pause"></i> &nbsp;<?php esc_attr_e( 'Pause', 'ajax-load-more-cache' ); ?></button>
@@ -51,5 +50,4 @@
 		<p><?php esc_attr_e( 'No cached items found.', 'ajax-load-more-cache' ); ?></p>
 	<?php } ?>
 </div>
-
-<p><small><?php echo wp_kses_post( __( '<strong>Note</strong>: The time required to build the entire cache depends on the amount of pages needed to complete the process. If you leave this page, the cache build process will stop.', 'ajax-load-more-cache' ) ); ?></small></p>
+<p><?php echo wp_kses_post( __( '<strong>Note</strong>: The time required to build the entire cache depends on the amount of pages needed to complete the process. If you leave this page, the cache build process will stop.', 'ajax-load-more-cache' ) ); ?></p>

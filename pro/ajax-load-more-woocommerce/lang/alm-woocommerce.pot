@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More WooCommerce\n"
-"POT-Creation-Date: 2023-05-11 09:18-0400\n"
+"POT-Creation-Date: 2023-07-26 10:14-0400\n"
 "PO-Revision-Date: 2018-06-20 13:05-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -284,72 +284,68 @@ msgstr ""
 msgid "Wait for all images to load before displaying ajax loaded content."
 msgstr ""
 
-#: admin/views/woocommerce.php:13
+#: admin/views/woocommerce.php:8
 msgid "WooCommerce"
 msgstr ""
 
-#: admin/views/woocommerce.php:14
-msgid "Infinite scroll WooCommerce products and archives."
-msgstr ""
-
-#: admin/views/woocommerce.php:24
+#: admin/views/woocommerce.php:19
 msgid "Getting Started"
 msgstr ""
 
-#: admin/views/woocommerce.php:26
+#: admin/views/woocommerce.php:21
 msgid ""
 "The Ajax Load More WooCommerce add-on integrates directly into the main shop "
 "and archive templates using existing WooCommerce core hooks and filters."
 msgstr ""
 
-#: admin/views/woocommerce.php:29
+#: admin/views/woocommerce.php:24
 msgid ""
 "modification of page templates, building custom shortcodes or creating <a "
 "href=\"admin.php?page=ajax-load-more-repeaters\">Repeater Templates</a> is "
 "not required for implementation."
 msgstr ""
 
-#: admin/views/woocommerce.php:41
+#: admin/views/woocommerce.php:35
 msgid "Shop, Product Archives & Search"
 msgstr ""
 
-#: admin/views/woocommerce.php:42
+#: admin/views/woocommerce.php:36
 msgid ""
 "Ajax Load More integrates directly into your WooCommerce shop and search "
 "templates."
 msgstr ""
 
-#: admin/views/woocommerce.php:44 admin/views/woocommerce.php:55
+#: admin/views/woocommerce.php:38 admin/views/woocommerce.php:49
 msgid "Edit in Customizer</a>"
 msgstr ""
 
-#: admin/views/woocommerce.php:52
+#: admin/views/woocommerce.php:46
 msgid "Display Options"
 msgstr ""
 
-#: admin/views/woocommerce.php:53
+#: admin/views/woocommerce.php:47
 msgid "Adjust the look and feel and set default configurations options."
 msgstr ""
 
-#: admin/views/woocommerce.php:54
+#: admin/views/woocommerce.php:48
 msgid ""
 "Display options allow for configuration of Ajax Load More parameters such "
 "and loading style, button labels and scroll settings."
 msgstr ""
 
-#: admin/views/woocommerce.php:66
+#: admin/views/woocommerce.php:60
 msgid "WooCommerce Resources"
 msgstr ""
 
-#: admin/views/woocommerce.php:71
+#: admin/views/woocommerce.php:65
 msgid "Documentation"
 msgstr ""
 
-#: admin/views/woocommerce.php:76
+#: admin/views/woocommerce.php:70
 msgid "Examples"
 msgstr ""
 
-#: admin/views/woocommerce.php:81
+#: admin/views/woocommerce.php:75
 msgid "Support and Issues"
 msgstr ""
 

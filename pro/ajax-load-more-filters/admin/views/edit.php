@@ -23,14 +23,11 @@ if ( ! $filter_vue ) { ?>
 
 <!-- Start app -->
 <div class="ajax-load-more-inner-wrapper" id="app">
-
 	<!-- MAIN COLUMN -->
-
 	<div class="cnkt-main stylefree">
 		<div class="alm-filters">
 			<?php require ALM_FILTERS_PATH . 'admin/views/includes/navigation.php'; ?>
-			<div class="repeater-listing">
-
+			<div class="alm-content-wrap">
 				<header class="alm-filter--intro">
 					<?php if ( ! $editing ) { ?>
 					<h2><?php esc_attr_e( 'Add New Filter', 'ajax-load-more-filters' ); ?></h2>
@@ -320,24 +317,16 @@ if ( ! $filter_vue ) { ?>
 
 	</div>
 	<!-- END MAIN COLUMN -->
-
-	<!-- SIDEBAR -->
 	<?php require ALM_FILTERS_PATH . 'admin/views/includes/sidebar.php'; ?>
-	<!-- END SIDEBAR -->
-
-	<div class="clear"></div>
-
 	<?php
 	if ( $editing ) {
 		include ALM_FILTERS_PATH . 'admin/views/includes/output-php.php';
 	}
 	?>
-
 </div>
 <!-- End #app -->
 
 <script type="text/x-template" id="filterTemplate">
-
 	<div class="alm-filter--wrapper" tabindex="-1">
 		<div class="alm-counter alm-drag" :title="'<?php esc_attr_e( 'Filter Block', 'ajax-load-more-filters' ); ?> #' + (index+1)" v-on:dblclick="toggleFilterGroup($event)">
 			<div class="count">{{ index + 1 }}</div>
@@ -821,7 +810,7 @@ if ( ! $filter_vue ) { ?>
 			<div class="related-filters--wrap" v-show="filter.field_type === 'date_picker'" id="datepicker">
 				<div class="alm-filter--row_instructions">
 					<div class="alm-instructions alm-instructions--intro">
-						<p><?php esc_attr_e( 'The <strong>Date Picker</strong> field type uses the <a href="https://flatpickr.js.org/" target="_blank">Flatpickr JS</a> library to display a calendar select input field.', 'ajax-load-more-filters' ); ?></p>
+						<p><?php _e( 'The <strong>Date Picker</strong> field type uses the <a href="https://flatpickr.js.org/" target="_blank">Flatpickr JS</a> library to display a calendar select input field.', 'ajax-load-more-filters' ); ?></p>
 					</div>
 				</div>
 
@@ -1487,7 +1476,5 @@ if ( ! $filter_vue ) { ?>
 				<?php esc_attr_e( 'Remove Filter', 'ajax-load-more-filters' ); ?>
 			</button>
 		</div>
-
 	</div>
-
 </script>

@@ -5,7 +5,7 @@
  * @package ALMWooCommerce
  */
 
- // Include customizer file.
+// Include customizer file.
 require_once 'class.customizer.php';
 
 /**
@@ -43,7 +43,7 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 1,
-			'label'       => __( 'Shop Page', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Shop Page', 'alm-woocommerce' ),
 			// translators: The URL to shop page.
 			'description' => sprintf( __( 'Enable Ajax Load More on the main WooCommerce <a href="%s">Shop</a> page.', 'alm-woocommerce' ), get_permalink( wc_get_page_id( 'shop' ) ) ),
 			'type'        => 'checkbox',
@@ -65,7 +65,7 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 			array(
 				'section'     => 'woocommerce_alm',
 				'priority'    => 2,
-				'label'       => __( 'Shop Cache', 'alm-woocommerce' ),
+				'label'       => esc_attr__( 'Shop Cache', 'alm-woocommerce' ),
 				// translators: The URL to the ALM cache.
 				'description' => sprintf( __( 'Enable <a href="%s">Cache</a> on main Shop.', 'alm-woocommerce' ), 'admin.php?page=ajax-load-more-cache' ),
 				'type'        => 'checkbox',
@@ -87,7 +87,7 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 2,
-			'label'       => __( 'Shop Archives', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Shop Archives', 'alm-woocommerce' ),
 			// translators: Random archive URL.
 			'description' => sprintf( __( 'Enable Ajax Load More on shop <a href="%s">archives</a>. <br/><span style="opacity: 0.7;">e.g. Product category and tags</span>', 'alm-woocommerce' ), alm_woo_get_random_product_cat() ),
 			'type'        => 'checkbox',
@@ -109,7 +109,7 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 			array(
 				'section'     => 'woocommerce_alm',
 				'priority'    => 2,
-				'label'       => __( 'Shop Archive Cache', 'alm-woocommerce' ),
+				'label'       => esc_attr__( 'Shop Archive Cache', 'alm-woocommerce' ),
 				// translators: The URL to the ALM cache.
 				'description' => sprintf( __( 'Enable <a href="%s">Cache</a> on shop archives.', 'alm-woocommerce' ), 'admin.php?page=ajax-load-more-cache' ),
 				'type'        => 'checkbox',
@@ -131,8 +131,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 2,
-			'label'       => __( 'Product Search', 'alm-woocommerce' ),
-			'description' => __( 'Enable Ajax Load More on product searches.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Product Search', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Enable Ajax Load More on product searches.', 'alm-woocommerce' ),
 			'type'        => 'checkbox',
 		)
 	);
@@ -151,8 +151,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 2,
-			'label'       => __( 'Container Class', 'alm-woocommerce' ),
-			'description' => __( 'Set the target classname of the WooCommerce listing container. You need to update this value if your theme does not follow the standard WooCommerce class structure.', 'alm-woocommerce' ) . '<span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `ul.products`</span>',
+			'label'       => esc_attr__( 'Container Class', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Set the target classname of the WooCommerce listing container. You need to update this value if your theme does not follow the standard WooCommerce class structure.', 'alm-woocommerce' ) . '<span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `ul.products`</span>',
 			'input_attrs' => array(
 				'placeholder' => apply_filters( 'alm_woocommerce_container', 'ul.products' ),
 			),
@@ -173,8 +173,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 2,
-			'label'       => __( 'Product Class', 'alm-woocommerce' ),
-			'description' => __( 'Set the target classname of the individual WooCommerce products.', 'alm-woocommerce' ) . '<br/><span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `.product`</span>',
+			'label'       => esc_attr__( 'Product Class', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Set the target classname of the individual WooCommerce products.', 'alm-woocommerce' ) . '<br/><span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `.product`</span>',
 			'input_attrs' => array(
 				'placeholder' => apply_filters( 'alm_woocommerce_products', '.product' ),
 			),
@@ -195,8 +195,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm',
 			'priority'    => 2,
-			'label'       => __( 'Permalink Structure', 'alm-woocommerce' ),
-			'description' => __( 'Update the pagination permalinks for the shop and archives. This is useful when plugins do not follow the standard WooCommerce permalink structure.', 'alm-woocommerce' ) . '<br/><span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `page/{page}`</span>',
+			'label'       => esc_attr__( 'Permalink Structure', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Update the pagination permalinks for the shop and archives. This is useful when plugins do not follow the standard WooCommerce permalink structure.', 'alm-woocommerce' ) . '<br/><span style="' . $block . '">' . __( 'Default:', 'alm-woocommerce' ) . ' `page/{page}`</span>',
 			'input_attrs' => array(
 				'placeholder' => apply_filters( 'alm_woocommerce_permalink_structure', 'page/{page}' ),
 			),
@@ -209,8 +209,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'woocommerce_alm_display',
 		array(
-			'title'       => __( 'Ajax Load More [Display]', 'alm-woocommerce' ),
-			'description' => __( 'Edit the following Ajax Load More display parameters to create a custom experience for your visitors.', 'alm-woocommerce' ) . '<hr style="margin-top: 15px;" />',
+			'title'       => esc_attr__( 'Ajax Load More [Display]', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Edit the following Ajax Load More display parameters to create a custom experience for your visitors.', 'alm-woocommerce' ) . '<hr style="margin-top: 15px;" />',
 			'priority'    => 90,
 			'panel'       => 'woocommerce',
 		)
@@ -230,23 +230,23 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Button/Loading Style', 'alm-woocommerce' ),
-			'description' => __( 'Select an Ajax loading style - choose between a Button or Infinite Scroll..', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Button/Loading Style', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Select an Ajax loading style - choose between a Button or Infinite Scroll.', 'alm-woocommerce' ),
 			'type'        => 'select',
 			'choices'     => array(
-				'default'                 => __( 'Button - Default', 'alm-woocommerce' ),
-				'blue'                    => __( 'Button - Blue', 'alm-woocommerce' ),
-				'green'                   => __( 'Button - Green', 'alm-woocommerce' ),
-				'purple'                  => __( 'Button - Purple', 'alm-woocommerce' ),
-				'grey'                    => __( 'Button - Grey', 'alm-woocommerce' ),
-				'white'                   => __( 'Button - White', 'alm-woocommerce' ),
-				'light-grey'              => __( 'Button - Light Grey', 'alm-woocommerce' ),
-				'infinite classic'        => __( 'Infinite Scroll - Classic', 'alm-woocommerce' ),
-				'infinite skype'          => __( 'Infinite Scroll - Skype', 'alm-woocommerce' ),
-				'infinite ring'           => __( 'Infinite Scroll - Ring', 'alm-woocommerce' ),
-				'infinite fading-blocks'  => __( 'Infinite Scroll - Fading Blocks', 'alm-woocommerce' ),
-				'infinite fading-circles' => __( 'Infinite Scroll - Fading Circles', 'alm-woocommerce' ),
-				'infinite chasing-arrows' => __( 'Infinite Scroll - Chasing Arrows', 'alm-woocommerce' ),
+				'default'                 => esc_attr__( 'Button - Default', 'alm-woocommerce' ),
+				'blue'                    => esc_attr__( 'Button - Blue', 'alm-woocommerce' ),
+				'green'                   => esc_attr__( 'Button - Green', 'alm-woocommerce' ),
+				'purple'                  => esc_attr__( 'Button - Purple', 'alm-woocommerce' ),
+				'grey'                    => esc_attr__( 'Button - Grey', 'alm-woocommerce' ),
+				'white'                   => esc_attr__( 'Button - White', 'alm-woocommerce' ),
+				'light-grey'              => esc_attr__( 'Button - Light Grey', 'alm-woocommerce' ),
+				'infinite classic'        => esc_attr__( 'Infinite Scroll - Classic', 'alm-woocommerce' ),
+				'infinite skype'          => esc_attr__( 'Infinite Scroll - Skype', 'alm-woocommerce' ),
+				'infinite ring'           => esc_attr__( 'Infinite Scroll - Ring', 'alm-woocommerce' ),
+				'infinite fading-blocks'  => esc_attr__( 'Infinite Scroll - Fading Blocks', 'alm-woocommerce' ),
+				'infinite fading-circles' => esc_attr__( 'Infinite Scroll - Fading Circles', 'alm-woocommerce' ),
+				'infinite chasing-arrows' => esc_attr__( 'Infinite Scroll - Chasing Arrows', 'alm-woocommerce' ),
 			),
 		)
 	);
@@ -265,8 +265,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Button Label', 'alm-woocommerce' ),
-			'description' => __( 'The text of the Load More button.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Button Label', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'The text of the Load More button.', 'alm-woocommerce' ),
 			'input_attrs' => array(
 				'placeholder' => ALMWooCustomizer::default_button_label(),
 			),
@@ -287,8 +287,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Button Loading Label', 'alm-woocommerce' ),
-			'description' => __( 'Update the button label while content is loading.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Button Loading Label', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Update the button label while content is loading.', 'alm-woocommerce' ),
 		)
 	);
 
@@ -306,8 +306,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Previous Products Button', 'alm-woocommerce' ),
-			'description' => __( 'On paged URLs, show a \'Previous Products\' button to load posts in a reverse load more order.', 'alm-woocommerce' ) . '<span style="' . $block . '">' . __( 'Leave empty to not render button.', 'alm-woocommerce' ) . '</span>',
+			'label'       => esc_attr__( 'Previous Products Button', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'On paged URLs, show a \'Previous Products\' button to load posts in a reverse load more order.', 'alm-woocommerce' ) . '<span style="' . $block . '">' . __( 'Leave empty to not render button.', 'alm-woocommerce' ) . '</span>',
 			'input_attrs' => array(
 				'placeholder' => apply_filters( 'alm_woocommerce_previous_products', __( 'Load Previous Products', 'alm-woocommerce' ) ),
 			),
@@ -328,12 +328,12 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Scrolling', 'alm-woocommerce' ),
-			'description' => __( 'Load products as users scroll the page.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Scrolling', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Load products as users scroll the page.', 'alm-woocommerce' ),
 			'type'        => 'select',
 			'choices'     => array(
-				'true'  => __( 'True', 'alm-woocommerce' ),
-				'false' => __( 'False', 'alm-woocommerce' ),
+				'true'  => esc_attr__( 'True', 'alm-woocommerce' ),
+				'false' => esc_attr__( 'False', 'alm-woocommerce' ),
 			),
 		)
 	);
@@ -352,12 +352,12 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Scroll Override', 'alm-woocommerce' ),
-			'description' => __( 'Allow scrolling to initiate the loading of posts. If false, users will have to click the \'Load More\' button to begin.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Scroll Override', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Allow scrolling to initiate the loading of posts. If false, users will have to click the \'Load More\' button to begin.', 'alm-woocommerce' ),
 			'type'        => 'select',
 			'choices'     => array(
-				'true'  => __( 'True', 'alm-woocommerce' ),
-				'false' => __( 'False', 'alm-woocommerce' ),
+				'true'  => esc_attr__( 'True', 'alm-woocommerce' ),
+				'false' => esc_attr__( 'False', 'alm-woocommerce' ),
 			),
 		)
 	);
@@ -376,8 +376,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 1,
-			'label'       => __( 'Scroll Distance', 'alm-woocommerce' ),
-			'description' => __( 'The distance (in pixels) from the bottom of the screen to trigger a post load.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Scroll Distance', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'The distance (in pixels) from the bottom of the screen to trigger a post load.', 'alm-woocommerce' ),
 			'type'        => 'number',
 			'input_attrs' => array(
 				'step' => 10,
@@ -399,12 +399,12 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 2,
-			'label'       => __( 'Back/Fwd Button', 'alm-woocommerce' ),
-			'description' => __( 'Enable navigation between Ajax loaded content using back and forward browser buttons.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Back/Fwd Button', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Enable navigation between Ajax loaded content using back and forward browser buttons.', 'alm-woocommerce' ),
 			'type'        => 'select',
 			'choices'     => array(
-				'true'  => __( 'True', 'alm-woocommerce' ),
-				'false' => __( 'False', 'alm-woocommerce' ),
+				'true'  => esc_attr__( 'True', 'alm-woocommerce' ),
+				'false' => esc_attr__( 'False', 'alm-woocommerce' ),
 			),
 		)
 	);
@@ -423,8 +423,8 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 2,
-			'label'       => __( 'Scroll Offset', 'alm-woocommerce' ),
-			'description' => __( 'Set the offset top position of the window. The offset determines at which point the URL will update while scrolling through Ajax loaded pages.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Scroll Offset', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Set the offset top position of the window. The offset determines at which point the URL will update while scrolling through Ajax loaded pages.', 'alm-woocommerce' ),
 			'type'        => 'number',
 			'input_attrs' => array(
 				'step' => 10,
@@ -446,12 +446,12 @@ function alm_woocommerce_customizer_register( $wp_customize ) {
 		array(
 			'section'     => 'woocommerce_alm_display',
 			'priority'    => 2,
-			'label'       => __( 'Images Loaded', 'alm-woocommerce' ),
-			'description' => __( 'Wait for all images to load before displaying ajax loaded content.', 'alm-woocommerce' ),
+			'label'       => esc_attr__( 'Images Loaded', 'alm-woocommerce' ),
+			'description' => esc_attr__( 'Wait for all images to load before displaying ajax loaded content.', 'alm-woocommerce' ),
 			'type'        => 'select',
 			'choices'     => array(
-				'true'  => __( 'True', 'alm-woocommerce' ),
-				'false' => __( 'False', 'alm-woocommerce' ),
+				'true'  => esc_attr__( 'True', 'alm-woocommerce' ),
+				'false' => esc_attr__( 'False', 'alm-woocommerce' ),
 			),
 		)
 	);
@@ -586,7 +586,6 @@ add_action( 'customize_controls_print_scripts', 'alm_woocommerce_customizer_add_
  * Get random product category when a user adjusts the `Shop Archives` customizer setting.
  */
 function alm_woo_get_random_product_cat() {
-
 	$args  = array(
 		'taxonomy'   => 'product_cat',
 		'hide_empty' => true,
@@ -610,5 +609,4 @@ function alm_woo_get_random_product_cat() {
 			return $term_link;
 		}
 	}
-
 }

@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com
-Version: 2.0.1
+Version: 2.0.2
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -45,6 +45,11 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/layouts/
 
 
 == Changelog ==
+
+= 2.0.2 - July 27, 2023=
+* UPDATE: Updated layout listing design and display.
+* UPDATE: Updated various elements to match new core Ajax Load More 6.1 admin styling.
+
 
 = 2.0.1 - February 14, 2023 =
 * UPDATE - Updated the exported CSS of default layout to allow for image sizes of any dimensions.

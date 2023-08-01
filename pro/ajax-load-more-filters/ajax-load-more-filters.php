@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.0.2.2
+ * Version: 2.1.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.0.2.2' );
-define( 'ALM_FILTERS_RELEASE', 'June 11, 2023' );
+define( 'ALM_FILTERS_VERSION', '2.1.0' );
+define( 'ALM_FILTERS_RELEASE', 'July 27, 2023' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -867,9 +867,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 				// Reset/Clear Filters Button.
 				$output .= alm_filters_render_controls( $options_obj, $obj );
 
-				/*
-				* Disable direct link edits of filter in admin.
-				*/
+				// Disable filter edit links while logged in.
 				$is_filter_option = get_option( ALM_FILTERS_PREFIX . $options_obj['id'] );
 				if ( is_user_logged_in() && current_user_can( apply_filters( 'alm_user_role', 'edit_theme_options' ) ) && apply_filters( 'alm_filters_edit', true ) && ! empty( $is_filter_option ) ) {
 					$output .= '<a href="' . get_admin_url() . 'admin.php?page=ajax-load-more-filters&filter=' . $filters['id'] . '" class="alm-filters-edit" title="' . __( 'Filter', 'ajax-load-more-filters' ) . ': ' . $filters['id'] . '">' . __( 'Edit Filter', 'ajax-load-more-filters' ) . '</a>';

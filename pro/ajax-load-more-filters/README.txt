@@ -8,7 +8,7 @@ Requires at least: 5.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 2.0.2.2
+Version: 2.1.0
 
 == Copyright ==
 Copyright 2023 Darren Cooney
@@ -50,6 +50,18 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 2.1.0 - July 27, 2023 =
+* FIX: Fixed issue with `attachment` post type and facets not returning results due to `post_status` not being set to `inherit`.
+* FIX: Updated the facet naming convention to allow facets to be reused with multiple instances of Ajax Load More and queries.
+* FIX: Added fix for deep link custom field queries not working if a duplicate `meta_key` has been set for ordering.
+* FIX: Allow for decimals in Range Slider input steps.
+* FIX: Removed orphaned quote in the Select listing for taxonomy terms.
+* FIX: Fixed issue with Default Values being incorrectly added to a query when using Radio field type.
+* UPDATE: Adding support for new `sort_key` parameter in Ajax Load More 6.1 that adds better control for ordering results by custom field key.
+* UPDATE: Updated admin pages to match new Ajax Load More 6.1 admin layout.
+* UPDATE: Various code cleanup tasks and file structure organizations.
+
 
 = 2.0.2.2 - June 11, 2023 =
 * UPDATE: Various security fixes and data escaping.

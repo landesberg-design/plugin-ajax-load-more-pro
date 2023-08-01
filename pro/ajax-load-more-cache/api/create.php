@@ -46,7 +46,7 @@ function alm_cache_create( WP_REST_Request $request ) {
 	$cache_id        = isset( $form_data['cache_id'] ) ? $form_data['cache_id'] : '';
 	$cache_logged_in = isset( $form_data['cache_logged_in'] ) ? $form_data['cache_logged_in'] : false;
 	$do_create_cache = $cache_logged_in === 'true' && is_user_logged_in() ? false : true;
-	$canonical_url   = isset( $form_data['canonical_url'] ) ? esc_url( $form_data['canonical_url'] ) : esc_url( $_SERVER['HTTP_REFERER'] );
+	$canonical_url   = isset( $form_data['canonical_url'] ) ? $form_data['canonical_url'] : $_SERVER['HTTP_REFERER'];
 	$name            = isset( $form_data['name'] ) ? $form_data['name'] : 0;
 	$postcount       = isset( $form_data['postcount'] ) ? $form_data['postcount'] : 1;
 	$totalposts      = isset( $form_data['totalposts'] ) ? $form_data['totalposts'] : 1;

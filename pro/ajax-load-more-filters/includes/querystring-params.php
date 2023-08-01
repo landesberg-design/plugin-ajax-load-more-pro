@@ -4,6 +4,8 @@
  *
  * @since 1.0
  * @package ALMFilters
+ * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+ * phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
  */
 
 // Get querystring array.
@@ -98,22 +100,20 @@ if ( $alm_filters_querystring ) {
 
 			case 'sort':
 				// Sort order.
-				$sortArray = explode( ':', $value ); // Convert value to array at colon.
-				if ( count( $sortArray ) > 1 && count( $sortArray ) <= 3 ) { // Between 1 and 3.
-					$sortOrder   = $sortArray[0];
-					$sortOrderby = $sortArray[1];
-					if ( in_array( $sortOrderby, alm_filters_get_order_array(), true ) ) {
-						$order   = $sortOrder;
-						$orderby = $sortOrderby;
+				$sort_array = explode( ':', $value ); // Convert value to array at colon.
+				if ( count( $sort_array ) > 1 && count( $sort_array ) <= 3 ) { // Between 1 and 3.
+					$sort_order   = $sort_array[0];
+					$sort_orderby = $sort_array[1];
+					if ( in_array( $sort_orderby, alm_filters_get_order_array(), true ) ) {
+						$order   = $sort_order;
+						$orderby = $sort_orderby;
 					} else {
-						// Get meta order (`meta_value`, `meta_value_num`).
-						$metaOrder = isset( $sortArray[2] ) ? $sortArray[2] : 'meta_value';
-						$order     = $sortOrder;
-						$orderby   = $metaOrder;
-						$meta_key  = $sortOrderby;
+						// Get meta order.
+						$order    = $sort_order;
+						$orderby  = isset( $sort_array[2] ) ? $sort_array[2] : 'meta_value';
+						$sort_key = $sort_orderby;
 					}
 				}
-
 				break;
 
 			case 'custom_field_query':
@@ -133,7 +133,6 @@ if ( $alm_filters_querystring ) {
 				$filter_meta_compare .= $filter_meta_count > 0 ? ':' . $filter_session_meta_operator : $filter_session_meta_operator;
 				$filter_meta_type    .= $filter_meta_count > 0 ? ':' . $filter_session_meta_type : $filter_session_meta_type;
 				$filter_meta_count++;
-
 				break;
 
 			case 'taxonomy_query':
@@ -156,31 +155,26 @@ if ( $alm_filters_querystring ) {
 					$filter_taxonomy_include_children .= $filter_taxonomy_count > 0 ? ':' . $filter_session_tax_include_children . '' : $filter_session_tax_include_children;
 					$filter_taxonomy_count++;
 				}
-
 				break;
 
 			case 'pg':
 				$pg = $value;
-
-				break;
-
-			default:
 				break;
 		}
 	}
 
-	// Apply Taxonomies.
+	// Taxonomy.
 	if ( ! empty( $filter_taxonomy ) && ! empty( $filter_taxonomy_terms ) ) {
-		// Append querystring taxonomy query params to existing taxonomy query.
+		// Append querystring taxonomy params to existing taxonomy query.
 		$taxonomy                  = $taxonomy ? $taxonomy . ':' . $filter_taxonomy : $filter_taxonomy;
 		$taxonomy_terms            = $taxonomy_terms ? $taxonomy_terms . ':' . $filter_taxonomy_terms : $filter_taxonomy_terms;
 		$taxonomy_operator         = $taxonomy_operator ? $taxonomy_operator . ':' . $filter_taxonomy_operator : $filter_taxonomy_operator;
 		$taxonomy_include_children = $taxonomy_include_children ? $taxonomy_include_children . ':' . $filter_taxonomy_include_children : $filter_taxonomy_include_children;
 	}
 
-	// Apply Meta Queries.
+	// Custom Fields.
 	if ( ! empty( $filter_meta_key ) && isset( $filter_meta_value ) ) {
-		// Append querystring meta query params to existing meta query.
+		// Append querystring meta params to existing meta query.
 		$meta_key     = $meta_key ? $meta_key . ':' . $filter_meta_key : $filter_meta_key;
 		$meta_value   = $meta_value ? $meta_value . ':' . $filter_meta_value : $filter_meta_value;
 		$meta_compare = $meta_compare ? $meta_compare . ':' . $filter_meta_compare : $filter_meta_compare;

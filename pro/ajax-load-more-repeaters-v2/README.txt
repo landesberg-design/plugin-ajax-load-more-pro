@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.1
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 2.5.10
+Version: 2.5.11
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -46,6 +46,11 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 
 == Changelog ==
+ 
+= 2.5.11 - July 27, 2023 =
+* UPDATE: Admin UI updates to match core Ajax Load More 6.1 updates.
+* UPDATE: Code cleanup and organization.
+
  
 = 2.5.10 - February 14, 2023 =
 * FIX: Added fix and warning message if Repeater Template is missing from the filesystem. This fix prevents a fatal error on the Repeater Template admin listing page and also allows for saving of the template at runtime.

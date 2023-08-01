@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.5.10
+ * Version: 2.5.11
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -15,8 +15,8 @@
 
 define( 'ALM_UNLIMITED_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_UNLIMITED_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_UNLIMITED_VERSION', '2.5.10' );
-define( 'ALM_UNLIMITED_RELEASE', 'February 14, 2023' );
+define( 'ALM_UNLIMITED_VERSION', '2.5.11' );
+define( 'ALM_UNLIMITED_RELEASE', 'July 27, 2023' );
 
 /**
  * Core activation hook function.
@@ -350,10 +350,9 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 						<h3 class="heading" data-default="<?php echo esc_html( $repeater_name ); ?>"><?php echo wp_kses_post( $heading ); ?></h3>
 						<div class="expand-wrap">
 							<div class="wrap repeater-wrap" data-name="<?php echo wp_kses_post( $repeater_file ); ?>" data-type="unlimited">
-
-								<div class="alm-row alm-row--margin-btm">
-									<div class="column column--half">
-										<label class="template-title has-margin-btm" for="alias-<?php echo esc_html( $repeater_file ); ?>">
+								<div class="alm-row">
+									<div class="column column-6">
+										<label for="alias-<?php echo esc_html( $repeater_file ); ?>">
 											<?php esc_html_e( 'Template Alias:', 'ajax-load-more-repeaters-v2' ); ?>
 											<span><?php esc_html_e( 'Enter a unique name for this template.', 'ajax-load-more-repeaters-v2' ); ?></span>
 										</label>
@@ -362,8 +361,8 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 											echo '<input type="text" id="alias-' . esc_html( $repeater_file ) . '" class="_alm_repeater_alias" value="' . esc_html( $alias ) . '" maxlength="55" placeholder="' . esc_html__( 'Blog Listing', 'ajax-load-more-repeaters-v2' ) . '">';
 										?>
 									</div>
-									<div class="column column--half">
-										<label class="template-title has-margin-btm" for="id-<?php echo esc_html( $repeater_file ); ?>">
+									<div class="column column-6">
+										<label for="id-<?php echo esc_html( $repeater_file ); ?>">
 											<?php esc_html_e( 'Template ID:', 'ajax-load-more-repeaters-v2' ); ?>
 											<span><?php esc_html_e( 'The unique ID assigned to this template.', 'ajax-load-more-repeaters-v2' ); ?></span>
 										</label>
@@ -371,26 +370,23 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 									</div>
 								</div>
 
-								<div class="alm-row alm-row--margin-btm">
-									<div class="column column--two-third">
-										<label class="template-title trigger-codemirror" data-id="<?php echo esc_html( $repeater_file ); ?>" for="template-<?php echo esc_html( $repeater_file ); ?>">
+								<div class="alm-row no-padding-btm">
+									<div class="column column-9">
+										<label class="trigger-codemirror" data-id="<?php echo esc_html( $repeater_file ); ?>" for="template-<?php echo esc_html( $repeater_file ); ?>">
 											<?php esc_html_e( 'Template Code:', 'ajax-load-more-repeaters-v2' ); ?>
 											<span><?php esc_html_e( 'Enter the PHP and HTML markup for this template.', 'ajax-load-more-repeaters-v2' ); ?></span>
 										</label>
 										</div>
-										<div class="column column--one-third">
-											<?php
-												do_action( 'alm_get_layouts' ); // Layouts - Template Selection.
-											?>
+										<div class="column column-3">
+											<?php do_action( 'alm_get_layouts' ); ?>
 										</div>
 									</div>
 
-									<div class="alm-row alm-row--margin-btm">
+									<div class="alm-row">
 										<div class="column textarea-wrap">
 											<?php
 											$filename = $base_dir . '/' . $repeater_file . '.php';
-
-											$content = '';
+											$content  = '';
 											if ( file_exists( $filename ) ) {
 												// phpcs:ignore
 												$handle   = fopen( $filename, 'r' );
@@ -422,15 +418,15 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 											});
 											</script>
 										</div>
-									</div>
+									</div> 
 
 									<div class="alm-row">
 										<div class="column">
 											<input type="submit" value="<?php esc_html_e( 'Save Template', 'ajax-load-more-repeaters-v2' ); ?>" class="button button-primary save-repeater" data-editor-id="<?php echo esc_html( $repeater_file ); ?>">
 											<div class="saved-response">&nbsp;</div>
-											<p class="alm-delete">
-												<a href="javascript:void(0);"><?php esc_html_e( 'Delete', 'ajax-load-more-repeaters-v2' ); ?></a>
-											</p>
+											<button type="button" class="alm-delete"> 
+												<?php esc_html_e( 'Delete', 'ajax-load-more-repeaters-v2' ); ?>
+											</button>
 											<?php
 												$repeater_options = [
 													'path' => $filename,
@@ -447,12 +443,12 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 							</div>
 							<div class="clear"></div>
 						</div>
-					</div><!-- /.row.template -->
+					</div>
 						<?php
 					endforeach;
 				endif;
 				?>
-			</div><!-- /#unlmited-container -->
+			</div>
 			<p class="alm-add-template" id="alm-add-template" style="margin-top:30px">
 				<a href="javascript:void(0);">
 					<i class="fa fa-plus-square"></i> <?php esc_html_e( 'Add New Template', 'ajax-load-more-repeaters-v2' ); ?>
@@ -522,7 +518,6 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 
 					// DELETE template.
 					$(document).on('click', '.alm-delete', function(){
-
 						var r = confirm("<?php esc_attr_e( 'Are you sure you want to delete this template?', 'ajax-load-more-repeaters-v2' ); ?>");
 						if (r == true && !$(this).hasClass('deleting')) {
 							var el = $(this);
@@ -564,7 +559,6 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 						}
 						return -c / 2 * ((--t) * (t - 2) - 1) + b;
 					};
-
 				});
 				</script>
 			<?php
@@ -577,7 +571,6 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 		 */
 		public function alm_unlimited_create() {
 			$form_data = filter_input_array( INPUT_POST );
-
 			if ( ! current_user_can( 'edit_theme_options' ) || ! isset( $form_data['nonce'] ) ) {
 				// Bail early if missing WP capabilities or nonce.
 				wp_die( esc_attr__( 'You don\'t belong here.', 'ajax-load-more-repeaters-v2' ) );

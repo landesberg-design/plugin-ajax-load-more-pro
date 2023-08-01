@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ALM Custom Repeaters\n"
-"POT-Creation-Date: 2023-02-06 19:00-0500\n"
+"POT-Creation-Date: 2023-07-14 16:13-0400\n"
 "PO-Revision-Date: 2015-07-28 21:29-0500\n"
 "Last-Translator: Darren Cooney <darren.cooney@gmail.com>\n"
 "Language-Team: \n"
@@ -28,86 +28,82 @@ msgstr ""
 msgid "Error creating repeater template directory"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:357 includes/template.php:23
+#: ajax-load-more-repeaters-v2.php:356 includes/template.php:23
 msgid "Template Alias:"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:358 includes/template.php:24
+#: ajax-load-more-repeaters-v2.php:357 includes/template.php:24
 msgid "Enter a unique name for this template."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:362
+#: ajax-load-more-repeaters-v2.php:361
 msgid "Blog Listing"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:367 includes/template.php:30
+#: ajax-load-more-repeaters-v2.php:366 includes/template.php:30
 msgid "Template ID:"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:368
+#: ajax-load-more-repeaters-v2.php:367 includes/template.php:31
 msgid "The unique ID assigned to this template."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:377 includes/template.php:39
+#: ajax-load-more-repeaters-v2.php:376 includes/template.php:39
 msgid "Template Code:"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:378 includes/template.php:40
+#: ajax-load-more-repeaters-v2.php:377 includes/template.php:40
 msgid "Enter the PHP and HTML markup for this template."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:408
+#: ajax-load-more-repeaters-v2.php:404
 msgid "This template is missing from the filesystem. Click the \"Save Template\" button below to save the template."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:429 includes/template.php:65
-msgid "Save Template"
-msgstr ""
-
-#: ajax-load-more-repeaters-v2.php:432 includes/template.php:67
-msgid "Delete"
-msgstr ""
-
-#: ajax-load-more-repeaters-v2.php:458
+#: ajax-load-more-repeaters-v2.php:449
 msgid "Add New Template"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:515
+#: ajax-load-more-repeaters-v2.php:506
 msgid "Error - Something went wrong and the template could not be created."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:526
+#: ajax-load-more-repeaters-v2.php:516
 msgid "Are you sure you want to delete this template?"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:556
+#: ajax-load-more-repeaters-v2.php:546
 msgid "Error - Something went wrong and the template could not be deleted."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:583 ajax-load-more-repeaters-v2.php:651
+#: ajax-load-more-repeaters-v2.php:571 ajax-load-more-repeaters-v2.php:639
 msgid "You don't belong here."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:588 ajax-load-more-repeaters-v2.php:656
+#: ajax-load-more-repeaters-v2.php:576 ajax-load-more-repeaters-v2.php:644
 msgid "Error - unable to verify nonce, please try again."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:602
+#: ajax-load-more-repeaters-v2.php:590
 msgid "Enter your template code here"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:635
+#: ajax-load-more-repeaters-v2.php:623
 msgid "Template #"
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:680
+#: ajax-load-more-repeaters-v2.php:668
 msgid "Template could not be deleted."
 msgstr ""
 
-#: ajax-load-more-repeaters-v2.php:682
+#: ajax-load-more-repeaters-v2.php:670
 msgid "Template deleted successfully."
 msgstr ""
 
-#: includes/template.php:31
-msgid "The unique ID assigned to this template (non-editable)."
+#: includes/template-actions.php:9
+msgid "Save Template"
+msgstr ""
+
+#: includes/template-actions.php:12
+msgid "Delete"
 msgstr ""

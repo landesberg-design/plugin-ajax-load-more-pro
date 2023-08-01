@@ -5,12 +5,14 @@
  * @package ALMFilters
  */
 
-$editing      = false;
-$deleted      = false;
-$filter_id    = '';
-$filter_vue   = '';
-$section      = 'dashboard';
-$query_params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
+$editing           = false;
+$deleted           = false;
+$filter_id         = '';
+$filter_vue        = '';
+$section           = 'dashboard';
+$query_params      = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
+$alm_admin_heading = __( 'Filters', 'ajax-load-more' );
+
 // Export/Import, New.
 if ( isset( $query_params['action'] ) ) {
 	if ( $query_params['action'] === 'tools' ) {
@@ -42,22 +44,17 @@ if ( isset( $query_params['delete_filter'] ) ) {
 $selected = ' selected="selected"';
 ?>
 
-<div class="admin ajax-load-more" id="alm-filters">
-	<div class="wrap main-cnkt-wrap">
-		<header class="header-wrap">
-			<h1>
-				<?php echo esc_html( ALM_TITLE ); ?>: <strong><?php esc_html_e( 'Filters', 'ajax-load-more-filters' ); ?></strong>
-				<em><?php esc_html_e( 'Build and manage your Ajax Load More filters.', 'ajax-load-more-filters' ); ?></em>
-			</h1>
-		</header>
-		<?php
-		if ( 'dashboard' === $section ) {
-			include ALM_FILTERS_PATH . 'admin/views/includes/dashboard.php';
-		} elseif ( 'tools' === $section ) {
-			include ALM_FILTERS_PATH . 'admin/views/includes/tools.php';
-		} else {
-			include ALM_FILTERS_PATH . 'admin/views/includes/edit.php';
-		}
-		?>
-	</div>
+<div class="admin wrap ajax-load-more main-cnkt-wrap" id="alm-filters">
+	<?php
+	if ( defined( 'ALM_PATH' ) && file_exists( ALM_PATH . 'admin/includes/components/header.php' ) ) {
+		require_once ALM_PATH . 'admin/includes/components/header.php';
+	}
+	if ( 'dashboard' === $section ) {
+		include ALM_FILTERS_PATH . 'admin/views/dashboard.php';
+	} elseif ( 'tools' === $section ) {
+		include ALM_FILTERS_PATH . 'admin/views/tools.php';
+	} else {
+		include ALM_FILTERS_PATH . 'admin/views/edit.php';
+	}
+	?>
 </div>

@@ -11429,14 +11429,13 @@ var _GetTerms2 = _interopRequireDefault(_GetTerms);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
+/**
  * Set the sort parameters for order and orderby.
  * If this is a custom field sort, check the orderby param and match against the array of possibilities
  *
- * @param filter element   The container element for the current filter set
- * @param data object   The data obj for the filter
- * @return data
- *
+ * @param {HTMLElement} filter Container element for the current filter set
+ * @param {object}      data   Data obj for the filter
+ * @return {object}            Modified data object.
  * @since 1.7.2
  */
 var getSortOrder = function getSortOrder(filter, data) {
@@ -11455,19 +11454,19 @@ var getSortOrder = function getSortOrder(filter, data) {
 			// Find value in `ordering` array
 			var in_array = orderArray.indexOf(orderby);
 
-			if (in_array != -1) {
+			if (in_array !== -1) {
 				// Standard Ordering
 				data["order"] = order;
 				data["orderby"] = orderby;
-				data["metaKey"] = ""; // reset if previous set
+				data["sortKey"] = ""; // reset if previously set.
 			} else {
-				// Order by Custom Field
+				// Order by Custom Field.
 				var metaOrder = sortArray[2];
 				metaOrder = metaOrder ? metaOrder.toLocaleLowerCase() : "meta_value";
 
 				data["order"] = order;
 				data["orderby"] = metaOrder;
-				data["metaKey"] = orderby;
+				data["sortKey"] = orderby;
 			}
 		}
 	}
@@ -11503,7 +11502,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @param  {HTMLElement} filter The container element for the current filter set.
  * @param  {object}      data   The data obj for the filter.
  * @return {string}             The value of the selected term.
- *
  * @since 1.0
  */
 var getTerms = function getTerms(filter, data) {
@@ -12409,7 +12407,7 @@ function setRangeSliders(filter_id, rangeSliders) {
 		var start_reset = slider.dataset.startReset ? parseInt(slider.dataset.startReset) : start;
 		var end = slider.dataset.end ? parseInt(slider.dataset.end) : max;
 		var end_reset = slider.dataset.endReset ? parseInt(slider.dataset.endReset) : end;
-		var steps = slider.dataset.steps ? parseInt(slider.dataset.steps) : 1;
+		var steps = slider.dataset.steps ? Number(slider.dataset.steps) : 1;
 		var display_label = slider.dataset.label ? slider.dataset.label : "{start} - {end}";
 		var orientation = slider.dataset.orientation ? slider.dataset.orientation : "horizontal";
 		var decimals = slider.dataset.decimals ? slider.dataset.decimals : "true";

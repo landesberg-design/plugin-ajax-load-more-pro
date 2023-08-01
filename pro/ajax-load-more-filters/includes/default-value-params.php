@@ -4,19 +4,26 @@
  *
  * @since 1.13.0
  * @package ALMFilters
+ * phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+ * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
-// Only run if filters are present.
+// Run if filters are present.
 if ( $alm_filters_array ) {
-
 	// Loop all filters to get the default_values.
 	foreach ( $alm_filters_array as $alm_filter ) {
+
 		if ( isset( $alm_filter['default_value'] ) && ! empty( trim( $alm_filter['default_value'] ) ) ) {
-			$alm_default_key = $alm_filter['key'];
-			$value           = alm_filters_parse_dynamic_vars( $alm_default_key, $alm_filter['default_value'] );
+			$default_key = $alm_filter['key'];
+			$field_type  = $alm_filter['field_type'];
 
-			switch ( $alm_default_key ) {
+			// Parse the querystring into array.
+			parse_str( $_SERVER ? $_SERVER['QUERY_STRING'] : '', $querystring );
 
+			// Parse the default value.
+			$value = alm_filters_parse_dynamic_vars( $default_key, $alm_filter['default_value'] );
+
+			switch ( $default_key ) {
 				case '_author':
 					$author = $author ? "$author, $value" : $value;
 					break;
@@ -68,20 +75,20 @@ if ( $alm_filters_array ) {
 					break;
 
 				case 'sort':
-					$sortArray = explode( ':', $value ); // Convert value to array at colon.
-					if ( count( $sortArray ) > 1 && count( $sortArray ) <= 3 ) { // Between 1 and 3
-						$sortOrder   = $sortArray[0];
-						$sortOrderby = $sortArray[1];
+					$sort_array = explode( ':', $value ); // Convert value to array at colon.
+					if ( count( $sort_array ) > 1 && count( $sort_array ) <= 3 ) { // Between 1 and 3.
+						$sort_order   = $sort_array[0];
+						$sort_orderby = $sort_array[1];
 
-						if ( in_array( $sortOrderby, alm_filters_get_order_array() ) ) {
-							$order   = $sortOrder;
-							$orderby = $sortOrderby;
+						if ( in_array( $sort_orderby, alm_filters_get_order_array(), true ) ) {
+							$order   = $sort_order;
+							$orderby = $sort_orderby;
 						} else {
-							// Get meta order (`meta_value`, `meta_value_num`)
-							$metaOrder = isset( $sortArray[2] ) ? $sortArray[2] : 'meta_value';
-							$order     = $sortOrder;
-							$orderby   = $metaOrder;
-							$meta_key  = $sortOrderby;
+							// Get meta order meta_value or meta_value_num.
+							$meta_order = isset( $sort_array[2] ) ? $sort_array[2] : 'meta_value';
+							$order      = $sort_order;
+							$orderby    = $meta_order;
+							$sort_key   = $sort_orderby;
 						}
 					}
 					break;
@@ -91,7 +98,8 @@ if ( $alm_filters_array ) {
 					$key                  = $alm_filter['taxonomy'];
 					$default_tax_operator = '';
 
-					if ( taxonomy_exists( $key ) ) {
+					// Confirm taxonomy exists and not already in the querystring.
+					if ( taxonomy_exists( $key ) && ! array_key_exists( $key, $querystring ) ) {
 						// Loop filters array to get the taxonomy operator.
 						foreach ( $alm_filters_array as $item ) {
 							if ( isset( $item['taxonomy'] ) && $item['taxonomy'] === $key ) {
@@ -107,9 +115,11 @@ if ( $alm_filters_array ) {
 				case 'meta':
 					// Custom Fields.
 					$key                          = $alm_filter['meta_key'];
-					$filter_session_meta_operator = $filter_session_meta_type = '';
+					$filter_session_meta_operator = '';
+					$filter_session_meta_type     = '';
 
-					if ( $key ) {
+					// Confirm key exists and not already in the querystring.
+					if ( $key && ! array_key_exists( $key, $querystring ) ) {
 						// Loop session array to get meta operator and type values.
 						foreach ( $alm_filters_array as $item ) {
 							if ( isset( $item['meta_key'] ) && $item['meta_key'] === $key ) {

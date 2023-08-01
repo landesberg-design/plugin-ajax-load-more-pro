@@ -9,11 +9,10 @@
 //@codingStandardsIgnoreStart
 ?>
 <div class="ajax-load-more-inner-wrapper">
-	<!-- MAIN COLUMN -->
 	<div class="cnkt-main stylefree">
 		<div class="alm-filters">
 			<?php require_once ALM_FILTERS_PATH . 'admin/views/includes/navigation.php'; ?>
-			<div class="repeater-listing">
+			<div class="alm-content-wrap">
 				<header class="alm-filter--intro">
 					<div>
 						<h2><?php _e( 'Filters', 'ajax-load-more-filters' ); ?></h2>
@@ -38,16 +37,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- END MAIN COLUMN -->
-
-	<aside class="cnkt-sidebar">
-		<div id="cnkt-sticky-wrapper">
-			<div id="cnkt-sticky">
-				<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/whats-new.php'; ?>
-				<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/help.php'; ?>
-			</div>
-		</div>
+	<aside class="cnkt-sidebar" data-sticky>
+		<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/whats-new.php'; ?>
+		<?php require_once ALM_FILTERS_PATH . 'admin/views/cta/help.php'; ?>
 	</aside>
-
-	<div class="clear"></div>
 </div>

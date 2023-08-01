@@ -37,7 +37,7 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 	// Loop custom values.
 	foreach ( $custom_values as $index => $v ) {
 		$items_count++;
-		$name          = esc_attr( $v['label'] );
+		$name          = wp_kses_post( $v['label'] );
 		$slug          = esc_attr( $v['value'] );
 		$nested        = isset( $v['nested'] ) && $v['nested'] ? true : false;
 		$obj['id']     = $key . '-' . $field_type . '-' . $obj['count'];

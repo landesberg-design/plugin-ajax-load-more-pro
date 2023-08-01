@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.0
+ * Version: 2.0.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ALM_CACHE_VERSION', '2.0.0' );
-define( 'ALM_CACHE_RELEASE', 'June 11, 2023' );
+define( 'ALM_CACHE_VERSION', '2.0.1' );
+define( 'ALM_CACHE_RELEASE', 'July 27, 2023' );
 
 /**
  * Display admin notice if plugin does not meet the requirements.
@@ -60,12 +60,32 @@ if ( ! class_exists( ' ALMCache' ) ) :
 			add_filter( 'alm_get_cache_array', [ &$this, 'alm_get_cache_array' ], 10, 2 );
 			add_filter( 'alm_cache_create_directory', [ &$this, 'alm_cache_create_directory' ], 10, 3 );
 			add_action( 'wp_ajax_alm_delete_cache', [ &$this, 'alm_delete_cache' ] );
+			add_action( 'admin_notices', [ &$this, 'alm_cache_admin_notices' ] );
 
 			add_action( 'init', [ &$this, 'alm_cache_create_publish_actions' ] );
 			add_action( 'admin_bar_menu', [ &$this, 'alm_add_toolbar_items' ], 100 );
 			add_action( 'alm_cache_settings', [ &$this, 'alm_cache_settings' ] );
 			add_filter( 'alm_cache_shortcode', [ &$this, 'alm_cache_shortcode' ], 10, 3 );
 			load_plugin_textdomain( 'ajax-load-more-cache', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+		}
+
+		/**
+		 * Cache admin notices.
+		 */
+		public function alm_cache_admin_notices() {
+			$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : false;
+			if ( $screen && $screen->id === 'ajax-load-more_page_ajax-load-more-cache' ) {
+				$params = filter_input_array( INPUT_GET );
+
+				// Cache deleted.
+				if ( array_key_exists( 'action', $params ) && $params['action'] === 'alm-cache-deleted' ) {
+					?>
+					<div class="notice notice-success is-dismissible">
+						<p><?php esc_attr_e( 'Ajax Load More Cache has been deleted successfully.', 'ajax-load-more-cache' ); ?></p>
+					</div>
+					<?php
+				}
+			}
 		}
 
 		/**

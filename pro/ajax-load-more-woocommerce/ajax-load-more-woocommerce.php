@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.2.2
+ * Version: 1.2.3
  * WC requires at least: 5.0
- * WC tested up to: 7.7.2
+ * WC tested up to: 7.9
  *
  * @package ALMWooCommerce
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_WOO_VERSION', '1.2.2' );
-define( 'ALM_WOO_RELEASE', 'June 11, 2023' );
+define( 'ALM_WOO_VERSION', '1.2.3' );
+define( 'ALM_WOO_RELEASE', 'July 27, 2023' );
 
 /**
  * Plugin activation hook.

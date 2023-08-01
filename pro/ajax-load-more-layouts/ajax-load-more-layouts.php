@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.1
+ * Version: 2.0.2
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package ALMLayouts
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_LAYOUTS_VERSION', '2.0.1' );
-define( 'ALM_LAYOUTS_RELEASE', 'February 14, 2023' );
+define( 'ALM_LAYOUTS_VERSION', '2.0.2' );
+define( 'ALM_LAYOUTS_RELEASE', 'July 27, 2023' );
 define( 'ALM_LAYOUTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_LAYOUTS_URL', plugins_url( '', __FILE__ ) );
 
