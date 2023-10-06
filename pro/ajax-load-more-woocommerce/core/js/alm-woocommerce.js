@@ -5,7 +5,6 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos, @connekthq
  */
-
 var alm_woo = {};
 
 (function () {
@@ -18,7 +17,6 @@ var alm_woo = {};
 	alm_woo.fromPopstate = false;
 	alm_woo.HTMLHead = document.getElementsByTagName("head")[0].innerHTML;
 	alm_woo.timer = null;
-	alm_woo.isIE = navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false;
 
 	/**
 	 * alm_woo
@@ -125,12 +123,11 @@ var alm_woo = {};
 	window.addEventListener("scroll", alm_woo.onScroll);
 
 	/**
-	 * alm_woo
-	 * Set the browser URL to current permalink then scroll user to post
+	 * Set the browser URL to current permalink then scroll user to post.
 	 *
-	 * @param {String} page
-	 * @param {String} permalink
-	 * @param {String} pageTitle
+	 * @param {string} page
+	 * @param {string} permalink
+	 * @param {string} pageTitle
 	 * @since 1.0
 	 */
 	alm_woo.setURL = function (page, permalink, pageTitle) {
@@ -140,19 +137,16 @@ var alm_woo = {};
 		};
 
 		if (permalink !== alm_woo.previousUrl && !alm_woo.fromPopstate) {
-			if (typeof window.history.pushState === "function" && !alm_woo.isIE) {
-				// If pushstate is enabled
+			if (typeof window.history.pushState === "function") {
 				if (alm_woo.controls) {
-					// pushstate
 					history.pushState(state, "", permalink);
 				} else {
-					// replaceState
 					history.replaceState(state, "", permalink);
 				}
 
-				// Callback Function (URL Change)
-				if (typeof almUrlUpdate === "function") {
-					window.almUrlUpdate(permalink, "woocommerce");
+				// Trigger analytics.
+				if (typeof ajaxloadmore.analytics === "function") {
+					ajaxloadmore.analytics("nextpage");
 				}
 			}
 
@@ -167,8 +161,7 @@ var alm_woo = {};
 	};
 
 	/**
-	 * onpopstate
-	 * Fires when users click back or forward browser buttons
+	 * Fires when users click back or forward browser buttons.
 	 *
 	 * @since 1.0
 	 */
@@ -209,8 +202,7 @@ var alm_woo = {};
 	};
 
 	/**
-	 * popstate
-	 * Window popstate eventlistener
+	 * Window popstate eventlistener.
 	 *
 	 * @since 1.0
 	 */
@@ -221,8 +213,7 @@ var alm_woo = {};
 	});
 
 	/**
-	 * getPageState
-	 * Get the current page number
+	 * Get the current page number.
 	 *
 	 * @param {Object} data
 	 * @since 1.0
@@ -242,8 +233,7 @@ var alm_woo = {};
 	};
 
 	/**
-	 * scrollToPage
-	 * Scroll page to current element wrapper
+	 * Scroll page to current element wrapper.
 	 *
 	 * @param {Number} page
 	 * @since 1.0
@@ -286,7 +276,6 @@ var alm_woo = {};
 	};
 
 	/**
-	 * getRelLinks
 	 * Set the meta rel links to page <head />.
 	 *
 	 * @param {Number} page
@@ -299,8 +288,7 @@ var alm_woo = {};
 	};
 
 	/**
-	 * setRelLink
-	 * Set the <link /> tag for next and prev rel links
+	 * Set the <link /> tag for next and prev rel links.
 	 *
 	 * @param {Number} page
 	 * @param {Number} start
@@ -336,8 +324,7 @@ var alm_woo = {};
 	};
 
 	/**
-	 * removeRelLink
-	 * remove the <link /> tag
+	 * remove the <link /> tag.
 	 *
 	 * @param {Element} rel
 	 * @since 1.0

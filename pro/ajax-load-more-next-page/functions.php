@@ -6,6 +6,19 @@
  */
 
 /**
+ * Remove Gutenberg block html comments.
+ * Comments were causing issues with ACF blocks.
+ *
+ * @param string $content Content to search.
+ * @return string         Modified content.
+ */
+function alm_nextpage_remove_block_comments( $content = '' ) {
+	$content = str_replace( '<!-- wp:nextpage -->', '', $content );
+	$content = str_replace( '<!-- /wp:nextpage -->', '', $content );
+	return $content;
+}
+
+/**
  * Parse the ALM shortcode for query params.
  *
  * @param string $shortcode The shortcode.

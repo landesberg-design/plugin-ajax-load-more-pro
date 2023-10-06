@@ -8,7 +8,7 @@ Requires at least: 4.0
 Tested up to: 6.2
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.2.19
+Version: 1.2.20
 
 == Copyright ==
 Copyright 2023 Darren Cooney, Connekt Media
@@ -48,6 +48,48 @@ http://connekthq.com/ajax-load-more/pro/
 This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5.6.0 for compatibility with the Filters add-on 2.0 update.
 
 == Changelog ==
+
+= 1.2.20 - September 27, 2023 =
+** Paging - 1.6.0 **
+* FIX: Fixed issue with paging links not matching final URL in Filters add-on.
+* UPDATE: Added support for new Next Page add-on URLs via querystring `pg` parameters.
+* UPDATE: Updated paging resize functionality to use ResizeObserver.
+* UPDATE: Code cleanup and organization.
+
+** Next Page - 1.7.0 **
+* NEW: Added ability to load full post content and split into pages for URL updates without infinite scroll. Use `nextpage_type="fullpage"` shortcode parameter to implement full article pagination URLs.
+* NEW: Added `alm_nextpage_retain_querystring` hook to prevent querystring params from being added on pages being loaded via Ajax request. e.g. `add_filter( 'alm_nextpage_retain_querystring', '__return_false' );`
+* FIX: Fixed issue with browser fwd/back (popstate) events and first page not moving user to first page.
+* FIX: Fixed issue with possible not retaining correct querystring params as pages are loaded.
+* Fixed issue with paged URLs when using auto page break functionality not working in WP 6.1. Solution is to move to ?pg=%num% URL format when using auto page break.
+* UPDATE: Added compatibility support for PHP 8.2.
+* UPDATE: Removed Analytics shortcode parameter as Google Analytics 4 now handles pageviews automatically.
+* UPDATE: Major code refactoring, cleanup and organization for the long-term health of the add-on.
+
+** Filters - 2.2.1 **
+* NEW: Added support for facets and Post Type filtering.
+* UPDATE: Removed Analytics shortcode parameter as Google Analytics 4 (GA4) now handles pageviews automatically.
+* UPDATE: Updated Filters JavaScript to support new Google Analytics 4.
+* FIX: Fixed issue with aria-checked attribute being encoded incorrectly on the frontend.
+* FIX: Fixed issue where taxonomy filter could return a fatal error if no terms exist on the taxonomy.
+* FIX: Fixed issue with category and tag filters on frontpage or homepage not parsing the querystring parameters correctly.
+* FIX: Stopped frontpage URLs from being encoded by the core WP `redirect_canonical` hook when using a static homepage. e.g. /?category=design+development was being encoded to /?category=design%20development
+* UPDATE: Removed legacy IE support for IE10 and IE11.
+
+** Elementor - 1.1.5 **
+* UPDATE: Updated to support new Google Analytics 4 implementation.
+
+** SEO - 1.9.5 **
+* UPDATE: Updated to support new Google Analytics 4 implementation.
+
+** Single Posts - 1.5.6 **
+* UPDATE: Updated to support new Google Analytics 4 implementation.
+* UPDATE: Code cleanup and organization.
+
+** WooCommerce - 1.2.4 **
+* UPDATE: Updated to support new Google Analytics 4 implementation.
+* UPDATE: Updated compatibility to WooCommerce 8.1.0.
+
 
 = 1.2.19 - July 27, 2023 =
 * UPDATE: Updated Pro settings page to match Ajax Load More 6.1 admin layout.

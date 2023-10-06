@@ -5,10 +5,10 @@ Author: Connekt Media
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.1.4
+Version: 1.1.5
 
 Infinite scroll Elementor widget content with Ajax Load More.
 
@@ -45,11 +45,15 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/elementor/
 
 == Changelog ==
 
+= 1.1.5 - September 27, 2023 =
+* UPDATE: Updated Elementor JavaScript to support new Google Analytics 4 implementation.
+
+
 = 1.1.4 - June 11, 2023 =
-* NEW: Added Elemeentor widget setting for `button_done_label` shortcode parameter.
+* NEW: Added Elementor widget setting for `button_done_label` shortcode parameter.
 * UPDATE: Updated to add compatibility with Cache Add-on 2.0 and Ajax Load More 6.0.
 * UPDATE - Code cleanup.
-* UPDATE - Elementor compatability version bump and testing.
+* UPDATE - Elementor compatibility version bump and testing.
 * FIX - Fix for PHP warning about undefined `cache` index.
 
 

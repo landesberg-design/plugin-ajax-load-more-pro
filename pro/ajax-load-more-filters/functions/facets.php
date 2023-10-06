@@ -27,7 +27,7 @@ function alm_filters_get_facets( $args = [], $facet_id = '' ) {
 	}
 
 	// Supported query keys.
-	$supported_keys = [ 'taxonomy', 'meta', 'category', 'category__and', 'tag', 'tag__and', 'author', 'year', 'month', 'day' ];
+	$supported_keys = [ 'taxonomy', 'meta', 'category', 'category__and', 'tag', 'tag__and', 'author', 'year', 'month', 'day', 'post_type' ];
 
 	/**
 	 * Store facets in site transient to reduce query load.
@@ -304,6 +304,7 @@ function alm_filters_build_post_index( $post_id, $facets ) {
 		'year'          => $date['year'],
 		'month'         => $date['month'],
 		'day'           => $date['day'],
+		'post_type'     => get_post_type( $post_id ),
 	];
 
 	return $index;
@@ -327,6 +328,7 @@ function alm_filters_pluck_facet_keys( $filters ) {
 		'year'          => false,
 		'month'         => false,
 		'day'           => false,
+		'post_type'     => false,
 	];
 
 	// phpcs:disable
@@ -463,8 +465,7 @@ function alm_filters_get_facet_author( $id = 0 ) {
 		return '';
 	}
 	$author_id = get_post_field( 'post_author', $id );
-	$facets    = $author_id;
-	return $facets;
+	return $author_id;
 }
 
 /**

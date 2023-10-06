@@ -96,20 +96,22 @@
 "use strict";
 
 
-/*
- * Ajax Load More - Paging
- * connekthq.com/plugins/ajax-load-more/paging/
- * Copyright Connekt Media - http://connekthq.com
- * Author: Darren Cooney
- * Twitter: @KaptonKaos, @connekthq
- */
+var _createButton = __webpack_require__(/*! ./functions/createButton */ "./src/js/functions/createButton.js");
 
-var almPaging = {};
+var almPaging = {}; /*
+                     * Ajax Load More - Paging
+                     * connekthq.com/plugins/ajax-load-more/paging/
+                     * Copyright Connekt Media - http://connekthq.com
+                     * Author: Darren Cooney
+                     * Twitter: @KaptonKaos, @connekthq
+                     */
 
 (function () {
 	"use strict";
 
 	almPaging.init = true;
+	almPaging.urlType = "default"; // default `/3` or querystring `?pg=3`
+	var init = true;
 
 	/**
   * Build the pagination for the menu.
@@ -118,10 +120,12 @@ var almPaging = {};
   * @param {object} alm The ALM object.
   */
 	window.almBuildPagination = function (data, alm) {
-		var posts_per_page = alm.orginal_posts_per_page,
-		    start = parseInt(alm.start_page),
-		    obj = alm.listing,
-		    alm_paging_controls = alm.addons.paging_controls;
+		var posts_per_page = alm.orginal_posts_per_page;
+		var start = parseInt(alm.start_page);
+		var obj = alm.listing;
+		var alm_paging_controls = alm.addons.paging_controls;
+
+		almPaging.urlType = alm.content.dataset.nextpageBreak === "true" ? "querystring" : "default";
 
 		alm.alm_show_at_most = alm.addons.paging_show_at_most;
 
@@ -150,28 +154,19 @@ var almPaging = {};
 
 		if (pages < 2) {
 			ul.classList.add("empty");
-
-			// Zero pages
+			// Zero pages.
 			alm.btnWrap[0].innerHTML = "";
 		} else {
 			// First / Previous
 			if (alm_paging_controls) {
 				// First Button
-				var firstBtnLabel = alm.addons.paging_first_label ? alm.addons.paging_first_label : "";
+				var firstBtnLabel = alm.addons.paging_first_label || "";
 				if (firstBtnLabel !== "" && showFirstLastBtns) {
-					var first = document.createElement("li");
-					first.setAttribute("class", "first");
-					var firstLink = document.createElement("a");
-					firstLink.setAttribute("data-page", "1");
-					firstLink.href = almPaging.setHref(alm, "1");
-					var firstSpan = document.createElement("span");
-					firstSpan.innerHTML = firstBtnLabel;
-					firstLink.appendChild(firstSpan);
-					first.appendChild(firstLink);
-					ul.appendChild(first);
+					var firstBtn = (0, _createButton.createButton)("first", firstBtnLabel);
+					ul.appendChild(firstBtn.element);
 
 					// Next Click Event
-					firstLink.addEventListener("click", function (e) {
+					firstBtn.link.addEventListener("click", function (e) {
 						e.preventDefault();
 						var parent = this.parentNode;
 						if (!parent.classList.contains("disabled") && !obj.classList.contains("loading")) {
@@ -182,21 +177,12 @@ var almPaging = {};
 				}
 
 				// Prev Button
-				var prevBtnLabel = alm.addons.paging_previous_label ? alm.addons.paging_previous_label : "";
-				var prev = document.createElement("li");
-				prev.setAttribute("class", "prev");
-				var prevLink = document.createElement("a");
-				prevLink.setAttribute("data-page", "prev");
-				prevLink.href = "#";
+				var prevBtnLabel = alm.addons.paging_previous_label || "";
+				var previousBtn = (0, _createButton.createButton)("prev", prevBtnLabel);
+				ul.appendChild(previousBtn.element);
 
-				var prevSpan = document.createElement("span");
-				prevSpan.innerHTML = prevBtnLabel;
-				prevLink.appendChild(prevSpan);
-				prev.appendChild(prevLink);
-				ul.appendChild(prev);
-
-				// Prev Click Event
-				prevLink.addEventListener("click", function (e) {
+				// Prev button Click Event
+				previousBtn.link.addEventListener("click", function (e) {
 					e.preventDefault();
 					if (!this.parentNode.classList.contains("disabled") && !obj.classList.contains("loading")) {
 						var current = ul.dataset.currentPage;
@@ -364,21 +350,49 @@ var almPaging = {};
 	};
 
 	/**
-  * Set the href of the button links.
+  * Create the href destination of the pagination links.
   *
   * @param {object} alm The ALM object.
   * @param {Number} page Page number.
   */
 	almPaging.setHref = function (alm, page) {
-		var href = "";
-		if (alm.addons.seo) {
-			href = alm.canonical_url + alm.addons.seo_leading_slash + "page/" + page + alm.addons.seo_trailing_slash;
-		} else if (alm.addons.nextpage) {
-			href = alm.canonical_url + window.alm_nextpage_localize.leading_slash + page + window.alm_nextpage_localize.trailing_slash;
-		} else {
-			href = "#";
+		var base_url = alm.canonical_url,
+		    addons = alm.addons;
+
+		// Filters
+
+		if (addons.filters) {
+			var querystring = window.location.search;
+			if (querystring.indexOf("pg=") > -1) {
+				// If querystring contains pg=x, replace it.
+				querystring = querystring.replace(/pg=\d+/g, "pg=" + page);
+			} else {
+				querystring = querystring ? querystring + "&pg=" + page : "?pg=" + page;
+			}
+
+			return base_url + querystring;
 		}
-		return href;
+
+		// Nextpage
+		if (addons.nextpage) {
+			var _window$alm_nextpage_ = window.alm_nextpage_localize,
+			    leading_slash = _window$alm_nextpage_.leading_slash,
+			    trailing_slash = _window$alm_nextpage_.trailing_slash;
+
+			if (almPaging.urlType === "querystring") {
+				return base_url + leading_slash + "?pg=" + page; // website.com?pg=3
+			} else {
+				return base_url + leading_slash + page + trailing_slash; // website.com/3/
+			}
+		}
+
+		// SEO
+		if (addons.seo) {
+			return base_url + addons.seo_leading_slash + "page/" + page + addons.seo_trailing_slash;
+		}
+
+		// Default
+		return "#";
 	};
 
 	/**
@@ -420,14 +434,17 @@ var almPaging = {};
 	/**
   * Set current navigation item (Click Event)
   *
-  * @param {string} current Current page number.
-  * @param {HTMLElement} obj The main ALM element `.alm-listing`.
-  * @param {object} alm The ALM object.
+  * @param {string}      current Current page number.
+  * @param {HTMLElement} obj     The main ALM element `.alm-listing`.
+  * @param {Object}      alm     The ALM object.
   */
-	var firstRun = true;
 	window.almSetCurrentPage = function (current, obj, alm) {
-		current = parseInt(current);
-		var page = current - 1;
+		var page = parseInt(current) - 1;
+		var _alm$addons = alm.addons,
+		    preloaded = _alm$addons.preloaded,
+		    seo = _alm$addons.seo,
+		    filters = _alm$addons.filters;
+
 
 		var pagingWrap = alm.btnWrap[0].querySelector(".alm-paging");
 		var totalPages = parseInt(pagingWrap.dataset.totalPages); // get total pages
@@ -442,7 +459,7 @@ var almPaging = {};
 		}
 
 		// Add 1 page if preloaded and SEO because start_page = 0;
-		current = alm.addons.preloaded === "true" && alm.addons.seo && almPaging.init ? current + 1 : current;
+		current = preloaded === "true" && seo && almPaging.init ? current + 1 : current;
 
 		// Add loading class
 		var almReveal = obj.querySelector(".alm-reveal");
@@ -456,7 +473,7 @@ var almPaging = {};
 		// First/Prev Buttons
 		var firstBtn = pagingWrap.querySelector(".first");
 		var prevBtn = pagingWrap.querySelector(".prev");
-		if ((prevBtn || firstBtn) && current === 1) {
+		if ((prevBtn || firstBtn) && parseInt(current) === 1) {
 			if (firstBtn) {
 				firstBtn.classList.add("disabled");
 			}
@@ -475,7 +492,7 @@ var almPaging = {};
 		// Next/Last Buttons
 		var nextBtn = pagingWrap.querySelector(".next");
 		var lastBtn = pagingWrap.querySelector(".last");
-		if ((nextBtn || lastBtn) && current === totalPages) {
+		if ((nextBtn || lastBtn) && parseInt(current) === totalPages) {
 			if (nextBtn) {
 				nextBtn.classList.add("disabled");
 			}
@@ -492,11 +509,11 @@ var almPaging = {};
 		}
 
 		// Preloaded
-		if (alm.addons.preloaded === "true") {
+		if (preloaded === "true") {
 			if (almPaging.init) {
 				// if almPaging.init, add 1 to page to select the correct nav item
 				almPaging.init = false;
-				page = alm.addons.seo ? page + 1 : page; // If SEO, add 1 page;
+				page = seo ? page + 1 : page; // If SEO, add 1 page;
 			}
 		}
 
@@ -518,17 +535,17 @@ var almPaging = {};
 		}
 
 		// Filters Add-on
-		if (alm.addons.paging && alm.addons.filters && typeof almFiltersPaged === "function") {
-			almFiltersPaged(alm, firstRun);
+		if (filters && typeof almFiltersPaged === "function") {
+			almFiltersPaged(alm, init);
 		}
 
 		// Position paging nav
-		almPaging.positionPager(obj, alm, totalPages, current); // Position element
+		almPaging.positionPager(obj, alm, totalPages, current);
 
 		// Update Next/Prev links
 		almPaging.updateNextPrevLinks(alm, pagingWrap);
 
-		firstRun = false;
+		init = false;
 	};
 
 	/**
@@ -680,6 +697,52 @@ var almPaging = {};
 		almPaging.setHeight(alm);
 	};
 })();
+
+/***/ }),
+
+/***/ "./src/js/functions/createButton.js":
+/*!******************************************!*\
+  !*** ./src/js/functions/createButton.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.createButton = createButton;
+/**
+ * Create a button link.
+ *
+ * @param {string} type  The button type (next/prev etc).
+ * @param {string} label The button label.
+ * @return {Object}      Button as an object.
+ */
+function createButton() {
+	var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+	var label = arguments[1];
+
+	var element = document.createElement("li");
+	element.setAttribute("class", type);
+
+	// Create HREF.
+	var link = document.createElement("a");
+	link.setAttribute("data-page", type);
+	link.href = "#";
+
+	// Create link span content.
+	var span = document.createElement("span");
+	span.innerHTML = label;
+
+	link.appendChild(span);
+	element.appendChild(link);
+
+	// Return the HTML.
+	return { element: element, link: link };
+}
 
 /***/ })
 

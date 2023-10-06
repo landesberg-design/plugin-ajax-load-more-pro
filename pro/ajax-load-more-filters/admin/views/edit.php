@@ -249,13 +249,12 @@ if ( ! $filter_vue ) { ?>
 							</label>
 						</div>
 					</div>
-
 				</section>
 
 				<!-- Header -->
 				<header class="alm-filter--header">
 					<h3>
-					<?php esc_attr_e( 'Filters', 'ajax-load-more-filters' ); ?>
+						<?php esc_attr_e( 'Filters', 'ajax-load-more-filters' ); ?>
 						<a title="<?php esc_attr_e( 'Build a custom filter group by adding and removing filter blocks.', 'ajax-load-more-filters' ); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1"></a>
 					</h3>
 					<div class="toggle-controls">

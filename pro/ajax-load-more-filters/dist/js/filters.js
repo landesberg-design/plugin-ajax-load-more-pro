@@ -9014,7 +9014,6 @@ module.exports = {
 	filter_classname: ".alm-filter",
 	almFilters: document.querySelector(className),
 	reset_btn_classname: "button#alm-filters-reset-button",
-	isIE: navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false,
 	pushstate: false,
 	delay: 125
 };
@@ -10189,7 +10188,7 @@ window.addEventListener("load", function () {
 	}
 
 	// Dispatch history change event on page load to allow for pushstate to trigger on first page.
-	if (typeof window.history.pushState === "function" && !_Variables2.default.isIE) {
+	if (typeof window.history.pushState === "function") {
 		var url = window.location.search;
 		var state = { permalink: url };
 		history.replaceState(state, null, url);
@@ -10419,36 +10418,19 @@ window.almFiltersAddonComplete = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
+exports.default = analytics;
 /**
- * Send pageviews, filters to Google Analytics
-
+ * Dispatch analytics report to core ALM.
+ *
  * @since 1.0
  */
-
-var analytics = function analytics() {
-	var path = "/" + window.location.pathname + window.location.search;
-	if (typeof ajaxloadmore.tracking === "function") {
-		ajaxloadmore.tracking(path);
-	} else {
-		// Gtag GA Tracking
-		if (typeof gtag === "function") {
-			gtag("event", "page_view", { page_path: path });
-		}
-
-		// Deprecated GA Tracking
-		if (typeof ga === "function") {
-			ga("send", "pageview", path);
-		}
-
-		// Monster Insights
-		if (typeof __gaTracker === "function") {
-			__gaTracker("send", "pageview", path);
-		}
-	}
-};
-exports.default = analytics;
+function analytics() {
+  if (typeof ajaxloadmore.analytics === "function") {
+    ajaxloadmore.analytics("filters");
+  }
+}
 
 /***/ }),
 
@@ -10883,7 +10865,7 @@ var setCurrentFilters = function setCurrentFilters(url) {
 		selected_filters_wrap.innerHTML = "";
 	}
 
-	// Append total filters as a data att
+	// Append total filters as a data attribute.
 	selected_filters_wrap.dataset.total = selected_filters_wrap.querySelectorAll("li").length;
 
 	/**
@@ -11151,18 +11133,15 @@ var _CurrentFilters2 = _interopRequireDefault(_CurrentFilters);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
- * dispatch
+/**
  * Send the final output to the almFilter() function in core ALM
  *
- * @param target string   The target ALM container
- * @param data object   The data obj for the filter
- * @param url string   The current URL
- * @return null   ddispatch global almFilter() function call
- *
  * @since 1.0
+ * @param {string} target Target ALM container
+ * @param {object} data   Data obj for the filter
+ * @param {string} url    The current URL
+ * @return void           Dispatch global almFilter() function call
  */
-
 var dispatch = function dispatch(target, data, url) {
 	// Get the target .ajax-load-more element
 	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
@@ -11172,10 +11151,8 @@ var dispatch = function dispatch(target, data, url) {
 		var transition = alm.dataset.transition == null ? "fade" : alm.dataset.transition;
 		var speed = alm.dataset.speed == null ? "250" : alm.dataset.speed;
 
-		// Analytics
-		if (alm.dataset.filtersAnalytics === "true") {
-			(0, _Analytics2.default)();
-		}
+		// Trigger analytics.
+		(0, _Analytics2.default)("filters");
 
 		// Debug Info
 		if (alm.dataset.filtersDebug === "true") {
@@ -11239,7 +11216,7 @@ var setFacets = function setFacets(facets) {
 
 	// Loop filters and pull out all potential facets.
 	filters && filters.forEach(function (group) {
-		var filters = group.querySelectorAll(target + "[data-key=taxonomy],\n\t\t\t\t" + target + "[data-key=meta],\n\t\t\t\t" + target + "[data-key=_author],\n\t\t\t\t" + target + "[data-key=_year],\n\t\t\t\t" + target + "[data-key=_month],\n\t\t\t\t" + target + "[data-key=_day],\n\t\t\t\t" + target + "[data-key=category],\n\t\t\t\t" + target + "[data-key=category_and],\n\t\t\t\t" + target + "[data-key=tag],\n\t\t\t\t" + target + "[data-key=tag_and]");
+		var filters = group.querySelectorAll(target + "[data-key=taxonomy],\n\t\t\t\t" + target + "[data-key=meta],\n\t\t\t\t" + target + "[data-key=_author],\n\t\t\t\t" + target + "[data-key=_year],\n\t\t\t\t" + target + "[data-key=_month],\n\t\t\t\t" + target + "[data-key=_day],\n\t\t\t\t" + target + "[data-key=category],\n\t\t\t\t" + target + "[data-key=category_and],\n\t\t\t\t" + target + "[data-key=tag],\n\t\t\t\t" + target + "[data-key=tag_and],\n\t\t\t\t" + target + "[data-key=postType]");
 		group.classList.add("alm-filters-facets-loaded");
 		facetGroups.push(Array.from(filters));
 	});
@@ -11253,6 +11230,7 @@ var setFacets = function setFacets(facets) {
 		var key = element.dataset.key; // Get the filter key by dataset.
 		var fieldtype = element.dataset.fieldtype; // Get the field type key by dataset.
 		var archive = element.dataset.isArchive ? true : false; // Is this an archive page?
+
 		switch (key) {
 			case "taxonomy":
 				var slug = element.dataset.taxonomy; // Get the taxonomy slug.
@@ -11306,6 +11284,11 @@ var setFacets = function setFacets(facets) {
 			case "_day":
 				var day = facets.day ? facets.day : ""; // Get the day slug.
 				parseTerms(day, element, fieldtype);
+				break;
+
+			case "postType":
+				var postType = facets.post_type ? facets.post_type : ""; // Get the post_type slug.
+				parseTerms(postType, element, fieldtype);
 				break;
 
 			default:
@@ -11673,7 +11656,7 @@ var _Analytics2 = _interopRequireDefault(_Analytics);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var almFiltersTimer = "";
+var almFiltersTimer = ""; // eslint-disable-line no-unused-vars
 
 /**
  * Update browser URL on scroll.
@@ -11747,14 +11730,12 @@ var onScroll = function onScroll(almFilters, almListing) {
 			};
 
 			// Update URL
-			if (typeof window.history.pushState === "function" && !_Variables2.default.isIE) {
+			if (typeof window.history.pushState === "function") {
 				history.replaceState(state, window.location.title, permalink);
 			}
 
-			// Analytics
-			if (alm[0].dataset.filtersAnalytics === "true") {
-				(0, _Analytics2.default)();
-			}
+			// Trigger analytics.
+			(0, _Analytics2.default)("filters");
 		}
 	}, 15);
 };
@@ -12070,7 +12051,7 @@ var triggerChange = function triggerChange(filterGroup) {
 
 	// If pushstate is enabled and not triggered via popstate
 	if (!_Variables2.default.alm_filtering_popstate && !hasMultple) {
-		if (typeof window.history.pushState === "function" && !_Variables2.default.isIE) {
+		if (typeof window.history.pushState === "function") {
 			var almListing = alm.querySelector(".alm-listing");
 
 			// Determine if URL should be updated

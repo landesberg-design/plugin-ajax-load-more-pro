@@ -81,35 +81,153 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/alm-next-page.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/next-page.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/js/alm-next-page.js":
-/*!*********************************!*\
-  !*** ./src/js/alm-next-page.js ***!
-  \*********************************/
+/***/ "./src/js/functions/getElementByPage.js":
+/*!**********************************************!*\
+  !*** ./src/js/functions/getElementByPage.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-/*
- * Ajax Load More - Next Page
- * https://connekthq.com/plugins/ajax-load-more/add-ons/next-page/
- * Copyright Connekt Media - https://connekthq.com
- * Author: Darren Cooney
- * Twitter: @KaptonKaos, @connekthq
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = getElementByPage;
+/**
+ * Get Next Page element by page number.
+ *
+ * @param {String|Number} page Current page number.
+ * @return {Element}           The Next Page element.
  */
+function getElementByPage() {
+	var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+	if (!page) {
+		return page;
+	}
+	var target = document.querySelector('.alm-listing[data-nextpage="true"] .alm-nextpage[data-page="' + parseInt(page) + '"]');
+	return target ? target : "";
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/getPageTitle.js":
+/*!******************************************!*\
+  !*** ./src/js/functions/getPageTitle.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = getPageTitle;
+/**
+ * Get the page title.
+ *
+ * @param {string} postTitle The title of the post.
+ * @param {string} page      Current page.
+ * @param {string} total     The total number of pages.
+ * @param {string} template  The title template.
+ * @return {string}          The page title.
+ * @since 1.0
+ */
+function getPageTitle(postTitle, page, total, template) {
+	var title = document.title;
+	if (template) {
+		var str = template;
+		str = str.replace("{site-title}", alm_localize ? alm_localize.site_title : ""); // Replace site title
+		str = str.replace("{tagline}", alm_localize ? alm_localize.site_tagline : ""); // Replace tagline
+		str = str.replace("{post-title}", postTitle); // Replace Post Title
+		str = str.replace("{page}", page); // Replace Page
+		str = str.replace("{total}", total); // Replace Total
+		title = str;
+	}
+
+	return title;
+}
+
+/***/ }),
+
+/***/ "./src/js/functions/scrollToPosition.js":
+/*!**********************************************!*\
+  !*** ./src/js/functions/scrollToPosition.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = scrollToPosition;
+/**
+ * Dispatch scroll event.
+ *
+ * @param {Number} top The top position of the element.
+ */
+function scrollToPosition() {
+	var top = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+	if (!top) {
+		return false;
+	}
+
+	// Scroll window to position
+	if (typeof ajaxloadmore.almScroll === "function") {
+		ajaxloadmore.almScroll(top);
+	} else {
+		window.scrollTo({
+			top: top,
+			behavior: "smooth"
+		});
+	}
+}
+
+/***/ }),
+
+/***/ "./src/js/next-page.js":
+/*!*****************************!*\
+  !*** ./src/js/next-page.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _getElementByPage = __webpack_require__(/*! ./functions/getElementByPage */ "./src/js/functions/getElementByPage.js");
+
+var _getElementByPage2 = _interopRequireDefault(_getElementByPage);
+
+var _getPageTitle = __webpack_require__(/*! ./functions/getPageTitle */ "./src/js/functions/getPageTitle.js");
+
+var _getPageTitle2 = _interopRequireDefault(_getPageTitle);
+
+var _scrollToPosition = __webpack_require__(/*! ./functions/scrollToPosition */ "./src/js/functions/scrollToPosition.js");
+
+var _scrollToPosition2 = _interopRequireDefault(_scrollToPosition);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var almNextpage = {};
 
 (function () {
 	// Defaults.
 	almNextpage.init = true;
 	almNextpage.urls = true;
-	almNextpage.pageviews = true;
 	almNextpage.animating = false;
 	almNextpage.scroll = false;
 	almNextpage.popstate = false;
@@ -122,9 +240,8 @@ var almNextpage = {};
 	almNextpage.timer = null;
 	almNextpage.nested = false;
 	almNextpage.titleTemplate = "";
-	almNextpage.first = document.querySelector('.alm-listing[data-nextpage="true"] .alm-nextpage:first-child');
+	almNextpage.first = document.querySelector('.alm-listing[data-nextpage="true"] .alm-nextpage');
 	almNextpage.wrap = document.querySelector('.alm-listing[data-nextpage="true"]');
-	almNextpage.isIE = navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false;
 
 	/**
   * Initial vars setup for Next Page;
@@ -140,63 +257,67 @@ var almNextpage = {};
 			return false; // Exit if nested.
 		}
 
-		if (el.dataset.nextpage === "true" && el.dataset.paging !== "true") {
-			almNextpage.paging = false;
-			almNextpage.active = true;
+		// Get alm data attributes.
+		var alm = el.dataset;
 
-			// Scroll & Offset.
-			almNextpage.scrollOptions = el.dataset.nextpageScroll;
-			almNextpage.scrollOptions = almNextpage.scrollOptions.split(":");
-			almNextpage.scroll = almNextpage.scrollOptions[0] === "false" || almNextpage.scrollOptions[0] === "0" ? false : true; // Convert to boolean
-			almNextpage.offset = almNextpage.scrollOptions[1] ? parseInt(almNextpage.scrollOptions[1]) : almNextpage.offset;
+		// Setup the title template.
 
-			// URLs.
-			almNextpage.urls = el.dataset.nextpageUrls;
-			almNextpage.urls = almNextpage.urls == "true"; // convert to boolean
+		almNextpage.titleTemplate = alm.nextpageTitleTemplate ? alm.nextpageTitleTemplate : "";
 
-			// Pageviews.
-			almNextpage.pageviews = el.dataset.nextpagePageviews;
-			almNextpage.pageviews = almNextpage.pageviews == "true"; // convert to boolean
+		// Run
+		if (alm.nextpage === "true" && alm.paging === "true") {
+			return; // Exit if paging is active.
+		}
+		almNextpage.paging = false;
+		almNextpage.active = true;
 
-			// If startpage > 1.
-			var startPage = parseInt(el.dataset.nextpageStartpage);
+		// Scroll & Offset.
+		almNextpage.scrollOptions = alm.nextpageScroll;
+		almNextpage.scrollOptions = almNextpage.scrollOptions.split(":");
+		almNextpage.scroll = almNextpage.scrollOptions[0] === "false" || almNextpage.scrollOptions[0] === "0" ? false : true; // Convert to boolean
+		almNextpage.offset = almNextpage.scrollOptions[1] ? parseInt(almNextpage.scrollOptions[1]) : almNextpage.offset;
 
-			// If paged, move to current page on page load.
-			if (startPage > 1) {
-				almNextpage.popstate = almNextpage.fromPopstate = true;
+		// URLs.
+		almNextpage.urls = alm.nextpageUrls;
+		almNextpage.urls = almNextpage.urls == "true"; // convert to boolean
 
-				// Scroll target.
-				var target = document.querySelector('.alm-nextpage[data-page="' + parseInt(startPage) + '"]');
-				if (target) {
-					var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
+		// If startpage > 1.
+		var startPage = parseInt(alm.nextpageStartpage);
 
-					var top = offset - parseInt(almNextpage.offset) + 1;
+		// If paged, move to current page on page load.
+		if (startPage > 1) {
+			almNextpage.popstate = almNextpage.fromPopstate = true;
 
-					if (almNextpage.fromPopstate) {
-						// From Popstate.
-						window.scrollTo(0, top);
-						almNextpage.fromPopstate = false;
-					} else {
-						// Standard.
-						almNextpage.doScroll(top);
-					}
+			// Scroll target.
+			var target = document.querySelector('.alm-nextpage[data-page="' + parseInt(startPage) + '"]');
+			if (target) {
+				var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
 
-					// Delay until user is moved to page.
-					setTimeout(function () {
-						almNextpage.popstate = false;
-					}, 250);
+				var top = offset - parseInt(almNextpage.offset) + 1;
+
+				if (almNextpage.fromPopstate) {
+					// From Popstate.
+					window.scrollTo(0, top);
+					almNextpage.fromPopstate = false;
+				} else {
+					// Standard.
+					(0, _scrollToPosition2.default)(top);
 				}
+
+				// Delay until user is moved to page.
+				setTimeout(function () {
+					almNextpage.popstate = false;
+				}, 250);
 			}
 		}
 	};
 
-	// If nextpage, run initial set up
+	// If nextpage, run initial set up.
 	if (almNextpage.first) {
-		// Get closest Ajax Load More object (Temp hack)
+		// Get closest Ajax Load More object (Temp hack).
 		var almListing = document.querySelector('.alm-listing[data-nextpage="true"]');
 		if (almListing) {
-			var container = almListing.parentNode;
-			almNextpage.setup(almListing, container);
+			almNextpage.setup(almListing, almListing.parentNode);
 		}
 	}
 
@@ -219,7 +340,7 @@ var almNextpage = {};
   * @since 1.0
   */
 	almNextpage.onScroll = function () {
-		var scrollTop = window.pageYOffset;
+		var scrollTop = window.scrollY;
 
 		if (almNextpage.active && !almNextpage.popstate && scrollTop > 1 && !almNextpage.paging) {
 			if (almNextpage.timer) {
@@ -256,6 +377,7 @@ var almNextpage = {};
 					total = almNextpage.first.dataset.totalPosts;
 				}
 
+				// Urls don't match, update browser URL.
 				if (url !== permalink) {
 					almNextpage.setURL(page, permalink, title, total, false);
 				}
@@ -267,7 +389,7 @@ var almNextpage = {};
 
 	/**
   * Main NextPage function.
-  * DIspatched from core Ajax Load More to trigger Next Page functionality.
+  * Dispatched from core Ajax Load More to trigger Next Page functionality.
   *
   * @param {Object} alm Ajax Load More object
   * @since 1.0
@@ -294,10 +416,6 @@ var almNextpage = {};
 
 			// Startpage
 			almNextpage.startpage = parseInt(alm.addons.nextpage_startpage); // The starting page.
-
-			// Pageviews
-			almNextpage.pageviews = alm.addons.nextpage_pageviews; // Send pageviews
-			almNextpage.pageviews = almNextpage.pageviews == "true" ? true : false;
 
 			// Scroll & Offset
 			almNextpage.scrollOptions = alm.addons.nextpage_scroll;
@@ -327,19 +445,20 @@ var almNextpage = {};
   * @since 1.0
   */
 	almNextpage.onpopstate = function (event) {
-		var page;
+		var page = void 0;
 
-		// Exit if nested OR not active
+		// Exit if nested OR not active.
 		if (almNextpage.nested || !almNextpage.active) {
-			// Safari fix - only fire when active
-			return false;
+			return false; // Safari fix - only fire when active
 		}
 
-		almNextpage.popstate = almNextpage.fromPopstate = true;
+		// Set popstate flags.
+		almNextpage.popstate = true;
+		almNextpage.fromPopstate = true;
 
 		if (event.state) {
 			page = event.state.pageID;
-			page = page === "" || page === null ? 1 : page;
+			page = !page || page === null ? 1 : page;
 		} else {
 			if (almNextpage.paging) {
 				page = almNextpage.firstpage;
@@ -349,15 +468,14 @@ var almNextpage = {};
 		}
 
 		if (almNextpage.paging) {
-			// Paging
-			// Trigger Paging Nav.
+			// Paging: Trigger Paging Navigation.
 			var button = almNextpage.btnWrap.querySelector('li.num a[data-page="' + parseInt(page) + '"]');
 			if (button) {
 				button.click();
 			}
 		} else {
 			// Standard.
-			var target = almNextpage.getElementByPage(page);
+			var target = (0, _getElementByPage2.default)(page);
 			if (target) {
 				var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
 				var top = offset - almNextpage.offset + 1;
@@ -365,8 +483,11 @@ var almNextpage = {};
 				// Delay fixes browser popstate issues
 				setTimeout(function () {
 					window.scrollTo(0, top);
-					almNextpage.previousUrl = event.permalink; // Set previous URL.
-					almNextpage.popstate = almNextpage.fromPopstate = false; // Popstate flag reset.
+					almNextpage.previousUrl = event.permalink; // Restore previous URL.
+
+					// Popstate reset flags.
+					almNextpage.popstate = false;
+					almNextpage.fromPopstate = false;
 				}, 10);
 			}
 		}
@@ -384,7 +505,7 @@ var almNextpage = {};
 	});
 
 	/**
-  * Set the browser URL to current permalink and send pageviews to GA.
+  * Set the browser URL to current permalink.
   *
   * @param {string}  page      Current page number.
   * @param {string}  permalink Current URL.
@@ -393,108 +514,58 @@ var almNextpage = {};
   * @param {boolean} is_paging Is this paging, true/false.
   */
 	almNextpage.setURL = function (page, permalink, title, total, is_paging) {
-		if (almNextpage.nested) {
-			return false; // Exit if nested
+		if (almNextpage.nested || !almNextpage.urls) {
+			return false; // Exit if nested or urls are disabled.
 		}
 
-		if (almNextpage.urls) {
-			// Paging.
-			if (is_paging) {
-				if (page > 1) {
-					permalink = permalink + window.alm_nextpage_localize.leading_slash + page + window.alm_nextpage_localize.trailing_slash;
-				} else {
-					permalink = permalink;
-				}
-			}
+		var _window$alm_nextpage_ = window.alm_nextpage_localize,
+		    leading_slash = _window$alm_nextpage_.leading_slash,
+		    trailing_slash = _window$alm_nextpage_.trailing_slash;
 
-			// Page Title.
-			var pageTitle = almNextpage.getPageTitle(title, page, total);
 
-			// Confirm URLs don't match and not from popstate.
-			if (permalink !== almNextpage.previousUrl && !almNextpage.fromPopstate) {
-				if (typeof window.history.pushState === "function" && !almNextpage.isIE) {
-					// State Variable.
-					var state = {
-						pageID: page,
-						permalink: permalink,
-						pageTitle: pageTitle
-					};
+		var urlType = almNextpage.wrap.dataset.nextpageBreak === "true" ? "querystring" : "default";
 
-					if (almNextpage.nested) {
-						history.replaceState(state, pageTitle, permalink);
-					} else {
-						history.pushState(state, pageTitle, permalink);
-					}
-
-					// Callback Function (URL Change)
-					if (typeof almUrlUpdate === "function") {
-						window.almUrlUpdate(permalink, "nextpage");
-					}
-				}
-
-				almNextpage.sendPageview();
-				almNextpage.previousUrl = permalink;
-			}
-
-			// Set page title.
-			document.title = pageTitle;
-			almNextpage.fromPopstate = almNextpage.popstate = false;
-		}
-	};
-
-	/**
-  * Get the page title.
-  *
-  * @param {string} postTitle
-  * @param {string} page
-  * @param {string} total
-  * @since 1.0
-  */
-	almNextpage.getPageTitle = function (postTitle, page, total) {
-		var title = document.title;
-		if (almNextpage.titleTemplate) {
-			var str = almNextpage.titleTemplate;
-			str = str.replace("{site-title}", alm_localize ? alm_localize.site_title : ""); // Replace site title
-			str = str.replace("{tagline}", alm_localize ? alm_localize.site_tagline : ""); // Replace tagline
-			str = str.replace("{post-title}", postTitle); // Replace Post Title
-			str = str.replace("{page}", page); // Replace Page
-			str = str.replace("{total}", total); // Replace Total
-			title = str;
-		}
-
-		return title;
-	};
-
-	/**
-  * Send pageviews to Google Analytics
-  */
-	almNextpage.sendPageview = function () {
-		if (almNextpage.pageviews) {
-			// If pageviews
-
-			var path = window.location.pathname;
-
-			if (typeof ajaxloadmore.tracking === "function") {
-				ajaxloadmore.tracking(path);
+		// Paging add-on.
+		if (is_paging && page > 1) {
+			if (urlType === "querystring") {
+				permalink = permalink + leading_slash + "?pg=" + page; // website.com?pg=3
 			} else {
-				// Gtag GA Tracking
-				if (typeof gtag === "function") {
-					gtag("event", "page_view", {
-						page_path: path
-					});
-				}
-
-				// Deprecated GA Tracking
-				if (typeof ga === "function") {
-					ga("send", "pageview", path);
-				}
-
-				// Monster Insights
-				if (typeof __gaTracker === "function") {
-					__gaTracker("send", "pageview", path);
-				}
+				permalink = permalink + leading_slash + page + trailing_slash; // website.com/3/
 			}
 		}
+
+		// Page Title.
+		var pageTitle = (0, _getPageTitle2.default)(title, page, total, almNextpage.titleTemplate);
+
+		// Confirm URLs don't match and not from popstate.
+		if (permalink !== almNextpage.previousUrl && !almNextpage.fromPopstate) {
+			if (typeof window.history.pushState === "function") {
+				var state = {
+					pageID: page,
+					permalink: permalink,
+					pageTitle: pageTitle
+				};
+
+				if (almNextpage.nested) {
+					history.replaceState(state, pageTitle, permalink);
+				} else {
+					history.pushState(state, pageTitle, permalink);
+				}
+
+				// Trigger analytics.
+				if (typeof ajaxloadmore.analytics === "function") {
+					ajaxloadmore.analytics("nextpage");
+				}
+			}
+			almNextpage.previousUrl = permalink;
+		}
+
+		// Set page title.
+		document.title = pageTitle;
+
+		// Reset flags.
+		almNextpage.fromPopstate = false;
+		almNextpage.popstate = false;
 	};
 
 	/**
@@ -512,7 +583,7 @@ var almNextpage = {};
 
 		// Get scroll target
 		// If paging, send user to top of listing
-		var target = almNextpage.paging ? almNextpage.wrap : almNextpage.getElementByPage(page);
+		var target = almNextpage.paging ? almNextpage.wrap : (0, _getElementByPage2.default)(page);
 
 		if (target) {
 			var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
@@ -520,7 +591,7 @@ var almNextpage = {};
 
 			if (almNextpage.paging) {
 				// Paging
-				almNextpage.doScroll(top);
+				(0, _scrollToPosition2.default)(top);
 			} else {
 				// Standard
 				if (almNextpage.fromPopstate) {
@@ -531,57 +602,18 @@ var almNextpage = {};
 					}, 5);
 				} else {
 					// Standard
-					almNextpage.doScroll(top);
+					(0, _scrollToPosition2.default)(top);
 				}
 			}
 		}
 	};
 
 	/**
-  * Dispatch scroll event.
-  *
-  * @param {Number} top The top position of the element.
+  * On DOM loaded.
   */
-	almNextpage.doScroll = function (top) {
-		if (!top) {
-			return false;
-		}
-
-		// Scroll window to position
-		if (typeof ajaxloadmore.almScroll === "function") {
-			ajaxloadmore.almScroll(top);
-		} else {
-			window.scrollTo({
-				top: top,
-				behavior: "smooth"
-			});
-		}
-	};
-
-	/**
-  * Get Next Page element by page number.
-  *
-  * @param {Number} page
-  * @return {Element}
-  */
-	almNextpage.getElementByPage = function (page) {
-		if (page) {
-			var target = document.querySelector('.alm-listing[data-nextpage="true"] .alm-nextpage[data-page="' + parseInt(page) + '"]');
-			return target ? target : "";
-		}
-	};
-
-	/**
-  * On DOM loaded set the data-url to the current browser URL.
-  * Note: This is a cached HTML content fix.
-  */
-	// window.addEventListener("DOMContentLoaded", function() {
-	// 	var url = window.location.href;
-	// 	var element = document.querySelector(".alm-nextpage");
-	// 	if (element) {
-	// 		element.dataset.url = url;
-	// 	}
-	// });
+	window.addEventListener("DOMContentLoaded", function () {
+		// Nothing yet.
+	});
 })();
 
 /***/ })

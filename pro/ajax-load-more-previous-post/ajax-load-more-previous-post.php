@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.5.5
+ * Version: 1.5.6
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PREV_POST_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PREV_POST_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PREV_POST_VERSION', '1.5.5' );
-define( 'ALM_PREV_POST_RELEASE', 'June 11, 2023' );
+define( 'ALM_PREV_POST_VERSION', '1.5.6' );
+define( 'ALM_PREV_POST_RELEASE', 'September 27, 2023' );
 
 /**
  * Activation hook.
@@ -214,7 +214,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			}
 
 			// Reset global $post object.
-			$post = $old_global;
+			$post = $old_global; //phpcs:ignore
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $previous_post );
@@ -283,12 +283,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 
 			// If Previous Post === Original post.
 			if ( $next_post && $next_post->ID === $exclude_post_id ) {
-				$post      = get_post( $previous_post->ID );
+				$post      = get_post( $previous_post->ID ); //phpcs:ignore
 				$next_post = ( ! empty( $tax ) ) ? get_next_post( true, $exclude_terms, $tax ) : get_next_post( false, $exclude_terms );
 			}
 
 			// Reset global $post object.
-			$post = $old_global;
+			$post = $old_global; //phpcs:ignore
 
 			// Build the $data object.
 			$data = self::alm_build_data_object( $id, $next_post );
@@ -335,7 +335,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @since 1.3
 		 */
 		public static function alm_query_latest_post_id( $id, $post_type, $taxonomy, $exclude_terms ) {
-
 			// Get latest post not including the current.
 			$args = [
 				'post_type'        => $post_type,
@@ -542,7 +541,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			if ( ! isset( $single_post_enable_scroll ) ) {
 				$single_post_enable_scroll = 'false';
 			} else {
-				if ( $single_post_enable_scroll == '1' ) {
+				if ( $single_post_enable_scroll === '1' ) {
 					$single_post_enable_scroll = 'true';
 				} else {
 					$single_post_enable_scroll = 'false';
@@ -560,18 +559,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 				$single_post_title_template = $options['_alm_prev_post_title'];
 			}
 
-			// GA send Pageview.
-			if ( ! isset( $options['_alm_prev_post_ga'] ) ) {
-				$single_post_send_pageview = 'true';
-			} else {
-				$single_post_send_pageview = $options['_alm_prev_post_ga'];
-				if ( $single_post_send_pageview == '1' ) {
-					$single_post_send_pageview = 'true';
-				} else {
-					$single_post_send_pageview = 'false';
-				}
-			}
-
 			$return .= ' data-single-post-title-template="' . $single_post_title_template . '"';
 			$return .= ' data-single-post-site-title="' . get_bloginfo( 'name' ) . '"';
 			$return .= ' data-single-post-site-tagline="' . get_bloginfo( 'description' ) . '"';
@@ -579,7 +566,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			$return .= ' data-single-post-scrolltop="' . $single_post_scrolltop . '"';
 			$return .= ' data-single-post-controls="' . $single_post_controls . '"';
 			$return .= ' data-single-post-progress-bar="' . $progress_bar . '"';
-			$return .= ' data-single-post-pageview="' . $single_post_send_pageview . '"';
 
 			return $return;
 		}
@@ -688,14 +674,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			);
 
 			add_settings_field(
-				'_alm_prev_post_ga',
-				__( 'Google Analytics', 'ajax-load-more-single-post' ),
-				'alm_prev_post_ga_callback',
-				'ajax-load-more',
-				'alm_prev_post_settings'
-			);
-
-			add_settings_field(
 				'_alm_prev_post_scroll',
 				__( 'Scroll to Post', 'ajax-load-more-single-post' ),
 				'alm_prev_post_scroll_callback',
@@ -724,6 +702,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 	/**
 	 * Sanitize license activation.
 	 *
+	 * @param string $new The new license key.
 	 * @since 1.0.0
 	 */
 	function alm_prev_post_sanitize_license( $new ) {
@@ -743,23 +722,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 	 */
 	function alm_prev_post_callback() {
 		$html = '<p>' . __( 'Customize your installation of the <a href="http://connekthq.com/plugins/ajax-load-more/add-ons/single-post/">Single Post</a> add-on.', 'ajax-load-more-single-post' ) . '</p>';
-
-		echo $html; // phpcs:ignore
-	}
-
-	/**
-	 * Send pageviews to Google Analytics.
-	 *
-	 * @since 1.0
-	 */
-	function alm_prev_post_ga_callback() {
-		$options = get_option( 'alm_settings' );
-		if ( ! isset( $options['_alm_prev_post_ga'] ) ) {
-			$options['_alm_prev_post_ga'] = '1';
-		}
-
-		$html  = '<input type="hidden" name="alm_settings[_alm_prev_post_ga]" value="0" /><input type="checkbox" id="_alm_prev_post_ga" name="alm_settings[_alm_prev_post_ga]" value="1"' . ( ( $options['_alm_prev_post_ga'] ) ? ' checked="checked"' : '' ) . ' />';
-		$html .= '<label for="_alm_prev_post_ga">' . __( 'Send pageviews to Google Analytics.', 'ajax-load-more-single-post' ) . '<br/><span>Each time a post is loaded it will count as a pageview. You must have a reference to your Google Analytics tracking code on the page.</span></label>';
 
 		echo $html; // phpcs:ignore
 	}
@@ -805,7 +767,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 
 		$html .= '<label for="alm_prev_scroll_page">';
 		$html .= __( 'Enable Window Scrolling.', 'ajax-load-more-single-post' );
-		$html .= '<span>' . __( 'If scrolling is enabled, the users window will scroll to the current page on \'Load More\' action.</span>', 'ajax-load-more-seo' ) . '</span>';
+		$html .= '<span>' . __( 'If scrolling is enabled, the users window will scroll to the current page on \'Load More\' action.</span>', 'ajax-load-more-single-post' ) . '</span>';
 		$html .= '</label>';
 
 		echo $html; // phpcs:ignore

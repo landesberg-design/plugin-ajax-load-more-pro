@@ -16,6 +16,7 @@
  */
 function alm_filters_list_terms( $obj, $querystring, $id ) {
 	$return         = '';
+	$terms          = [];
 	$items          = [];
 	$items_count    = 0;
 	$field_type     = $obj['field_type'];
@@ -241,7 +242,7 @@ function alm_filters_build_terms_list( $id, $obj, $match_array, $terms, $init ) 
 
 		// Build `<li/>`.
 		echo '<li class="alm-filter--' . esc_attr( $field_type ) . esc_attr( $field_level ) . ' field-' . esc_attr( $index ) . esc_attr( $past_limit_class ) . '"' . wp_kses_post( $past_limit ) . '>';
-		echo '<div class="alm-filter--link field-' . esc_attr( $field_type ) . ' field-' . esc_attr( $slug ) . ' ' . esc_attr( $active ) . '" id="' . esc_attr( $field_type ) . '-' . esc_attr( sanitize_title( $slug ) ) . '-' . esc_attr( $obj['count'] ) . '" data-type="' . esc_attr( $field_type ) . '" data-value="' . esc_attr( $slug ) . '" role="' . esc_attr( $field_type ) . '" tabindex="0" ' . esc_attr( $aria_checked ) . '>';
+		echo '<div class="alm-filter--link field-' . esc_attr( $field_type ) . ' field-' . esc_attr( $slug ) . ' ' . esc_attr( $active ) . '" id="' . esc_attr( $field_type ) . '-' . esc_attr( sanitize_title( $slug ) ) . '-' . esc_attr( $obj['count'] ) . '" data-type="' . esc_attr( $field_type ) . '" data-value="' . esc_attr( $slug ) . '" role="' . esc_attr( $field_type ) . '" tabindex="0" ' . wp_kses_post( $aria_checked ) . '>';
 		echo wp_kses_post( $name . $total );
 		echo '</div>';
 

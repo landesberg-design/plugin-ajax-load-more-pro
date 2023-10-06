@@ -5,10 +5,10 @@ Author: Connekt Media
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.2.3
+Version: 1.2.4
 
 == Copyright ==
 Copyright 2023 Connekt Media
@@ -42,6 +42,11 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog == 
+
+= 1.2.4 - September 27, 2023 =
+* UPDATE: Updated WooCommerce JavaScript to support new Google Analytics 4 implementation.
+* UPDATE: Updated compatibility to WooCommerce 8.1.0.
+
 
 = 1.2.3 - July 27, 2023 =
 * UPDATE: Updated the WooCommerce admin page to use the new Ajax Load More 6.1 layout.

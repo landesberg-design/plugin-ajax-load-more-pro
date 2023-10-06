@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.5.6.2
+ * Version: 1.6.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PAGING_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PAGING_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PAGING_VERSION', '1.5.6.2' );
-define( 'ALM_PAGING_RELEASE', 'February 14, 2023' );
+define( 'ALM_PAGING_VERSION', '1.6.0' );
+define( 'ALM_PAGING_RELEASE', 'September 27, 2023' );
 
 /**
  *  Install the add-on.

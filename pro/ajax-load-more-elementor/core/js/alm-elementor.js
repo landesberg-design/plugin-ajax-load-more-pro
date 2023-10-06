@@ -6,20 +6,18 @@
  * Twitter: @KaptonKaos, @connekthq
  */
 
-var alm_elmtr = {};
+var alm_elementor = {};
 
-(function () {
+(function () { 
 	/* Set Up Vars */
-	alm_elmtr.init = true;
-	alm_elmtr.paging = false;
-	alm_elmtr.previousUrl = window.location.href;
-	alm_elmtr.isAnimating = false;
-	alm_elmtr.defaultPage = 1;
-	alm_elmtr.fromPopstate = false;
-	alm_elmtr.HTMLHead = document.getElementsByTagName("head")[0].innerHTML;
-	alm_elmtr.timer = null;
-	alm_elmtr.isIE =
-		navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false;
+	alm_elementor.init = true;
+	alm_elementor.paging = false;
+	alm_elementor.previousUrl = window.location.href;
+	alm_elementor.isAnimating = false;
+	alm_elementor.defaultPage = 1;
+	alm_elementor.fromPopstate = false;
+	alm_elementor.HTMLHead = document.getElementsByTagName("head")[0].innerHTML;
+	alm_elementor.timer = null;
 
 	/**
 	 * Triggered from core ajax-load-more.js
@@ -34,28 +32,28 @@ var alm_elmtr = {};
 		}
 
 		// First run only
-		if (alm_elmtr.init) {
+		if (alm_elementor.init) {
 			// Container
-			alm_elmtr.container = alm.addons.elementor_element;
+			alm_elementor.container = alm.addons.elementor_element;
 
 			// Fwd/Back buttons
-			alm_elmtr.controls = alm.addons.elementor_controls;
+			alm_elementor.controls = alm.addons.elementor_controls;
 
 			// Scrolltop
-			alm_elmtr.scrolltop = alm.addons.elementor_scrolltop;
+			alm_elementor.scrolltop = alm.addons.elementor_scrolltop;
 
 			// First Element
-			alm_elmtr.first = alm_elmtr.container.querySelector(
+			alm_elementor.first = alm_elementor.container.querySelector(
 				".alm-elementor:first-child"
 			);
 
 			// Paging (Not yet supported)
-			alm_elmtr.paging = alm.addons.paging;
+			alm_elementor.paging = alm.addons.paging;
 		}
 
 		// Delay for effects
 		setTimeout(function () {
-			alm_elmtr.init = false;
+			alm_elementor.init = false;
 		}, 50);
 	};
 
@@ -64,17 +62,17 @@ var alm_elmtr = {};
 	 *
 	 * @since 1.0
 	 */
-	alm_elmtr.onScroll = function () {
-		var scrollTop = window.pageYOffset;
+	alm_elementor.onScroll = function () {
+		var scrollTop = window.scrollY;
 
-		if (!alm_elmtr.isAnimating && !alm_elmtr.paging && !alm_elmtr.init) {
-			if (alm_elmtr.timer) {
-				window.clearTimeout(alm_elmtr.timer);
+		if (!alm_elementor.isAnimating && !alm_elementor.paging && !alm_elementor.init) {
+			if (alm_elementor.timer) {
+				window.clearTimeout(alm_elementor.timer);
 			}
 
-			alm_elmtr.timer = window.setTimeout(function () {
+			alm_elementor.timer = window.setTimeout(function () {
 				// Get container scroll position
-				var fromTop = scrollTop + alm_elmtr.scrolltop;
+				var fromTop = scrollTop + alm_elementor.scrolltop;
 				var posts = document.querySelectorAll(".alm-elementor");
 				var url = window.location.href;
 
@@ -96,19 +94,19 @@ var alm_elmtr = {};
 
 				// If first page
 				if (page === undefined || page === "") {
-					page = alm_elmtr.first.dataset.page;
-					permalink = alm_elmtr.first.dataset.url;
-					pageTitle = alm_elmtr.first.dataset.pageTitle;
+					page = alm_elementor.first.dataset.page;
+					permalink = alm_elementor.first.dataset.url;
+					pageTitle = alm_elementor.first.dataset.pageTitle;
 				}
 
 				if (url !== permalink) {
-					alm_elmtr.setURL(page, permalink, pageTitle);
+					alm_elementor.setURL(page, permalink, pageTitle);
 				}
 			}, 15);
 		}
 	};
-	window.addEventListener("touchstart", alm_elmtr.onScroll);
-	window.addEventListener("scroll", alm_elmtr.onScroll);
+	window.addEventListener("touchstart", alm_elementor.onScroll);
+	window.addEventListener("scroll", alm_elementor.onScroll);
 
 	/**
 	 * Set the browser URL to current permalink then scroll user to post
@@ -118,29 +116,23 @@ var alm_elmtr = {};
 	 * @param string pageTitle
 	 * @since 1.0
 	 */
-	alm_elmtr.setURL = function (page, permalink, pageTitle) {
+	alm_elementor.setURL = function (page, permalink, pageTitle) {
 		var state = {
 			page: page,
 			permalink: permalink,
 		};
 
-		if (permalink !== alm_elmtr.previousUrl && !alm_elmtr.fromPopstate) {
-			if (
-				typeof window.history.pushState === "function" &&
-				!alm_elmtr.isIE
-			) {
-				// If pushstate is enabled
-				if (alm_elmtr.controls) {
-					// pushstate
+		if (permalink !== alm_elementor.previousUrl && !alm_elementor.fromPopstate) {
+			if (typeof window.history.pushState === "function") {
+				if (alm_elementor.controls) {
 					history.pushState(state, "", permalink);
 				} else {
-					// replaceState
 					history.replaceState(state, "", permalink);
 				}
 
-				// Callback Function (URL Change)
-				if (typeof almUrlUpdate === "function") {
-					window.almUrlUpdate(permalink, "elementor");
+				// Trigger analytics.
+				if (typeof ajaxloadmore.analytics === "function") { 
+					ajaxloadmore.analytics("nextpage");
 				}
 			}
 
@@ -148,10 +140,10 @@ var alm_elmtr = {};
 			document.title = pageTitle;
 
 			// Set Previous URL
-			alm_elmtr.previousUrl = permalink;
+			alm_elementor.previousUrl = permalink;
 		}
 
-		alm_elmtr.fromPopstate = false;
+		alm_elementor.fromPopstate = false;
 	};
 
 	/**
@@ -160,17 +152,17 @@ var alm_elmtr = {};
 	 * @param object event
 	 * @since 1.0
 	 */
-	alm_elmtr.onpopstate = function (event) {
+	alm_elementor.onpopstate = function (event) {
 		// if wrapper doesnt have data-elementor="posts" don't fire popstate
 		var elmtr = document.querySelector(
 			'.alm-listing[data-elementor="posts"]'
 		);
 
 		if (elmtr) {
-			if (!alm_elmtr.paging) {
+			if (!alm_elementor.paging) {
 				// Not Paging
-				alm_elmtr.fromPopstate = true;
-				alm_elmtr.getPageState(event.state);
+				alm_elementor.fromPopstate = true;
+				alm_elementor.getPageState(event.state);
 			} else {
 				// Paging
 				if (
@@ -184,10 +176,10 @@ var alm_elmtr = {};
 
 					// Check for null state value
 					current =
-						current === null ? alm_elmtr.defaultPage : event.state.page;
+						current === null ? alm_elementor.defaultPage : event.state.page;
 
 					// Set popstate flag to true - don't trigger pushstate on url update
-					alm_elmtr.fromPopstate = true;
+					alm_elementor.fromPopstate = true;
 
 					if (typeof almSetCurrentPage === "function") {
 						// Paging addon function
@@ -205,7 +197,7 @@ var alm_elmtr = {};
 	 */
 	window.addEventListener("popstate", function (event) {
 		if (typeof window.history.pushState == "function") {
-			alm_elmtr.onpopstate(event);
+			alm_elementor.onpopstate(event);
 		}
 	});
 
@@ -215,7 +207,7 @@ var alm_elmtr = {};
 	 * @param object data
 	 * @since 1.0
 	 */
-	alm_elmtr.getPageState = function (data) {
+	alm_elementor.getPageState = function (data) {
 		var page;
 		if (data === null || data === "") {
 			// Will be null with preloaded, so set -1
@@ -224,8 +216,8 @@ var alm_elmtr = {};
 			page = data.page;
 		}
 
-		if (alm_elmtr.container) {
-			alm_elmtr.scrollToPage(page);
+		if (alm_elementor.container) {
+			alm_elementor.scrollToPage(page);
 		}
 	};
 
@@ -235,18 +227,18 @@ var alm_elmtr = {};
 	 * @param number page
 	 * @since 1.0
 	 */
-	alm_elmtr.scrollToPage = function (page) {
+	alm_elementor.scrollToPage = function (page) {
 		// Current page
 		page =
 			page === undefined || page === "" || page === "-1" || page === -1
-				? alm_elmtr.first.dataset.page
+				? alm_elementor.first.dataset.page
 				: page;
 
-		if (alm_elmtr.isAnimating) {
+		if (alm_elementor.isAnimating) {
 			// Exit if animating
 			return false;
 		}
-		alm_elmtr.isAnimating = true;
+		alm_elementor.isAnimating = true;
 
 		var target = document.querySelector(
 			'.alm-elementor[data-page="' + page + '"]'
@@ -257,18 +249,18 @@ var alm_elmtr = {};
 				typeof ajaxloadmore.getOffset === "function"
 					? ajaxloadmore.getOffset(target).top
 					: target.offsetTop;
-			var top = offset - alm_elmtr.scrolltop + 5;
+			var top = offset - alm_elementor.scrolltop + 5;
 
 			// Move window to position
 			setTimeout(function () {
 				// Delay fixes browser popstate issues
 				window.scrollTo(0, top);
-				alm_elmtr.fromPopstate = false;
+				alm_elementor.fromPopstate = false;
 			}, 5);
 		}
 
 		setTimeout(function () {
-			alm_elmtr.isAnimating = false;
+			alm_elementor.isAnimating = false;
 		}, 250);
 	};
 })();

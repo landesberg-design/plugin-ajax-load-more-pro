@@ -33,6 +33,7 @@ if ( $alm_filters_array ) {
 					break;
 
 				case 'category':
+				case '_category':
 					$category = $category ? "$category, $value" : $value;
 					break;
 

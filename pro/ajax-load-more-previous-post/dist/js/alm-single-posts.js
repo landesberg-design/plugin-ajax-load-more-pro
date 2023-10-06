@@ -103,6 +103,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos, @connekthq
  */
+
 var almSinglePosts = {};
 
 (function () {
@@ -125,7 +126,6 @@ var almSinglePosts = {};
 		almSinglePosts.active = true;
 		almSinglePosts.target = "";
 		almSinglePosts.first = document.querySelector(".alm-single-post");
-		almSinglePosts.isIE = navigator.appVersion.indexOf("MSIE 10") !== -1 ? true : false;
 		almSinglePosts.showProgressBar = false;
 	};
 
@@ -274,7 +274,6 @@ var almSinglePosts = {};
 			// On init.
 			almSinglePosts.siteTitle = alm.addons.single_post_siteTitle; // Site Title
 			almSinglePosts.siteTagline = alm.addons.single_post_siteTagline; // Site Tagline
-			almSinglePosts.pageview = alm.addons.single_post_pageview && alm.addons.single_post_pageview === "true" ? true : false; // Send pageviews
 			almSinglePosts.scroll = alm.addons.single_post_scroll; // Scroll
 			almSinglePosts.offset = parseInt(alm.addons.single_post_scroll_top); // Scroll Top
 			almSinglePosts.controls = alm.addons.single_post_controls; // Enable back/fwd button controls
@@ -492,7 +491,7 @@ var almSinglePosts = {};
   */
 	almSinglePosts.setURL = function (id, permalink, title, page, element) {
 		// If pushstate & not IE10 is enabled
-		if (typeof window.history.pushState === "function" && !almSinglePosts.isIE) {
+		if (typeof window.history.pushState === "function") {
 			var nested = element && element.classList.contains("alm-nextpage") ? true : false;
 
 			var state = {
@@ -511,9 +510,9 @@ var almSinglePosts = {};
 			// Set page title.
 			almSinglePosts.setPageTitle(title);
 
-			// almUrlUpdate (Core ALM Callback)
-			if (typeof almUrlUpdate === "function") {
-				window.almUrlUpdate(permalink, "single-post");
+			// Trigger analytics.
+			if (typeof ajaxloadmore.analytics === "function") {
+				ajaxloadmore.analytics("single-posts");
 			}
 		}
 
@@ -521,37 +520,13 @@ var almSinglePosts = {};
 		if (almSinglePosts.is_disqus) {
 			almSinglePosts.disqusLoad(id, permalink, title, page);
 		}
-
-		// Send pageviews to Google Analytics.
-		if (almSinglePosts.pageview) {
-			var path = "/" + window.location.pathname;
-			if (typeof ajaxloadmore.tracking === "function") {
-				ajaxloadmore.tracking(path);
-			} else {
-				// Gtag GA Tracking
-				if (typeof gtag === "function") {
-					gtag("event", "page_view", {
-						page_path: path
-					});
-				}
-
-				// Deprecated GA Tracking
-				if (typeof ga === "function") {
-					ga("send", "pageview", path);
-				}
-
-				// Monster Insights
-				if (typeof __gaTracker === "function") {
-					__gaTracker("send", "pageview", path);
-				}
-			}
-		}
 	};
 
 	/**
   * Smooth scroll user to current post.
+  *
   * @since 1.0
-  * @param {string} id
+  * @param {string} id The post ID.
   */
 	almSinglePosts.scrollToPost = function (id) {
 		var target = document.querySelector(".alm-reveal.alm-single-post.post-" + id);
@@ -594,8 +569,9 @@ var almSinglePosts = {};
 
 	/**
   * Set the page title.
+  *
   * @since 1.0
-  * @param {string} title
+  * @param {string} title The page title.
   */
 	almSinglePosts.setPageTitle = function (title) {
 		if (!almSinglePosts.titleTemplate) {
@@ -613,7 +589,7 @@ var almSinglePosts = {};
   * Load Disqus comments on page init
   *
   * @since 1.2
-  * @param {object} container
+  * @param {object} container The ALM container.
   */
 	almSinglePosts.disqusInit = function (container) {
 		var disqus_shortname = container.dataset.disqusShortname; // get Disqus shortname from container
@@ -641,10 +617,10 @@ var almSinglePosts = {};
   * Load Disqus comments when page comes into view.
   *
   * @since 1.2
-  * @param {string} id
-  * @param {string} permalink
-  * @param {string} title
-  * @param {string} page
+  * @param {string} id        ALM ID.
+  * @param {string} permalink Post permalink.
+  * @param {string} title     Post title.
+  * @param {string} page      Current page.
   */
 	almSinglePosts.disqusLoad = function (id, permalink, title, page) {
 		var disqus_thread = document.getElementById("disqus_thread");

@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.1.0
+ * Version: 2.1.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.1.0' );
-define( 'ALM_FILTERS_RELEASE', 'July 27, 2023' );
+define( 'ALM_FILTERS_VERSION', '2.1.1' );
+define( 'ALM_FILTERS_RELEASE', 'September 27, 2023' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -115,25 +115,26 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * Construct class.
 		 */
 		public function __construct() {
-			add_action( 'alm_filters_installed', array( &$this, 'alm_filters_installed' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_filters_enqueue_scripts' ) );
-			add_action( 'admin_enqueue_scripts', array( &$this, 'alm_filters_admin_enqueue_scripts' ) );
-			add_action( 'ajax_load_more_filters_', array( &$this, 'ajax_load_more_filters_' ) );
-			add_shortcode( 'ajax_load_more_filters', array( &$this, 'alm_filters_shortcode' ) );
-			add_action( 'alm_filters_settings', array( &$this, 'alm_filters_settings' ) );
-			add_filter( 'alm_filters_shortcode_params', array( &$this, 'alm_filters_shortcode_params' ), 10, 9 );
-			add_filter( 'alm_filters_preloaded_args', array( &$this, 'alm_filters_preloaded_args' ), 10, 1 );
-			add_filter( 'alm_filters_reveal_open', array( &$this, 'alm_filters_reveal_open' ), 10, 4 );
-			add_filter( 'alm_filters_reveal_close', array( &$this, 'alm_filters_reveal_close' ), 10, 2 );
-			add_action( 'init', array( &$this, 'alm_filters_facet_publish_actions' ) );
+			add_action( 'alm_filters_installed', [ &$this, 'alm_filters_installed' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_filters_enqueue_scripts' ] );
+			add_action( 'admin_enqueue_scripts', [ &$this, 'alm_filters_admin_enqueue_scripts' ] );
+			add_action( 'ajax_load_more_filters_', [ &$this, 'ajax_load_more_filters_' ] );
+			add_shortcode( 'ajax_load_more_filters', [ &$this, 'alm_filters_shortcode' ] );
+			add_action( 'alm_filters_settings', [ &$this, 'alm_filters_settings' ] );
+			add_filter( 'alm_filters_shortcode_params', [ &$this, 'alm_filters_shortcode_params' ], 10, 8 );
+			add_filter( 'alm_filters_preloaded_args', [ &$this, 'alm_filters_preloaded_args' ], 10, 1 );
+			add_filter( 'alm_filters_reveal_open', [ &$this, 'alm_filters_reveal_open' ], 10, 4 );
+			add_filter( 'alm_filters_reveal_close', [ &$this, 'alm_filters_reveal_close' ], 10, 2 );
+			add_action( 'init', [ &$this, 'alm_filters_facet_publish_actions' ] );
+			add_filter( 'redirect_canonical', [ &$this, 'alm_filters_frontpage_canonical_redirect' ] );
 
-			add_action( 'admin_init', array( &$this, 'alm_filters_export' ) );
-			add_action( 'admin_init', array( &$this, 'alm_filters_import' ) );
-			add_action( 'admin_init', array( &$this, 'alm_filters_rebuild_facets' ) );
-			add_action( 'admin_init', array( &$this, 'alm_filters_duplicate_filter' ) );
-			add_action( 'admin_init', array( &$this, 'alm_filters_deleted' ) );
-			add_action( 'admin_init', array( &$this, 'alm_filters_updated' ) );
-			add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
+			add_action( 'admin_init', [ &$this, 'alm_filters_export' ] );
+			add_action( 'admin_init', [ &$this, 'alm_filters_import' ] );
+			add_action( 'admin_init', [ &$this, 'alm_filters_rebuild_facets' ] );
+			add_action( 'admin_init', [ &$this, 'alm_filters_duplicate_filter' ] );
+			add_action( 'admin_init', [ &$this, 'alm_filters_deleted' ] );
+			add_action( 'admin_init', [ &$this, 'alm_filters_updated' ] );
+			add_action( 'admin_notices', [ &$this, 'admin_notices' ] );
 
 			load_plugin_textdomain( 'ajax-load-more-filters', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 			$this->includes();
@@ -185,7 +186,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 					$types                   = wp_list_pluck( $post_types, 'post_type' );
 					if ( $types ) {
 						foreach ( $types as $type ) {
-							add_action( 'save_post_' . $type . '', array( &$this, 'alm_filters_update_facets_on_save' ) );
+							add_action( 'save_post_' . $type . '', [ &$this, 'alm_filters_update_facets_on_save' ] );
 						}
 					}
 				}
@@ -965,8 +966,9 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 					foreach ( $options as $filter ) {
 						if ( isset( $filter[ $key ] ) ) {
 							// If taxonomy or meta key, add items to array.
-							if ( $key === 'taxonomy' && is_archive() ) {
-								$array[] = '_' . $filter[ $key ]; // If archive, prepend `_` to taxonomy slug.
+							if ( $key === 'taxonomy' && ( is_archive() || is_front_page() || is_home() ) ) {
+								// If archive or frontpage, prepend `_` to taxonomy slug.
+								$array[] = '_' . $filter[ $key ];
 							} else {
 								$array[] = $filter[ $key ];
 							}
@@ -1253,30 +1255,28 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @param string $paging    The value of paging in the shortcode.
 		 * @param string $scroll    The value of scroll in the shortcode.
 		 * @param string $scrolltop The value of scrolltop in the shortcode.
-		 * @param string $analytics The value of analytics in the shortcode.
 		 * @param string $debug     The value of debug in the shortcode.
 		 * @param string $options   ALM global settings.
 		 * @return string           The generated shortcode attributes.
 		 * @since 1.0
 		 */
-		public function alm_filters_shortcode_params( $filters, $target, $url, $paging, $scroll, $scrolltop, $analytics, $debug, $options ) {
-			$return  = ' data-filters="true"';
-			$return .= ' data-filters-target="' . $target . '"';
-			$return .= ' data-filters-url="' . $url . '"';
-			$return .= ' data-filters-paging="' . $paging . '"';
-			$return .= ' data-filters-scroll="' . $scroll . '"';
-			$return .= ' data-filters-scrolltop="' . $scrolltop . '"';
-			$return .= ' data-filters-analytics="' . $analytics . '"';
-			$return .= ' data-filters-debug="' . $debug . '"';
+		public function alm_filters_shortcode_params( $filters, $target, $url, $paging, $scroll, $scrolltop, $debug, $options ) {
+			$data  = ' data-filters="true"';
+			$data .= ' data-filters-target="' . $target . '"';
+			$data .= ' data-filters-url="' . $url . '"';
+			$data .= ' data-filters-paging="' . $paging . '"';
+			$data .= ' data-filters-scroll="' . $scroll . '"';
+			$data .= ' data-filters-scrolltop="' . $scrolltop . '"';
+			$data .= ' data-filters-debug="' . $debug . '"';
 
 			if ( $target ) {
+				// Dynamically set `facets="true"` if set in filter.
 				if ( alm_filters_has_facets( $target ) ) {
-					// Dynamically set `facets="true"` if set in filter.
-					$return .= ' data-facets="true"';
+					$data .= ' data-facets="true"';
 				}
 			}
 
-			return $return;
+			return $data;
 		}
 
 		/**
@@ -1388,6 +1388,24 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 				$string = str_replace( 'alm_filter_', '', $string );
 				return $string;
 			}
+		}
+
+
+		/**
+		 * Prevent URL redirects on frontpage with filters.
+		 * Note: This is to prevent `+` in querystring parameters from being encoded.
+		 * website.com?=category=design+development was redirecting to website.com?=category=design%20development
+		 *
+		 * @see https://developer.wordpress.org/reference/hooks/redirect_canonical/
+		 * @param boolean $redirect Should redirect.
+		 * @return boolean
+		 */
+		public function alm_filters_frontpage_canonical_redirect( $redirect ) {
+			$query_params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			if ( is_front_page() && $query_params ) {
+				$redirect = false;
+			}
+			return $redirect;
 		}
 
 		/**

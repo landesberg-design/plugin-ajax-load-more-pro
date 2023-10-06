@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/paging/
 Requires at least: 4.0
-Tested up to: 5.9.0
+Tested up to: 6.3
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.5.6.2
+Version: 1.6.0
 
 
 == Copyright ==
@@ -49,6 +49,13 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 == Changelog ==
+
+= 1.6.0 - September 27, 2023 =
+* FIX: Fixed issue with paging links not matching final URL in Filters add-on.
+* UPDATE: Added support for new Next Page add-on URLs via querystring `pg` parameters.
+* UPDATE: Updated paging resize functionality to use ResizeObserver.
+* UPDATE: Code cleanup and organization.
+
 
 = 1.5.6.2 - February 14, 2023 =
 * FIX: Fixed potential CSS issue with double loading icon when using Paging and Filters add-ons together.

@@ -121,6 +121,7 @@ function alm_filters_save_filter( WP_REST_Request $request ) {
 			$show_count_array[] = 'year'; // Add year support.
 			$show_count_array[] = 'month'; // Add month support.
 			$show_count_array[] = 'day'; // Add day support.
+			$show_count_array[] = 'post_type'; // Add post_type support.
 		}
 
 		// Fields that allow for selection.
