@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.7.0
+ * Version: 1.7.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_NEXTPAGE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_NEXTPAGE_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_NEXTPAGE_VERSION', '1.7.0' );
-define( 'ALM_NEXTPAGE_RELEASE', 'September 27, 2023' );
+define( 'ALM_NEXTPAGE_VERSION', '1.7.1' );
+define( 'ALM_NEXTPAGE_RELEASE', 'January 16, 2024' );
 
 /**
  * Activation hook.
@@ -125,6 +125,10 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 
 				// Get current post type.
 				$post_type = get_post_type();
+
+				if ( ! is_singular( $post_type ) ) {
+					return $content;
+				}
 
 				// Get plugin options.
 				$options       = get_option( 'alm_settings' );
@@ -272,10 +276,9 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 						if ( ! $paging ) {
 							$page = $page + $startpage;
 						}
-					} else {
-						if ( ! $paging ) {
+					} elseif ( ! $paging ) {
 							$page = $page + 1; //phpcs:ignore
-						}
+
 					}
 
 					if ( $nextpage === 'true' ) {
@@ -665,7 +668,7 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 					if ( $querystring ) {
 						$index = 0;
 						foreach ( $querystring as $key => $value ) {
-							$index++;
+							++$index;
 							if ( $key === 'pg' ) {
 								// Skip if $key is pg.
 								continue;
@@ -897,16 +900,16 @@ if ( ! class_exists( 'ALM_Nextpage_Plugin' ) ) :
 	/**
 	 * Sanitize license activation.
 	 *
-	 * @param string $new The new license key.
+	 * @param string $key The new license key.
 	 * @author ConnektMedia
 	 * @since 1.0
 	 */
-	function alm_nextpage_sanitize_license( $new ) {
+	function alm_nextpage_sanitize_license( $key ) {
 		$old = get_option( 'alm_nextpage_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_nextpage_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/**

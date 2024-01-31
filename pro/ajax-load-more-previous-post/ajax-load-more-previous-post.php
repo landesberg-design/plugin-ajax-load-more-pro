@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.5.6
+ * Version: 1.6.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PREV_POST_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PREV_POST_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PREV_POST_VERSION', '1.5.6' );
-define( 'ALM_PREV_POST_RELEASE', 'September 27, 2023' );
+define( 'ALM_PREV_POST_VERSION', '1.6.0' );
+define( 'ALM_PREV_POST_RELEASE', 'January 16, 2024' );
 
 /**
  * Activation hook.
@@ -65,16 +65,16 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * Construct class function.
 		 */
 		public function __construct() {
-			add_action( 'alm_prev_post_installed', array( &$this, 'alm_prev_post_installed' ) );
-			add_action( 'alm_single_post_installed', array( &$this, 'alm_single_post_installed' ) );
-			add_action( 'wp_ajax_alm_get_single', array( &$this, 'alm_get_single_post' ) );
-			add_action( 'wp_ajax_nopriv_alm_get_single', array( &$this, 'alm_get_single_post' ) );
-			add_filter( 'alm_single_post_inc', array( &$this, 'alm_single_post_inc' ), 10, 5 );
-			add_filter( 'alm_single_post_args', array( &$this, 'alm_single_post_args' ), 10, 2 );
-			add_filter( 'alm_single_post_shortcode', array( &$this, 'alm_single_post_shortcode' ), 10, 10 );
-			add_action( 'alm_prev_post_settings', array( &$this, 'alm_prev_post_settings' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_single_post_enqueue_scripts' ) );
-			add_action( 'posts_where', array( &$this, 'alm_single_query_where' ), 10, 2 );
+			add_action( 'alm_prev_post_installed', [ &$this, 'alm_prev_post_installed' ] );
+			add_action( 'alm_single_post_installed', [ &$this, 'alm_single_post_installed' ] );
+			add_action( 'wp_ajax_alm_get_single', [ &$this, 'alm_get_single_post' ] );
+			add_action( 'wp_ajax_nopriv_alm_get_single', [ &$this, 'alm_get_single_post' ] );
+			add_filter( 'alm_single_post_inc', [ &$this, 'alm_single_post_inc' ], 10, 5 );
+			add_filter( 'alm_single_post_args', [ &$this, 'alm_single_post_args' ], 10, 2 );
+			add_filter( 'alm_single_post_shortcode', [ &$this, 'alm_single_post_shortcode' ], 10, 10 );
+			add_action( 'alm_prev_post_settings', [ &$this, 'alm_prev_post_settings' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_single_post_enqueue_scripts' ] );
+			add_action( 'posts_where', [ &$this, 'alm_single_query_where' ], 10, 2 );
 			load_plugin_textdomain( 'ajax-load-more-single-post', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 		}
 
@@ -110,7 +110,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 */
 		public function alm_single_post_enqueue_scripts() {
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-			wp_register_script( 'alm-single-posts', plugins_url( '/dist/js/alm-single-posts' . $suffix . '.js', __FILE__ ), array( 'ajax-load-more' ), ALM_PREV_POST_VERSION, true );
+			wp_register_script( 'alm-single-posts', plugins_url( '/dist/js/alm-single-posts' . $suffix . '.js', __FILE__ ), [ 'ajax-load-more' ], ALM_PREV_POST_VERSION, true );
 		}
 
 		/**
@@ -354,12 +354,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 					foreach ( $terms as $term ) {
 						$found_terms[] = $term->slug;
 					}
-					$args['tax_query'][] = array(
+					$args['tax_query'][] = [
 						'taxonomy' => $taxonomy,
 						'field'    => 'slug',
 						'terms'    => $found_terms,
 						'operator' => 'IN',
-					);
+					];
 				}
 			}
 
@@ -369,12 +369,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 				foreach ( $exclude_terms as $id ) {
 					$term_data = get_term( $id );
 					if ( $term_data ) {
-						$args['tax_query'][] = array(
+						$args['tax_query'][] = [
 							'taxonomy' => $term_data->taxonomy,
 							'field'    => 'term_id',
 							'terms'    => $id,
 							'operator' => 'NOT IN',
-						);
+						];
 					}
 				}
 			}
@@ -398,7 +398,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @since 1.3
 		 */
 		public static function alm_build_data_object( $id, $previous_post ) {
-			$data = array();
+			$data = [];
 			if ( $previous_post ) {
 				$data['has_previous_post'] = true;
 				$data['prev_id']           = $previous_post->ID;
@@ -453,11 +453,11 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 *  @since 1.0
 		 */
 		public function alm_single_post_args( $id, $post_type ) {
-			$args = array(
-				'post__in'       => array( $id ),
+			$args = [
+				'post__in'       => [ $id ],
 				'post_type'      => $post_type,
 				'posts_per_page' => 1,
-			);
+			];
 			return $args;
 		}
 
@@ -471,7 +471,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @param string $post_type      The post type.
 		 * @since 1.0
 		 */
-		public function alm_single_post_inc( $repeater, $repeater_type, $theme_repeater, $id, $post_type ) {
+		public function alm_single_post_inc( $repeater, $repeater_type, $theme_repeater, $id, $post_type ) { // phpcs:ignore
 			ob_start();
 			if ( $theme_repeater !== 'null' && has_filter( 'alm_get_theme_repeater' ) ) {
 				// Theme Repeater.
@@ -540,12 +540,10 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			$single_post_enable_scroll = isset( $options['_alm_prev_post_scroll'] ) ? $options['_alm_prev_post_scroll'] : 'false';
 			if ( ! isset( $single_post_enable_scroll ) ) {
 				$single_post_enable_scroll = 'false';
-			} else {
-				if ( $single_post_enable_scroll === '1' ) {
+			} elseif ( $single_post_enable_scroll === '1' ) {
 					$single_post_enable_scroll = 'true';
-				} else {
-					$single_post_enable_scroll = 'false';
-				}
+			} else {
+				$single_post_enable_scroll = 'false';
 			}
 
 			$single_post_controls = '1';
@@ -594,17 +592,17 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			$args['fields']         = 'ids';
 			$args['orderby']        = 'date';
 			$args['order']          = 'DESC';
-			$args['post__not_in']   = array( $post_id );
+			$args['post__not_in']   = [ $post_id ];
 			$args['posts_per_page'] = apply_filters( 'alm_single_post_posts_per_page_' . $args['alm_id'], '40' ); // phpcs:ignore
 
 			// Custom Query Ordering, used with custom query ordering.
 			if ( 'previous' === $query_order ) {
-				$args['date_query'] = array(
-					array(
+				$args['date_query'] = [
+					[
 						'before' => get_the_date( 'F d Y g:i a', $post_id ),
-					),
+					],
 					'inclusive' => true,
-				);
+				];
 			}
 
 			/**
@@ -624,7 +622,6 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			}
 
 			wp_reset_query(); // phpcs:ignore
-
 		}
 
 		/**
@@ -696,21 +693,20 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 				'alm_prev_post_settings'
 			);
 		}
-
 	}
 
 	/**
 	 * Sanitize license activation.
 	 *
-	 * @param string $new The new license key.
+	 * @param string $key The new license key.
 	 * @since 1.0.0
 	 */
-	function alm_prev_post_sanitize_license( $new ) {
+	function alm_prev_post_sanitize_license( $key ) {
 		$old = get_option( 'alm_prev_post_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_prev_post_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/* Next Post Settings (Displayed in ALM Core) */
@@ -840,12 +836,12 @@ function alm_single_post_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_PREV_POST_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_PREV_POST_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

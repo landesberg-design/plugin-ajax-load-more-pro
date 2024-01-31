@@ -9062,7 +9062,7 @@ function createPagingURL(alm, init) {
 	}
 	var obj = {};
 	var page = alm.page + 1;
-	page = alm.preloaded === "true" ? page + 1 : page; // Add 1 for preloaded
+	page = alm.preloaded ? page + 1 : page; // Add 1 for preloaded.
 
 	var querystring = window.location.search.substring(1);
 	if (querystring) {
@@ -11146,10 +11146,10 @@ var dispatch = function dispatch(target, data, url) {
 	// Get the target .ajax-load-more element
 	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
 
-	if (typeof alm != "undefined" && alm != null) {
+	if (typeof alm !== "undefined" && alm !== null) {
 		alm = alm[0];
-		var transition = alm.dataset.transition == null ? "fade" : alm.dataset.transition;
-		var speed = alm.dataset.speed == null ? "250" : alm.dataset.speed;
+		var transition = alm.dataset.transition === null ? "fade" : alm.dataset.transition;
+		var speed = alm.dataset.speed === null ? "250" : alm.dataset.speed;
 
 		// Trigger analytics.
 		(0, _Analytics2.default)("filters");

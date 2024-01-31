@@ -8,11 +8,11 @@ Requires at least: 4.0.0
 Tested up to: 6.2.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 2.0.1
+Version: 2.0.2
 
 
 == Copyright ==
-Copyright 2023 Darren Cooney
+Copyright 2024 Darren Cooney
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -46,6 +46,9 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+= 2.0.2 - January 16, 2024 =
+* FIX: Fixed issue with display of cache URL on the Cache admin page.
+
 
 = 2.0.1 - July 27, 2023 =
 * UPDATE: Updated cache admin page to reflect new admin styling.

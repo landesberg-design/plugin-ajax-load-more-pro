@@ -4,16 +4,15 @@ Contributors: dcooney
 Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/paging/
-Requires at least: 4.0
-Tested up to: 6.3
+Requires at least: 5.0
+Tested up to: 6.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.6.0
+Version: 2.0.0
 
 
 == Copyright ==
-Copyright 2022 Darren Cooney
-
+Copyright 2024 DConnekt Media
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -49,6 +48,16 @@ http://connekthq.com/plugins/ajax-load-more/paging/
 
 
 == Changelog ==
+
+= 2.0.0 - January 16, 2024 =
+* UPGRADE NOTICE: This update is affected by the core Ajax Load More 7.0 release. Updating this plugin will require updating Ajax Load More to 7.0.
+* UPDATE: Reduced Ajax requests on initial page load. Previously Paging add-on dispatched 2 requests and we have reduced this to a single request.
+* UPDATE: Pagination container is now created on the server side and not with Javascript on page load. This reduces the CLS (Cumulative Layout Shift) of the functionality.
+* UPDATE: Adding required changes for Ajax Load More 7.0 and removal of `alm-reveal` wrapper.
+* UPDATE: Improved loading animation and timing of pagination display.
+* UPDATE: Code cleanup, CSS updates and organization.
+* FIX: Fixed issue where first page link in paging naviagtion could result in a JS error.
+
 
 = 1.6.0 - September 27, 2023 =
 * FIX: Fixed issue with paging links not matching final URL in Filters add-on.

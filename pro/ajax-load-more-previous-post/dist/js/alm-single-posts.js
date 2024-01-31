@@ -288,7 +288,7 @@ var almSinglePosts = {};
 				var singlePostTarget = document.querySelector(almSinglePosts.target);
 				if (singlePostTarget) {
 					// Get .alm-single div
-					var singlePostWrap = document.querySelector(".alm-reveal.alm-single-post");
+					var singlePostWrap = document.querySelector(".alm-single-post");
 
 					// InsertBefore
 					singlePostTarget.parentNode.insertBefore(singlePostWrap, singlePostTarget);
@@ -330,7 +330,7 @@ var almSinglePosts = {};
 			return false; // Exit if ID null
 		}
 
-		var progressDiv = document.querySelector('.alm-reveal.alm-single-post[data-id="' + id + '"]');
+		var progressDiv = document.querySelector('.alm-single-post[data-id="' + id + '"]');
 
 		if (progressDiv) {
 			var elHeight = Math.round(progressDiv.offsetHeight);
@@ -529,7 +529,7 @@ var almSinglePosts = {};
   * @param {string} id The post ID.
   */
 	almSinglePosts.scrollToPost = function (id) {
-		var target = document.querySelector(".alm-reveal.alm-single-post.post-" + id);
+		var target = document.querySelector(".alm-single-post.post-" + id);
 		if (target) {
 			// Confirm target has children, if not move to top of page. (offset fix_
 			target = target.hasChildNodes() ? target : document.querySelector("body");

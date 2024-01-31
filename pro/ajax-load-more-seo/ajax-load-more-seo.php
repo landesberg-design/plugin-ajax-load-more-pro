@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.9.5
+ * Version: 1.9.6
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  */
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_SEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_SEO_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_SEO_VERSION', '1.9.5' );
-define( 'ALM_SEO_RELEASE', 'September 27, 2023' );
+define( 'ALM_SEO_VERSION', '1.9.6' );
+define( 'ALM_SEO_RELEASE', 'January 16, 2024' );
 
 /**
  * Install the SEO add-on
@@ -64,10 +64,10 @@ if ( ! class_exists( 'ALMSEO' ) ) :
 		 * Construct function.
 		 */
 		public function __construct() {
-			add_action( 'alm_seo_installed', array( &$this, 'alm_is_seo_installed' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_seo_enqueue_scripts' ) );
-			add_action( 'alm_seo_settings', array( &$this, 'alm_seo_settings' ) );
-			add_filter( 'alm_seo_shortcode', array( &$this, 'alm_seo_shortcode' ), 10, 4 );
+			add_action( 'alm_seo_installed', [ &$this, 'alm_is_seo_installed' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_seo_enqueue_scripts' ] );
+			add_action( 'alm_seo_settings', [ &$this, 'alm_seo_settings' ] );
+			add_filter( 'alm_seo_shortcode', [ &$this, 'alm_seo_shortcode' ], 10, 4 );
 			load_plugin_textdomain( 'ajax-load-more-seo', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 		}
 
@@ -83,7 +83,6 @@ if ( ! class_exists( 'ALMSEO' ) ) :
 		 * @since 1.2
 		 */
 		public function alm_seo_shortcode( $seo, $preloaded, $options, $seo_offset ) {
-
 			$seo_scrolltop = '30';
 			if ( isset( $options['_alm_seo_scrolltop'] ) ) {
 				$seo_scrolltop = $options['_alm_seo_scrolltop'];
@@ -169,7 +168,7 @@ if ( ! class_exists( 'ALMSEO' ) ) :
 		public function alm_seo_enqueue_scripts() {
 			// Use minified libraries if SCRIPT_DEBUG is turned off.
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-			wp_register_script( 'ajax-load-more-seo', plugins_url( '/js/alm-seo' . $suffix . '.js', __FILE__ ), array( 'ajax-load-more' ), ALM_SEO_VERSION, true );
+			wp_register_script( 'ajax-load-more-seo', plugins_url( '/js/alm-seo' . $suffix . '.js', __FILE__ ), [ 'ajax-load-more' ], ALM_SEO_VERSION, true );
 		}
 
 		/**
@@ -224,7 +223,6 @@ if ( ! class_exists( 'ALMSEO' ) ) :
 				'alm_seo_settings'
 			);
 		}
-
 	}
 
 	/**
@@ -293,16 +291,16 @@ if ( ! class_exists( 'ALMSEO' ) ) :
 	/**
 	 *  Sanitize our license activation.
 	 *
-	 * @param string $new The new license key.
+	 * @param string $key The new license key.
 	 * @author ConnektMedia
 	 * @since 1.3.0
 	 */
-	function alm_seo_sanitize_license( $new ) {
+	function alm_seo_sanitize_license( $key ) {
 		$old = get_option( 'alm_seo_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_seo_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/**
@@ -332,12 +330,12 @@ function alm_seo_plugin_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_SEO_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_SEO_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

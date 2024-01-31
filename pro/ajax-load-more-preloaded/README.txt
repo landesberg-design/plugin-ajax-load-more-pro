@@ -4,10 +4,10 @@ Contributors: dcooney
 Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/preloaded/
-Version: 1.3.3
+Version: 1.4.0
 
 == Copyright ==
-Copyright 2019 Connekt Media
+Copyright 2024 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -44,8 +44,14 @@ http://connekthq.com/plugins/ajax-load-more/preloaded/
 
 == Changelog ==
 
+= 1.4.0 - January 16, 2024 =
+* UPGRADE NOTICE: This update is affected by the core Ajax Load More 7.0 release. Updating this plugin will require updating Ajax Load More to 7.0.
+* UPDATE: Removed all references and output of `alm-reveal` divs.
+* UPDATE: Code cleanup and oragnization.
+
+
 = 1.3.3 - May 6, 2019 =
-* FIX - Fixed issue if core Ajax Load More is deactivated the add-on will throw a fatal error becasue of undefined methods.
+* FIX - Fixed fatal error that can occur if core Ajax Load More is deactivated and the add-on remains active.
 
 
 = 1.3.2 - August 26, 2018 =

@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.1
+ * Version: 2.0.2
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ALM_CACHE_VERSION', '2.0.1' );
-define( 'ALM_CACHE_RELEASE', 'July 27, 2023' );
+define( 'ALM_CACHE_VERSION', '2.0.2' );
+define( 'ALM_CACHE_RELEASE', 'January 16, 2024' );
 
 /**
  * Display admin notice if plugin does not meet the requirements.
@@ -104,7 +104,7 @@ if ( ! class_exists( ' ALMCache' ) ) :
 					wp_mkdir_p( $dir );
 				}
 				// Test directory access.
-				if ( ! is_writable( $dir ) ) {
+				if ( ! is_writable( $dir ) ) { // phpcs:ignore
 					wp_die( esc_html__( 'Error accessing uploads/alm-cache directory. This add-on is required to read/write to your server. Please contact your hosting administrator.', 'ajax-load-more-cache' ) );
 				}
 			}
@@ -230,10 +230,9 @@ if ( ! class_exists( ' ALMCache' ) ) :
 								$path_display = rtrim( $path_display, '/' );
 							}
 						}
-
 						$data .= '<ul class="cache-details">';
 						$data .= '<li title="' . __( 'Cache URL', 'ajax-load-more-cache' ) . '">';
-						$data .= '<i class="fa fa-globe" aria-hidden="true"></i> <a href="' . $info['url'] . '" target="_blank">' . $info['url'] . '</a>';
+						$data .= '<i class="fa fa-globe" aria-hidden="true"></i> <a href="' . urldecode( $info['url'] ) . '" target="_blank">' . urldecode( $info['url'] ) . '</a>';
 						$data .= '</li>';
 						$data .= '<li title="' . __( 'Date Created:', 'ajax-load-more-cache' ) . ' ' . $time_display . '">';
 						$data .= '<i class="fa fa-clock-o" aria-hidden="true"></i> ' . $time_display;
@@ -539,12 +538,12 @@ if ( ! class_exists( ' ALMCache' ) ) :
 							if ( filetype( $dir . '/' . $object ) === 'dir' ) {
 								self::alm_cache_rmdir( $dir . '/' . $object );
 							} else {
-								unlink( $dir . '/' . $object );
+								unlink( $dir . '/' . $object );  // phpcs:ignore
 							}
 						}
 					}
 					reset( $objects );
-					rmdir( $dir );
+					rmdir( $dir ); // phpcs:ignore
 				}
 			}
 		}
@@ -753,16 +752,16 @@ if ( ! class_exists( ' ALMCache' ) ) :
 	/**
 	 * Sanitize our license activation.
 	 *
-	 * @param string $new The API Key.
+	 * @param string $key The API Key.
 	 * @return string The API key as a string.
 	 * @since 1.3.0
 	 */
-	function alm_cache_sanitize_license( $new ) {
+	function alm_cache_sanitize_license( $key ) {
 		$old = get_option( 'alm_cache_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_cache_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/**

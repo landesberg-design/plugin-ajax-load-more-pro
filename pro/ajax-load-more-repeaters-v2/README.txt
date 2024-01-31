@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/custom-repeaters/
 Requires at least: 4.0
-Tested up to: 6.1
+Tested up to: 6.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 2.5.11
+Version: 2.5.12
 
 == Copyright ==
-Copyright 2023 Darren Cooney, Connekt Media
+Copyright 2024 Darren Cooney, Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,6 +47,10 @@ http://connekthq.com/ajax-load-more/custom-repeaters/
 
 == Changelog ==
  
+= 2.5.12 - January 16, 2024 =
+* FIX: Fixed issue with multiline tab support while editing Repeater Templates in the ALM Admin.
+
+
 = 2.5.11 - July 27, 2023 =
 * UPDATE: Admin UI updates to match core Ajax Load More 6.1 updates.
 * UPDATE: Code cleanup and organization.

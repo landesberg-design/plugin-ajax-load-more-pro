@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.6.0
+ * Version: 2.0.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PAGING_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PAGING_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PAGING_VERSION', '1.6.0' );
-define( 'ALM_PAGING_RELEASE', 'September 27, 2023' );
+define( 'ALM_PAGING_VERSION', '2.0.0' );
+define( 'ALM_PAGING_RELEASE', 'January 16, 2024' );
 
 /**
  *  Install the add-on.
@@ -67,11 +67,11 @@ if ( ! class_exists( 'ALM_Paging' ) ) :
 		 * Constuct Paging Class
 		 */
 		public function __construct() {
-			add_action( 'alm_paging_installed', array( &$this, 'alm_paging_installed' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_paging_enqueue_scripts' ) );
-			add_action( 'admin_enqueue_scripts', array( &$this, 'alm_paging_admin_enqueue_scripts' ) );
-			add_action( 'alm_paging_settings', array( &$this, 'alm_paging_settings' ) );
-			add_filter( 'alm_paging_shortcode', array( &$this, 'alm_paging_shortcode' ), 10, 9 );
+			add_action( 'alm_paging_installed', [ &$this, 'alm_paging_installed' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_paging_enqueue_scripts' ] );
+			add_action( 'admin_enqueue_scripts', [ &$this, 'alm_paging_admin_enqueue_scripts' ] );
+			add_action( 'alm_paging_settings', [ &$this, 'alm_paging_settings' ] );
+			add_filter( 'alm_paging_shortcode', [ &$this, 'alm_paging_shortcode' ], 10, 9 );
 			load_plugin_textdomain( 'ajax-load-more-paging', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 		}
 
@@ -124,7 +124,7 @@ if ( ! class_exists( 'ALM_Paging' ) ) :
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 			// Enqueue JS.
-			wp_register_script( 'ajax-load-more-paging', plugins_url( '/core/js/alm-paging' . $suffix . '.js', __FILE__ ), array( 'ajax-load-more' ), ALM_PAGING_VERSION, true );
+			wp_register_script( 'ajax-load-more-paging', plugins_url( '/core/js/alm-paging' . $suffix . '.js', __FILE__ ), [ 'ajax-load-more' ], ALM_PAGING_VERSION, true );
 
 			// Enqueue CSS.
 			$options = get_option( 'alm_settings' );
@@ -144,7 +144,7 @@ if ( ! class_exists( 'ALM_Paging' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_paging_admin_enqueue_scripts() {
-			wp_enqueue_style( 'alm-paging', ALM_PAGING_URL . '/core/css/ajax-load-more-paging.css', array(), ALM_PAGING_VERSION );
+			wp_enqueue_style( 'alm-paging', ALM_PAGING_URL . '/core/css/ajax-load-more-paging.css', [], ALM_PAGING_VERSION );
 		}
 
 		/**
@@ -288,15 +288,15 @@ if ( ! class_exists( 'ALM_Paging' ) ) :
 	/**
 	 * Sanitize license activation.
 	 *
-	 * @param string $new The new license key.
+	 * @param string $key The new license key.
 	 * @since 1.0.0
 	 */
-	function alm_paging_sanitize_license( $new ) {
+	function alm_paging_sanitize_license( $key ) {
 		$old = get_option( 'alm_paging_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_paging_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/**
@@ -325,12 +325,12 @@ function alm_paging_plugin_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_PAGING_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_PAGING_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

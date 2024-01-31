@@ -1,10 +1,10 @@
-.alm-reveal.alm-single-post .alm-single-post--preview {
+.alm-single-post .alm-single-post--preview {
   position: relative;
   max-height: 700px;
   overflow: hidden;
 }
 
-.alm-reveal.alm-single-post .alm-single-post--preview .alm-post-preview {
+.alm-single-post .alm-single-post--preview .alm-post-preview {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -26,7 +26,7 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 75%);
 }
 
-.alm-reveal.alm-single-post .alm-single-post--preview .alm-post-preview button {
+.alm-single-post .alm-single-post--preview .alm-post-preview button {
   color: #444;
   font-weight: 600;
   font-size: 14px;
@@ -44,7 +44,7 @@
   cursor: pointer;
 }
 
-.alm-reveal.alm-single-post .alm-single-post--preview .alm-post-preview button:hover, .alm-reveal.alm-single-post .alm-single-post--preview .alm-post-preview button:focus {
+.alm-single-post .alm-single-post--preview .alm-post-preview button:hover, .alm-single-post .alm-single-post--preview .alm-post-preview button:focus {
   border: 1px solid #e1e1e1;
   color: #222;
 }

@@ -185,73 +185,41 @@
 }
 
 /********** Grid **********/
-.alm-layouts .alm-grid {
-  margin-bottom: 20px;
-}
-
-.alm-layouts .alm-grid.alm-has-transition {
-  margin-bottom: 0;
-}
-
-.alm-layouts .alm-grid + .alm-btn-wrap {
-  padding-top: 0;
-}
-
-.alm-layouts .alm-grid.alm-no-transition,
-.alm-layouts:not(.alm-paging) .alm-grid.alm-has-transition .alm-reveal,
-.alm-layouts.alm-paging .alm-grid.alm-has-transition .alm-paging-content {
+.alm-layouts .alm-grid:not(.alm-paging-wrap),
+.alm-layouts .alm-grid .alm-paging-content {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 20px;
-}
-
-.alm-layouts .alm-grid.alm-no-transition:after,
-.alm-layouts:not(.alm-paging) .alm-grid.alm-has-transition .alm-reveal:after,
-.alm-layouts.alm-paging .alm-grid.alm-has-transition .alm-paging-content:after {
-  display: none;
-}
-
-.alm-layouts .alm-grid.alm-has-transition .alm-reveal {
-  margin-bottom: 20px;
-}
-
-.alm-layouts .alm-grid.alm-has-transition .alm-reveal:empty {
-  display: none !important;
-}
-
-.alm-layouts .alm-grid.alm-grid-gap-none.alm-has-transition .alm-reveal {
-  margin-bottom: 0;
-}
-
-.alm-layouts .alm-grid.alm-grid-gap-sm.alm-has-transition .alm-reveal {
-  margin-bottom: 5px;
-}
-
-.alm-layouts .alm-grid.alm-grid-gap-md.alm-has-transition .alm-reveal {
   margin-bottom: 10px;
 }
 
+.alm-layouts .alm-grid:not(.alm-paging-wrap):after,
+.alm-layouts .alm-grid .alm-paging-content:after {
+  display: none;
+}
+
+.alm-layouts .alm-grid:not(.alm-paging-wrap):empty,
+.alm-layouts .alm-grid .alm-paging-content:empty {
+  display: none !important;
+}
+
 .alm-layouts .alm-grid.alm-grid-gap-none,
-.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-none .alm-reveal,
 .alm-layouts.alm-paging .alm-grid.alm-grid-gap-none .alm-paging-content {
   gap: 0;
 }
 
 .alm-layouts .alm-grid.alm-grid-gap-md,
-.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-md .alm-reveal,
 .alm-layouts.alm-paging .alm-grid.alm-grid-gap-md .alm-paging-content {
   gap: 10px;
 }
 
 .alm-layouts .alm-grid.alm-grid-gap-sm,
-.alm-layouts:not(.alm-paging) .alm-grid.alm-grid-gap-sm .alm-reveal,
 .alm-layouts.alm-paging .alm-grid.alm-grid-gap-sm .alm-paging-content {
   gap: 5px;
 }
 
 @media screen and (min-width: 768px) {
   .alm-layouts .alm-grid.alm-grid-cols-2,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-2 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-2 .alm-paging-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -259,7 +227,6 @@
 
 @media screen and (min-width: 769px) {
   .alm-layouts .alm-grid.alm-grid-cols-3,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-3 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-3 .alm-paging-content {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -267,7 +234,6 @@
 
 @media screen and (min-width: 769px) {
   .alm-layouts .alm-grid.alm-grid-cols-4,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-4 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-4 .alm-paging-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -275,7 +241,6 @@
 
 @media screen and (min-width: 1025px) {
   .alm-layouts .alm-grid.alm-grid-cols-4,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-4 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-4 .alm-paging-content {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -283,7 +248,6 @@
 
 @media screen and (min-width: 769px) {
   .alm-layouts .alm-grid.alm-grid-cols-5,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-5 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-5 .alm-paging-content {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -291,7 +255,6 @@
 
 @media screen and (min-width: 1025px) {
   .alm-layouts .alm-grid.alm-grid-cols-5,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-5 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-5 .alm-paging-content {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
@@ -299,7 +262,6 @@
 
 @media screen and (min-width: 769px) {
   .alm-layouts .alm-grid.alm-grid-cols-6,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-6 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-6 .alm-paging-content {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -307,7 +269,6 @@
 
 @media screen and (min-width: 1025px) {
   .alm-layouts .alm-grid.alm-grid-cols-6,
-  .alm-layouts:not(.alm-paging) .alm-grid.alm-grid-cols-6 .alm-reveal,
   .alm-layouts.alm-paging .alm-grid.alm-grid-cols-6 .alm-paging-content {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
@@ -347,7 +308,7 @@
 .alm-layouts .alm-listing .alm-default > a,
 .alm-layouts .alm-listing .alm-default > img.wp-post-image {
   width: 150px;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .alm-layouts .alm-listing .alm-default > .details {
@@ -858,7 +819,8 @@
   border-top: 1px solid #efefef;
 }
 
-.alm-layouts .alm-listing .alm-blog-card-3 .alm-post-author img, .alm-layouts .alm-listing .alm-blog-card-3 .alm-post-author span {
+.alm-layouts .alm-listing .alm-blog-card-3 .alm-post-author img,
+.alm-layouts .alm-listing .alm-blog-card-3 .alm-post-author span {
   display: inline-block;
   vertical-align: top;
 }

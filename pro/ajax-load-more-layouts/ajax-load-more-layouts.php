@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.2
+ * Version: 2.1.0
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package ALMLayouts
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_LAYOUTS_VERSION', '2.0.2' );
-define( 'ALM_LAYOUTS_RELEASE', 'July 27, 2023' );
+define( 'ALM_LAYOUTS_VERSION', '2.1.0' );
+define( 'ALM_LAYOUTS_RELEASE', 'January 16, 2024' );
 define( 'ALM_LAYOUTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_LAYOUTS_URL', plugins_url( '', __FILE__ ) );
 
@@ -64,13 +64,13 @@ if ( ! class_exists( 'ALMLayouts' ) ) :
 		 * Set up constructors.
 		 */
 		public function __construct() {
-			add_action( 'after_setup_theme', array( &$this, 'alm_layouts_image_sizes' ) );
-			add_action( 'alm_layouts_installed', array( &$this, 'alm_lay outs_installed' ) );
-			add_action( 'alm_layouts_settings', array( &$this, 'alm_layouts_settings' ) );
-			add_action( 'alm_layouts_custom_css', array( &$this, 'alm_layouts_custom_css' ), 10, 2 );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_layouts_enqueue_scripts' ) );
-			add_action( 'alm_get_layouts_add_on', array( &$this, 'alm_get_layouts_add_on' ) );
-			add_filter( 'alm_get_layout_classes', array( &$this, 'alm_get_layout_classes' ), 10, 3 );
+			add_action( 'after_setup_theme', [ &$this, 'alm_layouts_image_sizes' ] );
+			add_action( 'alm_layouts_installed', [ &$this, 'alm_lay outs_installed' ] );
+			add_action( 'alm_layouts_settings', [ &$this, 'alm_layouts_settings' ] );
+			add_action( 'alm_layouts_custom_css', [ &$this, 'alm_layouts_custom_css' ], 10, 2 );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_layouts_enqueue_scripts' ] );
+			add_action( 'alm_get_layouts_add_on', [ &$this, 'alm_get_layouts_add_on' ] );
+			add_filter( 'alm_get_layout_classes', [ &$this, 'alm_get_layout_classes' ], 10, 3 );
 		}
 
 		/**
@@ -175,15 +175,15 @@ if ( ! class_exists( 'ALMLayouts' ) ) :
 	/**
 	 * Sanitize our license activation
 	 *
-	 * @param string $new The new key.
+	 * @param string $key The new key.
 	 * @since 1.0
 	 */
-	function alm_layouts_sanitize_license( $new ) {
+	function alm_layouts_sanitize_license( $key ) {
 		$old = get_option( 'alm_layouts_license_key' );
-		if ( $old && $old !== $new ) {
+		if ( $old && $old !== $key ) {
 			delete_option( 'alm_layouts_license_status' );
 		}
-		return $new;
+		return $key;
 	}
 
 	/**
@@ -308,12 +308,12 @@ function alm_layouts_plugin_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_LAYOUTS_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_LAYOUTS_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

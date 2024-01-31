@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.5.11
+ * Version: 2.5.12
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -15,8 +15,8 @@
 
 define( 'ALM_UNLIMITED_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_UNLIMITED_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_UNLIMITED_VERSION', '2.5.11' );
-define( 'ALM_UNLIMITED_RELEASE', 'July 27, 2023' );
+define( 'ALM_UNLIMITED_VERSION', '2.5.12' );
+define( 'ALM_UNLIMITED_RELEASE', 'January 16, 2024' );
 
 /**
  * Core activation hook function.
@@ -289,7 +289,7 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 			$i          = 0;
 			foreach ( $rows as $repeater ) {
 				// Get repeater alias, if avaialble.
-				$i++;
+				++$i;
 				$name           = $repeater->name;
 				$repeater_alias = $repeater->alias;
 				if ( empty( $repeater_alias ) ) {
@@ -334,7 +334,7 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 					self::alm_unlimited_mkdir( $base_dir );
 
 					foreach ( $rows as $repeater ) :
-						$i++;
+						++$i;
 						$repeater_file    = $repeater->name;
 						$repeater_name    = 'Template #' . $i;
 						$repeater_alias   = $repeater->alias;
@@ -410,11 +410,13 @@ if ( ! class_exists( 'AjaxLoadMoreRepeaters' ) ) :
 											{
 												mode:  "application/x-httpd-php",
 												lineNumbers: true,
+												styleActiveLine: true,
 												lineWrapping: true,
-												indentUnit: 0,
 												matchBrackets: true,
 												viewportMargin: Infinity,
-												extraKeys: {"Ctrl-Space": "autocomplete"},
+												foldGutter: true,
+												viewportMargin: Infinity,
+												gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 											});
 											</script>
 										</div>

@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.2.20
+ * Version: 1.2.21
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ALM_PRO_VERSION', '1.2.20' );
-define( 'ALM_PRO_RELEASE', 'September 27, 2023' );
+define( 'ALM_PRO_VERSION', '1.2.21' );
+define( 'ALM_PRO_RELEASE', 'January 16, 2024' );
 
 /**
  * Plugin installation hook

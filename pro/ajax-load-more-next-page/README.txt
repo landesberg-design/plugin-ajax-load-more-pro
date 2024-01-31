@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.7.0
+Version: 1.7.1
 
 == Copyright ==
-Copyright 2023 Connekt Media
+Copyright 2024 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -43,6 +43,10 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 5. Activate the plugin in the Plugin dashboard.
 
 == Changelog ==
+
+= 1.7.1 - January 16, 2024 =
+* FIX: Fixed issue with the Auto implementation method attempting to run in the_excerpt() requests. This issue resulted from a core WP bug with excerpt display in Ajax requests.
+
 
 = 1.7.0 - September 27, 2023 =
 * NEW: Added ability to load full post content and split into pages for URL updates without infinite scroll. Use `nextpage_type="fullpage"` shortcode parameter to implement full article pagination URLs.

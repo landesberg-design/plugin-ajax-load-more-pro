@@ -5,13 +5,13 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 2.1.1
+Version: 2.1.2
 
 == Copyright ==
-Copyright 2023 Darren Cooney
+Copyright 2024 DaConnekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,6 +47,12 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 2.1.2 - January 16, 2024 =
+* UPGRADE NOTICE: This update is affected by the core Ajax Load More 7.0 release. Updating this plugin will require updating Ajax Load More to 7.0.
+* UPDATE: Remove all references and output of `alm-reveal` divs.
+* UPDATE: Updated JS parameters to match updates in ALM 7.0.
+
 
 = 2.1.1 - September 27, 2023 =
 * NEW: Added support for facets and Post Type filtering.

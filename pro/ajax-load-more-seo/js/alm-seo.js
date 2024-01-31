@@ -20,15 +20,15 @@ var alm_seo = {};
 	alm_seo.timer = null;
 
 	/**
-	 * Triggered from core ajax-load-more.js
+	 * Callback function.
+	 * Triggered from core ajax-load-more.js.
 	 *
-	 * @param {Object} alm
-	 * @param {Boolean} preloadedInit
+	 * @param {Object}  alm           The Ajax Load More object.
+	 * @param {Boolean} preloadedInit Is this a preloaded init?
 	 * @since 1.0
 	 */
-	window.almSEO = function (alm, preloadedInit) {
-		// Exit if not SEO
-		if (!alm.addons.seo) {
+	window.almSEO = function (alm, preloadedInit) {		
+		if (!alm.addons.seo) { // Exit if not SEO	addon.
 			return false;
 		}
 
@@ -50,7 +50,7 @@ var alm_seo = {};
 			: alm_seo.totalposts;
 
 		alm_seo.totalpages = Math.ceil(alm_seo.totalposts / alm_seo.postsPerPage); // Get total pages
-		alm_seo.preloaded = alm.addons.preloaded === "true" ? true : false; // Get Preloaded value
+		alm_seo.preloaded = alm.addons.preloaded; // Get Preloaded value
 		alm_seo.scrolltop = parseInt(alm.addons.seo_scrolltop); // Scrolltop
 		alm_seo.controls = alm.addons.seo_controls; // Enable back/fwd button controls
 		alm_seo.controls = alm_seo.controls === "1" ? true : false;
@@ -62,7 +62,8 @@ var alm_seo = {};
 		alm_seo.leadingslash =
 			alm_seo.content.dataset.seoLeadingSlash === "true" ? "/" : "";
 
-		alm_seo.first = alm_seo.content.querySelector(".alm-seo:first-child");
+		// Get first item in ALM listing.
+		alm_seo.first = alm.main.querySelector(".alm-seo:first-child");
 
 		if (alm.is_search === undefined) {
 			alm.is_search = false;
@@ -78,9 +79,8 @@ var alm_seo = {};
 		nextpage = preloadedInit ? alm.page + 2 : nextpage; // Update nextpage if preloaded
 		alm_seo.newPath = alm_seo.getURL(page, start, alm_seo.permalink); // current page
 		alm_seo.nextPath = alm_seo.getURL(nextpage, start, alm_seo.permalink); // Upcoming page
-
-		// Exit if Preloaded
-		if (preloadedInit) {
+		
+		if (preloadedInit) { // Exit if Preloaded
 			alm_seo.init = false;
 			return false;
 		}
@@ -466,9 +466,8 @@ var alm_seo = {};
 		// If is a paged result
 		if (page >= 1) {
 			var link = alm_seo.getURL(page, 0, permalink); // get the new permalink
-
 			if (rel) {
-				// if exists, just update the href value
+				// if exists, update the href value.
 				rel.href = link;
 			} else {
 				// doesn't exist. Create it
@@ -477,24 +476,22 @@ var alm_seo = {};
 				rel.rel = type;
 				document.getElementsByTagName("head")[0].appendChild(rel);
 			}
-		} else {
-			// Remove <link />
-			alm_seo.removeRelLink(rel);
+		} else {			 
+			alm_seo.removeRelLink(rel); // Remove <link />
 		}
 	};
 
 	/**
-	 * Removes hash from url.
+	 * Removes hash from a URL.
 	 *
-	 * @param {string} path
+	 * @param {string} path The URL path.
+	 * @return {string}     The cleaned URL.
 	 * @since 1.0
 	 */
 	alm_seo.cleanURL = function (path) {
-		var loc = path,
-			index = loc.indexOf("#");
-
-		path = index > 0 ? path.substring(0, index) : path;
-		return path;
+		var loc = path;
+		var index = loc.indexOf("#");
+		return index > 0 ? path.substring(0, index) : path;
 	};
 
 	/**

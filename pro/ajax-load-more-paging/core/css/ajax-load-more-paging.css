@@ -2,14 +2,22 @@
  * Ajax Load More - Paging Add-on
  * @see https://connekthq.com/plugins/ajax-load-more/add-ons/paging/
  */
+.alm-paging .alm-btn-wrap {
+  padding-top: 25px;
+}
+
 ul.alm-paging {
-  text-align: center;
-  margin: 0;
-  padding: 15px 0 10px;
-  list-style: none;
-  opacity: 0;
+  all: unset;
   position: relative;
   z-index: 1;
+  display: block;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+}
+
+.alm-loading ul.alm-paging {
+  pointer-events: none;
 }
 
 ul.alm-paging .alm-paging.empty {
@@ -22,7 +30,7 @@ ul.alm-paging li {
   position: relative;
   list-style: none;
   padding: 0;
-  margin: 0 1px;
+  margin: 2px;
   line-height: 1;
   display: inline-block;
   vertical-align: top;
@@ -36,11 +44,12 @@ ul.alm-paging li:before, ul.alm-paging li:after {
 ul.alm-paging li a {
   display: block;
   padding: 8px 10px;
-  -webkit-border-radius: 2px;
-          border-radius: 2px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
   color: #666;
   border: 1px solid #f1f1f1;
   background: #f7f7f7;
+  line-height: 1;
   text-decoration: none;
   -webkit-transition: all 0.15s ease;
   -o-transition: all 0.15s ease;
@@ -119,7 +128,7 @@ ul.alm-paging li.active a {
 }
 
 .ajax-load-more-wrap.alm-loading .alm-paging-content {
-  opacity: 0.5 !important;
+  opacity: 0.5;
 }
 
 .alm-paging-wrap .alm-paging-loading {
@@ -132,14 +141,14 @@ ul.alm-paging li.active a {
 .ajax-load-more-wrap.alm-loading.alm-paging .alm-paging-wrap,
 .ajax-load-more-wrap.alm-loading .ajax-load-more-wrap.alm-is-filtering {
   /* On init */
-  min-height: 150px;
+  min-height: 250px;
 }
 
 .ajax-load-more-wrap.alm-is-filtering {
   background-color: transparent;
 }
 
-.alm-paging-wrap .alm-reveal {
+.alm-paging-wrap {
   position: relative;
 }
 
@@ -161,7 +170,7 @@ ul.alm-paging li.active a {
 .ajax-load-more-wrap.loading .alm-paging-wrap {
   visibility: visible;
   opacity: 1;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.35);
   background-image: url(../../img/ajax-loader.gif);
   background-repeat: no-repeat;
   background-position: center center;
@@ -171,6 +180,7 @@ ul.alm-paging li.active a {
 .alm-loading .alm-paging-wrap .alm-paging-loading {
   visibility: visible;
   opacity: 1;
+  pointer-events: none;
 }
 
 /* Hide loader on initial page load */
