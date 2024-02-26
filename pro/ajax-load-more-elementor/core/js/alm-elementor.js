@@ -1,15 +1,5 @@
-/*
- * Ajax Load More - Elementor
- * connekthq.com/plugins/ajax-load-more/add-ons/elementor/
- * Copyright Connekt Media - http://connekthq.com
- * Author: Darren Cooney
- * Twitter: @KaptonKaos, @connekthq
- */
-
 var alm_elementor = {};
-
 (function () { 
-	/* Set Up Vars */
 	alm_elementor.init = true;
 	alm_elementor.paging = false;
 	alm_elementor.previousUrl = window.location.href;
@@ -44,7 +34,7 @@ var alm_elementor = {};
 
 			// First Element
 			alm_elementor.first = alm_elementor.container.querySelector(
-				".alm-elementor:first-child"
+				".alm-elementor"
 			);
 
 			// Paging (Not yet supported)

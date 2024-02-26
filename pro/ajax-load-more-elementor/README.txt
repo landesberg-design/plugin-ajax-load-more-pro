@@ -5,10 +5,10 @@ Author: Connekt Media
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/
 Requires at least: 4.0
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 1.1.5
+Version: 1.2.0
 
 Infinite scroll Elementor widget content with Ajax Load More.
 
@@ -21,7 +21,7 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 == Description ==
 
-The Elementor add-on provides functionality required for integrating with the Elementor Posts Widget.
+The Elementor add-on provides functionality required for integrating with the Elementor Posts, WooCommerce, Loop Grid Widget.
 
 http://connekthq.com/plugins/ajax-load-more/add-ons/elementor/
 
@@ -44,6 +44,11 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/elementor/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 1.2.0 - February 8, 2024 =
+* NEW: Added support for Loop Grid Elementor widget.
+* FIX: Fixed issue with add-on potentially not disabling the Load More button when no content remains.
+
 
 = 1.1.5 - September 27, 2023 =
 * UPDATE: Updated Elementor JavaScript to support new Google Analytics 4 implementation.

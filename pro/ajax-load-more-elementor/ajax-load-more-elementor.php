@@ -7,9 +7,9 @@
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
  * Copyright: Darren Cooney & Connekt Media
- * Version: 1.1.5
- * Elementor tested up to: 3.16.4
- * Elementor Pro tested up to: 3.16.2
+ * Version: 1.2.0
+ * Elementor tested up to: 3.19.1
+ * Elementor Pro tested up to: 3.19.1
  *
  * @package ALMElementor
  */
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_ELEMENTOR_VERSION', '1.1.5' );
-define( 'ALM_ELEMENTOR_RELEASE', 'September 27, 2023' );
+define( 'ALM_ELEMENTOR_VERSION', '1.2.0' );
+define( 'ALM_ELEMENTOR_RELEASE', 'February 8, 2024' );
 
 /**
  * Plugin activation hook.
@@ -34,7 +34,6 @@ function alm_elementor_install() {
 	if ( ! alm_is_elementor_activated() ) {
 		set_transient( 'alm_elementor_admin_notice', true, 5 );
 	}
-
 }
 register_activation_hook( __FILE__, 'alm_elementor_install' );
 
@@ -95,20 +94,19 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		 * Set up plugin.
 		 *
 		 * @since 1.0
-		 * @author Darren Cooney
 		 */
 		public function __construct() {
 			define( 'ALM_ELEMENTOR_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'ALM_ELEMENTOR_URL', plugins_url( '', __FILE__ ) );
 			define( 'ALM_ELEMENTOR_PREFIX', 'alm_elementor_' );
 
-			add_action( 'alm_elementor_installed', array( &$this, 'alm_elementor_installed' ) );
-			add_action( 'wp_enqueue_scripts', array( &$this, 'alm_elementor_enqueue_scripts' ) );
-			add_filter( 'alm_elementor_params', array( &$this, 'alm_elementor_params' ), 10, 2 );
-			add_filter( 'alm_elementor_page_link', array( &$this, 'alm_elementor_page_link' ), 10, 3 );
-			add_filter( 'alm_elementor_hide_pagination', array( &$this, 'alm_elementor_hide_pagination' ) );
-			add_action( 'alm_elementor_settings', array( &$this, 'alm_elementor_settings' ) );
-			add_action( 'wp_loaded', array( $this, 'init_widget' ) );
+			add_action( 'alm_elementor_installed', [ &$this, 'alm_elementor_installed' ] );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'alm_elementor_enqueue_scripts' ] );
+			add_filter( 'alm_elementor_params', [ &$this, 'alm_elementor_params' ], 10, 2 );
+			add_filter( 'alm_elementor_page_link', [ &$this, 'alm_elementor_page_link' ], 10, 3 );
+			add_filter( 'alm_elementor_hide_pagination', [ &$this, 'alm_elementor_hide_pagination' ] );
+			add_action( 'alm_elementor_settings', [ &$this, 'alm_elementor_settings' ] );
+			add_action( 'wp_loaded', [ $this, 'init_widget' ] );
 			load_plugin_textdomain( 'alm-elementor', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 		}
 
@@ -117,7 +115,6 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		 * Init the custom Elementor widget on `wp_loaded`.
 		 *
 		 * @since 1.0
-		 * @author Darren Cooney
 		 */
 		public function init_widget() {
 			// Check if Elementor installed and activated.
@@ -130,11 +127,10 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		/**
 		 * Create link for going back to page 1.
 		 *
-		 * @param int    $paged page number.
-		 * @param string $label label.
+		 * @param int    $paged The page number.
+		 * @param string $label The label.
+		 * @return string
 		 * @since 1.0
-		 * @author Darren Cooney
-		 * @return $link
 		 */
 		public function alm_elementor_page_link( $paged, $label ) {
 			if ( $paged > 1 && ! empty( $label ) ) {
@@ -142,34 +138,36 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 			}
 		}
 
-
 		/**
 		 * Set up initial Elemntor params.
 		 *
-		 * @param array $params elementor parameters.
+		 * @param array $params The Elementor parameters.
+		 * @return string The settings as raw JSON.
 		 * @since 1.0
-		 * @author Darren Cooney
-		 * @return $data
 		 */
 		public function alm_elementor_params( $params ) {
+			$elementor_params = [
+				'target'                     => $params['target'],
+				'url'                        => $params['url'],
+				'controls'                   => $params['controls'] ? $params['controls'] : 'true',
+				'scrolltop'                  => $params['scrolltop'] ? $params['scrolltop'] : '50',
+				'paged'                      => $params['paged'],
+				'container_class'            => apply_filters( 'alm_elementor_container_class', 'elementor-grid' ),
+				'woo_item_class'             => apply_filters( 'alm_elementor_woo_item_class', 'product' ),
+				'woo_pagination_class'       => apply_filters( 'alm_elementor_woo_pagination_class', 'woocommerce-pagination' ),
+				'posts_item_class'           => apply_filters( 'alm_elementor_posts_item_class', 'elementor-grid-item' ),
+				'posts_pagination_class'     => apply_filters( 'alm_elementor_posts_pagination_class', 'elementor-pagination' ),
+				'loop_grid_item_class'       => apply_filters( 'alm_elementor_loop_grid_item_class', 'e-loop-item' ),
+				'loop_grid_pagination_class' => apply_filters( 'alm_elementor_loop_grid_pagination_class', 'elementor-pagination' ),
+				'pagination_item'            => apply_filters( 'alm_elementor_pagination_item', 'a.page-numbers' ),
 
-			$elementor_params = array(
-				'target'                 => $params['target'],
-				'url'                    => $params['url'],
-				'controls'               => $params['controls'] ? $params['controls'] : 'true',
-				'scrolltop'              => $params['scrolltop'] ? $params['scrolltop'] : '50',
-				'paged'                  => $params['paged'],
-				'posts_container_class'  => apply_filters( 'alm_elementor_posts_container_class', 'elementor-posts' ),
-				'posts_item_class'       => apply_filters( 'alm_elementor_posts_item_class', 'elementor-grid-item' ),
-				'posts_pagination_class' => apply_filters( 'alm_elementor_posts_pagination_class', 'elementor-pagination' ),
-				'woo_container_class'    => apply_filters( 'alm_elementor_woo_container_class', 'products' ),
-				'woo_item_class'         => apply_filters( 'alm_elementor_woo_item_class', 'product' ),
-				'woo_pagination_class'   => apply_filters( 'alm_elementor_woo_pagination_class', 'woocommerce-pagination' ),
-				'pagination_item'        => apply_filters( 'alm_elementor_pagination_item', 'a.page-numbers' ),
-			);
+				// Deprecated.
+				'woo_container_class'        => apply_filters( 'alm_elementor_woo_container_class', 'products' ),
+				'posts_container_class'      => apply_filters( 'alm_elementor_posts_container_class', 'elementor-posts' ),
+				'loop_grid_container_class'  => apply_filters( 'alm_elementor_loop_grid_container_class', 'elementor-grid' ),
+			];
 
-			$data = 'data-elementor-settings="' . htmlspecialchars( wp_json_encode( $elementor_params ), ENT_QUOTES, 'UTF-8' ) . '"';
-			return $data;
+			return 'data-elementor-settings="' . htmlspecialchars( wp_json_encode( $elementor_params ), ENT_QUOTES, 'UTF-8' ) . '"';
 		}
 
 
@@ -177,7 +175,6 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		 * Hide the Elementor Post List navigation on ALM pages.
 		 *
 		 * @since 1.0
-		 * @author Darren Cooney
 		 */
 		public function alm_elementor_hide_pagination() {
 			$posts_cn = apply_filters( 'alm_elementor_posts_pagination_class', 'elementor-pagination' );
@@ -202,18 +199,16 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		 * Enqueue our scripts.
 		 *
 		 * @since 1.0
-		 * @author Darren Cooney
 		 */
 		public function alm_elementor_enqueue_scripts() {
-
 			// Use minified libraries if SCRIPT_DEBUG is turned off.
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 			// Enqueue JS.
 			wp_register_script(
 				'ajax-load-more-elementor',
 				plugins_url( '/core/js/alm-elementor' . $suffix . '.js', __FILE__ ),
-				array( 'ajax-load-more' ),
+				[ 'ajax-load-more' ],
 				ALM_ELEMENTOR_VERSION,
 				true
 			);
@@ -223,7 +218,6 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 		 * Create the settings panel.
 		 *
 		 * @since 1.0
-		 * @author Darren Cooney
 		 */
 		public function alm_elementor_settings() {
 			register_setting(
@@ -237,27 +231,22 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 	/**
 	 * Sanitize the license activation.
 	 *
-	 * @param string $new new license key.
+	 * @param string $key The new license key.
 	 * @since 1.0
-	 * @author Darren Cooney
-	 * @return $new
+	 * @return string
 	 */
-	function alm_elementor_sanitize_license( $new ) {
+	function alm_elementor_sanitize_license( $key ) {
 		$old = get_option( 'alm_elementor_license_key' );
-		if ( $old && $new !== $old ) {
+		if ( $old && $key !== $old ) {
 			delete_option( 'alm_elementor_license_status' );
 		}
-		return $new;
+		return $key;
 	}
-
-
 
 	/**
 	 * Initiate the class
 	 *
 	 * @since 1.0
-	 * @author Darren Cooney
-	 * @return $alm_elementor
 	 */
 	function alm_elementor() {
 		global $alm_elementor;
@@ -270,12 +259,10 @@ if ( ! class_exists( 'ALMElementor' ) ) :
 
 endif;
 
-
 /**
  * Software Licensing.
  *
  * @since 1.0
- * @author Darren Cooney
  */
 function alm_elementor_plugin_updater() {
 	if ( ! has_action( 'alm_pro_installed' ) && class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -284,12 +271,12 @@ function alm_elementor_plugin_updater() {
 		$edd_updater = new EDD_SL_Plugin_Updater(
 			ALM_STORE_URL,
 			__FILE__,
-			array(
+			[
 				'version' => ALM_ELEMENTOR_VERSION,
 				'license' => $license_key,
 				'item_id' => ALM_ELEMENTOR_ITEM_NAME,
 				'author'  => 'Darren Cooney',
-			)
+			]
 		);
 	}
 }

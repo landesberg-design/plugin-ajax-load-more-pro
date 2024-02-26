@@ -51,6 +51,14 @@ This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5
 
 == Changelog ==
 
+** 1.2.22 - February 8, 2024 **
+
+Elementor - 1.2.0
+
+- NEW: Added support for Loop Grid Elementor widget.
+- FIX: Fixed issue with add-on potentially not disabling the Load More button when no content remains.
+
+
 ** 1.2.21 - January 16, 2024 **
 
 UPGRADE NOTICE:
