@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: http://connekthq.com
- * Version: 2.0.2
+ * Version: 2.0.3
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ALM_CACHE_VERSION', '2.0.2' );
-define( 'ALM_CACHE_RELEASE', 'January 16, 2024' );
+define( 'ALM_CACHE_VERSION', '2.0.3' );
+define( 'ALM_CACHE_RELEASE', 'March 21, 2024' );
 
 /**
  * Display admin notice if plugin does not meet the requirements.
@@ -330,16 +330,17 @@ if ( ! class_exists( ' ALMCache' ) ) :
 		/**
 		 * Create a cached file and write it to cache directory.
 		 *
-		 * @param string     $id    The cache id.
-		 * @param string     $slug  Cache slug/hash.
-		 * @param string     $url   Cache URL.
-		 * @param string     $data  Raw HTML data.
-		 * @param string|int $count Post count in the cache html file.
-		 * @param string|int $total The total posts in the entire query.
+		 * @param string     $id     The cache id.
+		 * @param string     $slug   Cache slug/hash.
+		 * @param string     $url    Cache URL.
+		 * @param string     $data   Raw HTML data.
+		 * @param string|int $count  Post count in the cache html file.
+		 * @param string|int $total  The total posts in the entire query.
+		 * @param array      $facets Array of active facets from the filters add-on.
 		 * @return void
 		 * @since 2.0
 		 */
-		public static function create_cache_file( $id, $slug, $url, $data, $count = 0, $total = 0 ) {
+		public static function create_cache_file( $id, $slug, $url, $data, $count = 0, $total = 0, $facets = [] ) {
 			if ( ! $id || ! $data ) {
 				return;
 			}
@@ -362,6 +363,10 @@ if ( ! class_exists( ' ALMCache' ) ) :
 					'totalposts' => $total,
 				],
 			];
+
+			if ( $facets ) {
+				$json['facets'] = $facets; // Append facets to the cache file.
+			}
 
 			// Create the cache file.
 			$success = $wp_filesystem->put_contents( $path . '/' . $slug . '.json', wp_json_encode( $json ), FS_CHMOD_FILE );

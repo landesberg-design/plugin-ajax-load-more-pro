@@ -5,12 +5,12 @@ Author: Darren Cooney
 Author; URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/pro/
 Requires at least: 4.0
-Tested up to: 6.4
+Tested up to: 6.5
 Stable tag: trunk
 Requires PHP: 7.0
 Homepage: https://connekthq.com/ajax-load-more/
 Donate: https://connekthq.com/donate
-Version: 1.2.21
+Version: 1.2.23
 
 == Copyright ==
 Copyright 2024 Darren Cooney, Connekt Media
@@ -50,6 +50,29 @@ http://connekthq.com/ajax-load-more/pro/
 This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5.6.0 for compatibility with the Filters add-on 2.0 update.
 
 == Changelog ==
+
+** 1.2.23 - March 21, 2024 **
+
+Filters - 2.2.0
+
+- NEW: Added Posts Per Page filter.
+- NEW: Added support for Post Type facet filtering.
+- NEW: Added Filters WordPress Block for Ajax Load More rendering filters directly to the Block Editor.
+- NEW: When "Hide Inactive Filter Options" is enabled with facet filtering, the entire filter group (radio & checkboxes only) will now be hidden if no filter options are returned.
+- NEW: Added support for deeplink URLs when using multiple Filter instances.
+- NEW: Added new `redirect` parameter for redirecting users to a new page after a filter action. e.g. `[ ajax_load_more_filters redirect="https://website.com/results" ...]`
+- UPDATE: Added console warning when filters is missing the core Ajax Load More instance.
+- UPDATE: Added support for search with use of archive="true".
+- FIX: Fixed issue with Facet checkbox/radios and the Show/Hide More buttons not always functioning correctly.
+- FIX: Fixed issue with sortKey not resetting after clearing the sort value.
+- FIX: Fixed issue with restoring the default value of a filter after a change event.
+- UPDATE: Accessibility updates to filter checkbox/radios.
+- UPDATE: Various UI/UX updates throughout plugin admin and frontend.
+
+Cache - 2.0.3
+
+- UPDATE: Added support for caching Filter add-on facets.
+
 
 ** 1.2.22 - February 8, 2024 **
 

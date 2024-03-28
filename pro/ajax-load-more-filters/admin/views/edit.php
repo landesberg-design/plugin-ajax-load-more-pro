@@ -34,18 +34,20 @@ if ( ! $filter_vue ) { ?>
 					<p><?php esc_attr_e( 'Create an Ajax Load More filter by adjusting the filter options below.', 'ajax-load-more-filters' ); ?></p>
 					<?php } else { ?>
 					<div>
-						<h2><?php esc_attr_e( 'Edit', 'ajax-load-more-filters' ); ?>: <em v-cloak>{{ data[0].id }}</em></h2>
-						<p><?php esc_attr_e( 'Edit this filter by adjusting the filter options below.', 'ajax-load-more-filters' ); ?> <?php esc_attr_e( 'Changes must be saved before they take effect.', 'ajax-load-more-filters' ); ?></p>
+						<h2><?php esc_attr_e( 'Filter:', 'ajax-load-more-filters' ); ?> <em v-cloak>{{ data[0].id }}</em></h2>
+						<p>
+							<?php esc_attr_e( 'Edit this filter by adjusting the options below.', 'ajax-load-more-filters' ); ?>
+						</p>
 					</div>
 					<a href="<?php echo esc_attr( get_home_url() ); ?>?alm_filters_preview=<?php echo esc_attr( $filter_id ); ?>" target="_blank" class="button"><?php esc_attr_e( 'Preview Filter', 'ajax-load-more-filters' ); ?></a>
 					<?php } ?>
 				</header>
 
 				<header class="alm-filter--header">
+					<i class="fa fa-cog"></i>
 					<h3><?php esc_attr_e( 'Options', 'ajax-load-more-filters' ); ?>
 						<a title="<?php esc_attr_e( 'Set up your filter options by entering a filter ID and selecting the interaction style.', 'ajax-load-more-filters' ); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1" tabindex="-1"></a>
 					</h3>
-					<i class="fa fa-cog"></i>
 				</header>
 
 				<section class="alm-filter--options">
@@ -253,15 +255,19 @@ if ( ! $filter_vue ) { ?>
 
 				<!-- Header -->
 				<header class="alm-filter--header">
+					<i class="fa fa-filter"></i>
 					<h3>
 						<?php esc_attr_e( 'Filters', 'ajax-load-more-filters' ); ?>
 						<a title="<?php esc_attr_e( 'Build a custom filter group by adding and removing filter blocks.', 'ajax-load-more-filters' ); ?>" href="javascript:void(0)" class="fa fa-question-circle tooltip" tabindex="-1"></a>
 					</h3>
 					<div class="toggle-controls">
-						<button v-on:click="collapseFilters($event)">&ndash;<span class="offscreen"><?php esc_attr_e( 'Collapse All Filters', 'ajax-load-more-filters' ); ?></button>
-						<button class="last" v-on:click="expandFilters($event)">&#43;<span class="offscreen"><?php esc_attr_e( 'Expand All Filters', 'ajax-load-more-filters' ); ?></button>
+						<button v-on:click="collapseFilters($event)" title="<?php esc_attr_e( 'Collapse All Filters', 'ajax-load-more-filters' ); ?>" aria-label="<?php esc_attr_e( 'Collapse All Filters', 'ajax-load-more-filters' ); ?>">
+							&ndash;
+						</button>
+						<button class="last" v-on:click="expandFilters($event)"  title="<?php esc_attr_e( 'Expand All Filters', 'ajax-load-more-filters' ); ?>" aria-label="<?php esc_attr_e( 'Expand All Filters', 'ajax-load-more-filters' ); ?>">
+							&#43;
+						</button>
 					</div>
-					<i class="fa fa-filter"></i>
 				</header>
 
 				<!-- Vue Template -->
@@ -273,7 +279,9 @@ if ( ! $filter_vue ) { ?>
 
 				<!-- Add Filter -->
 				<section class="alm-filter--add">
-					<button type="button" v-on:click="addFilter($event)" class="button add-filter"><?php esc_attr_e( 'Add Filter', 'ajax-load-more-filters' ); ?></button>
+					<button type="button" v-on:click="addFilter($event)" class="button add-filter">
+						<?php esc_attr_e( 'Add Filter', 'ajax-load-more-filters' ); ?>
+					</button>
 				</section>
 
 				<!-- Filter Actions -->
@@ -289,9 +297,6 @@ if ( ! $filter_vue ) { ?>
 						{{ update_btn_text }}<?php } ?>
 					</button>
 					<div class="saving-filter"></div>
-					<?php if ( $editing ) { ?>
-						<a v-on:click="deleteFilter($event)" data-id="<?php echo str_replace( 'alm_filter_', '', $filter_id ); ?>" href="javascript:void(0);" class="alm-filter-delete"><?php esc_attr_e( 'Delete', 'ajax-load-more-filters' ); ?></a>
-					<?php } ?>
 				</section>
 
 			<?php
@@ -304,7 +309,7 @@ if ( ! $filter_vue ) { ?>
 				}
 				if ( isset( $filter['date_created'] ) ) {
 					echo '<div class="col">';
-						echo esc_attr__( 'Last Modified', 'ajax-load-more-filters' ) . ': <span>' . wp_kses_post( gmdate( 'Y/m/d h:i:s a', $filter['date_modified'] ) ) . '</span>';
+						echo esc_attr__( 'Modified', 'ajax-load-more-filters' ) . ': <span>' . wp_kses_post( gmdate( 'Y/m/d h:i:s a', $filter['date_modified'] ) ) . '</span>';
 					echo '</div>';
 				}
 				echo '</section>';
@@ -328,6 +333,7 @@ if ( ! $filter_vue ) { ?>
 <script type="text/x-template" id="filterTemplate">
 	<div class="alm-filter--wrapper" tabindex="-1">
 		<div class="alm-counter alm-drag" :title="'<?php esc_attr_e( 'Filter Block', 'ajax-load-more-filters' ); ?> #' + (index+1)" v-on:dblclick="toggleFilterGroup($event)">
+			<div class="drag"><span></span><span></span><span></span></div>
 			<div class="count">{{ index + 1 }}</div>
 			<input type="text"
 				class="filter-order"
@@ -337,7 +343,6 @@ if ( ! $filter_vue ) { ?>
 			data-id="order"
 			readonly="readonly"
 			>
-			<div class="drag"><span></span><span></span><span></span></div>
 		</div>
 
 		<!-- Key -->
@@ -350,7 +355,7 @@ if ( ! $filter_vue ) { ?>
 						href="javascript:void(0)"
 						class="fa fa-question-circle tooltip" tabindex="-1"
 					></a>
-			</div>
+				</div>
 				<div class="item">
 					<div class="select-wrapper">
 						<select id="filter-key"
@@ -368,8 +373,12 @@ if ( ! $filter_vue ) { ?>
 		</div>
 
 		<div class="collapsible-controls">
-			<button class="open" v-on:click="toggleFilterGroup($event)" title="<?php esc_attr_e( 'Toggle filter parameters', 'ajax-load-more-filters' ); ?>">
-				<span><?php esc_attr_e( 'Toggle View', 'ajax-load-more-filters' ); ?></span>
+			<button
+				class="open"
+				v-on:click="toggleFilterGroup($event)"
+				title="<?php esc_attr_e( 'Expand/Collapse Filter Group', 'ajax-load-more-filters' ); ?>"
+				aria-label="<?php esc_attr_e( 'Expand/Collapse Filter Group', 'ajax-load-more-filters' ); ?>"
+				>
 				<i class="control minus">&ndash;</i>
 				<i class="control plus">&#43;</i>
 			</button>
@@ -670,7 +679,7 @@ if ( ! $filter_vue ) { ?>
 								v-on:change="filterChange($event)"
 							>
 								<option value="">-- <?php esc_attr_e( 'Select Field Type', 'ajax-load-more-filters' ); ?> --</option>
-								<option v-for="field_type in field_types" :value="field_type.value" :selected="field_type.value === filter.field_type ? 'selected' : ''" :disabled="field_type.value === '#'">{{ field_type.text }}</option>
+								<option v-for="field_type in field_types" :value="field_type.value" :selected="field_type.value === filter.field_type ? 'selected' : ''" :disabled="field_type.value === '#' || field_type.disabled === true">{{ field_type.text }}</option>
 							</select>
 						</div>
 					</div>
@@ -1354,7 +1363,7 @@ if ( ! $filter_vue ) { ?>
 			<div class="alm-filter--breakout">
 
 				<div class="alm-filters-inline-desc">
-					<h3><?php esc_attr_e( 'Filter Display Options', 'ajax-load-more-filters' ); ?></h3>
+					<h3><?php esc_attr_e( 'Display Options', 'ajax-load-more-filters' ); ?></h3>
 				</div>
 
 				<!-- Title -->

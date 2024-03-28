@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 Requires at least: 4.0.0
-Tested up to: 6.2.0
+Tested up to: 6.5.0
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 2.0.2
+Version: 2.0.3
 
 
 == Copyright ==
@@ -46,6 +46,11 @@ https://connekthq.com/plugins/ajax-load-more/add-ons/cache/
 5. Activate the plugin in the WP plugin dashboard.
 
 == Changelog ==
+
+= 2.0.3 - March 21, 2024 =
+* UPDATE: Added support for caching Filter add-on facets.
+
+
 = 2.0.2 - January 16, 2024 =
 * FIX: Fixed issue with display of cache URL on the Cache admin page.
 

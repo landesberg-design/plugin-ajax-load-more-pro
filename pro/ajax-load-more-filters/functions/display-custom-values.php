@@ -75,7 +75,6 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 		}
 
 		switch ( $field_type ) {
-
 			case 'select':
 			case 'select_multiple':
 				if ( ! empty( $match_array ) ) {
@@ -90,10 +89,7 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 					$return               .= '<option value="#"' . $selected . '>' . $default_select_option . '</option>';
 				}
 
-				$data_count          = ALMFilters::$facets && $obj['show_count'] ? ' data-count="true"' : ''; // Data attribute for facets.
-				$data_count_template = ALMFilters::$facets && $obj['show_count'] ? ' data-count-template="' . apply_filters( 'alm_filters_show_count_select_display', '(%count%)' ) . '"' : ''; // Data attribute for facets.
-
-				$return .= '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . esc_attr( $slug ) . '" data-name="' . $name . '"' . $selected . $data_count . $data_count_template . '>';
+				$return .= '<option id="' . $field_type . '-' . $slug . '"' . $fieldname . ' value="' . esc_attr( $slug ) . '" data-name="' . $name . '"' . $selected . '>';
 				$return .= esc_attr( $parent ) . esc_attr( $name );
 				$return .= '</option>';
 

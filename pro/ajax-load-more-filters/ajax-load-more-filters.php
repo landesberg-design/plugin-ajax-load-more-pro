@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.1.2
+ * Version: 2.2.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.1.2' );
-define( 'ALM_FILTERS_RELEASE', 'January 16, 2024' );
+define( 'ALM_FILTERS_VERSION', '2.2.0' );
+define( 'ALM_FILTERS_RELEASE', 'March 21, 2024' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -552,15 +552,15 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 				'alm_filters_localize',
 				[
 					'remove_active_filter' => __( 'Remove filter ', 'ajax-load-more-filters' ),
+					'hide_inactive_group'  => apply_filters( 'alm_filters_hide_inactive_group', true ),
 				]
 			);
 
 			// Enqueue CSS.
 			if ( ! alm_do_inline_css( '_alm_inline_css' ) && ! alm_css_disabled( '_alm_filters_disable_css' ) ) {
 				// Not inline or disabled.
-				$file = ALM_FILTERS_URL . '/dist/css/styles.css';
 				if ( class_exists( 'ALM_ENQUEUE' ) ) {
-					ALM_ENQUEUE::alm_enqueue_css( ALM_FILTERS_SLUG, $file );
+					ALM_ENQUEUE::alm_enqueue_css( ALM_FILTERS_SLUG, ALM_FILTERS_URL . '/dist/css/styles.css' );
 				}
 			}
 
@@ -598,32 +598,35 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		public static function alm_filters_shortcode( $atts ) {
 			$args    = shortcode_atts(
 				[
-					'id'      => '',
-					'target'  => '',
-					'preview' => false,
+					'id'       => '',
+					'target'   => '',
+					'preview'  => false,
+					'redirect' => false,
 				],
 				$atts
 			);
-			$id      = esc_attr( $args['id'] );
-			$target  = sanitize_key( $args['target'] );
-			$filter  = get_option( ALM_FILTERS_PREFIX . $id ); // Get the option.
-			$preview = esc_attr( $args['preview'] );
+			$id       = esc_attr( $args['id'] );
+			$target   = sanitize_key( $args['target'] );
+			$filter   = get_option( ALM_FILTERS_PREFIX . $id ); // Get the option.
+			$preview  = esc_attr( $args['preview'] );
+			$redirect = esc_attr( $args['redirect'] );
 
 			if ( $filter && $target ) {
-				$filter_array = unserialize( $filter );
-				return self::init( $filter_array, $target, $preview );
+				$filters = unserialize( $filter );
+				return self::init( $filters, $target, $preview, $redirect );
 			}
 		}
 
 		/**
 		 * Function to start the filter build process.
 		 *
-		 * @param array   $filters The array of filters.
-		 * @param string  $target  The target ALM ID.
-		 * @param boolean $preview Preview Mode.
+		 * @param array   $filters  Array of filters.
+		 * @param string  $target   Target ALM ID.
+		 * @param boolean $preview  Preview Mode.
+		 * @param string  $redirect Redirect user to new URL after filter.
 		 * @since 1.0
 		 */
-		public static function init( $filters = [], $target = '', $preview = false ) {
+		public static function init( $filters = [], $target = '', $preview = false, $redirect = false) {
 			if ( empty( $filters ) ) {
 				return;
 			}
@@ -649,6 +652,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 			$has_datepicker    = false;
 			$has_rangeslider   = false;
 			$container_element = 'div';
+			$redirect          = $redirect ? 'data-redirect="' . esc_attr( $redirect ) . '"' : '';
 
 			if ( $filters['filters'] ) {
 				$options_obj = [
@@ -672,7 +676,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 
 				$aria_roles = self::$facets ? ' aria-live="polite" aria-atomic="true"' : ''; // Add aria roles to container when facets enabled.
 
-				$output .= '<' . $container_element . $aria_roles . ' class="alm-filters alm-filters-container' . $facets_class . $color_class . '" id="alm-filters-' . $options_obj['id'] . '" data-target="' . $options_obj['target'] . '" data-style="' . $options_obj['style'] . '" data-id="' . $options_obj['id'] . '">';
+				$output .= '<' . $container_element . $aria_roles . ' class="alm-filters alm-filters-container' . $facets_class . $color_class . '" id="alm-filters-' . $options_obj['id'] . '" data-target="' . $options_obj['target'] . '" data-style="' . $options_obj['style'] . '" data-id="' . $options_obj['id'] . '" ' . $redirect . '>';
 
 				foreach ( $filters['filters'] as $f ) {
 					++$filter_count;
@@ -875,13 +879,13 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 
 				// Enqueue Datepicker CSS.
 				if ( $has_datepicker ) {
-					$datepicker_style = ( isset( $options['_alm_filters_flatpickr_theme'] ) ) ? $options['_alm_filters_flatpickr_theme'] : 'default';
+					$datepicker_style = isset( $options['_alm_filters_flatpickr_theme'] ) ? $options['_alm_filters_flatpickr_theme'] : 'default';
 					wp_enqueue_style( 'alm-flatpickr-' . $datepicker_style );
 				}
 
 				// Enqueue Range Slider CSS.
 				if ( $has_rangeslider ) {
-					$rangeslider_style = ( isset( $options['_alm_filters_flatpickr_theme'] ) ) ? $options['_alm_filters_flatpickr_theme'] : 'default';
+					$rangeslider_style = isset( $options['_alm_filters_flatpickr_theme'] ) ? $options['_alm_filters_flatpickr_theme'] : 'default';
 					wp_enqueue_style( 'alm-nouislider', ALM_FILTERS_URL . '/dist/vendor/nouislider/nouislider.min.css', '', ALM_FILTERS_VERSION );
 				}
 
@@ -1213,7 +1217,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 					'root'                => esc_url_raw( rest_url() ),
 					'nonce'               => wp_create_nonce( 'wp_rest' ),
 					'base_url'            => get_admin_url() . 'admin.php?page=ajax-load-more-filters',
-					'delete_filter'       => __( 'Are you sure you want to delete', 'ajax-load-more-filters' ),
+					'delete_filter'       => __( 'Are you sure you want to permanently delete', 'ajax-load-more-filters' ),
 					'ordering_parameters' => __( 'Ordering Parameters', 'ajax-load-more-filters' ),
 					'date_parameters'     => __( 'Date Parameters', 'ajax-load-more-filters' ),
 					'true_parameter'      => __( 'True', 'ajax-load-more-filters' ),
@@ -1225,7 +1229,10 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 					'tag_parameters'      => __( 'Tag Parameters', 'ajax-load-more-filters' ),
 					'create_filter'       => __( 'Create Filter', 'ajax-load-more-filters' ),
 					'update_filter'       => __( 'Save Changes', 'ajax-load-more-filters' ),
+					'saving_filter'       => __( 'Saving...', 'ajax-load-more-filters' ),
 					'saved_filter'        => __( 'Filter Saved', 'ajax-load-more-filters' ),
+					'expand_filter'       => __( 'Expand Filter', 'ajax-load-more-filters' ),
+					'close_filter'        => __( 'Close Filter', 'ajax-load-more-filters' ),
 				]
 			);
 		}
@@ -1263,7 +1270,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 			$data .= ' data-filters-paging="' . $paging . '"';
 			$data .= ' data-filters-scroll="' . $scroll . '"';
 			$data .= ' data-filters-scrolltop="' . $scrolltop . '"';
-			$data .= ' data-filters-debug="' . $debug . '"';
+			$data .= $debug === 'true' ? ' data-filters-debug="true"' : '';
 
 			if ( $target ) {
 				// Dynamically set `facets="true"` if set in filter.
@@ -1669,11 +1676,12 @@ endif;
 /**
  * The public function responsible for building the filters.
  *
- * @param array|string $data   Array of filter data or filter ID.
- * @param string       $target The target ID.
+ * @param array|string $data     Array of filter data or filter ID.
+ * @param string       $target   The target ID.
+ * @param string       $redirect Redirect user to new URL after filter.
  * @since 1.0
  */
-function alm_filters( $data, $target ) {
+function alm_filters( $data, $target, $redirect = false) {
 	if ( is_array( $data ) ) {
 		// Parse the filter array.
 		$id = isset( $data['id'] ) ? $data['id'] : false;
@@ -1690,7 +1698,7 @@ function alm_filters( $data, $target ) {
 
 	}
 
-	return ALMFilters::init( $data, $target );
+	return ALMFilters::init( $data, $target, false, $redirect );
 }
 
 /**

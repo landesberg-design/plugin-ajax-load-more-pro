@@ -168,15 +168,15 @@ function alm_filters_list_terms( $obj, $querystring, $id ) {
  * Term render method.
  * List elements in ul -> li
  *
- * @param string  $id Filter ID.
- * @param object  $obj Filter object.
- * @param array   $match_array Array of items to match.
- * @param array   $terms Tax terms.
- * @param boolean $init Is this the first run.
+ * @param string $id Filter ID.
+ * @param array  $obj Filter array.
+ * @param array  $match_array Array of items to match.
+ * @param array  $terms Tax terms.
+ * @param bool   $init Is this the first run.
  * @return mixed
  * @since 1.10.2
  */
-function alm_filters_build_terms_list( $id, $obj, $match_array, $terms, $init ) {
+function alm_filters_build_terms_list( $id, $obj = [], $match_array = [], $terms = [], $init = true ) {
 	if ( empty( $terms ) ) {
 		// Bail early if empty terms.
 		return;
@@ -261,13 +261,13 @@ function alm_filters_build_terms_list( $id, $obj, $match_array, $terms, $init ) 
  *
  * @param string $id          The filter ID.
  * @param array  $obj         Filter object array.
- * @param string $match_array The array to match for 'selected'.
+ * @param array  $match_array The array to match for 'selected'.
  * @param string $selected    The selected item.
  * @param array  $terms       The terms to display.
  * @since 10.1.2
  */
-function alm_filters_build_terms_select( $id, $obj, $match_array, $selected, $terms ) {
-	if ( ! $terms ) {
+function alm_filters_build_terms_select( $id, $obj, $match_array, $selected, $terms = [] ) {
+	if ( empty( $terms ) ) {
 		// Bail early if empty.
 		return;
 	}

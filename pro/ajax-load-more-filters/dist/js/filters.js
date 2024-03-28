@@ -8857,21 +8857,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since 1.10.1
  */
 function uiToggle(elements) {
-	if (!elements) {
-		return;
-	}
 	[].concat(_toConsumableArray(elements)).forEach(function (item) {
-		item.addEventListener("click", function () {
+		item.addEventListener('click', function () {
 			toggleFilter(this);
 		});
-		// Return/Enter.
-		item.addEventListener("keyup", function () {
+		item.addEventListener('keyup', function (e) {
+			var keyCode = e.keyCode;
 			// Number 13 is the "Enter" key on the keyboard
-			if (e.keyCode === 13) {
-				// Cancel the default action, if needed
+
+			if (keyCode === 13) {
 				e.preventDefault();
-				// Trigger the button element with a click
-				toggleFilter(e.target);
+				toggleFilter(e.target); // Trigger button element click.
 			}
 		});
 	});
@@ -8888,18 +8884,18 @@ var toggleFilter = function toggleFilter(el) {
 		return;
 	}
 	var parent = el.parentNode.parentNode;
-	var target = parent.querySelector(".alm-filter--inner");
+	var target = parent.querySelector('.alm-filter--inner');
 	if (!target) {
 		return;
 	}
-	if (target && el.getAttribute("aria-expanded") === "true") {
-		target.style.display = "none";
-		target.setAttribute("aria-hidden", true);
-		el.setAttribute("aria-expanded", false);
+	if (target && el.getAttribute('aria-expanded') === 'true') {
+		target.style.display = 'none';
+		target.setAttribute('aria-hidden', true);
+		el.setAttribute('aria-expanded', false);
 	} else {
-		target.style.display = "block";
-		target.setAttribute("aria-hidden", false);
-		el.setAttribute("aria-expanded", true);
+		target.style.display = 'block';
+		target.setAttribute('aria-hidden', false);
+		el.setAttribute('aria-expanded', true);
 	}
 };
 
@@ -8911,19 +8907,19 @@ var toggleFilter = function toggleFilter(el) {
 function checkboxLimitHandler(e) {
 	var button = e.currentTarget;
 	var parent = button.parentNode;
-	var items = parent.querySelectorAll("li.alm-filters-limit");
+	var items = parent.querySelectorAll('li.alm-filters-limit');
 
-	if (button.classList.contains("open")) {
-		button.classList.remove("open");
+	if (button.classList.contains('open')) {
+		button.classList.remove('open');
 		button.innerHTML = button.dataset.open;
 		[].concat(_toConsumableArray(items)).forEach(function (item) {
-			item.style.display = "none";
+			item.style.display = 'none';
 		});
 	} else {
-		button.classList.add("open");
+		button.classList.add('open');
 		button.innerHTML = button.dataset.close;
 		[].concat(_toConsumableArray(items)).forEach(function (item) {
-			item.style.display = "";
+			item.style.display = '';
 		});
 	}
 }
@@ -8935,12 +8931,8 @@ function checkboxLimitHandler(e) {
  * @since 2.0.0
  */
 function setCheckboxLimits(buttons) {
-	if (!buttons) {
-		return;
-	}
 	[].concat(_toConsumableArray(buttons)).forEach(function (button) {
-		// Add click event.
-		button.addEventListener("click", checkboxLimitHandler);
+		button.addEventListener('click', checkboxLimitHandler); // Add click event.
 	});
 }
 
@@ -8953,34 +8945,34 @@ function updateCheckboxLimits(element) {
 	if (!element) {
 		return;
 	}
-	var button = element.querySelector("a.alm-filter--checkbox-limit");
+	var button = element.querySelector('a.alm-filter--checkbox-limit');
 	if (!button) {
 		return;
 	}
 
-	button.removeEventListener("click", checkboxLimitHandler);
+	// Remove event listener.
+	button.removeEventListener('click', checkboxLimitHandler);
 
 	var limit = parseInt(button.dataset.limit);
 	var template = button.dataset.template;
-	var parent = button.parentNode;
-	var items = parent.querySelectorAll("li.field-parent:not(.disabled)");
+
+	// Get all visible items that are not display: none.
+	var items = button.parentNode.querySelectorAll('li.field-parent:not([style*="display: none;"])');
 	var count = items.length;
 	var diff = count - limit;
 
-	var open = template.replace("%total%", diff);
-
-	button.classList.remove("open");
+	button.classList.remove('open');
 	if (count <= limit) {
-		button.style.display = "none";
+		button.style.display = 'none';
 	} else {
-		button.style.display = "inline-block";
-		button.innerHTML = open;
-		button.addEventListener("click", checkboxLimitHandler);
+		button.style.display = 'inline-block';
+		button.innerHTML = template.replace('%total%', diff);
+		button.addEventListener('click', checkboxLimitHandler);
 
 		// Loop list items and set display.
 		[].concat(_toConsumableArray(items)).forEach(function (item, index) {
 			if (index >= limit) {
-				item.style.display = "none";
+				item.style.display = 'none';
 			}
 		});
 	}
@@ -9113,6 +9105,48 @@ function createPagingURL(alm, init) {
 
 /***/ }),
 
+/***/ "./src/js/frontend/helpers/getInstances.js":
+/*!*************************************************!*\
+  !*** ./src/js/frontend/helpers/getInstances.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getFilterInstances = getFilterInstances;
+exports.getFilters = getFilters;
+
+var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
+
+var _Variables2 = _interopRequireDefault(_Variables);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Get all filter instances.
+ *
+ * @return {NodeList} The filter instances.
+ */
+function getFilterInstances() {
+  return document.querySelectorAll(_Variables2.default.filters_classname);
+}
+
+/**
+ * Get all individual filters.
+ *
+ * @return {NodeList} The filter instances.
+ */
+function getFilters() {
+  return document.querySelectorAll(_Variables2.default.filters_classname + ' ' + _Variables2.default.filter_classname);
+}
+
+/***/ }),
+
 /***/ "./src/js/frontend/helpers/multipleInstances.js":
 /*!******************************************************!*\
   !*** ./src/js/frontend/helpers/multipleInstances.js ***!
@@ -9126,6 +9160,7 @@ function createPagingURL(alm, init) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = multipleInstances;
 
 var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
 
@@ -9139,12 +9174,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {boolean} Are there multiple instances of core ALM on the page.
  * @since 1.8.1
  */
-var multipleInstances = function multipleInstances() {
-  var instances = _Variables2.default.alm_core || document.querySelectorAll(_Variables2.default.alm_core_classname);
-
+function multipleInstances() {
+  var instances = document.querySelectorAll(_Variables2.default.alm_core_classname);
   return instances && instances.length > 1 ? true : false;
-};
-exports.default = multipleInstances;
+}
 
 /***/ }),
 
@@ -9634,7 +9667,7 @@ exports.toggleSelect = toggleSelect;
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
- * Set the state of the `Toggle All` button
+ * Set the state of the `Toggle All` button.
  *
  * @param {String} fieldtype the current field type (checkbox, radio etc)
  * @param {Array} items Array of items
@@ -9642,14 +9675,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since 1.8.1
  */
 function toggleAll(fieldtype) {
-	var items = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+	var items = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 	var parent = arguments[2];
 
-	var allElement = parent.querySelector("[data-type=all]");
-	if (fieldtype === "checkbox" && allElement) {
+	var allElement = parent.querySelector('[data-type=all]');
+	if (fieldtype === 'checkbox' && allElement) {
 		// Get all standard checkboxes not 'ALL'
 		var checkboxItems = [].concat(_toConsumableArray(items)).filter(function (item) {
-			return item.dataset.type === "checkbox";
+			return item.dataset.type === 'checkbox';
 		});
 
 		var allChecked = true;
@@ -9662,7 +9695,7 @@ function toggleAll(fieldtype) {
 				for (var _iterator = checkboxItems[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var item = _step.value;
 
-					if (!item.classList.contains("active")) {
+					if (!item.classList.contains('active')) {
 						allChecked = false;
 						break;
 					}
@@ -9683,11 +9716,11 @@ function toggleAll(fieldtype) {
 			}
 
 			if (allChecked) {
-				allElement.classList.add("active");
-				allElement.setAttribute("aria-checked", true);
+				allElement.classList.add('active');
+				allElement.setAttribute('aria-checked', true);
 			} else {
-				allElement.classList.remove("active");
-				allElement.setAttribute("aria-checked", false);
+				allElement.classList.remove('active');
+				allElement.setAttribute('aria-checked', false);
 			}
 		}
 	}
@@ -9707,30 +9740,30 @@ function toggleSelect() {
 	}
 
 	// Get checkbox filters ONLY
-	var checkboxFilters = filters.querySelectorAll(".alm-filter[data-fieldtype=checkbox]");
+	var checkboxFilters = filters.querySelectorAll('.alm-filter[data-fieldtype=checkbox]');
 
 	// Loop checkbox filters
 	[].concat(_toConsumableArray(checkboxFilters)).forEach(function (filter, e) {
 		// Select All link
-		var selectAll = filter.querySelector(".alm-filter--link[data-type=all]");
+		var selectAll = filter.querySelector('.alm-filter--link[data-type=all]');
 		if (!selectAll) {
 			return false;
 		}
 
 		// Get all checkbox items
-		var items = filter.querySelectorAll(".alm-filter--link[data-type=checkbox]");
+		var items = filter.querySelectorAll('.alm-filter--link[data-type=checkbox]');
 		if (!items) {
 			return false;
 		}
 
 		// Filter unchecked items
 		var unchecked = [].concat(_toConsumableArray(items)).filter(function (item) {
-			return !item.classList.contains("active");
+			return !item.classList.contains('active');
 		});
 
 		// If no items left unchecked, check All option
 		if (unchecked.length < 1) {
-			selectAll.classList.add("active");
+			selectAll.classList.add('active');
 		}
 	});
 }
@@ -9750,7 +9783,7 @@ function toggleSelect() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.resetFilter = exports.reset = exports.start = undefined;
+exports.wpblock = exports.resetFilter = exports.reset = exports.start = undefined;
 
 var _a11yarrows = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
 
@@ -9763,6 +9796,8 @@ var _Variables = __webpack_require__(/*! ./global/Variables */ "./src/js/fronten
 var _Variables2 = _interopRequireDefault(_Variables);
 
 var _addons = __webpack_require__(/*! ./helpers/addons */ "./src/js/frontend/helpers/addons.js");
+
+var _getInstances = __webpack_require__(/*! ./helpers/getInstances */ "./src/js/frontend/helpers/getInstances.js");
 
 var _multipleInstances = __webpack_require__(/*! ./helpers/multipleInstances */ "./src/js/frontend/helpers/multipleInstances.js");
 
@@ -9777,14 +9812,6 @@ var _BuildDataObj2 = _interopRequireDefault(_BuildDataObj);
 var _CurrentFilters = __webpack_require__(/*! ./modules/CurrentFilters */ "./src/js/frontend/modules/CurrentFilters.js");
 
 var _CurrentFilters2 = _interopRequireDefault(_CurrentFilters);
-
-var _getKeyElement = __webpack_require__(/*! ./modules/currentFilters/getKeyElement */ "./src/js/frontend/modules/currentFilters/getKeyElement.js");
-
-var _getKeyElement2 = _interopRequireDefault(_getKeyElement);
-
-var _getKeyObject = __webpack_require__(/*! ./modules/currentFilters/getKeyObject */ "./src/js/frontend/modules/currentFilters/getKeyObject.js");
-
-var _getKeyObject2 = _interopRequireDefault(_getKeyObject);
 
 var _Defaults = __webpack_require__(/*! ./modules/Defaults */ "./src/js/frontend/modules/Defaults.js");
 
@@ -9812,6 +9839,14 @@ var _TriggerChange = __webpack_require__(/*! ./modules/TriggerChange */ "./src/j
 
 var _TriggerChange2 = _interopRequireDefault(_TriggerChange);
 
+var _getKeyElement = __webpack_require__(/*! ./modules/currentFilters/getKeyElement */ "./src/js/frontend/modules/currentFilters/getKeyElement.js");
+
+var _getKeyElement2 = _interopRequireDefault(_getKeyElement);
+
+var _getKeyObject = __webpack_require__(/*! ./modules/currentFilters/getKeyObject */ "./src/js/frontend/modules/currentFilters/getKeyObject.js");
+
+var _getKeyObject2 = _interopRequireDefault(_getKeyObject);
+
 var _DatePicker = __webpack_require__(/*! ./types/DatePicker */ "./src/js/frontend/types/DatePicker.js");
 
 var _RangeSliders = __webpack_require__(/*! ./types/RangeSliders */ "./src/js/frontend/types/RangeSliders.js");
@@ -9835,49 +9870,59 @@ __webpack_require__(/*! ./helpers/polyfills */ "./src/js/frontend/helpers/polyfi
  * @since 1.0
  */
 var almFiltersInit = function almFiltersInit(filter) {
-	var style = filter.dataset.style; // change, button
+	if (!filter) {
+		return;
+	}
+
+	var _filter$dataset = filter.dataset,
+	    style = _filter$dataset.style,
+	    target = _filter$dataset.target;
+
+	var alm = document.querySelector('.ajax-load-more-wrap[data-id="' + target + '"]');
+	if (!alm) {
+		console.warn('Ajax Load More: Filters - Unable to locate core Ajax Load More instance. Ensure the target attribute is set correctly on each instance of filters.');
+	}
 
 	// Click/Change Event
 	var almFiltersClick = function almFiltersClick() {
 		if (_Variables2.default.alm_filtering) {
 			return false; // exit if animating/loading
 		}
-
 		(0, _TriggerChange2.default)(filter);
 	};
 
 	// Radio + Checkbox Click Event
 	var almFilterChange = function almFilterChange(event) {
-		if (_Variables2.default.alm_filtering) {
-			return false; // exit if animating/loading
-		}
-
 		event.preventDefault();
 
-		var target = event.currentTarget;
-		var fieldtype = target.dataset.type;
-		var current_id = target.id;
-		var parent = target.closest(".alm-filter"); // <div .alm-filter />// All items in filter
-		var items = parent.querySelectorAll(".alm-filter--link"); // All items in filter
+		if (_Variables2.default.alm_filtering) {
+			return false; // Exit if animating/loading
+		}
 
-		if (fieldtype === "all") {
-			if (target.classList.contains("active")) {
+		var element = event.currentTarget;
+		var fieldtype = element.dataset.type;
+		var current_id = element.id;
+		var parent = element.closest('.alm-filter'); // <div .alm-filter />// All items in filter
+		var items = parent.querySelectorAll('.alm-filter--link'); // All items in filter
+
+		if (fieldtype === 'all') {
+			if (element.classList.contains('active')) {
 				// Uncheck All
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
-					item.classList.remove("active");
-					item.setAttribute("aria-checked", false);
+					item.classList.remove('active');
+					item.setAttribute('aria-checked', false);
 				});
 			} else {
 				// Check All
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
-					item.classList.add("active");
-					item.setAttribute("aria-checked", true);
+					item.classList.add('active');
+					item.setAttribute('aria-checked', true);
 				});
 			}
 		} else {
-			if (fieldtype === "radio" || fieldtype === "star_rating") {
+			if (fieldtype === 'radio' || fieldtype === 'star_rating') {
 				// Exit if active and preselected value set
-				if (parent.classList.contains("alm-filter--preselected") && target.classList.contains("active")) {
+				if (parent.classList.contains('alm-filter--preselected') && element.classList.contains('active')) {
 					event.preventDefault();
 					return false;
 				}
@@ -9885,19 +9930,19 @@ var almFiltersInit = function almFiltersInit(filter) {
 				// Loop all radios
 				[].concat(_toConsumableArray(items)).forEach(function (item, e) {
 					if (item.id !== current_id) {
-						item.classList.remove("active");
-						item.setAttribute("aria-checked", false);
+						item.classList.remove('active');
+						item.setAttribute('aria-checked', false);
 					}
 				});
 			}
 
 			// Set active state
-			if (target.classList.contains("active")) {
-				target.classList.remove("active");
-				target.setAttribute("aria-checked", false);
+			if (element.classList.contains('active')) {
+				element.classList.remove('active');
+				element.setAttribute('aria-checked', false);
 			} else {
-				target.classList.add("active");
-				target.setAttribute("aria-checked", true);
+				element.classList.add('active');
+				element.setAttribute('aria-checked', true);
 			}
 
 			// Check for `toggle All` button
@@ -9905,24 +9950,28 @@ var almFiltersInit = function almFiltersInit(filter) {
 		}
 
 		// Trigger Change Event
-		if (style === "change") {
+		if (style === 'change') {
 			(0, _TriggerChange2.default)(filter);
 		}
 	};
 
 	// Radio + Checkbox Event listeners
-	var almFilterLinks = filter.querySelectorAll(".alm-filter--link");
+	var almFilterLinks = filter.querySelectorAll('.alm-filter--link');
 	if (almFilterLinks) {
 		[].concat(_toConsumableArray(almFilterLinks)).forEach(function (item, e) {
-			item.addEventListener("click", almFilterChange);
-			item.addEventListener("keyup", function (event) {
-				if (event.keyCode === 13 || event.keyCode === 32) {
+			item.addEventListener('click', almFilterChange);
+			item.addEventListener('keyup', function (event) {
+				var keyCode = event.keyCode;
+
+				if (keyCode === 13 || keyCode === 32) {
 					// Enter/return click || spacebar
 					almFilterChange(event);
 				}
 			});
-			item.addEventListener("keydown", function (event) {
-				if (event.keyCode === 32) {
+			item.addEventListener('keydown', function (event) {
+				var keyCode = event.keyCode;
+
+				if (keyCode === 32) {
 					//  Prevent the default scrollbar action of scrolling the page
 					event.preventDefault();
 					event.stopPropagation();
@@ -9933,22 +9982,21 @@ var almFiltersInit = function almFiltersInit(filter) {
 	}
 
 	// Radio + Checkbox - a11yarrows controls
-	var radioInputs = filter.querySelectorAll("div.alm-filter[data-fieldtype=radio]");
+	var radioInputs = filter.querySelectorAll('div.alm-filter[data-fieldtype=radio]');
 	if (radioInputs) {
-		[].concat(_toConsumableArray(radioInputs)).forEach(function (item, e) {
-			var target = item.querySelector("ul");
+		[].concat(_toConsumableArray(radioInputs)).forEach(function (item) {
+			var target = item.querySelector('ul');
 			a11yarrows.init(target, {
-				// options
-				selector: ".alm-filter--link"
+				selector: '.alm-filter--link' // options
 			});
 		});
 	}
 
 	// Star Rating
-	var starRatings = filter.querySelectorAll("div.alm-filter[data-fieldtype=star_rating]");
+	var starRatings = filter.querySelectorAll('div.alm-filter[data-fieldtype=star_rating]');
 	if (starRatings) {
-		[].concat(_toConsumableArray(starRatings)).forEach(function (rating, e) {
-			var stars = rating.querySelectorAll("li div.field-starrating");
+		[].concat(_toConsumableArray(starRatings)).forEach(function (rating) {
+			var stars = rating.querySelectorAll('li div.field-starrating');
 			if (stars) {
 				(0, _StarRating2.default)(stars);
 			}
@@ -9956,46 +10004,48 @@ var almFiltersInit = function almFiltersInit(filter) {
 	}
 
 	// Textfield Button Event listeners
-	var almFiltertextButtons = filter.querySelectorAll(".alm-filter--text-wrap.has-button button");
+	var almFiltertextButtons = filter.querySelectorAll('.alm-filter--text-wrap.has-button button');
 	if (almFiltertextButtons) {
 		[].concat(_toConsumableArray(almFiltertextButtons)).forEach(function (button) {
-			button.addEventListener("click", almFiltersClick);
+			button.addEventListener('click', almFiltersClick);
 		});
 	}
 
 	// Change Event (Select)
-	if (style === "change") {
+	if (style === 'change') {
 		// Loop all items and add the event listener
-		var almFilterItems = filter.querySelectorAll(".alm-filter--item");
+		var almFilterItems = filter.querySelectorAll('.alm-filter--item');
 		if (almFilterItems) {
 			[].concat(_toConsumableArray(almFilterItems)).forEach(function (item) {
-				item.addEventListener("change", almFiltersClick);
+				item.addEventListener('change', almFiltersClick);
 			});
 		}
 	}
 
 	// Button
-	if (style === "button") {
-		var almFilterButton = filter.querySelector(".alm-filters--button");
+	if (style === 'button') {
+		var almFilterButton = filter.querySelector('.alm-filters--button');
 		if (almFilterButton) {
-			almFilterButton.addEventListener("click", almFiltersClick);
+			almFilterButton.addEventListener('click', almFiltersClick);
 		}
 	}
 
 	// Reset Button
-	var resetButton = filter && filter.querySelector(_Variables2.default.reset_btn_classname);
+	var resetButton = filter.querySelector(_Variables2.default.reset_btn_classname);
 	if (resetButton) {
-		resetButton.addEventListener("click", function () {
+		resetButton.addEventListener('click', function () {
 			window.almFiltersClear(true, filter);
 		});
 	}
 
 	// Attach enter click listener for textfields
-	var almFilterTextfields = filter.querySelectorAll(".alm-filter--textfield");
+	var almFilterTextfields = filter.querySelectorAll('.alm-filter--textfield');
 	if (almFilterTextfields) {
-		[].concat(_toConsumableArray(almFilterTextfields)).forEach(function (item, e) {
-			item.addEventListener("keyup", function (e) {
-				if (e.keyCode === 13) {
+		[].concat(_toConsumableArray(almFilterTextfields)).forEach(function (item) {
+			item.addEventListener('keyup', function (event) {
+				var keyCode = event.keyCode;
+
+				if (keyCode === 13) {
 					// Enter/return click
 					almFiltersClick();
 				}
@@ -10004,25 +10054,25 @@ var almFiltersInit = function almFiltersInit(filter) {
 	}
 
 	// Datepicker init.
-	var datePickers = filter.querySelectorAll("input.alm-flatpickr");
+	var datePickers = filter.querySelectorAll('input.alm-flatpickr');
 	if (datePickers) {
 		(0, _DatePicker.setDatePickers)(filter.dataset.id, datePickers);
 	}
 
 	// RangeSlider init.
-	var rangeSliders = filter.querySelectorAll("div.alm-range-slider");
+	var rangeSliders = filter.querySelectorAll('div.alm-range-slider');
 	if (rangeSliders) {
 		(0, _RangeSliders.setRangeSliders)(filter.dataset.id, rangeSliders, style);
 	}
 
 	// Toggle Filter button.
-	var filterToggles = filter.querySelectorAll("div.alm-filter--title .alm-filter--toggle");
+	var filterToggles = filter.querySelectorAll('div.alm-filter--title .alm-filter--toggle');
 	if (filterToggles) {
 		(0, _UI.uiToggle)(filterToggles);
 	}
 
 	// Checkbox Limit buttons.
-	var checkboxLimitToggles = filter.querySelectorAll("a.alm-filter--checkbox-limit");
+	var checkboxLimitToggles = filter.querySelectorAll('a.alm-filter--checkbox-limit');
 	if (checkboxLimitToggles) {
 		(0, _UI.setCheckboxLimits)(checkboxLimitToggles);
 	}
@@ -10043,18 +10093,21 @@ window.almFiltersFacets = function (facets) {
 /**
  * Reset Button Callback.
  *
- * @param {Element} filter The current filter element.
  * @param {object} obj The active filters object.
  */
-window.almFiltersResetStatus = function (filter, obj) {
-	var resetButton = filter && filter.querySelector(_Variables2.default.reset_btn_classname);
-	if (resetButton) {
-		if (obj === "") {
-			resetButton.classList.add("hidden");
-		} else {
-			resetButton.classList.remove("hidden");
-		}
+window.almFiltersResetStatus = function (obj) {
+	var resetButtons = document.querySelectorAll(_Variables2.default.reset_btn_classname);
+	if (!resetButtons) {
+		return;
 	}
+
+	[].concat(_toConsumableArray(resetButtons)).forEach(function (button) {
+		if (obj === '') {
+			button.classList.add('hidden');
+		} else {
+			button.classList.remove('hidden');
+		}
+	});
 };
 
 /**
@@ -10063,28 +10116,42 @@ window.almFiltersResetStatus = function (filter, obj) {
  * @param {Element} element The clicked element.
  */
 window.removeSelectedFilter = function (element) {
-	var almFilters = _Variables2.default.almFilters;
-	var key = element.dataset.key;
-	var value = element.dataset.value;
-	var obj = (0, _getKeyObject2.default)(key, value); // Return the el container (.alm-filter)
-	var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
+	var _element$dataset = element.dataset,
+	    key = _element$dataset.key,
+	    value = _element$dataset.value;
+
+	var obj = (0, _getKeyObject2.default)(key);
+
+	var target = obj.target,
+	    fieldType = obj.fieldType;
+
+	if (!target || !fieldType) {
+		return;
+	}
+	var el = (0, _getKeyElement2.default)(target, value, fieldType);
+
+	// Get the parent filter group.
+	var filter = target.closest(_Variables2.default.filters_classname);
+	if (!filter) {
+		return;
+	}
 
 	switch (obj.fieldType) {
-		case "select":
+		case 'select':
 			// if has a selected value
-			el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : "#";
-			(0, _TriggerChange2.default)(almFilters);
+			el.value = target.dataset.selectedValue ? target.dataset.selectedValue : '#';
+			(0, _TriggerChange2.default)(filter);
 			break;
 
-		case "text":
-			el.value = "";
-			(0, _TriggerChange2.default)(almFilters);
+		case 'text':
+			el.value = '';
+			(0, _TriggerChange2.default)(filter);
 			break;
 
 		default:
 			el.click();
-			if (almFilters.dataset.style === "button") {
-				(0, _TriggerChange2.default)(almFilters);
+			if (filter.dataset.style === 'button') {
+				(0, _TriggerChange2.default)(filter);
 			}
 			break;
 	}
@@ -10096,84 +10163,62 @@ window.removeSelectedFilter = function (element) {
  * @param {Element} element The clicked element
  */
 window.removeSelectedFilterEnter = function (event) {
-	if (!event) {
-		return false;
-	}
+	var keyCode = event.keyCode;
 
-	if (event.keyCode === 13) {
-		// Enter/Return click
-		var element = event.target;
-
-		var almFilters = _Variables2.default.almFilters;
-		var key = element.dataset.key;
-		var value = element.dataset.value;
-		var obj = (0, _getKeyObject2.default)(key, value); // Return the el container (.alm-filter)
-		var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
-
-		switch (obj.fieldType) {
-			case "select":
-				// if has a selected value
-				el.value = obj.target.dataset.selectedValue ? obj.target.dataset.selectedValue : "#";
-				(0, _TriggerChange2.default)(almFilters);
-				break;
-
-			case "text":
-				el.value = "";
-				(0, _TriggerChange2.default)(almFilters);
-				break;
-
-			default:
-				el.click();
-				if (almFilters.dataset.style === "button") {
-					(0, _TriggerChange2.default)(almFilters);
-				}
-				break;
-		}
+	if (keyCode === 13) {
+		removeSelectedFilter(event.target); // Enter/Return click
 	}
 };
 
 /**
  * Initiate Ajax Load More filters.
- *
  * Public JS function.
  *
- * @param {string} target The filter instance ID.
+ * @param {string}  filter_id     The filter instance ID.
+ * @param {boolean} isBlockEditor Is this a block editor instance.
  * @since 1.7.5
  */
 var start = function start() {
-	var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
+	var filter_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var isBlockEditor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 	var className = _Variables2.default.filters_classname;
-	var almFilters = target ? document.querySelectorAll(className + "[data-id=\"" + target + "\"]") : document.querySelectorAll("" + className);
+
+	var almFilters = filter_id ? document.querySelectorAll(className + '[data-id="' + filter_id + '"]') : document.querySelectorAll('' + className);
 
 	if (!almFilters) {
-		return false; // Exit if empty.
+		return; // Exit if empty.
 	}
 
 	// Loop each filter.
 	almFilters.forEach(function (filter) {
+		// Initiate each filter instance.
 		almFiltersInit(filter);
+
+		// Set the toggle state of the filter.
+		(0, _toggle.toggleSelect)(filter);
+
+		if (isBlockEditor) {
+			return true; // Exit early if in the WP Block Editor.
+		}
+
 		var target = filter.dataset.target;
-		var alm = document.querySelector(".ajax-load-more-wrap[data-id=\"" + target + "\"]");
+		var alm = document.querySelector('.ajax-load-more-wrap[data-id="' + target + '"]');
 		if (alm) {
-			var almListing = alm.querySelector(".alm-listing[data-filters=true]");
+			var almListing = alm.querySelector('.alm-listing[data-filters=true]');
 			// Set scroll & touch listeners if required to update the paging URL.
 			// Exit if Paging add-on is active so we don't update the browser URL.
-			if (!(0, _multipleInstances2.default)() && almListing && almListing.dataset.paging !== "true") {
+			if (!(0, _multipleInstances2.default)() && almListing && almListing.dataset.paging !== 'true') {
 				var pagination = almListing.dataset.filtersPaging;
-				if (pagination === "true") {
-					window.addEventListener("touchstart", function () {
+				if (pagination === 'true') {
+					window.addEventListener('touchstart', function () {
 						(0, _Scroll2.default)(filter, almListing);
 					});
-					window.addEventListener("scroll", function () {
+					window.addEventListener('scroll', function () {
 						(0, _Scroll2.default)(filter, almListing);
 					});
 				}
 			}
 		}
-
-		// Set the toggle state of the filter.
-		(0, _toggle.toggleSelect)(filter);
 	});
 };
 exports.start = start;
@@ -10182,13 +10227,13 @@ exports.start = start;
  * Initiate Filters on page load.
  */
 
-window.addEventListener("load", function () {
+window.addEventListener('load', function () {
 	if (_Variables2.default.almFilters) {
 		start();
 	}
 
 	// Dispatch history change event on page load to allow for pushstate to trigger on first page.
-	if (typeof window.history.pushState === "function") {
+	if (typeof window.history.pushState === 'function') {
 		var url = window.location.search;
 		var state = { permalink: url };
 		history.replaceState(state, null, url);
@@ -10199,7 +10244,7 @@ window.addEventListener("load", function () {
  * Fires when users click back or forward browser buttons.
  * Popstate is only available when a single instance of Ajax Load More is on the screen.
  */
-window.addEventListener("popstate", function (event) {
+window.addEventListener('popstate', function (event) {
 	// Safari popstate fix
 	// Safari triggers a popstate anytime the back button is pressed.
 	// This flag prevents execution from articles or other pages.
@@ -10220,21 +10265,20 @@ window.addEventListener("popstate", function (event) {
 
 	var querystring = window.location.search;
 	var url = event.state ? event.state.permalink : querystring; // Get state or querystring
-	url = url.replace("?", ""); // remove `?` param
+	url = url.replace('?', ''); // remove `?` param
 
 	var resetButton = document.querySelector(_Variables2.default.reset_btn_classname);
 
-	// Empty URL or empty querystring
-	if (url === "" || url === null || querystring === "") {
+	// Empty URL or empty querystring.
+	if (!url || querystring === '') {
 		window.almFiltersClear(false);
 		if (resetButton) {
-			resetButton.classList.add("hidden");
+			resetButton.classList.add('hidden');
 		}
 	} else {
-		var urlArray = (0, _ParseQuerystring2.default)(url); // [helpers/helpers.js]
-		(0, _SetSelectedElements2.default)(urlArray); // [modules/setSelectedElements.js]
+		(0, _SetSelectedElements2.default)((0, _ParseQuerystring2.default)(url));
 		if (resetButton) {
-			resetButton.classList.remove("hidden");
+			resetButton.classList.remove('hidden');
 		}
 	}
 });
@@ -10255,10 +10299,9 @@ window.almFiltersPaged = function (alm) {
 
 /**
  * Reset all filters back to default state.
+ * Public JS function.
  *
- * Public JS function
- *
- * @param {boolean} reset      Should this reset the entire filter.
+ * @param {boolean} reset  Should this reset the entire filter.
  * @param {Element} filter An optional filter element to pass.
  * @since 1.7.5
  */
@@ -10266,15 +10309,19 @@ var reset = function reset() {
 	var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 	var filter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-	var almFilters = filter ? filter : _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
+	var almFilters = filter ? filter : _Variables2.default.almFilters || document.querySelector('.alm-filters-container');
 
 	if (!almFilters) {
 		return false;
 	}
 
-	var target = almFilters.dataset.target; // Get target
-	var filters = almFilters.querySelectorAll(".alm-filter--group"); // Get all filters
-	var data = {}; // Define data object
+	var target = almFilters.dataset.target; // Get filter target.
+	var filters = (0, _getInstances.getFilters)(); // Get all filter instances.
+	if (!filters) {
+		return;
+	}
+
+	var data = {};
 
 	// Loop all filters
 	[].concat(_toConsumableArray(filters)).forEach(function (filter) {
@@ -10283,7 +10330,7 @@ var reset = function reset() {
 	});
 
 	if (reset) {
-		// Trigger change events
+		// Trigger change event.
 		(0, _TriggerChange2.default)(almFilters);
 	} else {
 		// Dispatch filter change
@@ -10321,13 +10368,31 @@ var resetFilter = function resetFilter(filter) {
 exports.resetFilter = resetFilter;
 
 /**
+ * Load a Filters instance inside the WP Block Editor.
+ *
+ * @since 7.1.0
+ * @param {Element} instance The HTML element.
+ */
+
+var wpblock = exports.wpblock = function wpblock(instance) {
+	var filter = instance.querySelector('.alm-filters-container');
+	if (!filter || filter.dataset.blockLoaded === 'true') {
+		return true; // Exit if does not exist or block already loaded.
+	}
+	filter.dataset.blockLoaded = 'true';
+	var id = filter.dataset.id;
+	if (id) {
+		start(id, true);
+	}
+};
+
+/**
  * Scroll user to page on page load.
  * Fires from core Ajax Load More [core/src/js/ajax-load-more.js]
  *
  * @param {object} alm The global ALM object.
  * @since 1.7
  */
-
 window.almFiltersOnload = function () {
 	var alm = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
@@ -10341,7 +10406,7 @@ window.almFiltersOnload = function () {
 		if (page > 1) {
 			var target = alm.listing.querySelector('.alm-filters[data-page="' + page + '"]');
 			if (target) {
-				var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(target).top : target.offsetTop;
+				var offset = typeof ajaxloadmore.getOffset === 'function' ? ajaxloadmore.getOffset(target).top : target.offsetTop;
 				var scrolltop = alm.addons.filters_scrolltop ? parseInt(alm.addons.filters_scrolltop) : 30;
 				var top = offset - scrolltop + 1;
 				window.scrollTo(0, top);
@@ -10354,51 +10419,45 @@ window.almFiltersOnload = function () {
  * Filters Complete function.
  * Fires from core Ajax Load More [core/src/js/modules/filtering.js]
  *
- * @param {Element} el The alm element.
+ * @param {Element} element The alm element.
  * @since 1.0
  */
 window.almFiltersAddonComplete = function () {
-	var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-	var target = el.querySelector(".alm-listing");
+	var target = element.querySelector('.alm-listing');
 	var scroll = false;
 	var scrolltop = 30;
 
 	if (target) {
-		scroll = target.dataset.filtersScroll === "true" ? true : false;
+		scroll = target.dataset.filtersScroll === 'true' ? true : false;
 		scrolltop = target.dataset.filtersScrolltop ? parseInt(target.dataset.filtersScrolltop) : 30;
 	}
 
-	// Delay re-initialization
+	// Add slight delay for re-initialization of filters.
 	setTimeout(function () {
-		var className = _Variables2.default.filters_classname;
-		var filters = document.querySelectorAll("" + className);
-
-		if (!filters) {
-			return false;
-		}
-
 		_Variables2.default.alm_filtering = false;
-		filters.forEach(function (filter) {
-			filter.classList.remove("filtering");
+
+		// Get all filter instances.
+		var filterInstances = (0, _getInstances.getFilterInstances)();
+		[].concat(_toConsumableArray(filterInstances)).forEach(function (instance) {
+			instance.classList.remove('filtering'); // Remove loading state on each filter instance.
 		});
 
 		/*
-   * almFiltersComplete
-   * Callback function dispatched after the filters have completed their magic.
-   *
+   * Callback function dispatched after the filters have completed.
    */
-		if (typeof window.almFiltersComplete === "function") {
+		if (typeof window.almFiltersComplete === 'function') {
 			window.almFiltersComplete();
 		}
 
 		// Scroll User to top of listing.
-		if (typeof ajaxloadmore.almScroll === "function" && scroll) {
-			if (!el) {
-				return false;
+		if (typeof ajaxloadmore.almScroll === 'function' && scroll) {
+			if (!element) {
+				return;
 			}
 
-			var offset = typeof ajaxloadmore.getOffset === "function" ? ajaxloadmore.getOffset(el).top : el.offsetTop;
+			var offset = typeof ajaxloadmore.getOffset === 'function' ? ajaxloadmore.getOffset(element).top : element.offsetTop;
 			var top = offset - scrolltop + 1;
 			ajaxloadmore.almScroll(top);
 		}
@@ -10447,6 +10506,7 @@ function analytics() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.default = buildDataObj;
 
 var _GetTerms = __webpack_require__(/*! ./GetTerms */ "./src/js/frontend/modules/GetTerms.js");
 
@@ -10471,7 +10531,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @since 1.0
  */
-var buildDataObj = function buildDataObj(filter, data) {
+function buildDataObj(filter, data) {
 	var key = filter.dataset.key;
 	var isArchive = filter.dataset.isArchive;
 	var taxonomy = filter.dataset.taxonomy;
@@ -10481,29 +10541,36 @@ var buildDataObj = function buildDataObj(filter, data) {
 	var metaCompare = filter.dataset.metaCompare;
 	var metaType = filter.dataset.metaType;
 
-	// Convert date and author queries to abbv because 404 occurs otherwise
-	if (key === "_year") {
-		key = "year";
-	}
-	if (key === "_month") {
-		key = "month";
-	}
-	if (key === "_day") {
-		key = "day";
-	}
-	if (key === "_author") {
-		key = "author";
-	}
+	// Convert key to alt values.
+	switch (key) {
+		case "perPage":
+			key = "postsPerPage";
+			break;
 
-	// Convert category_and and tag_and for data params
-	if (key === "category_and") {
-		key = "categoryAnd";
-	}
-	if (key === "tag_and") {
-		key = "tagAnd";
-	}
-	if (key === "_tag") {
-		key = "tag";
+		// Convert date and author queries becauses 404 occur otherwise.
+		case "_year":
+			key = "year";
+			break;
+		case "_month":
+			key = "month";
+			break;
+		case "_day":
+			key = "day";
+			break;
+		case "_author":
+			key = "author";
+			break;
+
+		// Convert category_and and tag_and for data params
+		case "category_and":
+			key = "categoryAnd";
+			break;
+		case "tag_and":
+			key = "tagAnd";
+			break;
+		case "_tag":
+			key = "tag";
+			break;
 	}
 
 	var terms = "";
@@ -10583,9 +10650,7 @@ var buildDataObj = function buildDataObj(filter, data) {
 		}
 
 	return data;
-};
-
-exports.default = buildDataObj;
+}
 
 /***/ }),
 
@@ -10621,12 +10686,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  */
 
 var buildURL = function buildURL(filter, currentURL) {
-	var url = "";
 	var key = filter.dataset.key;
 	var fieldtype = filter.dataset.fieldtype;
 	var taxonomy = filter.dataset.taxonomy;
 	var metaKey = filter.dataset.metaKey;
 
+	var url = "";
 	var title = key === "taxonomy" ? "" + taxonomy : "" + key; // Convert type to taxonomy slug
 	title = key === "meta" ? "" + metaKey : title; // Convert type to custom field slug
 
@@ -10652,9 +10717,6 @@ var buildURL = function buildURL(filter, currentURL) {
 				var value = option.value;
 				if (option.selected) {
 					mSelectVal += mSelectCount > 0 ? "+" : "";
-
-					// Remove meta_value params from URL
-					//value = "sort" === key ? removeMetaValue(value) : value;
 
 					if (value !== "") {
 						// Confirm option has a value
@@ -10747,7 +10809,8 @@ exports.default = buildURL;
 /**
  * Remove `meta_value_num` and `meta_value` from URL.
  *
- * @param {*} value
+ * @param {string} value The meta value.
+ * @return {string}      The modified meta value.
  */
 
 var removeMetaValue = function removeMetaValue(value) {
@@ -10778,28 +10841,31 @@ var removeMetaValue = function removeMetaValue(value) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
+exports.default = clearInputs;
+
+var _Defaults = __webpack_require__(/*! ./Defaults */ "./src/js/frontend/modules/Defaults.js");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-/*
- * clearInputs
+/**
  * Clear the input field
  *
- * @param inputs array   Array of inputs
+ * @param {Element} filter The filter.
+ * @param {array}   inputs Array of inputs.
  * @since 1.0
  */
+function clearInputs(filter, inputs) {
+	[].concat(_toConsumableArray(inputs)).forEach(function (input) {
+		input.classList.remove('active');
+		input.classList.remove('highlight');
+		input.setAttribute('aria-checked', false);
+	});
 
-var clearInputs = function clearInputs(inputs) {
-  [].concat(_toConsumableArray(inputs)).forEach(function (input) {
-    input.classList.remove("active");
-    input.classList.remove("highlight");
-    input.setAttribute("aria-checked", false);
-  });
-};
-
-exports.default = clearInputs;
+	// Restore the default value of the filter.
+	(0, _Defaults.restoreDefault)(filter);
+}
 
 /***/ }),
 
@@ -10906,6 +10972,7 @@ function currentFilters(url) {
  */
 function buildSelections(obj) {
 	var items = "";
+	var disallowed = ["perPage", "sort", "order", "orderBy"];
 
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
@@ -10920,8 +10987,8 @@ function buildSelections(obj) {
 			var key = _ref2[0];
 			var value = _ref2[1];
 
-			if (value === undefined || value === "") {
-				continue; // Exit current iteration if empty
+			if (!value || disallowed.includes(key)) {
+				continue; // Exit current iteration when condition met.
 			}
 
 			// Split multiple key values - Do not split Search strings
@@ -10993,31 +11060,35 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 /**
  * Set the default state of the filter.
-
+ *
+ * @param {Element} container The filter container.
  * @return null
  * @since 1.2
  */
 function setDefaults(container) {
 	var found = false;
-	var items = container.querySelectorAll(".alm-filter--link");
-	[].concat(_toConsumableArray(items)).forEach(function (item, e) {
-		if (item.classList.contains("active")) {
+	var items = container.querySelectorAll('.alm-filter--link');
+	[].concat(_toConsumableArray(items)).forEach(function (item) {
+		if (item.classList.contains('active')) {
 			found = true;
 		}
 	});
 
-	if (found) return false;
+	if (found) {
+		return false;
+	}
 
 	var default_item = container.querySelector('.alm-filter--link[data-selected="true"]');
 	if (default_item) {
-		default_item.classList.add("active");
-		default_item.setAttribute("aria-checked", true);
+		default_item.classList.add('active');
+		default_item.setAttribute('aria-checked', true);
 	}
 }
 
 /**
  * Restore the default value of the filter.
  *
+ * @param {Element} filter The filter container.
  * @since 1.2
  */
 function restoreDefault(filter) {
@@ -11025,30 +11096,30 @@ function restoreDefault(filter) {
 	var selected_value = filter.dataset.selectedValue; // Default selected value
 
 	switch (fieldtype) {
-		case "radio":
-		case "checkbox":
-			var items = filter.querySelectorAll(".alm-filter--link");
+		case 'radio':
+		case 'checkbox':
+			var items = filter.querySelectorAll('.alm-filter--link');
 			[].concat(_toConsumableArray(items)).forEach(function (item) {
-				if (item.dataset.value === selected_value && item.dataset.type !== "all") {
+				if (item.dataset.value === selected_value && item.dataset.type !== 'all') {
 					// If item is preselected.
-					item.classList.add("active");
-					item.setAttribute("aria-checked", true);
+					item.classList.add('active');
+					item.setAttribute('aria-checked', true);
 				} else {
-					item.classList.remove("active");
-					item.setAttribute("aria-checked", false);
+					item.classList.remove('active');
+					item.setAttribute('aria-checked', false);
 				}
 			});
 
 			break;
 
-		case "select":
-			var select = filter.querySelector("select");
+		case 'select':
+			var select = filter.querySelector('select');
 			if (!select) {
 				break; // exit if empty
 			}
 
 			// If (pre)selected value is null, set value to #
-			selected_value = selected_value == null || selected_value === "" ? "#" : selected_value;
+			selected_value = selected_value == null || selected_value === '' ? '#' : selected_value;
 
 			[].concat(_toConsumableArray(select.options)).forEach(function (item) {
 				if (item.value === selected_value) {
@@ -11058,14 +11129,14 @@ function restoreDefault(filter) {
 
 			break;
 
-		case "select_multiple":
-			var select_multiple = filter.querySelector("select");
+		case 'select_multiple':
+			var select_multiple = filter.querySelector('select');
 			if (!select_multiple) {
 				break; // exit if empty
 			}
 
 			// If (pre)selected value is null, set value to #
-			selected_value = selected_value == null || selected_value === "" ? "#" : selected_value;
+			selected_value = selected_value == null || selected_value === '' ? '#' : selected_value;
 
 			// Loop all options and deselect.
 			[].concat(_toConsumableArray(select_multiple.options)).forEach(function (item) {
@@ -11077,12 +11148,12 @@ function restoreDefault(filter) {
 		default:
 			// textfield
 
-			var input = filter.querySelector("input");
+			var input = filter.querySelector('input');
 			if (!input) {
 				break; // exit if empty
 			}
 
-			input.value = "";
+			input.value = '';
 
 			break;
 	}
@@ -11095,7 +11166,7 @@ function restoreDefault(filter) {
  * @since 1.4.1
  */
 function getDefault(filter) {
-	var returnVal = "";
+	var returnVal = '';
 	var key = filter.dataset.key;
 	var defaultValue = filter.dataset.defaultValue;
 
@@ -11216,8 +11287,8 @@ var setFacets = function setFacets(facets) {
 
 	// Loop filters and pull out all potential facets.
 	filters && filters.forEach(function (group) {
-		var filters = group.querySelectorAll(target + "[data-key=taxonomy],\n\t\t\t\t" + target + "[data-key=meta],\n\t\t\t\t" + target + "[data-key=_author],\n\t\t\t\t" + target + "[data-key=_year],\n\t\t\t\t" + target + "[data-key=_month],\n\t\t\t\t" + target + "[data-key=_day],\n\t\t\t\t" + target + "[data-key=category],\n\t\t\t\t" + target + "[data-key=category_and],\n\t\t\t\t" + target + "[data-key=tag],\n\t\t\t\t" + target + "[data-key=tag_and],\n\t\t\t\t" + target + "[data-key=postType]");
-		group.classList.add("alm-filters-facets-loaded");
+		var filters = group.querySelectorAll(target + '[data-key=taxonomy],\n\t\t\t\t' + target + '[data-key=meta],\n\t\t\t\t' + target + '[data-key=_author],\n\t\t\t\t' + target + '[data-key=_year],\n\t\t\t\t' + target + '[data-key=_month],\n\t\t\t\t' + target + '[data-key=_day],\n\t\t\t\t' + target + '[data-key=category],\n\t\t\t\t' + target + '[data-key=category_and],\n\t\t\t\t' + target + '[data-key=tag],\n\t\t\t\t' + target + '[data-key=tag_and],\n\t\t\t\t' + target + '[data-key=postType]');
+		group.classList.add('alm-filters-facets-loaded');
 		facetGroups.push(Array.from(filters));
 	});
 
@@ -11232,62 +11303,62 @@ var setFacets = function setFacets(facets) {
 		var archive = element.dataset.isArchive ? true : false; // Is this an archive page?
 
 		switch (key) {
-			case "taxonomy":
+			case 'taxonomy':
 				var slug = element.dataset.taxonomy; // Get the taxonomy slug.
-				slug = archive ? slug.replace(/^_/, "") : slug; // Remove leading underscore if archive.
+				slug = archive ? slug.replace(/^_/, '') : slug; // Remove leading underscore if archive.
 
-				var taxonomies = facets.taxonomies && facets.taxonomies[slug] ? facets.taxonomies[slug] : "";
+				var taxonomies = facets.taxonomies && facets.taxonomies[slug] ? facets.taxonomies[slug] : '';
 				parseTerms(taxonomies, element, fieldtype);
 				break;
 
-			case "category":
-				var cats = facets.category ? facets.category : ""; // Get the category slug.
+			case 'category':
+				var cats = facets.category ? facets.category : ''; // Get the category slug.
 				parseTerms(cats, element, fieldtype);
 				break;
 
-			case "category_and":
-				var category_and = facets.category__and ? facets.category__and : "";
+			case 'category_and':
+				var category_and = facets.category__and ? facets.category__and : '';
 				parseTerms(category_and, element, fieldtype);
 				break;
 
-			case "tag":
-				var tag = facets.tag ? facets.tag : ""; // Get the tag slug.
+			case 'tag':
+				var tag = facets.tag ? facets.tag : ''; // Get the tag slug.
 				parseTerms(tag, element, fieldtype);
 				break;
 
-			case "tag_and":
-				var tag_and = facets.tag__and ? facets.tag__and : ""; //Get the tag__and slug.
+			case 'tag_and':
+				var tag_and = facets.tag__and ? facets.tag__and : ''; //Get the tag__and slug.
 				parseTerms(tag_and, element, fieldtype);
 				break;
 
-			case "meta":
+			case 'meta':
 				var metaKey = element.dataset.metaKey; // Get the meta key.
-				var meta = facets.meta && facets.meta[metaKey] ? facets.meta[metaKey] : "";
+				var meta = facets.meta && facets.meta[metaKey] ? facets.meta[metaKey] : '';
 				parseTerms(meta, element, fieldtype);
 				break;
 
-			case "_author":
-				var authors = facets.author ? facets.author : ""; // Get the author slug.
+			case '_author':
+				var authors = facets.author ? facets.author : ''; // Get the author slug.
 				parseTerms(authors, element, fieldtype);
 				break;
 
-			case "_year":
-				var year = facets.year ? facets.year : ""; // Get the year slug.
+			case '_year':
+				var year = facets.year ? facets.year : ''; // Get the year slug.
 				parseTerms(year, element, fieldtype);
 				break;
 
-			case "_month":
-				var month = facets.month ? facets.month : ""; // Get the month slug.
+			case '_month':
+				var month = facets.month ? facets.month : ''; // Get the month slug.
 				parseTerms(month, element, fieldtype);
 				break;
 
-			case "_day":
-				var day = facets.day ? facets.day : ""; // Get the day slug.
+			case '_day':
+				var day = facets.day ? facets.day : ''; // Get the day slug.
 				parseTerms(day, element, fieldtype);
 				break;
 
-			case "postType":
-				var postType = facets.post_type ? facets.post_type : ""; // Get the post_type slug.
+			case 'postType':
+				var postType = facets.post_type ? facets.post_type : ''; // Get the post_type slug.
 				parseTerms(postType, element, fieldtype);
 				break;
 
@@ -11308,68 +11379,86 @@ exports.default = setFacets;
 
 function parseTerms(facets, element, fieldtype) {
 	var facetArray = facets ? Object.keys(facets) : [];
-	var hideInactive = element.parentNode.classList.contains("alm-filters-facets-hide-inactive");
+	var hideInactive = element.parentNode.classList.contains('alm-filters-facets-hide-inactive');
+	var _alm_filters_localize = alm_filters_localize,
+	    _alm_filters_localize2 = _alm_filters_localize.hide_inactive_group,
+	    hide_inactive_group = _alm_filters_localize2 === undefined ? '1' : _alm_filters_localize2;
 
+
+	element.dataset.active = facetArray.length; // Set the active filter count.
+
+	// Hide entire filter if contains 0 active items.
+	if (facetArray.length === 0 && hideInactive && hide_inactive_group === '1') {
+		element.style.display = 'none';
+		return;
+	}
+	element.removeAttribute('style');
+
+	// Switch over field types.
 	switch (fieldtype) {
-		case "radio":
-		case "checkbox":
-			var items = element.querySelectorAll("li");
+		case 'radio':
+		case 'checkbox':
+			var items = element.querySelectorAll('li');
 			items && items.forEach(function (item) {
 				var value = item.firstChild.dataset.value;
 				var found = facetArray.includes(value);
 				var count = facets && facets[value] ? parseInt(facets[value]) : 0;
-				var target = item.querySelector(".alm-filter--link");
+				var target = item.querySelector('.alm-filter--link');
+				target.tabIndex = '0';
 
-				var counter = target.querySelector(".alm-filter-counter");
+				var counter = target.querySelector('.alm-filter-counter');
 				if (counter) {
 					counter.innerHTML = count;
 				}
 
 				// 0 items returned.
 				if (count === 0) {
-					target.classList.add("disabled");
-					target.classList.remove("active");
+					target.classList.add('disabled');
+					target.classList.remove('active');
+					target.tabIndex = '-1';
 				}
 
 				// `Hide Inactive` option.
-				if (hideInactive) {
+				if (hideInactive && fieldtype === 'checkbox') {
 					if (found) {
-						item.removeAttribute("style");
+						item.removeAttribute('style');
+						enableParentListItems(item);
 					} else {
-						item.style.display = "none";
+						item.style.display = 'none';
 					}
 				}
 
-				if (!found && !target.classList.contains("active")) {
-					target.classList.add("disabled");
-					target.classList.remove("active");
+				if (!found && !target.classList.contains('active')) {
+					target.classList.add('disabled');
+					target.classList.remove('active');
 				} else {
-					target.classList.remove("disabled");
+					if (count !== 0) {
+						target.classList.remove('disabled');
+					}
 				}
 			});
 
 			if (hideInactive) {
-				// Show/Hide checkbox limit buttons.
-				(0, _UI.updateCheckboxLimits)(element);
+				(0, _UI.updateCheckboxLimits)(element); // Show/Hide checkbox limit buttons.
 			}
 
 			break;
 
-		case "select":
-		case "select_multiple":
-			var select = element.querySelector("select");
-			var showCount = select.dataset.count === "true";
+		case 'select':
+		case 'select_multiple':
+			var select = element.querySelector('select');
+			var showCount = select.dataset.count === 'true';
 
 			var active = false;
 			Array.from(select.options).forEach(function (option) {
 				var value = option.value;
-				if (value !== "#") {
-					var count = facets && facets[value] ? facets[value] : "0";
+				if (value !== '#') {
+					var count = facets && facets[value] ? facets[value] : '0';
 					var name = option.dataset.name;
 					if (showCount) {
 						var countTemplate = select.dataset.countTemplate;
-						var countDisplay = " " + countTemplate.replace("%count%", count);
-						option.innerHTML = "" + name + countDisplay;
+						var countDisplay = ' ' + countTemplate.replace('%count%', count);
+						option.innerHTML = '' + name + countDisplay;
 					}
 
 					var found = facetArray.includes(value);
@@ -11381,12 +11470,26 @@ function parseTerms(facets, element, fieldtype) {
 			select.disabled = active ? false : true;
 
 			if (select.disabled) {
-				select.classList.add("disabled");
+				select.classList.add('disabled');
 			} else {
-				select.classList.remove("disabled");
+				select.classList.remove('disabled');
 			}
 
 			break;
+	}
+}
+
+/**
+ * Recursively show parent list items if a child is active.
+ *
+ * @param {Element} element The target element.
+ */
+function enableParentListItems(element) {
+	if (element.classList.contains('field-child')) {
+		// If element is a child, find the parent and enabled it.
+		var parentNode = element.parentNode.parentNode;
+		parentNode.removeAttribute('style');
+		enableParentListItems(parentNode);
 	}
 }
 
@@ -11405,6 +11508,7 @@ function parseTerms(facets, element, fieldtype) {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.default = getSortOrder;
 
 var _GetTerms = __webpack_require__(/*! ./GetTerms */ "./src/js/frontend/modules/GetTerms.js");
 
@@ -11421,9 +11525,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {object}            Modified data object.
  * @since 1.7.2
  */
-var getSortOrder = function getSortOrder(filter, data) {
+function getSortOrder(filter, data) {
 	var sortValue = (0, _GetTerms2.default)(filter, data);
-	if (sortValue) {
+	if (!sortValue) {
+		data["sortKey"] = ""; // Clear sortKey if previously set.
+	} else {
 		var sortArray = sortValue.split(":");
 
 		// Array must have a length of 2
@@ -11455,9 +11561,7 @@ var getSortOrder = function getSortOrder(filter, data) {
 	}
 
 	return data;
-};
-
-exports.default = getSortOrder;
+}
 
 /***/ }),
 
@@ -11799,19 +11903,21 @@ var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/fronte
 
 var _Variables2 = _interopRequireDefault(_Variables);
 
-var _TriggerChange = __webpack_require__(/*! ./TriggerChange */ "./src/js/frontend/modules/TriggerChange.js");
+var _getInstances = __webpack_require__(/*! ../helpers/getInstances */ "./src/js/frontend/helpers/getInstances.js");
 
-var _TriggerChange2 = _interopRequireDefault(_TriggerChange);
-
-var _SetCheckboxState = __webpack_require__(/*! ./SetCheckboxState */ "./src/js/frontend/modules/SetCheckboxState.js");
-
-var _SetCheckboxState2 = _interopRequireDefault(_SetCheckboxState);
+var _StarRating = __webpack_require__(/*! ../types/StarRating */ "./src/js/frontend/types/StarRating.js");
 
 var _ClearInputs = __webpack_require__(/*! ./ClearInputs */ "./src/js/frontend/modules/ClearInputs.js");
 
 var _ClearInputs2 = _interopRequireDefault(_ClearInputs);
 
-var _StarRating = __webpack_require__(/*! ../types/StarRating */ "./src/js/frontend/types/StarRating.js");
+var _SetCheckboxState = __webpack_require__(/*! ./SetCheckboxState */ "./src/js/frontend/modules/SetCheckboxState.js");
+
+var _SetCheckboxState2 = _interopRequireDefault(_SetCheckboxState);
+
+var _TriggerChange = __webpack_require__(/*! ./TriggerChange */ "./src/js/frontend/modules/TriggerChange.js");
+
+var _TriggerChange2 = _interopRequireDefault(_TriggerChange);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11824,113 +11930,105 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since 1.0
  */
 var setElementStates = function setElementStates(urlArray) {
-	var almFilters = _Variables2.default.almFilters || document.querySelector(".alm-filters-container");
+	var almFilters = document.querySelector(_Variables2.default.filters_classname);
 	if (!almFilters) {
-		return false;
+		return; // Exit if Filters instance does not exist.
 	}
 
-	_Variables2.default.alm_filtering_popstate = true;
-	var filters = document.querySelectorAll(".alm-filter--group");
+	_Variables2.default.alm_filtering_popstate = true; // Set popstate trigger.
+	var filters = (0, _getInstances.getFilters)(); // Get all filters on the page.
 
 	// Loop all filters
-	[].concat(_toConsumableArray(filters)).forEach(function (filter, e) {
+	[].concat(_toConsumableArray(filters)).forEach(function (filter) {
 		var fieldtype = filter.dataset.fieldtype;
 		var key = filter.dataset.key;
-		key = key === "taxonomy" ? filter.dataset.taxonomy : key; // If key is taxonomy, convert key to taxonomy slug
-		key = key === "meta" ? filter.dataset.metaKey : key; // If key is meta, convert key to meta key
+		key = key === 'taxonomy' ? filter.dataset.taxonomy : key; // If key is taxonomy, convert key to taxonomy slug
+		key = key === 'meta' ? filter.dataset.metaKey : key; // If key is meta, convert key to meta key
 
 		switch (fieldtype) {
-			case "checkbox":
+			case 'checkbox':
 				// Checkbox
-				var checkboxes = filter.querySelectorAll("div.field-checkbox"); // All checkboxes
-
+				var checkboxes = filter.querySelectorAll('div.field-checkbox'); // All checkboxes
 				// If key matches URL key
 				if (urlArray.hasOwnProperty(key)) {
-					var valueArray = urlArray[key].split("+");
+					var valueArray = urlArray[key].split('+');
 					[].concat(_toConsumableArray(checkboxes)).forEach(function (checkbox) {
 						(0, _SetCheckboxState2.default)(valueArray, checkbox);
 					});
 				} else {
-					(0, _ClearInputs2.default)(checkboxes); // Clear all
+					(0, _ClearInputs2.default)(filter, checkboxes); // Clear all
 				}
 
 				break;
 
-			case "radio":
+			case 'radio':
 				// Radios
-				var radios = filter.querySelectorAll("div.field-radio"); // All radios
-
+				var radios = filter.querySelectorAll('div.field-radio'); // All radios
 				if (urlArray.hasOwnProperty(key)) {
-					var _valueArray = urlArray[key].split("+");
+					var _valueArray = urlArray[key].split('+');
 					[].concat(_toConsumableArray(radios)).forEach(function (radio) {
 						(0, _SetCheckboxState2.default)(_valueArray, radio);
 					});
 				} else {
-					(0, _ClearInputs2.default)(radios); // Clear all
+					(0, _ClearInputs2.default)(filter, radios); // Clear all
 				}
-
 				break;
 
-			case "star_rating":
+			case 'star_rating':
 				// Star Rating... Duplicate of Radio func
-				var stars = filter.querySelectorAll("div.field-starrating"); // All radios
+				var stars = filter.querySelectorAll('div.field-starrating'); // All radios
 
 				if (urlArray.hasOwnProperty(key)) {
-					var _valueArray2 = urlArray[key].split("+");
+					var _valueArray2 = urlArray[key].split('+');
 					[].concat(_toConsumableArray(stars)).forEach(function (star) {
 						(0, _SetCheckboxState2.default)(_valueArray2, star);
 					});
 					(0, _StarRating.setHighlightedStars)(filter, stars);
 				} else {
-					(0, _ClearInputs2.default)(stars); // Clear all
+					(0, _ClearInputs2.default)(filter, stars); // Clear all
 				}
-
 				break;
 
-			case "select":
+			case 'select':
 				// Select
-				var select = filter.querySelector("select");
+				var select = filter.querySelector('select');
 				if (urlArray.hasOwnProperty(key)) {
 					select.value = urlArray[key];
 				} else {
-					select.value = "#";
+					select.value = '#';
 				}
-
 				break;
 
-			case "select_multiple":
+			case 'select_multiple':
 				// Select
-				var select_multiple = filter.querySelector("select");
+				var select_multiple = filter.querySelector('select');
 				if (urlArray.hasOwnProperty(key)) {
 					select_multiple.value = urlArray[key];
 				} else {
-					select_multiple.value = "#";
+					select_multiple.value = '#';
 				}
-
 				break;
 
-			case "date_picker":
+			case 'date_picker':
 				// Select
-				var datepicker = filter.querySelector(".flatpickr-input");
+				var datepicker = filter.querySelector('.flatpickr-input');
 				if (urlArray.hasOwnProperty(key)) {
 					// Replace `+` with ` | ` for range mode
-					var value = urlArray[key].replace("+", " | ");
+					var value = urlArray[key].replace('+', ' | ');
 					datepicker.value = value;
 				} else {
-					datepicker.value = "";
+					datepicker.value = '';
 				}
-
 				break;
 
 			default:
 				// Textfield
-				var textfield = filter.querySelector("input[type=text]");
+				var textfield = filter.querySelector('input[type=text]');
 				if (urlArray.hasOwnProperty(key)) {
 					textfield.value = urlArray[key];
 				} else {
-					textfield.value = "";
+					textfield.value = '';
 				}
-
 				break;
 		}
 	});
@@ -11959,6 +12057,12 @@ var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/fronte
 
 var _Variables2 = _interopRequireDefault(_Variables);
 
+var _getInstances = __webpack_require__(/*! ../helpers/getInstances */ "./src/js/frontend/helpers/getInstances.js");
+
+var _multipleInstances = __webpack_require__(/*! ../helpers/multipleInstances */ "./src/js/frontend/helpers/multipleInstances.js");
+
+var _multipleInstances2 = _interopRequireDefault(_multipleInstances);
+
 var _parseQueryString = __webpack_require__(/*! ../helpers/parseQueryString */ "./src/js/frontend/helpers/parseQueryString.js");
 
 var _parseQueryString2 = _interopRequireDefault(_parseQueryString);
@@ -11975,10 +12079,6 @@ var _Dispatch = __webpack_require__(/*! ./Dispatch */ "./src/js/frontend/modules
 
 var _Dispatch2 = _interopRequireDefault(_Dispatch);
 
-var _multipleInstances = __webpack_require__(/*! ../helpers/multipleInstances */ "./src/js/frontend/helpers/multipleInstances.js");
-
-var _multipleInstances2 = _interopRequireDefault(_multipleInstances);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -11986,76 +12086,89 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /**
  * Get the selected terms and append them to data obj.
  *
- * @param {HTMLElement} filterGroup The filters element.
+ * @param {HTMLElement} filterGroup The filters element container.
  * @since 1.0
  */
 var triggerChange = function triggerChange(filterGroup) {
 	/*
   * Callback function is dispatched when a filter change event is triggered.
   */
-	if (typeof window.almFiltersChange === "function") {
+	if (typeof window.almFiltersChange === 'function') {
 		window.almFiltersChange();
 	}
 
-	_Variables2.default.alm_filtering = true;
-	filterGroup.classList.add("filtering");
+	// Get all filter instances.
+	var filterInstances = (0, _getInstances.getFilterInstances)();
+	[].concat(_toConsumableArray(filterInstances)).forEach(function (instance) {
+		instance.classList.add('filtering'); // Set loading state on each filter instance.
+	});
 
-	var target = filterGroup.dataset.target; // Get target
+	_Variables2.default.alm_filtering = true;
+
+	var _filterGroup$dataset = filterGroup.dataset,
+	    target = _filterGroup$dataset.target,
+	    _filterGroup$dataset$ = _filterGroup$dataset.redirect,
+	    redirect = _filterGroup$dataset$ === undefined ? false : _filterGroup$dataset$; // Get filter params from data attributes.
+
 	var data = {}; // Define data object
-	var url = ""; // Build URL
-	var count = 0;
+	var url = ''; // Build URL
 
 	// Get the target .ajax-load-more element
-	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"]');
-	alm = alm[0];
+	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"]')[0] || null;
+	if (!alm) {
+		return;
+	}
 
-	// Get canonicalUrl for empty pushState
-	var canonicalUrl = alm.dataset.canonicalUrl;
+	var canonicalUrl = alm.dataset.canonicalUrl; // Get the canonical URL
 
-	// Are there multiple instances of ALM Filters.
-	var hasMultple = (0, _multipleInstances2.default)();
+	var hasMultple = (0, _multipleInstances2.default)(); // Are there multiple instances of core ALM on the page.
 
-	// Get all filters in group.
-	var filters = filterGroup.querySelectorAll(".alm-filter--group");
+	// Get all filters on the page.
+	var filters = (0, _getInstances.getFilters)();
 
 	// Loop all filters.
 	[].concat(_toConsumableArray(filters)).forEach(function (filter) {
-		count++;
-		data = (0, _BuildDataObj2.default)(filter, data); // Build data obj
+		data = (0, _BuildDataObj2.default)(filter, data); // Build data object to send to ALM.
 		if (!hasMultple) {
-			url += (0, _BuildURL2.default)(filter, url); // Build the URL
+			url += (0, _BuildURL2.default)(filter, url); // Build the URL.
 		}
 	});
 
-	// Build an object of active filters
-	var activeFiltersObj = url !== "" ? (0, _parseQueryString2.default)(url, true) : "";
+	// Redirect user to new URL after filter.
+	if (redirect) {
+		window.location.href = '' + redirect + url;
+		return;
+	}
+
+	// Build an object of active filters.
+	var activeFilters = url !== '' ? (0, _parseQueryString2.default)(url, true) : '';
 
 	/*
   * Callback function dispatched informing user of the active filters.
   */
-	if (typeof window.almFiltersActive === "function") {
-		window.almFiltersActive(activeFiltersObj);
+	if (typeof window.almFiltersActive === 'function') {
+		window.almFiltersActive(activeFilters);
 	}
 
 	// Set the reset button status.
-	if (typeof window.almFiltersResetStatus === "function") {
-		window.almFiltersResetStatus(filterGroup, activeFiltersObj);
+	if (typeof window.almFiltersResetStatus === 'function') {
+		window.almFiltersResetStatus(activeFilters);
 	}
 
-	// Set URL
-	url = url === "" ? canonicalUrl : url;
+	// Set new URL.
+	url = url === '' ? canonicalUrl : url;
 
 	var state = {
 		permalink: url
 	};
 
-	// If pushstate is enabled and not triggered via popstate
+	// If pushstate is enabled and not triggered via popstate.
 	if (!_Variables2.default.alm_filtering_popstate && !hasMultple) {
-		if (typeof window.history.pushState === "function") {
-			var almListing = alm.querySelector(".alm-listing");
+		if (typeof window.history.pushState === 'function') {
+			var almListing = alm.querySelector('.alm-listing');
 
 			// Determine if URL should be updated
-			if (almListing && almListing.dataset.filtersUrl !== "false") {
+			if (almListing && almListing.dataset.filtersUrl !== 'false') {
 				// Send Pushstate
 				// history.replaceState(state, null, url);
 				history.pushState(state, null, url);
@@ -12064,7 +12177,7 @@ var triggerChange = function triggerChange(filterGroup) {
 				/*
      * Callback function dispatched after the browser URL has been updated
      */
-				if (typeof window.almFiltersURLUpdate === "function") {
+				if (typeof window.almFiltersURLUpdate === 'function') {
 					window.almFiltersURLUpdate(url);
 				}
 			}
@@ -12096,33 +12209,26 @@ exports.default = triggerChange;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-/*
- * getKeyElement
+/**
  * Get the actual element of a filter target
  *
- * @param target element
- * @param value string
- * @param fieldType string
- * @return el element
+ * @param {element} target   The target element
+ * @param {string} value     The value of the filter.
+ * @param {string} fieldType The filter fieldtype.
+ * @return {Element}         The filter element.
  */
 var getKeyElement = function getKeyElement(target, value, fieldType) {
-	var el = "";
-
 	switch (fieldType) {
-		case "select":
-		case "select_multiple":
-			el = target.querySelector("select.alm-filter--item");
-			break;
+		case 'select':
+		case 'select_multiple':
+			return target.querySelector('select.alm-filter--item');
 
-		case "text":
-			el = target.querySelector("input.alm-filter--textfield");
-			break;
+		case 'text':
+			return target.querySelector('input.alm-filter--textfield');
 
 		default:
-			el = target.querySelector('div.alm-filter--link[data-value="' + decodeURI(value) + '"]');
+			return target.querySelector('div.alm-filter--link[data-value="' + decodeURI(value) + '"]');
 	}
-
-	return el;
 };
 exports.default = getKeyElement;
 
@@ -12141,17 +12247,14 @@ exports.default = getKeyElement;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-/*
- * getKeyObject
- * Get the filter key and fieldtype (taxonomy, meta, standard(order, tag))
+/**
+ * Get the filter key and fieldtype (taxonomy, meta, standard(order, tag)).
  * Need to get the type, because keys are different when using tax and meta query
  *
- * @param key string
- * @param value string
- * @return obj object
+ * @param {string} key The key to lookup.
+ * @return {object}
  */
-var getKeyObject = function getKeyObject(key, value) {
-
+var getKeyObject = function getKeyObject(key) {
 	var target = '';
 
 	if (document.querySelector('.alm-filter[data-taxonomy="' + key + '"]')) {
@@ -12165,14 +12268,14 @@ var getKeyObject = function getKeyObject(key, value) {
 		target = document.querySelector('.alm-filter[data-key="' + key + '"]');
 	}
 
-	if (!target) return false; // Exit if target does not exist
+	if (!target) {
+		return; // Exit if target does not exist
+	}
 
-	var obj = {
+	return {
 		fieldType: target.dataset.fieldtype,
 		target: target
 	};
-
-	return obj;
 };
 exports.default = getKeyObject;
 
@@ -12213,51 +12316,50 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @return {string}       The filter value.
  */
 var getKeyValue = function getKeyValue(key, value) {
-	var obj = (0, _getKeyObject2.default)(key, value);
-
-	if (obj) {
-		// Confirm obj exist
-		var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
-		if (!el) {
-			// Exit if does not exist
-			return "";
-		}
-
-		var filterVal = "";
-
-		switch (obj.fieldType) {
-			case "select":
-				// If has selected value
-				if (el.selectedOptions && el.selectedOptions.length) {
-					filterVal = el.selectedOptions[0].text;
-				} else {
-					filterVal = "";
-				}
-				break;
-
-			case "select_multiple":
-				if (el.options) {
-					// Loop all options to build values.
-					[].concat(_toConsumableArray(el.options)).forEach(function (option) {
-						if (option.selected && option.value === value) {
-							filterVal = value;
-						}
-					});
-				} else {
-					filterVal = "";
-				}
-				break;
-
-			case "text":
-				filterVal = el.value;
-				break;
-
-			default:
-				filterVal = el.innerHTML;
-		}
-
-		return filterVal;
+	var obj = (0, _getKeyObject2.default)(key);
+	if (!obj) {
+		return;
 	}
+
+	var el = (0, _getKeyElement2.default)(obj.target, value, obj.fieldType);
+	if (!el) {
+		return;
+	}
+
+	var filterVal = '';
+
+	switch (obj.fieldType) {
+		case 'select':
+			// If has selected value
+			if (el.selectedOptions && el.selectedOptions.length) {
+				filterVal = el.selectedOptions[0].text;
+			} else {
+				filterVal = '';
+			}
+			break;
+
+		case 'select_multiple':
+			if (el.options) {
+				// Loop all options to build values.
+				[].concat(_toConsumableArray(el.options)).forEach(function (option) {
+					if (option.selected && option.value === value) {
+						filterVal = value;
+					}
+				});
+			} else {
+				filterVal = '';
+			}
+			break;
+
+		case 'text':
+			filterVal = el.value;
+			break;
+
+		default:
+			filterVal = el.innerHTML;
+	}
+
+	return filterVal;
 };
 exports.default = getKeyValue;
 

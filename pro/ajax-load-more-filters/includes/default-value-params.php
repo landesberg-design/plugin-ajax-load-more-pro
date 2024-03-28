@@ -75,6 +75,10 @@ if ( $alm_filters_array ) {
 					$search = $value;
 					break;
 
+				case 'perPage':
+					$posts_per_page = $value;
+					break;
+
 				case 'sort':
 					$sort_array = explode( ':', $value ); // Convert value to array at colon.
 					if ( count( $sort_array ) > 1 && count( $sort_array ) <= 3 ) { // Between 1 and 3.

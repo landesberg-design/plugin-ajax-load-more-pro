@@ -98,6 +98,10 @@ if ( $alm_filters_querystring ) {
 				$search = $value;
 				break;
 
+			case 'perPage':
+				$posts_per_page = $value;
+				break;
+
 			case 'sort':
 				// Sort order.
 				$sort_array = explode( ':', $value ); // Convert value to array at colon.
