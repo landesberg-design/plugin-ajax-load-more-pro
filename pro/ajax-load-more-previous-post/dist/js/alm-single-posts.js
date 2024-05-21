@@ -135,8 +135,7 @@ var almSinglePosts = {};
   * @since 2.0
   */
 	almSinglePosts.onScroll = function () {
-		var scrollTop = window.pageYOffset;
-
+		var scrollTop = window.scrollY;
 		if (almSinglePosts.active && !almSinglePosts.popstate && scrollTop > 1 && !almSinglePosts.disableOnScroll) {
 			// Get container scroll position
 			var fromTop = scrollTop + almSinglePosts.offset;
@@ -177,7 +176,7 @@ var almSinglePosts = {};
 			}
 
 			// Set URL, if applicible.
-			if (url !== permalink) {
+			if (url !== permalink && !hasNextPageAddon()) {
 				almSinglePosts.setURL(id, permalink, title, page, currentPost);
 			}
 		}
@@ -369,8 +368,8 @@ var almSinglePosts = {};
 			return false; // Exit, not the correct amount of parameters
 		}
 
-		var transition = "all 0.3s linear";
-		var transition2 = "all 0.15s linear";
+		var transition = "all 0.3s ease";
+		var transition2 = "all 0.2s ease";
 		var body = document.body;
 
 		almSinglePosts.progressWrap = document.createElement("div");
@@ -474,6 +473,9 @@ var almSinglePosts = {};
   * @param {event} event The window event.
   */
 	window.addEventListener("popstate", function (event) {
+		if (hasNextPageAddon()) {
+			return; // Exit if Next Page instance exists.
+		}
 		if (typeof window.history.pushState == "function") {
 			almSinglePosts.onpopstate(event);
 		}
@@ -653,6 +655,18 @@ var almSinglePosts = {};
 			});
 		}
 	};
+
+	/**
+  * Does the instance contain an nested Next Page.
+  *
+  * @return {boolean} True if Next Page exists.
+  */
+	function hasNextPageAddon() {
+		if (document.querySelector(".ajax-load-more-wrap .alm-nextpage")) {
+			return true;
+		}
+		return false;
+	}
 
 	// Initiate script.
 	if (document.querySelector(".alm-single-post")) {

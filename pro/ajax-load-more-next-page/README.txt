@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/next-page/
 Requires at least: 4.0
-Tested up to: 6.4
+Tested up to: 6.5
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.7.1
+Version: 1.8.0
 
 == Copyright ==
 Copyright 2024 Connekt Media
@@ -43,6 +43,12 @@ The Next Page add-on for Ajax Load More works by using <!-‒nextpage‒-> Quick
 5. Activate the plugin in the Plugin dashboard.
 
 == Changelog ==
+
+= 1.8.0 - May 10, 2024 =
+* NEW: Added official support for using Next Page add-on with Single Posts add-on.
+* NEW: Added global `alm_nextpage_post_id` PHP variable for use in filters/shortcodes etc. This will allow the current post ID to be accessed within the Ajax request.
+* UPDATE: Code clean up.
+
 
 = 1.7.1 - January 16, 2024 =
 * FIX: Fixed issue with the Auto implementation method attempting to run in the_excerpt() requests. This issue resulted from a core WP bug with excerpt display in Ajax requests.

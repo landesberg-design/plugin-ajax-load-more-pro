@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 1.6.0
+ * Version: 1.7.0
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ALM_PREV_POST_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_PREV_POST_URL', plugins_url( '', __FILE__ ) );
-define( 'ALM_PREV_POST_VERSION', '1.6.0' );
-define( 'ALM_PREV_POST_RELEASE', 'January 16, 2024' );
+define( 'ALM_PREV_POST_VERSION', '1.7.0' );
+define( 'ALM_PREV_POST_RELEASE', 'May 10, 2024' );
 
 /**
  * Activation hook.
@@ -41,7 +41,6 @@ register_activation_hook( __FILE__, 'alm_single_post_install' );
  */
 function alm_single_post_admin_notice() {
 	$slug   = 'ajax-load-more';
-	$plugin = $slug . '-previous-post';
 	// Ajax Load More Notice.
 	if ( get_transient( 'alm_single_post_admin_notice' ) ) {
 		$install_url = get_admin_url() . '/update.php?action=install-plugin&plugin=' . $slug . '&_wpnonce=' . wp_create_nonce( 'install-plugin_' . $slug );
@@ -120,7 +119,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @return void
 		 */
 		public function alm_get_single_post() {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET );
 
 			$init            = isset( $params['init'] ) ? $params['init'] : false;
 			$id              = isset( $params['id'] ) ? $params['id'] : '';
@@ -278,12 +277,12 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 			// Get post object.
 			$post = get_post( $id ); // phpcs:ignore
 
-			// Get Previous Post.
+			// Get next post.
 			$next_post = ! empty( $tax ) ? get_next_post( true, $exclude_terms, $tax ) : get_next_post( false, $exclude_terms );
 
-			// If Previous Post === Original post.
+			// If next === original post.
 			if ( $next_post && $next_post->ID === $exclude_post_id ) {
-				$post      = get_post( $previous_post->ID ); //phpcs:ignore
+				$post      = get_post( $next_post->ID ); //phpcs:ignore
 				$next_post = ( ! empty( $tax ) ) ? get_next_post( true, $exclude_terms, $tax ) : get_next_post( false, $exclude_terms );
 			}
 
@@ -576,7 +575,7 @@ if ( ! class_exists( 'ALM_SINGLEPOST' ) ) :
 		 * @param string $query_args The query to build.
 		 */
 		public static function alm_single_post_custom_query( $post_id = '', $query_order = 'previous', $query_args = null ) {
-			$params = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$params = filter_input_array( INPUT_GET );
 
 			// Exit if this is an Ajax request as this should run on page load only.
 			if ( isset( $params ) && isset( $params['alm_page'] ) ) {

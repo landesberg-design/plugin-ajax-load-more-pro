@@ -238,7 +238,6 @@ var almNextpage = {};
 	almNextpage.previousUrl = window.location.href;
 	almNextpage.fromPopstate = false;
 	almNextpage.timer = null;
-	almNextpage.nested = false;
 	almNextpage.titleTemplate = "";
 	almNextpage.first = document.querySelector('.alm-listing[data-nextpage="true"] .alm-nextpage');
 	almNextpage.wrap = document.querySelector('.alm-listing[data-nextpage="true"]');
@@ -246,17 +245,10 @@ var almNextpage = {};
 	/**
   * Initial vars setup for Next Page;
   *
-  * @param {Element} el        The `.alm-listing` element.
-  * @param {Element} container The main Ajax Load More container.
+  * @param {Element} el The `.alm-listing` element.
   * @since 1.0
   */
-	almNextpage.setup = function (el, container) {
-		almNextpage.nested = container.dataset.nested === "true" ? true : false;
-
-		if (almNextpage.nested) {
-			return false; // Exit if nested.
-		}
-
+	almNextpage.setup = function (el) {
 		// Get alm data attributes.
 		var alm = el.dataset;
 
@@ -317,7 +309,7 @@ var almNextpage = {};
 		// Get closest Ajax Load More object (Temp hack).
 		var almListing = document.querySelector('.alm-listing[data-nextpage="true"]');
 		if (almListing) {
-			almNextpage.setup(almListing, almListing.parentNode);
+			almNextpage.setup(almListing);
 		}
 	}
 
@@ -447,8 +439,8 @@ var almNextpage = {};
 	almNextpage.onpopstate = function (event) {
 		var page = void 0;
 
-		// Exit if nested OR not active.
-		if (almNextpage.nested || !almNextpage.active) {
+		// Exit if not active.
+		if (!almNextpage.active) {
 			return false; // Safari fix - only fire when active
 		}
 
@@ -514,8 +506,8 @@ var almNextpage = {};
   * @param {boolean} is_paging Is this paging, true/false.
   */
 	almNextpage.setURL = function (page, permalink, title, total, is_paging) {
-		if (almNextpage.nested || !almNextpage.urls) {
-			return false; // Exit if nested or urls are disabled.
+		if (!almNextpage.urls) {
+			return false; // Exit if urls are disabled.
 		}
 
 		var _window$alm_nextpage_ = window.alm_nextpage_localize,
@@ -546,11 +538,7 @@ var almNextpage = {};
 					pageTitle: pageTitle
 				};
 
-				if (almNextpage.nested) {
-					history.replaceState(state, pageTitle, permalink);
-				} else {
-					history.pushState(state, pageTitle, permalink);
-				}
+				history.pushState(state, pageTitle, permalink);
 
 				// Trigger analytics.
 				if (typeof ajaxloadmore.analytics === "function") {
@@ -574,10 +562,6 @@ var almNextpage = {};
   * @param {Number} page Current page number.
   */
 	almNextpage.scrollToPage = function (page) {
-		if (almNextpage.nested) {
-			return false; // Exit if nested
-		}
-
 		// Get current page number
 		page = almNextpage.paging ? parseInt(page) + 1 : page + almNextpage.startpage + 1;
 

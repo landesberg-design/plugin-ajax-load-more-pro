@@ -5,10 +5,10 @@ Author: Darren Cooney
 Author URI: https://connekthq.com/
 Plugin URI: https://connekthq.com/ajax-load-more/add-ons/single-post/
 Requires at least: 4.0
-Tested up to: 6.4
+Tested up to: 6.5
 Stable tag: trunk
 Homepage: https://connekthq.com/ajax-load-more/
-Version: 1.6.0
+Version: 1.7.0
 
 
 == Copyright ==
@@ -48,6 +48,12 @@ http://connekthq.com/plugins/ajax-load-more/single-post/
 
 
 == Changelog ==
+
+= 1.7.0 - May 10, 2024 =
+* NEW: Added official support for using Next Page add-on with Single Posts add-on.
+* FIX: Fixed issue with undefined PHP variable when using `Next` post ordering.
+* UPDATE: Code clean up.
+
 
 = 1.6.0 - January 16, 2024 =
 * UPGRADE NOTICE: This update is affected by the core Ajax Load More 7.0 release. Updating this plugin will require updating Ajax Load More to 7.0.

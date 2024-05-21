@@ -10,7 +10,7 @@ Stable tag: trunk
 Requires PHP: 7.0
 Homepage: https://connekthq.com/ajax-load-more/
 Donate: https://connekthq.com/donate
-Version: 1.2.23
+Version: 1.2.24
 
 == Copyright ==
 Copyright 2024 Darren Cooney, Connekt Media
@@ -50,6 +50,20 @@ http://connekthq.com/ajax-load-more/pro/
 This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5.6.0 for compatibility with the Filters add-on 2.0 update.
 
 == Changelog ==
+
+** 1.2.24 - May 10, 2024 **
+
+Next Page - 1.8.0
+
+* NEW: Added official support for using Next Page add-on with Single Posts add-on.
+* NEW: Added global `alm_nextpage_post_id` PHP variable for use in filters/shortcodes etc. This will allow the current post ID to be accessed within the Ajax request.
+* UPDATE: Code clean up.
+
+Single Posts - 1.7.0
+
+- NEW: Added official support for using Next Page add-on with Single Posts add-on.
+- FIX: Fixed issue with undefined PHP variable when using `Next` post ordering.
+- UPDATE: Code clean up.
 
 ** 1.2.23 - March 21, 2024 **
 
