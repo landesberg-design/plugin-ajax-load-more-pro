@@ -8,10 +8,10 @@ Requires at least: 5.0
 Tested up to: 6.5
 Stable tag: trunk
 Homepage: https://connekthq.com/
-Version: 2.2.0
+Version: 2.2.1
 
 == Copyright ==
-Copyright 2024 DaConnekt Media
+Copyright 2024 Connekt Media
 
 This software is NOT to be distributed, but can be INCLUDED in WP themes: Premium or Contracted.
 This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -47,6 +47,12 @@ http://connekthq.com/plugins/ajax-load-more/add-ons/filters/
 
 
 == Changelog ==
+
+= 2.2.1 - May 30, 2024 =
+* NEW: Added new hook that allows for modifying the query args used when creating the facet index. [View Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/facets/#alm_filters_facets_index_args)
+* NEW: Added new `almfilters.getActiveFilters()` public JS function that returns an object of active filters.
+* NEW: Added new `alm_filters_redirect_underscore_{filter_id}` hook that is used with the Redirect functionality to remove the underscores in URLs on archive pages.
+
 
 = 2.2.0 - March 21, 2024 =
 * NEW: Added Posts Per Page filter.

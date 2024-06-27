@@ -58,9 +58,9 @@ function alm_filters_list_custom_values( $id, $custom_values, $obj, $querystring
 			// Custom Fields.
 			$match_array = explode( '+', $querystring[ $obj['meta_key'] ] );
 
-		} elseif ( $key === 'taxonomy' && isset( $querystring[ alm_filters_add_underscore() . $obj['taxonomy'] ] ) ) {
+		} elseif ( $key === 'taxonomy' && isset( $querystring[ alm_filters_add_underscore( $id ) . $obj['taxonomy'] ] ) ) {
 			// Taxonomy.
-			$match_array = explode( '+', $querystring[ alm_filters_add_underscore() . $obj['taxonomy'] ] );
+			$match_array = explode( '+', $querystring[ alm_filters_add_underscore( $id ) . $obj['taxonomy'] ] );
 
 		} else {
 			// Everything else.

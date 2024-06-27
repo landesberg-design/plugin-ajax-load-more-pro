@@ -8990,12 +8990,12 @@ function updateCheckboxLimits(element) {
 "use strict";
 
 
-var almClassName = ".alm-listing[data-filters=true]";
-var className = ".alm-filters.alm-filters-container";
-var facetsClassName = ".alm-filters.alm-filters-facets";
+var almClassName = '.alm-listing[data-filters=true]';
+var className = '.alm-filters.alm-filters-container';
+var facetsClassName = '.alm-filters.alm-filters-facets';
 
 module.exports = {
-	url: "",
+	url: '',
 	alm_filtering: false,
 	alm_filtering_popstate: false,
 	alm_core: document.querySelectorAll(almClassName),
@@ -9003,9 +9003,9 @@ module.exports = {
 	alm_filters: document.querySelectorAll(className),
 	alm_filters_facets: document.querySelectorAll(facetsClassName),
 	filters_classname: className,
-	filter_classname: ".alm-filter",
+	filter_classname: '.alm-filter',
 	almFilters: document.querySelector(className),
-	reset_btn_classname: "button#alm-filters-reset-button",
+	reset_btn_classname: 'button#alm-filters-reset-button',
 	pushstate: false,
 	delay: 125
 };
@@ -9783,7 +9783,7 @@ function toggleSelect() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.wpblock = exports.resetFilter = exports.reset = exports.start = undefined;
+exports.wpblock = exports.resetFilter = exports.getActiveFilters = exports.reset = exports.start = undefined;
 
 var _a11yarrows = __webpack_require__(/*! a11yarrows */ "./node_modules/a11yarrows/dist/a11yarrows.min.js");
 
@@ -10354,12 +10354,38 @@ window.almFiltersClear = function () {
 };
 
 /**
+ * Get all active filters.
+ * Public JS function.
+ *
+ * @return {Object} filter The HTML element to reset.
+ * @since 2.2.1
+ */
+var getActiveFilters = function getActiveFilters() {
+	var querystring = window.location.search.replace('?', '');
+	if (!querystring) {
+		return {};
+	}
+
+	var params = (0, _ParseQuerystring2.default)(querystring); // Get current querystring.
+	var filters = {};
+
+	// Loop each querystring to build an object.
+	for (var property in params) {
+		filters[property] = params[property];
+	}
+
+	return filters;
+};
+exports.getActiveFilters = getActiveFilters;
+
+/**
  * Reset an individual filter group `almfilters.restoreDefault()`
  * Public JS function.
  *
  * @param {Element} filter The HTML element to reset.
  * @since 1.7.5
  */
+
 var resetFilter = function resetFilter(filter) {
 	if (filter) {
 		(0, _Defaults.restoreDefault)(filter);
@@ -10691,21 +10717,21 @@ var buildURL = function buildURL(filter, currentURL) {
 	var taxonomy = filter.dataset.taxonomy;
 	var metaKey = filter.dataset.metaKey;
 
-	var url = "";
-	var title = key === "taxonomy" ? "" + taxonomy : "" + key; // Convert type to taxonomy slug
-	title = key === "meta" ? "" + metaKey : title; // Convert type to custom field slug
+	var url = '';
+	var title = key === 'taxonomy' ? '' + taxonomy : '' + key; // Convert type to taxonomy slug
+	title = key === 'meta' ? '' + metaKey : title; // Convert type to custom field slug
 
 	// If current URL is empty, prepend ? for the querystring
-	title = currentURL === "" ? "?" + title : "&" + title;
+	title = currentURL === '' ? '?' + title : '&' + title;
 
 	// Get preselected value
 	var preselected = filter.dataset.selectedValue;
 
 	switch (fieldtype) {
-		case "select_multiple":
-			var mSelect = filter.querySelector("select");
+		case 'select_multiple':
+			var mSelect = filter.querySelector('select');
 			var options = mSelect && mSelect.options;
-			var mSelectVal = "";
+			var mSelectVal = '';
 			var mSelectCount = 0;
 
 			if (!mSelect) {
@@ -10716,21 +10742,21 @@ var buildURL = function buildURL(filter, currentURL) {
 			[].concat(_toConsumableArray(options)).forEach(function (option) {
 				var value = option.value;
 				if (option.selected) {
-					mSelectVal += mSelectCount > 0 ? "+" : "";
+					mSelectVal += mSelectCount > 0 ? '+' : '';
 
-					if (value !== "") {
+					if (value !== '') {
 						// Confirm option has a value
 						mSelectVal += value;
 						mSelectCount++;
 					}
 				}
 			});
-			url += mSelectCount > 0 ? title + "=" + mSelectVal : url;
+			url += mSelectCount > 0 ? title + '=' + mSelectVal : url;
 
 			break;
 
-		case "select":
-			var select = filter.querySelector("select");
+		case 'select':
+			var select = filter.querySelector('select');
 			if (!select) {
 				break; // exit if empty
 			}
@@ -10740,38 +10766,38 @@ var buildURL = function buildURL(filter, currentURL) {
 			// Remove meta_value params from URL
 			//value = "sort" === key ? removeMetaValue(value) : value;
 
-			url += value === "#" || value === preselected ? "" : title + "=" + value;
+			url += value === '#' || value === preselected ? '' : title + '=' + value;
 
 			break;
 
-		case "text":
-		case "range_slider":
-			var textfield = filter.querySelector("input[type=text]");
+		case 'text':
+		case 'range_slider':
+			var textfield = filter.querySelector('input[type=text]');
 			if (!textfield) {
 				break; // exit if empty
 			}
 
-			url += textfield.value === "" ? "" : title + "=" + textfield.value;
+			url += textfield.value === '' ? '' : title + '=' + textfield.value;
 
 			break;
 
-		case "date_picker":
-			var datepicker = filter.querySelector("input.flatpickr-input");
+		case 'date_picker':
+			var datepicker = filter.querySelector('input.flatpickr-input');
 			if (!datepicker) {
 				break; // exit if empty
 			}
 
 			if (datepicker.value) {
 				// Replace ` | ` with `+` for range mode
-				var _value = datepicker.value.replace(" | ", "+");
-				url += datepicker.value === "" ? "" : title + "=" + _value;
+				var _value = datepicker.value.replace(' | ', '+');
+				url += datepicker.value === '' ? '' : title + '=' + _value;
 			}
 
 			break;
 
 		default:
-			var items = filter.querySelectorAll(".alm-filter--link"); // Get all inputs
-			var checkedVal = "";
+			var items = filter.querySelectorAll('.alm-filter--link'); // Get all inputs
+			var checkedVal = '';
 			var count = 0;
 
 			if (!items.length) {
@@ -10780,15 +10806,12 @@ var buildURL = function buildURL(filter, currentURL) {
 
 			[].concat(_toConsumableArray(items)).forEach(function (item) {
 				var value = item.dataset.value;
-				if (item.classList.contains("active")) {
-					if (count > 0 && value !== "") {
-						checkedVal += "+";
+				if (item.classList.contains('active')) {
+					if (count > 0 && value !== '') {
+						checkedVal += '+';
 					}
 
-					// Remove meta_value params from URL
-					//value = "sort" === key ? removeMetaValue(value) : value;
-
-					if (value !== "") {
+					if (value !== '') {
 						// Confirm checked has a value
 						checkedVal += value;
 						count++;
@@ -10798,35 +10821,13 @@ var buildURL = function buildURL(filter, currentURL) {
 
 			// If has selection and doesn't equal the preselected value
 			// Remove the preselected value as it shouldn't be shown in the URL
-			url += count > 0 && (0, _sortAlphaStr2.default)(preselected) !== (0, _sortAlphaStr2.default)(checkedVal) ? title + "=" + checkedVal : url;
+			url += count > 0 && (0, _sortAlphaStr2.default)(preselected) !== (0, _sortAlphaStr2.default)(checkedVal) ? title + '=' + checkedVal : url;
 	}
 
 	return url;
 };
 
 exports.default = buildURL;
-
-/**
- * Remove `meta_value_num` and `meta_value` from URL.
- *
- * @param {string} value The meta value.
- * @return {string}      The modified meta value.
- */
-
-var removeMetaValue = function removeMetaValue(value) {
-	if (!value) {
-		return "";
-	}
-	if (value.indexOf(":meta_value_num") !== -1) {
-		value = value.replace(":meta_value_num", "");
-	}
-
-	if (value.indexOf(":meta_value") !== -1) {
-		value = value.replace(":meta_value", "");
-	}
-
-	return value;
-};
 
 /***/ }),
 
@@ -10906,7 +10907,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since 1.4
  */
 var setCurrentFilters = function setCurrentFilters(url) {
-	var selected_filters_wrap = document.getElementById("alm-selected-filters");
+	var selected_filters_wrap = document.getElementById('alm-selected-filters');
 
 	var almInstances = _Variables2.default.alm_core;
 
@@ -10915,7 +10916,7 @@ var setCurrentFilters = function setCurrentFilters(url) {
 		return;
 	}
 
-	if (url && url.indexOf("?") !== -1) {
+	if (url && url.indexOf('?') !== -1) {
 		// Confirm URL contains a querystring
 		var selected_filters = currentFilters(url);
 
@@ -10924,22 +10925,22 @@ var setCurrentFilters = function setCurrentFilters(url) {
 			selected_filters_wrap.innerHTML = selected_filters;
 		} else {
 			// Clear filters
-			selected_filters_wrap.innerHTML = "";
+			selected_filters_wrap.innerHTML = '';
 		}
 	} else {
 		// Clear filters
-		selected_filters_wrap.innerHTML = "";
+		selected_filters_wrap.innerHTML = '';
 	}
 
 	// Append total filters as a data attribute.
-	selected_filters_wrap.dataset.total = selected_filters_wrap.querySelectorAll("li").length;
+	selected_filters_wrap.dataset.total = selected_filters_wrap.querySelectorAll('li').length;
 
 	/**
   * Selected Filters Callback function
   * Dispatched when a filter change event is triggered.
   *
   */
-	if (typeof window.almFiltersSelected === "function") {
+	if (typeof window.almFiltersSelected === 'function') {
 		window.almFiltersSelected(selected_filters_wrap);
 	}
 };
@@ -10954,13 +10955,7 @@ exports.default = setCurrentFilters;
  */
 
 function currentFilters(url) {
-	// remove '?' from URL.
-	url = url.replace("?", "");
-
-	// Parse URL into object.
-	var new_url = (0, _ParseQuerystring2.default)(url);
-
-	return buildSelections(new_url);
+	return buildSelections((0, _ParseQuerystring2.default)(url.replace('?', '')));
 }
 
 /**
@@ -10971,8 +10966,8 @@ function currentFilters(url) {
  * @since 1.4
  */
 function buildSelections(obj) {
-	var items = "";
-	var disallowed = ["perPage", "sort", "order", "orderBy"];
+	var items = '';
+	var disallowed = ['perPage', 'sort', 'order', 'orderBy'];
 
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
@@ -10992,7 +10987,7 @@ function buildSelections(obj) {
 			}
 
 			// Split multiple key values - Do not split Search strings
-			var values = key !== "search" ? value.split("+") : value.split();
+			var values = key !== 'search' ? value.split('+') : value.split();
 
 			for (var n = 0; n < values.length; n++) {
 				// Get text of the filter, not the slug
@@ -11001,21 +10996,21 @@ function buildSelections(obj) {
 				// Confirm value exits.
 				if (_value) {
 					// Remove span `.alm-filter-count` from display.
-					var temp = document.createElement("div");
+					var temp = document.createElement('div');
 					temp.innerHTML = _value;
-					var spanCount = temp.querySelector("span.alm-filter-count, span.alm-filter-counter");
+					var spanCount = temp.querySelector('span.alm-filter-count, span.alm-filter-counter');
 					if (spanCount) {
 						spanCount.remove(); // Remove span counter.
 						_value = temp.textContent;
 					}
 
 					// Strip all remaining HTML tags -> https://stackoverflow.com/a/5002161/921927.
-					_value = _value.replace(/<\/?[^>]+(>|$)/g, "");
-					items += "<li>";
-					items += '<div onclick="window.removeSelectedFilter(this);" onkeyup="window.removeSelectedFilterEnter(event);" data-key="' + key + '" data-value="' + values[n] + '" tabindex="0" aria-label="' + window.alm_filters_localize.remove_active_filter + "" + values[n] + '">';
+					_value = _value.replace(/<\/?[^>]+(>|$)/g, '');
+					items += '<li>';
+					items += '<div onclick="window.removeSelectedFilter(this);" onkeyup="window.removeSelectedFilterEnter(event);" data-key="' + key + '" data-value="' + values[n] + '" tabindex="0" aria-label="' + window.alm_filters_localize.remove_active_filter + '' + values[n] + '">';
 					items += _value;
-					items += "</a>";
-					items += "</li>";
+					items += '</a>';
+					items += '</li>';
 				}
 			}
 		}
@@ -11202,6 +11197,10 @@ var _CurrentFilters = __webpack_require__(/*! ./CurrentFilters */ "./src/js/fron
 
 var _CurrentFilters2 = _interopRequireDefault(_CurrentFilters);
 
+var _Variables = __webpack_require__(/*! ../global/Variables */ "./src/js/frontend/global/Variables.js");
+
+var _Variables2 = _interopRequireDefault(_Variables);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -11217,21 +11216,21 @@ var dispatch = function dispatch(target, data, url) {
 	// Get the target .ajax-load-more element
 	var alm = document.querySelectorAll('.ajax-load-more-wrap[data-id="' + target + '"] .alm-listing.alm-ajax');
 
-	if (typeof alm !== "undefined" && alm !== null) {
+	if (typeof alm !== 'undefined' && alm !== null) {
 		alm = alm[0];
-		var transition = alm.dataset.transition === null ? "fade" : alm.dataset.transition;
-		var speed = alm.dataset.speed === null ? "250" : alm.dataset.speed;
+		var transition = alm.dataset.transition === null ? 'fade' : alm.dataset.transition;
+		var speed = alm.dataset.speed === null ? '250' : alm.dataset.speed;
 
 		// Trigger analytics.
-		(0, _Analytics2.default)("filters");
+		(0, _Analytics2.default)('filters');
 
 		// Debug Info
-		if (alm.dataset.filtersDebug === "true") {
-			console.log("ALM Filters Debug:", data);
+		if (alm.dataset.filtersDebug === 'true') {
+			console.log('ALM Filters Debug:', data);
 		}
 
 		// Dispatch filters to core ALM
-		if (typeof ajaxloadmore.filter === "function") {
+		if (typeof ajaxloadmore.filter === 'function') {
 			ajaxloadmore.filter(transition, speed, data);
 		}
 

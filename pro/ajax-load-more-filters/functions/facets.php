@@ -313,17 +313,21 @@ function alm_filters_save_facet( $filter ) {
 function alm_filters_build_facet_index( $filter ) {
 	$index      = [];
 	$post_types = isset( $filter['facets_post_types'] ) ? $filter['facets_post_types'] : [ 'post' ];
-	//error_log( print_r( $post_types, true ) );
-	$args       = array(
+	$args       = [
 		'post_type'      => $post_types,
 		'post_status'    => 'publish',
 		'posts_per_page' => -1,
-	);
+	];
 
 	// Set `inherit` post_status for attachments.
 	if ( in_array( 'attachment', $post_types, true ) ) {
 		$args['post_status'] = [ 'publish', 'inherit' ];
 	}
+
+	/**
+	 * Facets Hook to modify index query args.
+	 */
+	$args = apply_filters( 'alm_filters_facets_index_' . $filter['id'] . '_args', $args );
 
 	$filters = isset( $filter ) && isset( $filter['filters'] ) ? $filter['filters'] : [];
 	$facets  = alm_filters_pluck_facet_keys( $filters );
@@ -620,7 +624,7 @@ function alm_filters_has_facets( $target ) {
  * @return array Array of query params.
  */
 function alm_filters_facet_get_querystring() {
-	$params  = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+	$params  = filter_input_array( INPUT_GET ); // phpcs:ignore
 	$is_ajax = isset( $params ) && isset( $params['facets'] );
 	if ( $is_ajax ) {
 		// Ajax request.
@@ -668,11 +672,11 @@ function alm_filters_facet_get_transient_name( $id = '', $alm_id = '' ) {
  */
 function alm_filters_test_index() {
 	$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-	$args  = array(
-		'post_type'      => array( 'movie' ),
+	$args  = [
+		'post_type'      => [ 'movie' ],
 		'post_status'    => 'publish',
 		'posts_per_page' => -1,
-	);
+	];
 
 	$array  = [];
 	$facets = [

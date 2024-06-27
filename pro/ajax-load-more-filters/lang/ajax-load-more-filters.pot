@@ -2,14 +2,14 @@
 # This file is distributed under the GPL.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ajax Load More: Filters 2.2.0\n"
+"Project-Id-Version: Ajax Load More: Filters 2.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ajax-load-more-filters\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-03-21T13:00:08+00:00\n"
+"POT-Creation-Date: 2024-05-30T12:47:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: ajax-load-more-filters\n"
@@ -72,7 +72,7 @@ msgid "Edit"
 msgstr ""
 
 #: admin/functions.php:112
-#: ajax-load-more-filters.php:1525
+#: ajax-load-more-filters.php:1523
 msgid "Preview"
 msgstr ""
 
@@ -127,7 +127,7 @@ msgid "The first step in filtering with Ajax Load More is to create one!"
 msgstr ""
 
 #: admin/functions.php:213
-#: ajax-load-more-filters.php:1230
+#: ajax-load-more-filters.php:1228
 msgid "Create Filter"
 msgstr ""
 
@@ -240,9 +240,9 @@ msgstr ""
 #: admin/views/edit.php:118
 #: admin/views/edit.php:1341
 #: admin/views/edit.php:1358
-#: ajax-load-more-filters.php:663
-#: ajax-load-more-filters.php:705
-#: ajax-load-more-filters.php:1541
+#: ajax-load-more-filters.php:661
+#: ajax-load-more-filters.php:703
+#: ajax-load-more-filters.php:1539
 msgid "Submit"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgstr ""
 
 #: admin/views/edit.php:218
 #: admin/views/edit.php:249
-#: ajax-load-more-filters.php:665
+#: ajax-load-more-filters.php:663
 msgid "Reset Filters"
 msgstr ""
 
@@ -462,7 +462,7 @@ msgid "The text to be rendered on the `Show More` button. Use the %total% placeh
 msgstr ""
 
 #: admin/views/edit.php:730
-#: ajax-load-more-filters.php:700
+#: ajax-load-more-filters.php:698
 #: functions/checkbox-limit.php:17
 msgid "Show More"
 msgstr ""
@@ -476,7 +476,7 @@ msgid "The text to be rendered on the `Show Less` button."
 msgstr ""
 
 #: admin/views/edit.php:747
-#: ajax-load-more-filters.php:701
+#: ajax-load-more-filters.php:699
 #: functions/checkbox-limit.php:20
 msgid "Show Less"
 msgstr ""
@@ -518,7 +518,7 @@ msgid "The text to be rendered as the toggle checkbox label."
 msgstr ""
 
 #: admin/views/edit.php:808
-#: ajax-load-more-filters.php:726
+#: ajax-load-more-filters.php:724
 msgid "Select All"
 msgstr ""
 
@@ -658,13 +658,13 @@ msgstr ""
 
 #: admin/views/edit.php:1023
 #: admin/views/edit.php:1050
-#: ajax-load-more-filters.php:1223
+#: ajax-load-more-filters.php:1221
 msgid "True"
 msgstr ""
 
 #: admin/views/edit.php:1024
 #: admin/views/edit.php:1051
-#: ajax-load-more-filters.php:1224
+#: ajax-load-more-filters.php:1222
 msgid "False"
 msgstr ""
 
@@ -1190,149 +1190,149 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: ajax-load-more-filters.php:554
+#: ajax-load-more-filters.php:552
 msgid "Remove filter "
 msgstr ""
 
-#: ajax-load-more-filters.php:874
+#: ajax-load-more-filters.php:872
 msgid "Filter"
 msgstr ""
 
-#: ajax-load-more-filters.php:874
+#: ajax-load-more-filters.php:872
 msgid "Edit Filter"
 msgstr ""
 
-#: ajax-load-more-filters.php:1123
+#: ajax-load-more-filters.php:1121
 msgid "stars and up"
 msgstr ""
 
-#: ajax-load-more-filters.php:1123
+#: ajax-load-more-filters.php:1121
 msgid "star and up"
 msgstr ""
 
-#: ajax-load-more-filters.php:1124
+#: ajax-load-more-filters.php:1122
 msgid "stars"
 msgstr ""
 
-#: ajax-load-more-filters.php:1220
+#: ajax-load-more-filters.php:1218
 msgid "Are you sure you want to permanently delete"
 msgstr ""
 
-#: ajax-load-more-filters.php:1221
+#: ajax-load-more-filters.php:1219
 msgid "Ordering Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1222
+#: ajax-load-more-filters.php:1220
 msgid "Date Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1225
+#: ajax-load-more-filters.php:1223
 msgid "Category Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1226
+#: ajax-load-more-filters.php:1224
 msgid "Beta"
 msgstr ""
 
-#: ajax-load-more-filters.php:1227
+#: ajax-load-more-filters.php:1225
 msgid "Basic Form Fields"
 msgstr ""
 
-#: ajax-load-more-filters.php:1228
+#: ajax-load-more-filters.php:1226
 msgid "Advanced Form Fields"
 msgstr ""
 
-#: ajax-load-more-filters.php:1229
+#: ajax-load-more-filters.php:1227
 msgid "Tag Parameters"
 msgstr ""
 
-#: ajax-load-more-filters.php:1231
+#: ajax-load-more-filters.php:1229
 msgid "Save Changes"
 msgstr ""
 
-#: ajax-load-more-filters.php:1232
+#: ajax-load-more-filters.php:1230
 msgid "Saving..."
 msgstr ""
 
-#: ajax-load-more-filters.php:1233
+#: ajax-load-more-filters.php:1231
 msgid "Filter Saved"
 msgstr ""
 
-#: ajax-load-more-filters.php:1234
+#: ajax-load-more-filters.php:1232
 msgid "Expand Filter"
 msgstr ""
 
-#: ajax-load-more-filters.php:1235
+#: ajax-load-more-filters.php:1233
 msgid "Close Filter"
 msgstr ""
 
-#: ajax-load-more-filters.php:1401
+#: ajax-load-more-filters.php:1399
 msgid "Disable Filter CSS"
 msgstr ""
 
-#: ajax-load-more-filters.php:1408
+#: ajax-load-more-filters.php:1406
 msgid "Color"
 msgstr ""
 
-#: ajax-load-more-filters.php:1415
+#: ajax-load-more-filters.php:1413
 msgid "Facet Indexing"
 msgstr ""
 
-#: ajax-load-more-filters.php:1422
+#: ajax-load-more-filters.php:1420
 msgid "Datepicker Theme"
 msgstr ""
 
-#: ajax-load-more-filters.php:1438
+#: ajax-load-more-filters.php:1436
 msgid "Customize your installation of the <a href=\"http://connekthq.com/plugins/ajax-load-more/filters/\">Filters</a> add-on."
 msgstr ""
 
-#: ajax-load-more-filters.php:1456
+#: ajax-load-more-filters.php:1454
 msgid "I want to use my own CSS styles."
 msgstr ""
 
-#: ajax-load-more-filters.php:1456
+#: ajax-load-more-filters.php:1454
 msgid "View Filter CSS"
 msgstr ""
 
-#: ajax-load-more-filters.php:1475
+#: ajax-load-more-filters.php:1473
 msgid "Rebuild facet indexes when a posts or custom post type is updated."
 msgstr ""
 
-#: ajax-load-more-filters.php:1476
+#: ajax-load-more-filters.php:1474
 msgid "Note: Facet indexes are rebuilt on post types used within facets only."
 msgstr ""
 
-#: ajax-load-more-filters.php:1515
+#: ajax-load-more-filters.php:1513
 msgid "Choose the color of your filter elements"
 msgstr ""
 
-#: ajax-load-more-filters.php:1517
+#: ajax-load-more-filters.php:1515
 msgid "Default"
 msgstr ""
 
-#: ajax-load-more-filters.php:1518
+#: ajax-load-more-filters.php:1516
 msgid "Blue"
 msgstr ""
 
-#: ajax-load-more-filters.php:1519
+#: ajax-load-more-filters.php:1517
 msgid "Red"
 msgstr ""
 
-#: ajax-load-more-filters.php:1520
+#: ajax-load-more-filters.php:1518
 msgid "Green"
 msgstr ""
 
-#: ajax-load-more-filters.php:1529
-#: ajax-load-more-filters.php:1535
+#: ajax-load-more-filters.php:1527
+#: ajax-load-more-filters.php:1533
 msgid "Checked"
 msgstr ""
 
-#: ajax-load-more-filters.php:1530
-#: ajax-load-more-filters.php:1536
+#: ajax-load-more-filters.php:1528
+#: ajax-load-more-filters.php:1534
 msgid "Unchecked"
 msgstr ""
 
-#: ajax-load-more-filters.php:1633
+#: ajax-load-more-filters.php:1631
 msgid "Select a <a href=\"https://flatpickr.js.org/themes/\" target=\"blank\">Theme</a> for the Datepicker Field Type."
 msgstr ""
 
@@ -1344,6 +1344,6 @@ msgstr ""
 msgid "Ajax Load More Filter Preview"
 msgstr ""
 
-#: functions/helpers.php:280
+#: functions/helpers.php:290
 msgid " results for "
 msgstr ""

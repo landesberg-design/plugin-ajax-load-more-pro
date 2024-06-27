@@ -86,7 +86,7 @@ function alm_filters_list_terms( $obj, $querystring, $id ) {
 
 	// Taxonomy.
 	if ( $key === 'taxonomy' ) {
-		$match_key = alm_filters_add_underscore() . '' . $obj['taxonomy']; // Set $match_key to taxonomy slug.
+		$match_key = alm_filters_add_underscore( $id ) . '' . $obj['taxonomy']; // Set $match_key to taxonomy slug.
 		$tax_args  = [
 			'order'      => 'ASC',
 			'orderby'    => 'name',

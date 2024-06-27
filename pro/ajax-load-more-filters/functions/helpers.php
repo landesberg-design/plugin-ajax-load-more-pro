@@ -214,9 +214,19 @@ function alm_filters_is_archive() {
 /**
  * Is the current page a front page or an archive, add _ to prevent redirects.
  *
+ * @param string $id The filter ID.
  * @since 1.8.1
  */
-function alm_filters_add_underscore() {
+function alm_filters_add_underscore( $id = '' ) {
+	/**
+	 * Fix for underscores in taxonomy names when using on archive pages.
+	 * Filter to remove '_' from redirects.
+	 */
+	$redirect_underscore = apply_filters( 'alm_filters_redirect_underscore_' . $id, true ); //
+	if ( alm_filters_is_archive() && ! $redirect_underscore ) {
+		return ''; // Exit early to remove the underscore.
+	}
+
 	return alm_filters_is_archive() ? '_' : '';
 }
 

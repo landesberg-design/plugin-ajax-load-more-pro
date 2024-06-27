@@ -12,7 +12,7 @@
  * @return void
  */
 function alm_filters_preview_filter() {
-	$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
+	$params = filter_input_array( INPUT_GET );
 	if ( empty( $params['alm_filters_preview'] ) || ! current_user_can( apply_filters( 'alm_user_role', 'edit_theme_options' ) ) ) {
 		return;
 	}

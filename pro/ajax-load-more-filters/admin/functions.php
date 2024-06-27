@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function alm_list_all_filters( $filter_id, $pos = 'sidebar' ) {
 	$filters = ALMFilters::alm_get_all_filters();
-	$params  = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING );
+	$params  = filter_input_array( INPUT_GET );
 	$order   = isset( $params['order'] ) ? $params['order'] : 'desc';
 	$orderby = isset( $params['orderby'] ) ? $params['orderby'] : 'id';
 	$results = [];

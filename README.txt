@@ -10,7 +10,7 @@ Stable tag: trunk
 Requires PHP: 7.0
 Homepage: https://connekthq.com/ajax-load-more/
 Donate: https://connekthq.com/donate
-Version: 1.2.24
+Version: 1.2.25
 
 == Copyright ==
 Copyright 2024 Darren Cooney, Connekt Media
@@ -51,13 +51,22 @@ This Ajax Load More Pro update requires updating core Ajax Load More plugin to 5
 
 == Changelog ==
 
+** 1.2.25 - May 30, 2024 **
+
+Filters - 2.2.1
+
+- NEW: Added new hook that allows for modifying the query args used when creating the facet index. [View Docs](https://connekthq.com/plugins/ajax-load-more/docs/add-ons/filters/facets/#alm_filters_facets_index_args)
+- NEW: Added new `almfilters.getActiveFilters()` public JS function that returns an object of active filters.
+- NEW: Added new `alm_filters_redirect_underscore_{filter_id}` hook that is used with the Redirect functionality to remove the underscores in URLs on archive pages.
+
+
 ** 1.2.24 - May 10, 2024 **
 
 Next Page - 1.8.0
 
-* NEW: Added official support for using Next Page add-on with Single Posts add-on.
-* NEW: Added global `alm_nextpage_post_id` PHP variable for use in filters/shortcodes etc. This will allow the current post ID to be accessed within the Ajax request.
-* UPDATE: Code clean up.
+- NEW: Added official support for using Next Page add-on with Single Posts add-on.
+- NEW: Added global `alm_nextpage_post_id` PHP variable for use in filters/shortcodes etc. This will allow the current post ID to be accessed within the Ajax request.
+- UPDATE: Code clean up.
 
 Single Posts - 1.7.0
 

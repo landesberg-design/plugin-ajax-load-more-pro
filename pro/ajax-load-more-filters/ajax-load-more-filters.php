@@ -6,7 +6,7 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 2.2.0
+ * Version: 2.2.1
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ALM_FILTERS_VERSION', '2.2.0' );
-define( 'ALM_FILTERS_RELEASE', 'March 21, 2024' );
+define( 'ALM_FILTERS_VERSION', '2.2.1' );
+define( 'ALM_FILTERS_RELEASE', 'May 30, 2024' );
 define( 'ALM_FILTERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ALM_FILTERS_URL', plugins_url( '', __FILE__ ) );
 define( 'ALM_FILTERS_ADMIN_URL', plugins_url( 'admin/', __FILE__ ) );
@@ -233,7 +233,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 2.0
 		 */
 		public function alm_filters_rebuild_facets() {
-			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			if ( isset( $params['rebuild_facet_index'] ) ) {
 				$filter_id = $params['rebuild_facet_index'];
 				$filter    = get_option( ALM_FILTERS_PREFIX . $filter_id );
@@ -262,7 +262,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 2.0
 		 */
 		public function alm_filters_duplicate_filter() {
-			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			if ( isset( $params['duplicate_filter'] ) && isset( $params['filter_id'] ) ) {
 				$id         = $params['duplicate_filter'];
 				$new        = $params['filter_id'];
@@ -309,7 +309,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_deleted() {
-			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			if ( isset( $params['delete_filter'] ) ) {
 				$filter_id = $params['delete_filter'];
 
@@ -419,7 +419,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.6
 		 */
 		public function alm_filters_updated() {
-			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			if ( isset( $params['filter_updated'] ) ) {
 				$msg = str_replace( '+', ' ', $params['filter_updated'] );
 				$this->alm_filters_add_admin_notice( '<i class="fa fa-check-square" style="color: #46b450";></i>&nbsp; ' . $msg . '!', 'success' );
@@ -432,7 +432,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_export() {
-			$params = filter_input_array( INPUT_POST, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_POST ); // phpcs:ignore
 			if ( isset( $params['alm_filters_export'] ) ) {
 				$filename = 'alm-filters';
 				if ( ! empty( $params['filter_keys'] ) ) {
@@ -464,7 +464,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.5
 		 */
 		public function alm_filters_import() {
-			$params = filter_input_array( INPUT_POST, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_POST ); // phpcs:ignore
 			if ( isset( $params['alm_filters_import'] ) ) {
 				$file = $_FILES['alm_import_file']; // phpcs:ignore
 
@@ -542,8 +542,6 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @since 1.0
 		 */
 		public function alm_filters_enqueue_scripts() {
-			$options = get_option( 'alm_settings' ); // Get ALM Options.
-
 			// JS and Localization.
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min'; // Use minified libraries if SCRIPT_DEBUG is turned off.
 			wp_register_script( 'ajax-load-more-filters', plugins_url( '/dist/js/filters' . $suffix . '.js', __FILE__ ), 'ajax-load-more', ALM_FILTERS_VERSION, true );
@@ -761,7 +759,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 					$taxonomy_operator         = '';
 					$taxonomy_include_children = '';
 					if ( $obj['taxonomy'] && $obj['taxonomy_operator'] ) {
-						$taxonomy_value            = ' data-taxonomy="' . alm_filters_add_underscore() . '' . $obj['taxonomy'] . '"';
+						$taxonomy_value            = ' data-taxonomy="' . alm_filters_add_underscore( $options_obj['id'] ) . '' . $obj['taxonomy'] . '"';
 						$taxonomy_operator         = ' data-taxonomy-operator="' . $obj['taxonomy_operator'] . '"';
 						$taxonomy_include_children = ' data-taxonomy-include-children="' . $obj['taxonomy_include_children'] . '"';
 					}
@@ -783,7 +781,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 
 					// Convert tag to _tag for front and archive pages.
 					if ( $obj['key'] === 'tag' && alm_filters_is_archive() ) {
-						$obj['key'] = alm_filters_add_underscore() . 'tag';
+						$obj['key'] = alm_filters_add_underscore( $options_obj['id'] ) . 'tag';
 					}
 
 					// Set Author Role.
@@ -1288,7 +1286,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 *  @since 1.0
 		 */
 		public static function alm_filters_get_page_num() {
-			$params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			$pg     = isset( $params['pg'] ) ? $params['pg'] : 1;
 			return $pg;
 		}
@@ -1372,7 +1370,7 @@ if ( ! class_exists( 'ALMFilters' ) ) :
 		 * @return boolean
 		 */
 		public function alm_filters_frontpage_canonical_redirect( $redirect ) {
-			$query_params = filter_input_array( INPUT_GET, @FILTER_SANITIZE_STRING ); // phpcs:ignore
+			$query_params = filter_input_array( INPUT_GET ); // phpcs:ignore
 			if ( is_front_page() && $query_params ) {
 				$redirect = false;
 			}
